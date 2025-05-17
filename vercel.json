@@ -1,5 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npm i --no-save && npm run build",
-  "outputDirectory": "dist"
+  "buildCommand": "rm -rf node_modules && npm i --prefer-offline --no-audit --no-fund --legacy-peer-deps && ROLLUP_NATIVE=false npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite"
 } 

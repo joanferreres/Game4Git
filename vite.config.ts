@@ -37,6 +37,8 @@ export default defineConfig(({ mode }) => ({
       }
     },
     rollupOptions: {
+      // Disable native plugins to avoid platform-specific dependencies
+      context: 'globalThis',
       output: {
         manualChunks: {
           react: ['react', 'react-dom'],
