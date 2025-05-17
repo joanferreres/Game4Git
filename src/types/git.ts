@@ -1,4 +1,3 @@
-
 export interface GitCommit {
   id: string;
   message: string;
@@ -13,10 +12,19 @@ export interface GitBranch {
   isActive: boolean;
 }
 
+export interface RemoteReference {
+  name: string;      // Ejemplo: origin/main
+  commitId: string;  // El commit al que apunta en el remoto
+}
+
 export interface GitRepository {
   commits: GitCommit[];
   branches: GitBranch[];
   HEAD: string; // Current commit ID
+  remoteReferences: RemoteReference[]; // Referencias a ramas remotas
+  remoteName: string; // Nombre del repositorio remoto (ejemplo: "origin")
+  lastFetchTime?: number; // Última vez que se hizo fetch (timestamp)
+  lastPushTime?: number; // Última vez que se hizo push (timestamp)
 }
 
 export interface CodeFile {

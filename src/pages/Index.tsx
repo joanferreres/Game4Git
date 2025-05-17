@@ -15,11 +15,62 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Info } from "lucide-react";
+import { Info, Globe } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
+import "../i18n"; // Importamos la configuración de i18n
+
+// Language selector component
+const LanguageSelector: React.FC = () => {
+  const { i18n, t } = useTranslation();
+  
+  const languages = [
+    { code: "en", name: "English" },
+    { code: "es", name: "Español" },
+    { code: "ca", name: "Català" },
+    { code: "fr", name: "Français" }
+  ];
+  
+  const handleLanguageChange = (lang: string) => {
+    i18n.changeLanguage(lang);
+    toast.success(t(`general.languageChanged`));
+  };
+  
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="icon" className="relative">
+          <Globe className="h-4 w-4" />
+          <span className="absolute top-0 right-0 -mt-1 -mr-1 bg-primary text-primary-foreground text-[8px] font-bold rounded-full w-3 h-3 flex items-center justify-center uppercase">
+            {i18n.language.substring(0, 2)}
+          </span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {languages.map((lang) => (
+          <DropdownMenuItem 
+            key={lang.code}
+            onClick={() => handleLanguageChange(lang.code)}
+            className={i18n.language.startsWith(lang.code) ? "bg-muted" : ""}
+          >
+            {lang.name}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
 
 const GitGame: React.FC = () => {
   const [showDiff, setShowDiff] = useState(false);
   const { repository, workingChanges, selectedCommitId, stagedChanges } = useGitStore();
+  const { t } = useTranslation();
   
   // Get the selected commit if any
   const selectedCommit = selectedCommitId 
@@ -43,12 +94,16 @@ const GitGame: React.FC = () => {
   
   return (
     <div className="container min-h-screen py-8 flex flex-col">
-      <header className="mb-6 text-center">
-        <h1 className="text-4xl font-bold tracking-tight">Git Game</h1>
-       
-        <p className="text-muted-foreground">
-          Learn Git concepts visually with this interactive playground
-        </p>
+      <header className="mb-6 relative">
+        <div className="absolute right-0 top-1/2 -translate-y-1/2">
+          <LanguageSelector />
+        </div>
+        <div className="text-center">
+          <h1 className="text-4xl font-bold tracking-tight">{t('general.title')}</h1>
+          <p className="text-muted-foreground">
+            {t('general.subtitle')}
+          </p>
+        </div>
       </header>
       
       {/* Floating Action Button for Usage Guide Sheet */}
@@ -65,43 +120,43 @@ const GitGame: React.FC = () => {
         </SheetTrigger>
         <SheetContent side="left" className="w-full sm:w-[540px] p-0">
           <SheetHeader className="p-6 pb-4 border-b">
-            <SheetTitle className="text-xl font-semibold">How to Use This Git Playground</SheetTitle>
+            <SheetTitle className="text-xl font-semibold">{t('howToUse.title')}</SheetTitle>
             <SheetDescription>
-              Follow these steps to learn Git concepts visually.
+              {t('howToUse.subtitle')}
             </SheetDescription>
           </SheetHeader>
           <div className="p-6 overflow-y-auto h-[calc(100vh-80px)]"> {/* Adjust height as needed */}
             <ol className="list-decimal list-inside space-y-3 text-sm">
               <li>
-                <strong>Switch/Select Branch</strong>: Use the 'Branches' section in 'Git Controls' (bottom panel) to switch to an existing branch or create a new one. Your file modifications and new commits will apply to this active branch.
+                <strong>{t('howToUse.switchBranch')}</strong>: {t('howToUse.switchBranchDesc')}
               </li>
               <li>
-                <strong>Edit Code</strong>: Modify the code in the 'Code Editor' on the left.
+                <strong>{t('howToUse.editCode')}</strong>: {t('howToUse.editCodeDesc')}
               </li>
               <li>
-                <strong>Stage Changes (Git Add)</strong>: Once you've made changes, click 'Git Add (Stage Changes)' in 'Git Controls'. This prepares your modifications for the next commit on the active branch.
+                <strong>{t('howToUse.stageChanges')}</strong>: {t('howToUse.stageChangesDesc')}
               </li>
               <li>
-                <strong>Commit Changes</strong>: Enter a commit message and click 'Git Commit'. This saves a snapshot of your staged changes on the current active branch. The Git Graph will update.
+                <strong>{t('howToUse.commitChanges')}</strong>: {t('howToUse.commitChangesDesc')}
               </li>
               <li>
-                <strong>Create New Branch</strong>: In 'Git Controls', type a new branch name under the 'Branches' section and click 'Create'. This creates a new branch from the current commit (HEAD).
+                <strong>{t('howToUse.createBranch')}</strong>: {t('howToUse.createBranchDesc')}
               </li>
               <li>
-                <strong>Merge Branches</strong>:
+                <strong>{t('howToUse.mergeBranches')}</strong>:
                 <ul className="list-disc list-inside pl-6 space-y-1.5 mt-1.5">
-                  <li>In 'Git Controls', under 'Merge Branches', select the branch you want to merge from (source) and the branch you want to merge into (target).</li>
-                  <li>Click 'Merge Branches'. A new merge commit will be created on the target branch, and the graph will update. The target branch becomes active.</li>
+                  <li>{t('howToUse.mergeBranchesDesc1')}</li>
+                  <li>{t('howToUse.mergeBranchesDesc2')}</li>
                 </ul>
               </li>
               <li>
-                <strong>View History & Commits</strong>: The 'Git Graph' (middle panel) visualizes your commit history. Click on any commit node in the graph to see its details and content in the right panel.
+                <strong>{t('howToUse.viewHistory')}</strong>: {t('howToUse.viewHistoryDesc')}
               </li>
               <li>
-                <strong>View Changes (Diff)</strong>: When you stage changes using 'Git Add', a diff view will automatically appear in the right panel showing the differences between your changes and the HEAD commit.
+                <strong>{t('howToUse.viewChanges')}</strong>: {t('howToUse.viewChangesDesc')}
               </li>
               <li>
-                <strong>Experiment</strong>: Try different sequences of commands to see how the Git history and file states change!
+                <strong>{t('howToUse.experiment')}</strong>: {t('howToUse.experimentDesc')}
               </li>
             </ol>
           </div>
@@ -137,9 +192,9 @@ const GitGame: React.FC = () => {
           ) : (
             <Card className="w-full h-full flex items-center justify-center">
               <CardContent className="text-center p-6">
-                <h3 className="text-lg font-medium mb-2">Git Visualization</h3>
+                <h3 className="text-lg font-medium mb-2">{t('visualization.title')}</h3>
                 <p className="text-muted-foreground">
-                  Select a commit from the graph to view its contents, or use "Git Add" to stage changes and see the differences with the current HEAD commit.
+                  {t('visualization.description')}
                 </p>
               </CardContent>
             </Card>

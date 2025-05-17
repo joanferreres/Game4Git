@@ -1,0 +1,258 @@
+{
+  "general": {
+    "title": "Git Game",
+    "subtitle": "Aprende conceptos de Git visualmente con este playground interactivo",
+    "languageChanged": "Idioma cambiado a Español"
+  },
+  "git": {
+    "controls": "Controles de Git",
+    "terminal": "Modo Terminal",
+    "visualizer": "Visualización de Git",
+    "commitChanges": "Confirmar Cambios",
+    "stageChanges": "Añadir Cambios",
+    "branches": "Ramas",
+    "createBranch": "Crear Rama",
+    "switchBranch": "Cambiar de Rama",
+    "currentBranch": "Rama Actual",
+    "newBranchName": "Nombre de nueva rama",
+    "remoteName": "Repositorio Remoto",
+    "gitFetch": "Git Fetch",
+    "gitPull": "Git Pull",
+    "gitPush": "Git Push",
+    "mergeBranches": "Fusionar Ramas",
+    "mergeFrom": "Fusionar desde",
+    "mergeInto": "En la rama",
+    "lastFetch": "Último fetch",
+    "lastPush": "Último push",
+    "remoteReferences": "Referencias remotas",
+    "actions": "Acciones",
+    "resetChanges": "Resetear Cambios",
+    "clearSelection": "Limpiar Selección",
+    "resetAll": "Resetear Todo",
+    "create": "Crear",
+    "gitAdd": "Git Add (Preparar Cambios)",
+    "gitCommit": "Git Commit"
+  },
+  "terminal": {
+    "help": "Terminal Git Game - Escribe 'help' para ver los comandos disponibles",
+    "currentBranch": "Rama actual:",
+    "commandNotRecognized": "Error: Comando no reconocido:",
+    "availableCommands": "Comandos disponibles",
+    "availableCommandsTitle": "Comandos disponibles",
+    "placeholder": "Escribe comando git..."
+  },
+  "messages": {
+    "changesStaged": "Cambios preparados para commit",
+    "enterCommitMessage": "Por favor, introduce un mensaje de commit",
+    "noChangesStaged": "No hay cambios preparados para commit. Usa Git Add primero.",
+    "committedSuccessfully": "Cambios confirmados con éxito",
+    "enterBranchName": "Por favor, introduce un nombre de rama",
+    "branchExists": "La rama ya existe",
+    "branchCreated": "Rama creada",
+    "switchedToBranch": "Cambiado a la rama",
+    "changesReset": "Cambios reseteados al HEAD actual",
+    "resetToInitial": "Reseteado al commit inicial",
+    "selectSourceBranch": "Por favor, selecciona una rama de origen para fusionar.",
+    "selectTargetBranch": "Por favor, selecciona una rama de destino para fusionar.",
+    "sourceSameAsTarget": "Las ramas de origen y destino no pueden ser la misma.",
+    "mergedBranch": "Rama fusionada",
+    "into": "en",
+    "noActiveBranch": "No hay rama activa",
+    "hasUnsavedChanges": "Tienes cambios sin guardar. Usa \"Git Add\" para prepararlos.",
+    "stagedAndReady": "Cambios preparados y listos para commit"
+  },
+  "tooltips": {
+    "selectCommit": "Selecciona un commit del gráfico para ver su contenido, o usa \"Git Add\" para preparar cambios y ver las diferencias con el commit HEAD actual."
+  },
+  "guide": {
+    "title": "Guía de Flujo de Trabajo Git",
+    "description": "Aprende los comandos y flujos de trabajo esenciales de Git para un control de versiones efectivo",
+    "daily": {
+      "title": "Flujo de Trabajo Diario",
+      "description": "Pasos básicos para el trabajo diario con Git",
+      "step1": {
+        "title": "1. Verifica tu rama actual",
+        "description": "Siempre verifica en qué rama estás con 'git branch' o mira la barra de estado. Esto ayuda a evitar trabajar accidentalmente en la rama incorrecta."
+      },
+      "step2": {
+        "title": "2. Actualiza tu repositorio local",
+        "description": "Ejecuta 'git fetch' para descargar los últimos cambios del repositorio remoto sin modificar tu directorio de trabajo."
+      },
+      "step3": {
+        "title": "3. Integra los cambios remotos",
+        "description": "Ejecuta 'git pull' para obtener Y fusionar los cambios del repositorio remoto en tu rama actual antes de comenzar un nuevo trabajo."
+      },
+      "step4": {
+        "title": "4. Realiza tus cambios",
+        "description": "Modifica código, añade archivos, etc."
+      },
+      "step5": {
+        "title": "5. Prepara tus cambios",
+        "description": "Usa 'git add <archivos>' o 'git add .' para preparar tus cambios para el commit."
+      },
+      "step6": {
+        "title": "6. Confirma tus cambios",
+        "description": "Usa 'git commit -m \"Tu mensaje descriptivo\"' para guardar tus cambios preparados localmente."
+      },
+      "step7": {
+        "title": "7. Envía tus cambios",
+        "description": "Usa 'git push' para subir tus commits locales al repositorio remoto."
+      }
+    },
+    "branching": {
+      "title": "Flujo de Trabajo con Ramas", 
+      "description": "Cómo trabajar con ramas",
+      "step1": {
+        "title": "1. Crear una nueva rama",
+        "description": "Usa 'git branch <nombre-rama>' para crear una rama (sin cambiar a ella)."
+      },
+      "step2": {
+        "title": "2. Crear y cambiar a una nueva rama",
+        "description": "Usa 'git checkout -b <nombre-rama>' para crear una rama y cambiar a ella inmediatamente."
+      },
+      "step3": {
+        "title": "3. Cambiar entre ramas",
+        "description": "Usa 'git checkout <nombre-rama>' para cambiar a una rama existente."
+      },
+      "step4": {
+        "title": "4. Listar todas las ramas",
+        "description": "Usa 'git branch' para ver todas las ramas locales. La rama actual estará marcada con un asterisco (*)."
+      },
+      "step5": {
+        "title": "5. Obtener ramas remotas",
+        "description": "Usa 'git fetch' para actualizar la información de ramas remotas, luego 'git branch -r' para ver las ramas remotas."
+      }
+    },
+    "merging": {
+      "title": "Flujo de Trabajo de Fusión",
+      "description": "Cómo fusionar cambios entre ramas",
+      "step1": {
+        "title": "1. Cambiar a la rama destino",
+        "description": "Primero usa 'git checkout <rama-destino>' para cambiar a la rama en la que quieres fusionar. Esto es crítico - debes estar EN la rama receptora."
+      },
+      "step2": {
+        "title": "2. Actualizar la rama destino",
+        "description": "Ejecuta 'git pull' para asegurarte de que tu rama destino esté actualizada con el repositorio remoto."
+      },
+      "step3": {
+        "title": "3. Fusionar la rama origen",
+        "description": "Usa 'git merge <rama-origen>' para fusionar los cambios DESDE la rama origen HACIA tu rama actual (destino)."
+      },
+      "step4": {
+        "title": "4. Resolver conflictos",
+        "description": "Si hay conflictos de fusión, Git te notificará. Edita los archivos con conflictos y luego 'git add' una vez resueltos."
+      },
+      "step5": {
+        "title": "5. Resolución de Conflictos de Fusión (En Detalle)",
+        "description": "Cuando ocurren conflictos, Git los marca en los archivos con marcadores especiales. Abre cada archivo con conflicto y busca secciones con '<<<<<<< HEAD', '=======', y '>>>>>>> nombre-rama'. El contenido entre '<<<<<<< HEAD' y '=======' es de tu rama actual, mientras que el contenido entre '=======' y '>>>>>>> nombre-rama' es de la rama que estás fusionando. Edita estas secciones para crear la versión final, eliminando todos los marcadores de conflicto. Después de resolver, ejecuta 'git add <archivo>' en cada archivo corregido y haz commit con 'git commit'."
+      },
+      "step6": {
+        "title": "6. Completar la fusión",
+        "description": "Si hubo conflictos, usa 'git commit' para finalizar la fusión. De lo contrario, la fusión se completa automáticamente."
+      },
+      "step7": {
+        "title": "7. Enviar los cambios fusionados",
+        "description": "Usa 'git push' para subir los cambios fusionados al repositorio remoto."
+      }
+    },
+    "troubleshooting": {
+      "title": "Solución de Problemas",
+      "description": "Problemas comunes de Git y sus soluciones",
+      "step1": {
+        "title": "Descartar cambios locales",
+        "description": "Usa 'git reset --hard' para descartar todos los cambios locales y resetear al último commit."
+      },
+      "step2": {
+        "title": "Descartar todos los cambios no preparados",
+        "description": "Usa 'git checkout -- .' para descartar todos los cambios no preparados en tu directorio de trabajo. Es más seguro que reset --hard ya que solo afecta a los cambios no preparados."
+      },
+      "step3": {
+        "title": "Descartar cambios para un archivo específico",
+        "description": "Usa 'git checkout -- <archivo>' para descartar cambios en un archivo específico y restaurarlo a la versión en HEAD."
+      },
+      "step4": {
+        "title": "Quitar cambios del área de preparación",
+        "description": "Usa 'git reset HEAD <archivo>' para quitar un archivo del área de preparación manteniendo tus cambios."
+      },
+      "step5": {
+        "title": "Corregir el último mensaje de commit",
+        "description": "Usa 'git commit --amend' para modificar el mensaje de tu commit más reciente (antes de hacer push)."
+      },
+      "step6": {
+        "title": "Deshacer el último commit",
+        "description": "Usa 'git reset HEAD~1' para deshacer el último commit pero mantener los cambios preparados."
+      },
+      "step7": {
+        "title": "Revisar el historial de commits",
+        "description": "Usa 'git log' para ver el historial de commits y encontrar commits específicos si es necesario."
+      },
+      "step8": {
+        "title": "Abortar una fusión con conflictos",
+        "description": "Si has iniciado una fusión pero quieres cancelarla debido a demasiados conflictos, usa 'git merge --abort' para volver al estado anterior a la fusión."
+      }
+    }
+  },
+  "explanations": {
+    "gitFetch": "En un repositorio Git real, este comando descargaría objetos y referencias del repositorio remoto. Actualiza tus ramas de seguimiento remoto sin modificar tu directorio de trabajo o ramas locales.",
+    "gitPull": "En un repositorio Git real, este comando obtendría e integraría cambios de otro repositorio o una rama local. Combina git fetch y git merge en un solo paso.",
+    "gitPush": "En un repositorio Git real, este comando actualizaría las referencias remotas junto con los objetos asociados, enviando los commits de tu rama local a la rama del repositorio remoto.",
+    "simulationFetch": "Esto es una simulación: En Git real, fetch descargaría commits, archivos y referencias de un repositorio remoto.",
+    "simulationPull": "Esto es una simulación: En Git real, pull obtendría y fusionaría cambios remotos en tu rama actual.",
+    "simulationPush": "Esto es una simulación: En Git real, push subiría los commits de tu rama al repositorio remoto."
+  },
+  "gitCommands": {
+    "stageAll": "Preparar todos los cambios",
+    "stageFile": "Preparar cambios para el archivo hello.c",
+    "commit": "Confirmar cambios preparados con un mensaje",
+    "listBranches": "Listar ramas",
+    "createBranch": "Crear una nueva rama",
+    "switchBranch": "Cambiar a una rama",
+    "createAndSwitch": "Crear y cambiar a una nueva rama",
+    "merge": "Fusionar la rama especificada en la rama actual",
+    "fetch": "Obtener últimos cambios del repositorio remoto",
+    "pull": "Obtener y fusionar cambios del repositorio remoto",
+    "push": "Enviar cambios locales al repositorio remoto",
+    "reset": "Resetear directorio de trabajo a HEAD",
+    "status": "Mostrar estado actual",
+    "clear": "Limpiar terminal",
+    "help": "Mostrar ayuda"
+  },
+  "howToUse": {
+    "title": "Cómo Usar Este Playground de Git",
+    "subtitle": "Sigue estos pasos para aprender conceptos de Git visualmente.",
+    "switchBranch": "Cambiar/Seleccionar Rama",
+    "switchBranchDesc": "Usa la sección 'Ramas' en 'Controles de Git' (panel inferior) para cambiar a una rama existente o crear una nueva. Tus modificaciones de archivos y nuevos commits se aplicarán a esta rama activa.",
+    "editCode": "Editar Código",
+    "editCodeDesc": "Modifica el código en el 'Editor de Código' a la izquierda.",
+    "stageChanges": "Preparar Cambios (Git Add)",
+    "stageChangesDesc": "Una vez que hayas hecho cambios, haz clic en 'Git Add (Preparar Cambios)' en 'Controles de Git'. Esto prepara tus modificaciones para el próximo commit en la rama activa.",
+    "commitChanges": "Confirmar Cambios",
+    "commitChangesDesc": "Introduce un mensaje de commit y haz clic en 'Git Commit'. Esto guarda una instantánea de tus cambios preparados en la rama activa actual. El Gráfico de Git se actualizará.",
+    "createBranch": "Crear Nueva Rama",
+    "createBranchDesc": "En 'Controles de Git', escribe un nuevo nombre de rama bajo la sección 'Ramas' y haz clic en 'Crear'. Esto crea una nueva rama desde el commit actual (HEAD).",
+    "mergeBranches": "Fusionar Ramas",
+    "mergeBranchesDesc1": "En 'Controles de Git', bajo 'Fusionar Ramas', selecciona la rama que quieres fusionar (origen) y la rama en la que quieres fusionar (destino).",
+    "mergeBranchesDesc2": "Haz clic en 'Fusionar Ramas'. Se creará un nuevo commit de fusión en la rama destino, y el gráfico se actualizará. La rama destino se convierte en activa.",
+    "viewHistory": "Ver Historial y Commits",
+    "viewHistoryDesc": "El 'Gráfico de Git' (panel central) visualiza tu historial de commits. Haz clic en cualquier nodo de commit en el gráfico para ver sus detalles y contenido en el panel derecho.",
+    "viewChanges": "Ver Cambios (Diff)",
+    "viewChangesDesc": "Cuando preparas cambios usando 'Git Add', una vista de diferencias aparecerá automáticamente en el panel derecho mostrando las diferencias entre tus cambios y el commit HEAD actual.",
+    "experiment": "Experimenta",
+    "experimentDesc": "¡Prueba diferentes secuencias de comandos para ver cómo cambian el historial de Git y los estados de los archivos!"
+  },
+  "visualization": {
+    "title": "Visualización de Git",
+    "description": "Selecciona un commit del gráfico para ver su contenido, o usa \"Git Add\" para preparar cambios y ver las diferencias con el commit HEAD actual."
+  },
+  "gitHistory": {
+    "title": "Historial de Git",
+    "currentBranch": "Rama actual:",
+    "head": "HEAD"
+  },
+  "gitGraph": {
+    "title": "Gráfico de Git",
+    "master": "Master",
+    "yourWork": "Tu Trabajo",
+    "head": "HEAD"
+  }
+} 

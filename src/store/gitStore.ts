@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { GitRepository, GitCommit, GitBranch, CodeFile } from '../types/git';
+import { GitRepository, GitCommit, GitBranch, CodeFile, RemoteReference } from '../types/git';
 import { toast } from 'sonner';
 
 // Initial C file content
@@ -32,6 +32,11 @@ interface GitStore {
   stageChanges: (content: string) => void;
   resetToInitialCommit: () => void;
   mergeBranch: (sourceBranchName: string, targetBranchName: string) => void;
+  
+  // Operaciones Remotas
+  fetchRemote: () => void;
+  pullRemote: (branchName?: string) => void;
+  pushToRemote: (branchName?: string) => void;
 }
 
 // Create initial repository with a master branch and initial commit
@@ -55,7 +60,14 @@ const createInitialRepo = (): GitRepository => {
         isActive: true
       }
     ],
-    HEAD: initialCommitId
+    HEAD: initialCommitId,
+    remoteReferences: [
+      {
+        name: "origin/master",
+        commitId: initialCommitId
+      }
+    ],
+    remoteName: "origin"
   };
 };
 
@@ -277,6 +289,249 @@ const useGitStore = create<GitStore>((set, get) => ({
       stagedChanges: null,
       selectedCommitId: newCommitId,
     }));
+  },
+
+  // Operaciones Remotas
+
+  // Fetch: Obtiene los cambios del remoto pero no los aplica a las ramas locales
+  fetchRemote: () => {
+    const { repository } = get();
+
+    // Simulamos que el remoto tiene algunos commits que aún no tenemos localmente
+    // En un caso real, esta información vendría realmente del servidor
+    const remoteHasNewCommits = Math.random() > 0.3; // 70% de probabilidad
+
+    if (!remoteHasNewCommits) {
+      toast.info("Remote is up to date. No new changes to fetch.");
+      return;
+    }
+
+    // Simular que obtenemos nuevos commits del remoto
+    const simulateRemoteChanges = () => {
+      // Elegir una rama aleatoria para actualizar
+      const branchesToUpdate = repository.branches.filter(branch => {
+        const remoteRef = repository.remoteReferences.find(ref => 
+          ref.name === `${repository.remoteName}/${branch.name}`
+        );
+        return remoteRef && remoteRef.commitId === branch.commitId;
+      });
+
+      if (branchesToUpdate.length === 0) return null;
+
+      const randomBranch = branchesToUpdate[Math.floor(Math.random() * branchesToUpdate.length)];
+      const remoteRefName = `${repository.remoteName}/${randomBranch.name}`;
+      
+      // Crear un nuevo commit simulando que viene del remoto
+      const lastCommit = repository.commits.find(c => c.id === randomBranch.commitId);
+      if (!lastCommit) return null;
+      
+      const newRemoteCommitId = generateId();
+      const randomChanges = lastCommit.content.replace(
+        "Hello, Git Game!", 
+        `Hello, Git Game! (Remote change at ${new Date().toLocaleTimeString()})`
+      );
+      
+      const newRemoteCommit: GitCommit = {
+        id: newRemoteCommitId,
+        message: `Remote update on ${randomBranch.name}`,
+        content: randomChanges,
+        timestamp: Date.now(),
+        parentIds: [randomBranch.commitId]
+      };
+
+      return {
+        commit: newRemoteCommit,
+        refName: remoteRefName,
+        branchName: randomBranch.name
+      };
+    };
+
+    const remoteChange = simulateRemoteChanges();
+    
+    if (!remoteChange) {
+      toast.info("No changes to fetch from remote.");
+      return;
+    }
+
+    // Actualizar los commits y referencias remotas
+    const updatedRemoteRefs = repository.remoteReferences.map(ref => 
+      ref.name === remoteChange.refName 
+        ? { ...ref, commitId: remoteChange.commit.id } 
+        : ref
+    );
+
+    // Si no existe la referencia remota, la creamos
+    const refExists = repository.remoteReferences.some(ref => ref.name === remoteChange.refName);
+    if (!refExists) {
+      updatedRemoteRefs.push({
+        name: remoteChange.refName,
+        commitId: remoteChange.commit.id
+      });
+    }
+
+    set({
+      repository: {
+        ...repository,
+        commits: [...repository.commits, remoteChange.commit],
+        remoteReferences: updatedRemoteRefs,
+        lastFetchTime: Date.now()
+      }
+    });
+
+    toast.success(`Fetched new changes for ${remoteChange.refName}`);
+  },
+
+  // Pull: Fetch + Merge de los cambios remotos a la rama local
+  pullRemote: (branchName?: string) => {
+    const { repository } = get();
+    
+    // Usar la rama activa si no se especifica
+    const targetBranchName = branchName || repository.branches.find(b => b.isActive)?.name;
+    
+    if (!targetBranchName) {
+      toast.error("No branch selected for pull operation");
+      return;
+    }
+    
+    const targetBranch = repository.branches.find(b => b.name === targetBranchName);
+    if (!targetBranch) {
+      toast.error(`Branch '${targetBranchName}' not found`);
+      return;
+    }
+    
+    // Primero hacemos fetch
+    get().fetchRemote();
+    
+    // Luego buscamos si hay cambios en el remoto para la rama
+    const remoteRefName = `${repository.remoteName}/${targetBranchName}`;
+    const remoteRef = repository.remoteReferences.find(ref => ref.name === remoteRefName);
+    
+    if (!remoteRef) {
+      toast.error(`No remote reference found for branch '${targetBranchName}'`);
+      return;
+    }
+    
+    // Si la rama local ya está en el mismo commit que el remoto, no hay nada que hacer
+    if (targetBranch.commitId === remoteRef.commitId) {
+      toast.info(`Branch '${targetBranchName}' is already up to date`);
+      return;
+    }
+    
+    // Ahora hay que hacer merge del remoto a la rama local
+    const remoteCommit = repository.commits.find(c => c.id === remoteRef.commitId);
+    if (!remoteCommit) {
+      toast.error("Remote commit not found in local repository");
+      return;
+    }
+    
+    const localCommit = repository.commits.find(c => c.id === targetBranch.commitId);
+    if (!localCommit) {
+      toast.error("Local commit not found");
+      return;
+    }
+    
+    // Creamos un nuevo commit de merge
+    const mergeCommitId = generateId();
+    const mergeCommit: GitCommit = {
+      id: mergeCommitId,
+      message: `Merge branch '${remoteRefName}' into ${targetBranchName}`,
+      content: remoteCommit.content, // Tomamos el contenido del remoto
+      timestamp: Date.now(),
+      parentIds: [targetBranch.commitId, remoteRef.commitId]
+    };
+    
+    // Actualizamos la rama local para que apunte al nuevo commit
+    const updatedBranches = repository.branches.map(branch => 
+      branch.name === targetBranchName 
+        ? { ...branch, commitId: mergeCommitId, isActive: true } 
+        : { ...branch, isActive: false }
+    );
+    
+    set({
+      repository: {
+        ...repository,
+        commits: [...repository.commits, mergeCommit],
+        branches: updatedBranches,
+        HEAD: mergeCommitId
+      },
+      workingChanges: remoteCommit.content,
+      stagedChanges: null
+    });
+    
+    toast.success(`Pulled and merged changes from ${remoteRefName} into ${targetBranchName}`);
+  },
+
+  // Push: Envía los cambios locales al remoto
+  pushToRemote: (branchName?: string) => {
+    const { repository } = get();
+    
+    // Usar la rama activa si no se especifica
+    const sourceBranchName = branchName || repository.branches.find(b => b.isActive)?.name;
+    
+    if (!sourceBranchName) {
+      toast.error("No branch selected for push operation");
+      return;
+    }
+    
+    const sourceBranch = repository.branches.find(b => b.name === sourceBranchName);
+    if (!sourceBranch) {
+      toast.error(`Branch '${sourceBranchName}' not found`);
+      return;
+    }
+    
+    // Verificar si la rama existe en el remoto
+    const remoteRefName = `${repository.remoteName}/${sourceBranchName}`;
+    let remoteRef = repository.remoteReferences.find(ref => ref.name === remoteRefName);
+    
+    // Si no existe, simulamos que estamos creando una nueva rama en el remoto
+    const isNewBranch = !remoteRef;
+    
+    if (isNewBranch) {
+      // La rama no existe en el remoto, la creamos
+      remoteRef = {
+        name: remoteRefName,
+        commitId: sourceBranch.commitId
+      };
+      
+      set({
+        repository: {
+          ...repository,
+          remoteReferences: [...repository.remoteReferences, remoteRef],
+          lastPushTime: Date.now()
+        }
+      });
+      
+      toast.success(`Created new branch '${remoteRefName}' on remote with your commits`);
+      return;
+    }
+    
+    // La rama existe, verificar si es un fast-forward (el remoto es ancestro del local)
+    // Simplificado: si el remoto no ha avanzado más allá del punto donde lo dejamos
+    if (remoteRef.commitId === sourceBranch.commitId) {
+      toast.info(`Branch '${sourceBranchName}' is already up to date on remote`);
+      return;
+    }
+    
+    // Verificar si podemos hacer un fast-forward
+    // En un escenario real, verificaríamos que el commit remoto es ancestro del local
+    // Aquí lo simplificamos y asumimos que siempre es posible
+    
+    // Actualizar la referencia remota para que apunte al commit local
+    const updatedRemoteRefs = repository.remoteReferences.map(ref => 
+      ref.name === remoteRefName 
+        ? { ...ref, commitId: sourceBranch.commitId } 
+        : ref
+    );
+    
+    set({
+      repository: {
+        ...repository,
+        remoteReferences: updatedRemoteRefs,
+        lastPushTime: Date.now()
+      }
+    });
+    
+    toast.success(`Pushed local changes from '${sourceBranchName}' to '${remoteRefName}'`);
   }
 }));
 

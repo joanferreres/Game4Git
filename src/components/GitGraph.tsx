@@ -15,6 +15,7 @@ import useGitStore from "@/store/gitStore";
 import GitCommitNode from "./GitCommitNode";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { GitCommit } from "@/types/git";
+import { useTranslation } from "react-i18next";
 
 // Define custom node types
 const nodeTypes: NodeTypes = {
@@ -29,6 +30,7 @@ const VERTICAL_SPACING = 100;
 
 const GitGraph: React.FC = () => {
   const { repository, selectedCommitId, selectCommit } = useGitStore();
+  const { t } = useTranslation();
   
   const { nodes, edges } = useMemo(() => {
     const newNodes: Node[] = [];
@@ -309,7 +311,7 @@ const GitGraph: React.FC = () => {
   return (
     <Card className="w-full h-full overflow-hidden">
       <CardHeader className="py-3 px-4">
-        <CardTitle className="text-sm">Git Graph</CardTitle>
+        <CardTitle className="text-sm">{t('gitGraph.title')}</CardTitle>
       </CardHeader>
       <CardContent className="p-0 h-[calc(100%-48px)]">
         <ReactFlow
@@ -332,16 +334,16 @@ const GitGraph: React.FC = () => {
             <div className="text-xs flex gap-2">
               <div className="flex items-center">
                 <div className="w-3 h-3 rounded-full bg-green-500 mr-1"></div>
-                <span>Master</span>
+                <span>{t('gitGraph.master')}</span>
               </div>
               <div className="flex items-center">
                 <div className="w-3 h-3 rounded-full bg-blue-500 mr-1"></div>
-                <span>Your Work</span>
+                <span>{t('gitGraph.yourWork')}</span>
               </div>
               
               <div className="flex items-center">
                 <div className="w-3 h-3 rounded-full bg-amber-500 mr-1"></div>
-                <span>HEAD</span>
+                <span>{t('gitGraph.head')}</span>
               </div>
             </div>
           </Panel>

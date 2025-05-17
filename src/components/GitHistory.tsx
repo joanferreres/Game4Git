@@ -11,9 +11,11 @@ import { Button } from "@/components/ui/button";
 import { History } from "lucide-react";
 import useGitStore from "@/store/gitStore";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 const GitHistory: React.FC = () => {
   const { repository } = useGitStore();
+  const { t } = useTranslation();
   
   // Get the active branch
   const activeBranch = repository.branches.find(b => b.isActive);
@@ -35,9 +37,9 @@ const GitHistory: React.FC = () => {
       </SheetTrigger>
       <SheetContent side="right" className="w-full sm:w-[540px] p-0">
         <SheetHeader className="p-6 pb-4 border-b">
-          <SheetTitle className="text-xl font-semibold">Git History</SheetTitle>
+          <SheetTitle className="text-xl font-semibold">{t('gitHistory.title')}</SheetTitle>
           <SheetDescription>
-            Current branch: <span className="font-semibold text-primary">{activeBranch?.name || "none"}</span>
+            {t('gitHistory.currentBranch')} <span className="font-semibold text-primary">{activeBranch?.name || "none"}</span>
           </SheetDescription>
         </SheetHeader>
         <div className="p-6 overflow-y-auto h-[calc(100vh-80px)]">
@@ -54,7 +56,7 @@ const GitHistory: React.FC = () => {
                   {/* HEAD indicator */}
                   {commit.id === repository.HEAD && (
                     <div className="bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full inline-block mb-2">
-                      HEAD
+                      {t('gitHistory.head')}
                     </div>
                   )}
                   

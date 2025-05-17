@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useTranslation } from "react-i18next";
 
 interface TerminalLine {
   type: "input" | "output" | "error";
@@ -25,25 +26,31 @@ interface CommandExample {
   description: string;
 }
 
-const gitCommands: CommandExample[] = [
-  { command: "git add .", description: "Stage all changes" },
-  { command: "git add hello.c", description: "Stage changes for hello.c file" },
-  { command: "git commit -m \"message\"", description: "Commit staged changes with a message" },
-  { command: "git branch", description: "List branches" },
-  { command: "git branch <name>", description: "Create a new branch" },
-  { command: "git checkout <branch>", description: "Switch to a branch" },
-  { command: "git checkout -b <branch>", description: "Create and switch to a new branch" },
-  { command: "git merge <branch>", description: "Merge specified branch into current branch" },
-  { command: "git reset --hard", description: "Reset working directory to HEAD" },
-  { command: "git status", description: "Show current status" },
-];
-
-const otherCommands: CommandExample[] = [
-  { command: "clear", description: "Clear terminal" },
-  { command: "help", description: "Show help" },
-];
-
 const GitTerminal: React.FC = () => {
+  const { t } = useTranslation();
+  
+  // Use useMemo to recreate these arrays when t (translation function) changes
+  const gitCommands = React.useMemo<CommandExample[]>(() => [
+    { command: "git add .", description: t("gitCommands.stageAll") },
+    { command: "git add hello.c", description: t("gitCommands.stageFile") },
+    { command: "git commit -m \"message\"", description: t("gitCommands.commit") },
+    { command: "git branch", description: t("gitCommands.listBranches") },
+    { command: "git branch <n>", description: t("gitCommands.createBranch") },
+    { command: "git checkout <branch>", description: t("gitCommands.switchBranch") },
+    { command: "git checkout -b <branch>", description: t("gitCommands.createAndSwitch") },
+    { command: "git merge <branch>", description: t("gitCommands.merge") },
+    { command: "git fetch", description: t("gitCommands.fetch") },
+    { command: "git pull", description: t("gitCommands.pull") },
+    { command: "git push", description: t("gitCommands.push") },
+    { command: "git reset --hard", description: t("gitCommands.reset") },
+    { command: "git status", description: t("gitCommands.status") },
+  ], [t]);
+
+  const otherCommands = React.useMemo<CommandExample[]>(() => [
+    { command: "clear", description: t("gitCommands.clear") },
+    { command: "help", description: t("gitCommands.help") },
+  ], [t]);
+  
   const { 
     repository, 
     createCommit, 
@@ -54,14 +61,26 @@ const GitTerminal: React.FC = () => {
     workingChanges,
     resetToInitialCommit,
     mergeBranch,
-    stagedChanges
+    stagedChanges,
+    fetchRemote,
+    pullRemote,
+    pushToRemote
   } = useGitStore();
   
   const [command, setCommand] = useState("");
+  // Store raw history keys for i18n
   const [history, setHistory] = useState<TerminalLine[]>([
-    { type: "output", content: "Git Game Terminal - Type 'help' for available commands" },
-    { type: "output", content: `Current branch: ${repository.branches.find(b => b.isActive)?.name || "none"}` }
+    { type: "output", content: t("terminal.help") },
+    { type: "output", content: `${t("terminal.currentBranch")} ${repository.branches.find(b => b.isActive)?.name || "none"}` }
   ]);
+  
+  // Effect to update the initial history when language changes
+  useEffect(() => {
+    setHistory([
+      { type: "output", content: t("terminal.help") },
+      { type: "output", content: `${t("terminal.currentBranch")} ${repository.branches.find(b => b.isActive)?.name || "none"}` }
+    ]);
+  }, [t, repository.branches]);
   
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -84,7 +103,7 @@ const GitTerminal: React.FC = () => {
   const insertCommand = (cmdText: string) => {
     // Replace placeholder text with actual values in some common cases
     let processedCmd = cmdText;
-    processedCmd = processedCmd.replace("<name>", "feature-branch");
+    processedCmd = processedCmd.replace("<n>", "feature-branch");
     processedCmd = processedCmd.replace("<branch>", repository.branches[0]?.name || "master");
     
     setCommand(processedCmd);
@@ -272,7 +291,59 @@ const GitTerminal: React.FC = () => {
             status += "\nNothing to commit, working tree clean";
           }
           
+          // Add remote tracking info
+          const remoteBranch = repository.remoteReferences.find(
+            ref => ref.name === `${repository.remoteName}/${activeBranch?.name || ''}`
+          );
+          
+          if (remoteBranch) {
+            const isUpToDate = remoteBranch.commitId === activeBranch?.commitId;
+            if (isUpToDate) {
+              status += `\n\nYour branch is up to date with '${remoteBranch.name}'.`;
+            } else {
+              status += `\n\nYour branch is not in sync with '${remoteBranch.name}'.`;
+              status += "\n  (use \"git pull\" to update your local branch)";
+            }
+          }
+          
           addToHistory({ type: "output", content: status });
+          return;
+          
+        case "fetch":
+          toast.info(
+            t("git.gitFetch"), 
+            { 
+              description: t("explanations.gitFetch"),
+              duration: 5000
+            }
+          );
+          addToHistory({ type: "output", content: t("explanations.simulationFetch") });
+          return;
+          
+        case "pull":
+          toast.info(
+            t("git.gitPull"), 
+            { 
+              description: t("explanations.gitPull"),
+              duration: 5000
+            }
+          );
+          
+          const currentBranch = repository.branches.find(b => b.isActive)?.name;
+          addToHistory({ type: "output", content: t("explanations.simulationPull").replace('current', currentBranch || '') });
+          return;
+          
+        case "push":
+          toast.info(
+            t("git.gitPush"), 
+            { 
+              description: t("explanations.gitPush"),
+              duration: 5000
+            }
+          );
+          
+          const pushBranch = repository.branches.find(b => b.isActive)?.name;
+          addToHistory({ type: "output", content: t("explanations.simulationPush").replace('branch', pushBranch || '') });
           return;
           
         default:
@@ -280,37 +351,40 @@ const GitTerminal: React.FC = () => {
           return;
       }
     } else if (mainCommand === "clear") {
-      // Clear terminal
+      // Clear terminal with current language
       setHistory([
-        { type: "output", content: "Git Game Terminal - Type 'help' for available commands" },
-        { type: "output", content: `Current branch: ${repository.branches.find(b => b.isActive)?.name || "none"}` }
+        { type: "output", content: t("terminal.help") },
+        { type: "output", content: `${t("terminal.currentBranch")} ${repository.branches.find(b => b.isActive)?.name || "none"}` }
       ]);
       return;
     } else if (mainCommand === "help") {
-      // Show help
+      // Show help using current language translations
       const help = `
-Available commands:
-  git add [.]                  - Stage changes
-  git add hello.c              - Stage changes for hello.c file
-  git commit -m "message"      - Commit staged changes with a message
-  git branch                   - List branches
-  git branch <name>            - Create a new branch
-  git checkout <branch>        - Switch to a branch
-  git checkout -b <branch>     - Create and switch to a new branch
-  git merge <branch>           - Merge specified branch into current branch
-  git reset [--hard]           - Reset working directory to HEAD
-  git status                   - Show current status
-  clear                        - Clear terminal
-  help                         - Show this help
+${t("terminal.availableCommandsTitle")}:
+  git add [.]                  - ${t("gitCommands.stageAll")}
+  git add hello.c              - ${t("gitCommands.stageFile")}
+  git commit -m "message"      - ${t("gitCommands.commit")}
+  git branch                   - ${t("gitCommands.listBranches")}
+  git branch <n>               - ${t("gitCommands.createBranch")}
+  git checkout <branch>        - ${t("gitCommands.switchBranch")}
+  git checkout -b <branch>     - ${t("gitCommands.createAndSwitch")}
+  git merge <branch>           - ${t("gitCommands.merge")}
+  git fetch                    - ${t("gitCommands.fetch")}
+  git pull                     - ${t("gitCommands.pull")}
+  git push                     - ${t("gitCommands.push")}
+  git reset [--hard]           - ${t("gitCommands.reset")}
+  git status                   - ${t("gitCommands.status")}
+  clear                        - ${t("gitCommands.clear")}
+  help                         - ${t("gitCommands.help")}
       `;
       addToHistory({ type: "output", content: help.trim() });
       return;
     }
     
     // If we get here, command wasn't recognized
-    addToHistory({ type: "error", content: `Error: Command not recognized: '${cmd}'` });
+    addToHistory({ type: "error", content: `${t("terminal.commandNotRecognized")} '${cmd}'` });
   };
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -325,21 +399,21 @@ Available commands:
       setCommand("");
     }
   };
-  
+
   return (
     <Card className="w-full h-full">
       <CardHeader className="py-3 px-4">
         <CardTitle className="text-sm flex justify-between items-center">
-          <span>Git Terminal</span>
+          <span>{t("git.terminal")}</span>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex items-center text-sm font-medium text-muted-foreground hover:text-foreground">
                 <HelpCircle className="h-4 w-4 mr-1" />
-                <span>Available Commands</span>
+                <span>{t("terminal.availableCommands")}</span>
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[300px]">
-              <DropdownMenuLabel>Git Commands</DropdownMenuLabel>
+              <DropdownMenuLabel>{t("terminal.availableCommands")}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
                 {gitCommands.map((cmd, index) => (
@@ -354,7 +428,7 @@ Available commands:
                 ))}
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
-              <DropdownMenuLabel>Other Commands</DropdownMenuLabel>
+              <DropdownMenuLabel>{t("git.actions")}</DropdownMenuLabel>
               <DropdownMenuGroup>
                 {otherCommands.map((cmd, index) => (
                   <DropdownMenuItem 
@@ -390,7 +464,7 @@ Available commands:
                 value={command}
                 onChange={(e) => setCommand(e.target.value)}
                 className="border-none focus-visible:ring-0 bg-transparent font-mono text-green-400"
-                placeholder="Type git command..."
+                placeholder={t("terminal.placeholder")}
               />
             </div>
           </form>

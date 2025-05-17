@@ -1,0 +1,130 @@
+{
+  "general": {
+    "title": "Git Game",
+    "subtitle": "Apprenez les concepts de Git visuellement avec ce terrain de jeu interactif",
+    "languageChanged": "Langue changée en Français"
+  },
+  "git": {
+    "controls": "Contrôles Git",
+    "terminal": "Mode Terminal",
+    "visualizer": "Visualisation Git",
+    "commitChanges": "Valider les Changements",
+    "stageChanges": "Indexer les Changements",
+    "branches": "Branches",
+    "createBranch": "Créer Branche",
+    "switchBranch": "Changer de Branche",
+    "currentBranch": "Branche Actuelle",
+    "newBranchName": "Nom de nouvelle branche",
+    "remoteName": "Dépôt Distant",
+    "gitFetch": "Git Fetch",
+    "gitPull": "Git Pull",
+    "gitPush": "Git Push",
+    "mergeBranches": "Fusionner les Branches",
+    "mergeFrom": "Fusionner depuis",
+    "mergeInto": "Dans la branche",
+    "lastFetch": "Dernier fetch",
+    "lastPush": "Dernier push",
+    "remoteReferences": "Références distantes",
+    "actions": "Actions",
+    "resetChanges": "Réinitialiser les Changements",
+    "clearSelection": "Effacer la Sélection",
+    "resetAll": "Tout Réinitialiser"
+  },
+  "terminal": {
+    "help": "Terminal Git Game - Tapez 'help' pour voir les commandes disponibles",
+    "currentBranch": "Branche actuelle:",
+    "commandNotRecognized": "Erreur: Commande non reconnue:",
+    "availableCommands": "Commandes disponibles",
+    "availableCommandsTitle": "Commandes disponibles",
+    "placeholder": "Tapez commande git..."
+  },
+  "messages": {
+    "changesStaged": "Changements indexés pour commit",
+    "enterCommitMessage": "Veuillez entrer un message de commit",
+    "noChangesStaged": "Aucun changement n'a été indexé pour commit. Utilisez Git Add d'abord.",
+    "committedSuccessfully": "Changements validés avec succès",
+    "enterBranchName": "Veuillez entrer un nom de branche",
+    "branchExists": "La branche existe déjà",
+    "branchCreated": "Branche créée",
+    "switchedToBranch": "Basculé vers la branche",
+    "changesReset": "Changements réinitialisés au HEAD actuel",
+    "resetToInitial": "Réinitialisé au commit initial",
+    "selectSourceBranch": "Veuillez sélectionner une branche source pour fusionner.",
+    "selectTargetBranch": "Veuillez sélectionner une branche cible pour fusionner.",
+    "sourceSameAsTarget": "Les branches source et cible ne peuvent pas être identiques.",
+    "mergedBranch": "Branche fusionnée",
+    "into": "dans",
+    "noActiveBranch": "Pas de branche active",
+    "hasUnsavedChanges": "Vous avez des changements non sauvegardés. Utilisez \"Git Add\" pour les indexer.",
+    "stagedAndReady": "Changements indexés et prêts pour commit"
+  },
+  "tooltips": {
+    "selectCommit": "Sélectionnez un commit du graphique pour voir son contenu, ou utilisez \"Git Add\" pour indexer les changements et voir les différences avec le commit HEAD actuel."
+  },
+  "guide": {
+    "title": "Guide de Flux de Travail Git",
+    "description": "Apprenez les commandes et flux de travail essentiels de Git pour un contrôle de version efficace",
+    "daily": {
+      "title": "Flux de Travail Quotidien",
+      "description": "Étapes de base pour le travail quotidien avec Git"
+    },
+    "branching": {
+      "title": "Flux de Travail avec Branches", 
+      "description": "Comment travailler avec les branches"
+    },
+    "merging": {
+      "title": "Flux de Travail de Fusion",
+      "description": "Comment fusionner les changements entre branches"
+    },
+    "troubleshooting": {
+      "title": "Dépannage",
+      "description": "Problèmes courants de Git et leurs solutions"
+    }
+  },
+  "howToUse": {
+    "title": "Comment Utiliser Ce Terrain de Jeu Git",
+    "subtitle": "Suivez ces étapes pour apprendre les concepts Git visuellement.",
+    "switchBranch": "Changer/Sélectionner une Branche",
+    "switchBranchDesc": "Utilisez la section 'Branches' dans 'Contrôles Git' (panneau inférieur) pour passer à une branche existante ou en créer une nouvelle. Vos modifications de fichiers et nouveaux commits s'appliqueront à cette branche active.",
+    "editCode": "Modifier le Code",
+    "editCodeDesc": "Modifiez le code dans l'Éditeur de Code' à gauche.",
+    "stageChanges": "Indexer les Changements (Git Add)",
+    "stageChangesDesc": "Une fois que vous avez fait des changements, cliquez sur 'Git Add (Indexer les Changements)' dans 'Contrôles Git'. Cela prépare vos modifications pour le prochain commit sur la branche active.",
+    "commitChanges": "Valider les Changements",
+    "commitChangesDesc": "Entrez un message de commit et cliquez sur 'Git Commit'. Cela sauvegarde un instantané de vos changements indexés sur la branche active actuelle. Le Graphe Git se mettra à jour.",
+    "createBranch": "Créer Nouvelle Branche",
+    "createBranchDesc": "Dans 'Contrôles Git', tapez un nouveau nom de branche sous la section 'Branches' et cliquez sur 'Créer'. Cela crée une nouvelle branche à partir du commit actuel (HEAD).",
+    "mergeBranches": "Fusionner les Branches",
+    "mergeBranchesDesc1": "Dans 'Contrôles Git', sous 'Fusionner les Branches', sélectionnez la branche que vous voulez fusionner (source) et la branche dans laquelle vous voulez fusionner (cible).",
+    "mergeBranchesDesc2": "Cliquez sur 'Fusionner les Branches'. Un nouveau commit de fusion sera créé sur la branche cible, et le graphe se mettra à jour. La branche cible devient active.",
+    "viewHistory": "Voir l'Historique et les Commits",
+    "viewHistoryDesc": "Le 'Graphe Git' (panneau central) visualise votre historique de commits. Cliquez sur n'importe quel nœud de commit dans le graphe pour voir ses détails et son contenu dans le panneau droit.",
+    "viewChanges": "Voir les Changements (Diff)",
+    "viewChangesDesc": "Lorsque vous indexez des changements avec 'Git Add', une vue des différences apparaîtra automatiquement dans le panneau droit montrant les différences entre vos changements et le commit HEAD actuel.",
+    "experiment": "Expérimentez",
+    "experimentDesc": "Essayez différentes séquences de commandes pour voir comment l'historique Git et les états des fichiers changent!"
+  },
+  "visualization": {
+    "title": "Visualisation Git",
+    "description": "Sélectionnez un commit du graphique pour voir son contenu, ou utilisez \"Git Add\" pour indexer les changements et voir les différences avec le commit HEAD actuel."
+  },
+  "gitHistory": {
+    "title": "Historique Git",
+    "currentBranch": "Branche actuelle:",
+    "head": "HEAD"
+  },
+  "gitGraph": {
+    "title": "Graphe Git",
+    "master": "Master",
+    "yourWork": "Votre Travail",
+    "head": "HEAD"
+  },
+  "explanations": {
+    "gitFetch": "Dans un vrai dépôt Git, cette commande téléchargerait des objets et des références depuis un dépôt distant. Elle met à jour vos branches de suivi distant sans modifier votre répertoire de travail ou vos branches locales.",
+    "gitPull": "Dans un vrai dépôt Git, cette commande récupèrerait et intègrerait les changements d'un autre dépôt ou d'une branche locale. Elle combine git fetch et git merge en une seule étape.",
+    "gitPush": "Dans un vrai dépôt Git, cette commande mettrait à jour les références distantes ainsi que les objets associés, en envoyant les commits de votre branche locale vers la branche du dépôt distant.",
+    "simulationFetch": "Ceci est une simulation : Dans le vrai Git, fetch téléchargerait des commits, des fichiers et des références depuis un dépôt distant.",
+    "simulationPull": "Ceci est une simulation : Dans le vrai Git, pull récupèrerait et fusionnerait les changements distants dans votre branche actuelle.",
+    "simulationPush": "Ceci est une simulation : Dans le vrai Git, push téléverserait les commits de votre branche vers le dépôt distant."
+  }
+} 

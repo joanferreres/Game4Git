@@ -1,0 +1,130 @@
+{
+  "general": {
+    "title": "Git Game",
+    "subtitle": "Aprèn conceptes de Git visualment amb aquest playground interactiu",
+    "languageChanged": "Idioma canviat a Català"
+  },
+  "git": {
+    "controls": "Controls de Git",
+    "terminal": "Mode Terminal",
+    "visualizer": "Visualització de Git",
+    "commitChanges": "Confirmar Canvis",
+    "stageChanges": "Afegir Canvis",
+    "branches": "Branques",
+    "createBranch": "Crear Branca",
+    "switchBranch": "Canviar de Branca",
+    "currentBranch": "Branca Actual",
+    "newBranchName": "Nom de nova branca",
+    "remoteName": "Repositori Remot",
+    "gitFetch": "Git Fetch",
+    "gitPull": "Git Pull",
+    "gitPush": "Git Push",
+    "mergeBranches": "Fusionar Branques",
+    "mergeFrom": "Fusionar des de",
+    "mergeInto": "A la branca",
+    "lastFetch": "Últim fetch",
+    "lastPush": "Últim push",
+    "remoteReferences": "Referències remotes",
+    "actions": "Accions",
+    "resetChanges": "Restablir Canvis",
+    "clearSelection": "Netejar Selecció",
+    "resetAll": "Restablir Tot"
+  },
+  "terminal": {
+    "help": "Terminal Git Game - Escriu 'help' per veure les comandes disponibles",
+    "currentBranch": "Branca actual:",
+    "commandNotRecognized": "Error: Comanda no reconeguda:",
+    "availableCommands": "Comandes disponibles",
+    "availableCommandsTitle": "Comandes disponibles",
+    "placeholder": "Escriu comanda git..."
+  },
+  "messages": {
+    "changesStaged": "Canvis preparats per commit",
+    "enterCommitMessage": "Si us plau, introdueix un missatge de commit",
+    "noChangesStaged": "No hi ha canvis preparats per commit. Fes servir Git Add primer.",
+    "committedSuccessfully": "Canvis confirmats amb èxit",
+    "enterBranchName": "Si us plau, introdueix un nom de branca",
+    "branchExists": "La branca ja existeix",
+    "branchCreated": "Branca creada",
+    "switchedToBranch": "Canviat a la branca",
+    "changesReset": "Canvis restablerts al HEAD actual",
+    "resetToInitial": "Restablert al commit inicial",
+    "selectSourceBranch": "Si us plau, selecciona una branca d'origen per fusionar.",
+    "selectTargetBranch": "Si us plau, selecciona una branca de destí per fusionar.",
+    "sourceSameAsTarget": "Les branques d'origen i destí no poden ser la mateixa.",
+    "mergedBranch": "Branca fusionada",
+    "into": "a",
+    "noActiveBranch": "No hi ha branca activa",
+    "hasUnsavedChanges": "Tens canvis sense guardar. Fes servir \"Git Add\" per preparar-los.",
+    "stagedAndReady": "Canvis preparats i a punt per commit"
+  },
+  "tooltips": {
+    "selectCommit": "Selecciona un commit del gràfic per veure el seu contingut, o fes servir \"Git Add\" per preparar canvis i veure les diferències amb el commit HEAD actual."
+  },
+  "guide": {
+    "title": "Guia de Flux de Treball Git",
+    "description": "Aprèn les comandes i fluxos de treball essencials de Git per un control de versions efectiu",
+    "daily": {
+      "title": "Flux de Treball Diari",
+      "description": "Passos bàsics per al treball diari amb Git"
+    },
+    "branching": {
+      "title": "Flux de Treball amb Branques", 
+      "description": "Com treballar amb branques"
+    },
+    "merging": {
+      "title": "Flux de Treball de Fusió",
+      "description": "Com fusionar canvis entre branques"
+    },
+    "troubleshooting": {
+      "title": "Solució de Problemes",
+      "description": "Problemes comuns de Git i les seves solucions"
+    }
+  },
+  "howToUse": {
+    "title": "Com Utilitzar Aquest Playground de Git",
+    "subtitle": "Segueix aquests passos per aprendre conceptes de Git visualment.",
+    "switchBranch": "Canviar/Seleccionar Branca",
+    "switchBranchDesc": "Utilitza la secció 'Branques' als 'Controls de Git' (panell inferior) per canviar a una branca existent o crear-ne una de nova. Les teves modificacions d'arxius i nous commits s'aplicaran a aquesta branca activa.",
+    "editCode": "Editar Codi",
+    "editCodeDesc": "Modifica el codi a l'Editor de Codi' de l'esquerra.",
+    "stageChanges": "Preparar Canvis (Git Add)",
+    "stageChangesDesc": "Una vegada hagis fet canvis, fes clic a 'Git Add (Afegir Canvis)' als 'Controls de Git'. Això prepara les teves modificacions per al proper commit a la branca activa.",
+    "commitChanges": "Confirmar Canvis",
+    "commitChangesDesc": "Introdueix un missatge de commit i fes clic a 'Git Commit'. Això guarda una instantània dels teus canvis preparats a la branca activa actual. El Gràfic de Git s'actualitzarà.",
+    "createBranch": "Crear Nova Branca",
+    "createBranchDesc": "Als 'Controls de Git', escriu un nou nom de branca sota la secció 'Branques' i fes clic a 'Crear'. Això crea una nova branca des del commit actual (HEAD).",
+    "mergeBranches": "Fusionar Branques",
+    "mergeBranchesDesc1": "Als 'Controls de Git', sota 'Fusionar Branques', selecciona la branca que vols fusionar (origen) i la branca en la qual vols fusionar (destí).",
+    "mergeBranchesDesc2": "Fes clic a 'Fusionar Branques'. Es crearà un nou commit de fusió a la branca destí, i el gràfic s'actualitzarà. La branca destí es converteix en activa.",
+    "viewHistory": "Veure Historial i Commits",
+    "viewHistoryDesc": "El 'Gràfic de Git' (panell central) visualitza el teu historial de commits. Fes clic a qualsevol node de commit al gràfic per veure els seus detalls i contingut al panell dret.",
+    "viewChanges": "Veure Canvis (Diff)",
+    "viewChangesDesc": "Quan prepares canvis utilitzant 'Git Add', una vista de diferències apareixerà automàticament al panell dret mostrant les diferències entre els teus canvis i el commit HEAD actual.",
+    "experiment": "Experimenta",
+    "experimentDesc": "Prova diferents seqüències de comandes per veure com canvien l'historial de Git i els estats dels arxius!"
+  },
+  "visualization": {
+    "title": "Visualització de Git",
+    "description": "Selecciona un commit del gràfic per veure el seu contingut, o utilitza \"Git Add\" per preparar canvis i veure les diferències amb el commit HEAD actual."
+  },
+  "gitHistory": {
+    "title": "Historial de Git",
+    "currentBranch": "Branca actual:",
+    "head": "HEAD"
+  },
+  "gitGraph": {
+    "title": "Gràfic de Git",
+    "master": "Master",
+    "yourWork": "El Teu Treball",
+    "head": "HEAD"
+  },
+  "explanations": {
+    "gitFetch": "En un repositori Git real, aquesta comanda descarregaria objectes i referències del repositori remot. Actualitza les teves branques de seguiment remot sense modificar el teu directori de treball o branques locals.",
+    "gitPull": "En un repositori Git real, aquesta comanda obtindria i integraria canvis d'un altre repositori o una branca local. Combina git fetch i git merge en un sol pas.",
+    "gitPush": "En un repositori Git real, aquesta comanda actualitzaria les referències remotes juntament amb els objectes associats, enviant els commits de la teva branca local a la branca del repositori remot.",
+    "simulationFetch": "Això és una simulació: En Git real, fetch descarregaria commits, arxius i referències d'un repositori remot.",
+    "simulationPull": "Això és una simulació: En Git real, pull obtindria i fusionaria canvis remots a la teva branca actual.",
+    "simulationPush": "Això és una simulació: En Git real, push pujaria els commits de la teva branca al repositori remot."
+  }
+} 
