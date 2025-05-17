@@ -4,6 +4,7 @@ import CodeEditor from "@/components/CodeEditor";
 import GitGraph from "@/components/GitGraph";
 import DiffViewer from "@/components/DiffViewer";
 import GitControls from "@/components/GitControls";
+import GitHistory from "@/components/GitHistory";
 import useGitStore from "@/store/gitStore";
 import {
   Sheet,
@@ -106,6 +107,9 @@ const GitGame: React.FC = () => {
           </div>
         </SheetContent>
       </Sheet>
+      
+      {/* Floating Action Button for Git History Sheet */}
+      <GitHistory />
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 mb-6">
         {/* Left Column - Code Editor */}
