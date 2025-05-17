@@ -1,0 +1,5 @@
+{
+  "version": 2,
+  "buildCommand": "npm i --no-save && npm run build",
+  "outputDirectory": "dist"
+} 
