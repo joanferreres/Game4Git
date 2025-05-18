@@ -33,7 +33,7 @@ const GitCommitNode: React.FC<GitCommitNodeProps> = ({ data }) => {
   const shortMessage = label.length > 20
     ? label.substring(0, 17) + '...'
     : label;
-    
+
   // Determine node style based on branch
   const getBgColor = () => {
     if (isHead) return 'bg-amber-500';
@@ -92,16 +92,16 @@ const GitCommitNode: React.FC<GitCommitNodeProps> = ({ data }) => {
             {isBranchHead && (
               <div className="absolute -top-7 sm:-top-8 md:-top-9 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1">
                 {branchNames.map((label) => (
-                  <Badge 
-                    key={label} 
+                <Badge 
+                  key={label} 
                     className={`${badgeClass} font-medium shadow-sm
-                      ${label === 'master' ? 'bg-green-600' : 
-                      label.toLowerCase().includes('someone') || label.toLowerCase().includes('else') ? 'bg-orange-600' : 'bg-blue-600'}`}
-                  >
-                    {label}
-                  </Badge>
-                ))}
-              </div>
+                    ${label === 'master' ? 'bg-green-600' : 
+                    label.toLowerCase().includes('someone') || label.toLowerCase().includes('else') ? 'bg-orange-600' : 'bg-blue-600'}`}
+                >
+                  {label}
+                </Badge>
+              ))}
+            </div>
             )}
             
             {/* Commit message */}

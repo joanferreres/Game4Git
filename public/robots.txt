@@ -1,13 +1,11 @@
 # robots.txt file for Git Game Visualizer
 
+# Allow all web crawlers
 User-agent: *
 Allow: /
-Disallow: /api/
-Disallow: /admin/
-Disallow: /private/
 
 # Crawl delay to prevent server overload
 Crawl-delay: 10
 
 # Sitemap location
-Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://gitgame.com/sitemap.xml

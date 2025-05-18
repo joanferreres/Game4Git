@@ -26,6 +26,7 @@ import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import "../i18n"; // Importamos la configuración de i18n
 import GitExercises from "@/components/GitExercises";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   Dialog,
   DialogContent,
@@ -103,7 +104,8 @@ const GitGame: React.FC = () => {
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
       <header className="mb-4 sm:mb-6 relative">
-        <div className="absolute right-2 top-1/2 -translate-y-1/2">
+        <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
+          <ThemeToggle />
           <LanguageSelector />
         </div>
         <div className="text-center">
@@ -225,7 +227,21 @@ const GitGame: React.FC = () => {
             <img src="/logo.png" alt="Git Game Logo" className="h-5 w-5 sm:h-6 sm:w-6" />
             <p className="font-medium">Git Game</p>
           </div>
-          <p>&copy; {new Date().getFullYear()} Joan Ferreres Vivero. All rights reserved.</p>
+          <div className="flex items-center justify-center space-x-2">
+            <p>&copy; {new Date().getFullYear()} FerVi. All rights reserved.</p>
+            <span>|</span>
+            <a 
+              href="mailto:game4git@gmail.com" 
+              rel="noopener noreferrer" 
+              className="hover:text-primary transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.href = "mailto:game4git@gmail.com";
+              }}
+            >
+              Contact
+            </a>
+          </div>
           <p className="text-xs">Built with React, TypeScript and TailwindCSS. Learn Git concepts visually.</p>
         </div>
       </footer>

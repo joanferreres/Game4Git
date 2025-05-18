@@ -352,12 +352,14 @@ const GitGraph: React.FC = () => {
             <Background color="#aaa" size={1.5} variant={BackgroundVariant.Dots} />
             <Controls
               showInteractive={false}
-              className="bg-background/80 backdrop-blur-sm border"
+              className="react-flow__panel react-flow__controls vertical bg-card border-border shadow-md z-10"
               style={{
                 fontSize: '0.75rem',
                 padding: '0.25rem',
                 borderRadius: '0.375rem',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
+                border: '1px solid var(--border)',
+                backdropFilter: 'blur(8px)',
               }}
             />
            

@@ -353,7 +353,7 @@ const GitControls: React.FC = () => {
       // Solo resetear si hay cambios para resetear
       const currentCommit = repository.commits.find(c => c.id === repository.HEAD);
       if (currentCommit && currentCommit.content !== workingChanges) {
-        resetWorkingChanges();
+    resetWorkingChanges();
         toast.info(t('messages.changesReset', "Changes reset to current HEAD"));
       } else {
         toast.info(t('messages.noChangesToReset', "No changes to reset"));
@@ -367,12 +367,12 @@ const GitControls: React.FC = () => {
   const handleClearSelection = () => {
     // Verificar si hay una selección para limpiar o si estamos en una rama diferente a master
     if (selectedCommitId || activeBranchName !== "master") {
-      // Clear the selected commit
-      selectCommit(null);
-      
-      // Reset to the initial commit
-      resetToInitialCommit();
-      
+    // Clear the selected commit
+    selectCommit(null);
+    
+    // Reset to the initial commit
+    resetToInitialCommit();
+    
       toast.info(t('messages.resetToInitial', "Reset to initial commit"));
       
       // Mostrar una explicación más detallada de lo que hace esta acción
@@ -490,7 +490,7 @@ const GitControls: React.FC = () => {
                 className="text-xs sm:text-sm h-8 sm:h-10"
               />
             </div>
-            <Button
+            <Button 
               variant="default"
               size="sm"
               disabled={!commitMessage.trim() || !stagedChanges}
@@ -553,7 +553,7 @@ const GitControls: React.FC = () => {
                 className="text-xs sm:text-sm h-8 sm:h-10"
               />
             </div>
-            <Button
+            <Button 
               onClick={handleCreateBranch}
               size="sm"
               disabled={!branchName.trim()}
@@ -571,7 +571,7 @@ const GitControls: React.FC = () => {
         <div className="space-y-2">
           <h3 className="text-xs sm:text-sm font-medium">{t('git.remoteName')} ({repository.remoteName})</h3>
           <div className="grid grid-cols-3 gap-1 sm:gap-2">
-            <Button
+            <Button 
               variant="outline"
               size="sm"
               onClick={handleFetch}
@@ -580,7 +580,7 @@ const GitControls: React.FC = () => {
               <DownloadCloud className="mr-0.5 sm:mr-1 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
               <span className="hidden xs:inline">{t('git.gitFetch')}</span>
             </Button>
-            <Button
+            <Button 
               variant="outline"
               size="sm"
               onClick={handlePull}
@@ -590,7 +590,7 @@ const GitControls: React.FC = () => {
               <ArrowDownUp className="mr-0.5 sm:mr-1 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
               <span className="hidden xs:inline">{t('git.gitPull')}</span>
             </Button>
-            <Button
+            <Button 
               variant="outline"
               size="sm"
               onClick={handlePush}
@@ -605,12 +605,12 @@ const GitControls: React.FC = () => {
           {/* Mostrar información sobre el último fetch/push */}
           <div className="text-[10px] sm:text-xs text-muted-foreground">
             <div className="flex flex-wrap gap-2">
-              {repository.lastFetchTime && (
-                <div>{t('git.lastFetch')}: {new Date(repository.lastFetchTime).toLocaleTimeString()}</div>
-              )}
-              {repository.lastPushTime && (
-                <div>{t('git.lastPush')}: {new Date(repository.lastPushTime).toLocaleTimeString()}</div>
-              )}
+            {repository.lastFetchTime && (
+              <div>{t('git.lastFetch')}: {new Date(repository.lastFetchTime).toLocaleTimeString()}</div>
+            )}
+            {repository.lastPushTime && (
+              <div>{t('git.lastPush')}: {new Date(repository.lastPushTime).toLocaleTimeString()}</div>
+            )}
             </div>
             {/* Mostrar las referencias remotas */}
             <div className="mt-1">
