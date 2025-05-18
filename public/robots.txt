@@ -8,4 +8,4 @@ Allow: /
 Crawl-delay: 10
 
 # Sitemap location
-Sitemap: https://gitgame.com/sitemap.xml
+Sitemap: https://game4git.vercel.app/sitemap.xml
