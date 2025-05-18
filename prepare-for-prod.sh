@@ -13,6 +13,10 @@ if ! command -v npm &> /dev/null; then
     exit 1
 fi
 
+# Generate sitemap.xml
+echo "🌐 Generating sitemap.xml..."
+node generate-sitemap.js
+
 # Clean up previous builds
 echo "🧹 Cleaning up previous builds..."
 if [ -d "dist" ]; then
