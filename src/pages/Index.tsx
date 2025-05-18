@@ -25,6 +25,15 @@ import {
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import "../i18n"; // Importamos la configuración de i18n
+import GitExercises from "@/components/GitExercises";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 // Language selector component
 const LanguageSelector: React.FC = () => {
@@ -39,7 +48,6 @@ const LanguageSelector: React.FC = () => {
   
   const handleLanguageChange = (lang: string) => {
     i18n.changeLanguage(lang);
-    toast.success(t(`general.languageChanged`));
   };
   
   return (
@@ -206,6 +214,9 @@ const GitGame: React.FC = () => {
       <div>
         <GitControls />
       </div>
+      
+      {/* Exercises Component */}
+      <GitExercises />
       
       {/* Footer */}
       <footer className="mt-8 py-4 border-t border-border text-center text-sm text-muted-foreground">

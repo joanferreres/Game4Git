@@ -1,8 +1,7 @@
 {
   "general": {
     "title": "Git Game",
-    "subtitle": "Aprende conceptos de Git visualmente con este playground interactivo",
-    "languageChanged": "Idioma cambiado a Español"
+    "subtitle": "Aprende conceptos de Git visualmente con este playground interactivo"
   },
   "git": {
     "controls": "Controles de Git",
@@ -52,6 +51,9 @@
     "switchedToBranch": "Cambiado a la rama",
     "changesReset": "Cambios reseteados al HEAD actual",
     "resetToInitial": "Reseteado al commit inicial",
+    "noChangesToReset": "No hay cambios para resetear",
+    "nothingToClear": "No hay nada que limpiar",
+    "clearSelectionExplanation": "Esto resetea la vista del gráfico al estado inicial, vuelve a la rama master y limpia tu selección de commit.",
     "selectSourceBranch": "Por favor, selecciona una rama de origen para fusionar.",
     "selectTargetBranch": "Por favor, selecciona una rama de destino para fusionar.",
     "sourceSameAsTarget": "Las ramas de origen y destino no pueden ser la misma.",
@@ -124,11 +126,11 @@
       }
     },
     "merging": {
-      "title": "Flujo de Trabajo de Fusión",
-      "description": "Cómo fusionar cambios entre ramas",
+      "title": "Flux de Trabajo de Fusión",
+      "description": "Como fusionar cambios entre ramas",
       "step1": {
-        "title": "1. Cambiar a la rama destino",
-        "description": "Primero usa 'git checkout <rama-destino>' para cambiar a la rama en la que quieres fusionar. Esto es crítico - debes estar EN la rama receptora."
+        "title": "1. Cambia a la rama destino",
+        "description": "Primero usa 'git checkout <rama-destino>' para cambiar a la rama en la que deseas fusionar. Esto es crítico - debes estar EN la rama receptora."
       },
       "step2": {
         "title": "2. Actualizar la rama destino",
@@ -140,10 +142,10 @@
       },
       "step4": {
         "title": "4. Resolver conflictos",
-        "description": "Si hay conflictos de fusión, Git te notificará. Edita los archivos con conflictos y luego 'git add' una vez resueltos."
+        "description": "Si hay merge conflicts, Git te notificará. Edita los archivos con conflictos y luego 'git add' una vez resueltos."
       },
       "step5": {
-        "title": "5. Resolución de Conflictos de Fusión (En Detalle)",
+        "title": "5. Resolución de Merge Conflicts (En Detalle)",
         "description": "Cuando ocurren conflictos, Git los marca en los archivos con marcadores especiales. Abre cada archivo con conflicto y busca secciones con '<<<<<<< HEAD', '=======', y '>>>>>>> nombre-rama'. El contenido entre '<<<<<<< HEAD' y '=======' es de tu rama actual, mientras que el contenido entre '=======' y '>>>>>>> nombre-rama' es de la rama que estás fusionando. Edita estas secciones para crear la versión final, eliminando todos los marcadores de conflicto. Después de resolver, ejecuta 'git add <archivo>' en cada archivo corregido y haz commit con 'git commit'."
       },
       "step6": {
@@ -250,9 +252,220 @@
     "head": "HEAD"
   },
   "gitGraph": {
-    "title": "Gráfico de Git",
+    "title": "Gráfico Git",
     "master": "Master",
     "yourWork": "Tu Trabajo",
     "head": "HEAD"
+  },
+  "exercises": {
+    "title": "Ejercicios de Git",
+    "description": "Completa estos ejercicios para aprender ramificación en Git y flujos de trabajo en equipo",
+    "challenges": "Desafíos",
+    "progress": "Progreso",
+    "steps": "Pasos a completar",
+    "stepsCompleted": "completados",
+    "reference": "Referencia de Comandos",
+    "terminalCommands": "Comandos de Terminal",
+    "uiActions": "Acciones de UI",
+    "exerciseCompleted": "¡Ejercicio completado! 🎉",
+    "exerciseFullyCompleted": "¡Todos los pasos completados! 🎉",
+    "reset": "Reiniciar Progreso",
+    "close": "Cerrar",
+    "cancel": "Cancelar",
+    "completionMessage": "¡Felicidades! Has completado todos los pasos de este ejercicio con éxito.",
+    "readyToStart": "¿Listo para empezar?",
+    "startExplanation": "Al iniciar el ejercicio, haremos seguimiento de tu progreso en cada paso hasta que lo completes.",
+    "start": "Iniciar Ejercicio",
+    "exerciseFinished": "¡Ejercicio Completado!",
+    "finishedExplanation": "Has completado este ejercicio. Puedes reiniciarlo o continuar con otro.",
+    "startAgain": "Comenzar de Nuevo",
+    "nextExercise": "Siguiente Ejercicio",
+    "checkProgress": "Comprobar Progreso",
+    "markAsDone": "Marcar como Completado",
+    "featureBranch": {
+      "tabTitle": "Feature Branch",
+      "title": "Flujo de Trabajo de Rama de Funcionalidad",
+      "description": "Aprende a trabajar con ramas de funcionalidad para desarrollar nuevas características sin afectar al código base principal.",
+      "steps": {
+        "createDev": "Crear una rama 'dev' desde 'master'",
+        "switchDev": "Cambiar a la rama 'dev'",
+        "createFeature": "Crear y cambiar a una nueva rama llamada 'feature-login'",
+        "makeChanges": "Modificar el código (añadir una nueva función o comentario)",
+        "commitChanges": "Preparar y confirmar tus cambios con un mensaje descriptivo",
+        "mergeToDev": "Cambiar a la rama 'dev' y fusionar tu rama de funcionalidad"
+      },
+      "hints": {
+        "createDev": "Usa 'git branch dev' en modo terminal o usa el control de creación de ramas de la interfaz",
+        "switchDev": "Usa 'git checkout dev' en modo terminal o usa el desplegable de cambio de rama",
+        "createFeature": "Usa 'git checkout -b feature-login' en modo terminal o crea la rama desde la interfaz y luego cambia a ella",
+        "makeChanges": "Edita el código en el editor para hacer cualquier cambio",
+        "commitChanges": "Usa 'git add .' y 'git commit -m \"tu mensaje\"' en terminal o usa los botones de la interfaz",
+        "mergeToDev": "Primero usa 'git checkout dev' luego 'git merge feature-login', o usa los controles de la interfaz"
+      },
+      "uiActions": {
+        "createDev": "Crear rama 'dev'",
+        "switchDev": "Cambiar a rama 'dev'",
+        "createFeature": "Crear rama 'feature-login'",
+        "editCode": "Editar código",
+        "stageChanges": "Preparar cambios con Git Add",
+        "commitChanges": "Confirmar cambios",
+        "switchBackDev": "Cambiar a rama 'dev'",
+        "mergeFeature": "Fusionar 'feature-login' en 'dev'"
+      },
+      "commands": {
+        "createDev": "git branch dev",
+        "switchDev": "git checkout dev",
+        "createFeature": "git checkout -b feature-login",
+        "add": "git add .",
+        "commit": "git commit -m \"Añadir funcionalidad de login\"",
+        "checkoutDev": "git checkout dev",
+        "merge": "git merge feature-login"
+      }
+    },
+    "teamWorkflow": {
+      "tabTitle": "Team Workflow",
+      "title": "Flujo de Trabajo en Equipo",
+      "description": "Aprende cómo un equipo colabora usando ramas, operaciones de pull y merge.",
+      "steps": {
+        "createStructure": "Crear una estructura con ramas 'master', 'dev' y 'release'",
+        "createStory": "Crear una rama de historia llamada 'story-123' desde 'dev'",
+        "implementStory": "Hacer cambios en 'story-123' y confirmarlos",
+        "mergeToDev": "Fusionar 'story-123' en 'dev' y luego 'dev' en 'release'",
+        "prepareProduction": "Fusionar 'release' en 'master' para producción"
+      },
+      "hints": {
+        "createStructure": "Crea cada rama desde master usando 'git branch' o la interfaz",
+        "createStory": "Primero cambia a 'dev', luego crea la rama 'story-123'",
+        "implementStory": "Cambia a 'story-123', haz cambios, prepáralos y confírmalos",
+        "mergeToDev": "Primero fusiona en 'dev', luego fusiona 'dev' en 'release'",
+        "prepareProduction": "Cambia a 'master' y fusiona desde 'release'"
+      },
+      "commands": {
+        "createDev": "git branch dev",
+        "createRelease": "git branch release",
+        "checkoutDev": "git checkout dev",
+        "createStory": "git checkout -b story-123",
+        "add": "git add .",
+        "commit": "git commit -m \"Implementar funcionalidad story-123\"",
+        "checkoutDev2": "git checkout dev",
+        "mergeStory": "git merge story-123",
+        "checkoutRelease": "git checkout release",
+        "mergeDev": "git merge dev",
+        "checkoutMaster": "git checkout master",
+        "mergeRelease": "git merge release"
+      },
+      "uiActions": {
+        "createBranches": "Crear ramas 'dev' y 'release'",
+        "switchDev": "Cambiar a rama 'dev'",
+        "createStory": "Crear rama 'story-123'",
+        "makeChanges": "Hacer cambios en el código",
+        "stageAndCommit": "Preparar y confirmar cambios",
+        "mergeBranches": "Fusionar ramas en secuencia"
+      }
+    },
+    "technicalTasks": {
+      "tabTitle": "Technical Tasks",
+      "title": "Flujo de Trabajo de Tareas Técnicas",
+      "description": "Aprende cómo desglosar una historia en tareas técnicas y trabajar en ellas en paralelo.",
+      "steps": {
+        "setupProject": "Crear ramas 'master', 'dev' y 'story-456'",
+        "createTasks": "Crear dos ramas de tareas técnicas: 'task-1' y 'task-2' desde 'story-456'",
+        "implementTask1": "Implementar 'task-1' con cambios y confirmar",
+        "implementTask2": "Implementar 'task-2' con cambios diferentes y confirmar",
+        "integrateTasks": "Fusionar ambas tareas en 'story-456'",
+        "completeWorkflow": "Entregar la historia fusionando a través de 'dev' a 'master'"
+      },
+      "hints": {
+        "setupProject": "Crea la estructura de ramas para el proyecto",
+        "createTasks": "Cambia a 'story-456' y crea dos ramas a partir de ella",
+        "implementTask1": "Cambia a 'task-1', haz cambios y confírmalos",
+        "implementTask2": "Cambia a 'task-2', haz cambios y confírmalos",
+        "integrateTasks": "Cambia a 'story-456' y fusiona ambas ramas de tareas",
+        "completeWorkflow": "Fusiona 'story-456' a 'dev', luego 'dev' a 'master'"
+      },
+      "commands": {
+        "createDev": "git branch dev",
+        "createStory": "git checkout -b story-456",
+        "createTask1": "git checkout -b task-1",
+        "add": "git add .",
+        "commitTask1": "git commit -m \"Implementar task-1\"",
+        "checkoutStory": "git checkout story-456",
+        "createTask2": "git checkout -b task-2",
+        "addTask2": "git add .",
+        "commitTask2": "git commit -m \"Implementar task-2\"",
+        "checkoutStory2": "git checkout story-456",
+        "mergeTask1": "git merge task-1",
+        "mergeTask2": "git merge task-2",
+        "checkoutDev": "git checkout dev",
+        "mergeStory": "git merge story-456",
+        "checkoutMaster": "git checkout master",
+        "mergeDev": "git merge dev"
+      },
+      "uiActions": {
+        "createStructure": "Crear estructura de ramas",
+        "createTasks": "Crear ramas de tareas",
+        "implementTasks": "Implementar y confirmar tareas por separado",
+        "mergeTasks": "Fusionar tareas en la historia",
+        "completeWorkflow": "Completar flujo de entrega"
+      }
+    },
+    "mergeConflicts": {
+      "tabTitle": "Merge Conflicts",
+      "title": "Resolver Merge Conflicts",
+      "description": "Aprende a identificar y resolver merge conflicts que ocurren al fusionar ramas con cambios conflictivos.",
+      "steps": {
+        "setupRepo": "Configurar repositorio con ramas 'master' y 'dev'",
+        "createFeatureA": "Crear y cambiar a la rama 'feature-a' desde 'dev'",
+        "commitFeatureA": "Hacer cambios al código y confirmarlos en 'feature-a'",
+        "createFeatureB": "Cambiar a 'dev' y crear la rama 'feature-b'",
+        "commitFeatureB": "Hacer cambios conflictivos en 'feature-b' y confirmarlos",
+        "resolveConflict": "Crear y resolver un merge conflict"
+      },
+      "hints": {
+        "setupRepo": "Crea una rama 'dev' desde 'master'",
+        "createFeatureA": "Usa 'git checkout -b feature-a' desde la rama 'dev'",
+        "commitFeatureA": "Edita el código, prepara y confirma tus cambios",
+        "createFeatureB": "Regresa a 'dev' y crea una nueva rama con 'git checkout -b feature-b'",
+        "commitFeatureB": "Edita la misma parte del código, prepara y confirma tus cambios",
+        "resolveConflict": "Cambia a 'dev', intenta fusionar ambas ramas de características y resuelve el conflicto"
+      },
+      "conflict": {
+        "title": "¡Merge Conflict Detectado!",
+        "description": "Hay un merge conflict en tu archivo. Necesitas resolverlo manualmente editando el contenido a continuación.",
+        "fileTitle": "Contenido del Archivo con Conflictos:",
+        "placeholder": "Edita este código para resolver el conflicto...",
+        "instruction": "Elimina los marcadores de conflicto (<<<<<<< HEAD, =======, >>>>>>>), y edita el código para crear una solución funcional.",
+        "validate": "Validar Resolución",
+        "success": "¡Conflicto resuelto correctamente!",
+        "error": "Aún hay conflictos sin resolver. Elimina los marcadores de conflicto y proporciona una solución.",
+        "incomplete": "Has eliminado los marcadores de conflicto, pero tu solución debe incluir tanto la funcionalidad de registro como las mejoras de rendimiento."
+      },
+      "scenario": {
+        "title": "Escenario: Conflicto de Colaboración en Equipo",
+        "description": "Tu equipo está trabajando en una funcionalidad. Dos desarrolladores han modificado la misma función de diferentes maneras:",
+        "dev1": "Desarrollador 1 (rama feature-a)",
+        "dev1desc": "Implementó una versión enfocada en el rendimiento.",
+        "dev2": "Desarrollador 2 (rama feature-b)",
+        "dev2desc": "Implementó una versión con registros adicionales.",
+        "task": "Al fusionar estas ramas en dev, se produjo un conflicto. Tu tarea es resolver este conflicto creando una solución que conserve tanto las mejoras de rendimiento como la funcionalidad de registro."
+      },
+      "resolution": {
+        "title": "Cómo Resolver Este Conflicto:",
+        "step1": "Elimina los marcadores de conflicto (<<<<<<< HEAD, =======, >>>>>>>)",
+        "step2": "Combina ambas implementaciones para mantener las mejoras de rendimiento de feature-a",
+        "step3": "Conserva la funcionalidad de registro de la rama actual (HEAD)",
+        "step4": "Asegúrate de que el resultado sea JavaScript válido que se ejecute sin errores"
+      },
+      "startExplanation": "Se te presentará un conflicto para resolver. Debes editar el código para crear una versión que combine correctamente ambas implementaciones.",
+      "commands": {
+        "afterResolve": "# Después de resolver el conflicto en el editor",
+        "add": "git add .",
+        "commit": "git commit -m \"Fusionar y resolver conflictos\""
+      },
+      "uiActions": {
+        "editFile": "Editar archivo para resolver conflicto",
+        "stageAndCommit": "Preparar y confirmar cambios resueltos"
+      }
+    }
   }
 } 

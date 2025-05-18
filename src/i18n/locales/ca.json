@@ -1,8 +1,7 @@
 {
   "general": {
     "title": "Git Game",
-    "subtitle": "Aprèn conceptes de Git visualment amb aquest playground interactiu",
-    "languageChanged": "Idioma canviat a Català"
+    "subtitle": "Aprèn conceptes de Git visualment amb aquest playground interactiu"
   },
   "git": {
     "controls": "Controls de Git",
@@ -28,7 +27,9 @@
     "actions": "Accions",
     "resetChanges": "Restablir Canvis",
     "clearSelection": "Netejar Selecció",
-    "resetAll": "Restablir Tot"
+    "resetAll": "Restablir Tot",
+    "create": "Crear",
+    "gitAdd": "Git Add (Afegir Canvis)"
   },
   "terminal": {
     "help": "Terminal Git Game - Escriu 'help' per veure les comandes disponibles",
@@ -41,14 +42,17 @@
   "messages": {
     "changesStaged": "Canvis preparats per commit",
     "enterCommitMessage": "Si us plau, introdueix un missatge de commit",
-    "noChangesStaged": "No hi ha canvis preparats per commit. Fes servir Git Add primer.",
+    "noChangesStaged": "No hi ha canvis preparats per commit. Utilitza Git Add primer.",
     "committedSuccessfully": "Canvis confirmats amb èxit",
     "enterBranchName": "Si us plau, introdueix un nom de branca",
     "branchExists": "La branca ja existeix",
     "branchCreated": "Branca creada",
     "switchedToBranch": "Canviat a la branca",
-    "changesReset": "Canvis restablerts al HEAD actual",
-    "resetToInitial": "Restablert al commit inicial",
+    "changesReset": "Canvis resetejats al HEAD actual",
+    "resetToInitial": "Resetejat al commit inicial",
+    "noChangesToReset": "No hi ha canvis per resetjar",
+    "nothingToClear": "No hi ha res per netejar",
+    "clearSelectionExplanation": "Això reseteja la vista del gràfic a l'estat inicial, torna a la branca master i neteja la teva selecció de commit.",
     "selectSourceBranch": "Si us plau, selecciona una branca d'origen per fusionar.",
     "selectTargetBranch": "Si us plau, selecciona una branca de destí per fusionar.",
     "sourceSameAsTarget": "Les branques d'origen i destí no poden ser la mateixa.",
@@ -126,5 +130,151 @@
     "simulationFetch": "Això és una simulació: En Git real, fetch descarregaria commits, arxius i referències d'un repositori remot.",
     "simulationPull": "Això és una simulació: En Git real, pull obtindria i fusionaria canvis remots a la teva branca actual.",
     "simulationPush": "Això és una simulació: En Git real, push pujaria els commits de la teva branca al repositori remot."
+  },
+  "exercises": {
+    "title": "Exercicis de Git",
+    "description": "Completa aquests exercicis per aprendre ramificació en Git i fluxos de treball en equip",
+    "challenges": "Desafiaments",
+    "progress": "Progrés",
+    "steps": "Passos a completar",
+    "stepsCompleted": "completats",
+    "reference": "Referència de Comandes",
+    "terminalCommands": "Comandes de Terminal",
+    "uiActions": "Accions d'UI",
+    "exerciseCompleted": "Exercici completat! 🎉",
+    "exerciseFullyCompleted": "Tots els passos completats! 🎉",
+    "reset": "Reiniciar Progrés",
+    "close": "Tancar",
+    "cancel": "Cancel·lar",
+    "completionMessage": "Felicitats! Has completat tots els passos d'aquest exercici amb èxit.",
+    "readyToStart": "Preparat per començar?",
+    "startExplanation": "Quan comencis l'exercici, farem un seguiment del teu progrés en cada pas fins que el completis.",
+    "start": "Iniciar Exercici",
+    "exerciseFinished": "Exercici Completat!",
+    "finishedExplanation": "Has completat aquest exercici. Pots reiniciar-lo o continuar amb un altre.",
+    "startAgain": "Començar de Nou",
+    "nextExercise": "Següent Exercici",
+    "checkProgress": "Verificar Progrés",
+    "markAsDone": "Marcar com a Completat",
+    "featureBranch": {
+      "tabTitle": "Feature Branch",
+      "title": "Flux de Treball de Branca de Funcionalitat",
+      "description": "Aprèn a treballar amb branques de funcionalitat per desenvolupar noves característiques sense afectar al codi base principal.",
+      "steps": {
+        "createDev": "Crear una branca 'dev' des de 'master'",
+        "switchDev": "Canviar a la branca 'dev'",
+        "createFeature": "Crear i canviar a una nova branca anomenada 'feature-login'",
+        "makeChanges": "Modificar el codi (afegir una nova funció o comentari)",
+        "commitChanges": "Preparar i confirmar els teus canvis amb un missatge descriptiu",
+        "mergeToDev": "Canviar a la branca 'dev' i fusionar la teva branca de funcionalitat"
+      },
+      "hints": {
+        "createDev": "Utilitza 'git branch dev' en mode terminal o utilitza el control de creació de branques de la interfície",
+        "switchDev": "Utilitza 'git checkout dev' en mode terminal o utilitza el desplegable de canvi de branca",
+        "createFeature": "Utilitza 'git checkout -b feature-login' des de la branca 'dev' o crea la branca des de la interfície i després canvia a ella",
+        "makeChanges": "Edita el codi a l'editor per fer qualsevol canvi",
+        "commitChanges": "Utilitza 'git add .' i 'git commit -m \"el teu missatge\"' en terminal o utilitza els botons de la interfície",
+        "mergeToDev": "Primer utilitza 'git checkout dev' després 'git merge feature-login', o utilitza els controls de la interfície"
+      },
+      "uiActions": {
+        "createDev": "Crear branca 'dev'",
+        "switchDev": "Canviar a branca 'dev'",
+        "createFeature": "Crear branca 'feature-login'",
+        "editCode": "Editar codi",
+        "stageChanges": "Preparar canvis amb Git Add",
+        "commitChanges": "Confirmar canvis",
+        "switchBackDev": "Canviar a branca 'dev'",
+        "mergeFeature": "Fusionar 'feature-login' a 'dev'"
+      }
+    },
+    "teamWorkflow": {
+      "tabTitle": "Team Workflow",
+      "title": "Flux de Treball en Equip",
+      "description": "Aprèn com un equip col·labora utilitzant branques, operacions de pull i merge.",
+      "steps": {
+        "createStructure": "Crear una estructura amb branques 'master', 'dev' i 'release'",
+        "createStory": "Crear una branca d'història anomenada 'story-123' des de 'dev'",
+        "implementStory": "Fer canvis a 'story-123' i confirmar-los",
+        "mergeToDev": "Fusionar 'story-123' a 'dev' i després 'dev' a 'release'",
+        "prepareProduction": "Fusionar 'release' a 'master' per a producció"
+      },
+      "hints": {
+        "createStructure": "Crea cada branca des de master utilitzant 'git branch' o la interfície",
+        "createStory": "Primer canvia a 'dev', després crea la branca 'story-123'",
+        "implementStory": "Canvia a 'story-123', fes canvis, prepara'ls i confirma'ls",
+        "mergeToDev": "Primer fusiona a 'dev', després fusiona 'dev' a 'release'",
+        "prepareProduction": "Canvia a 'master' i fusiona des de 'release'"
+      }
+    },
+    "technicalTasks": {
+      "tabTitle": "Technical Tasks",
+      "title": "Flux de Treball de Tasques Tècniques",
+      "description": "Aprèn com desglossar una història en tasques tècniques i treballar en elles en paral·lel.",
+      "steps": {
+        "setupProject": "Crear branques 'master', 'dev' i 'story-456'",
+        "createTasks": "Crear dues branques de tasques tècniques: 'task-1' i 'task-2' des de 'story-456'",
+        "implementTask1": "Implementar 'task-1' amb canvis i confirmar",
+        "implementTask2": "Implementar 'task-2' amb canvis diferents i confirmar",
+        "integrateTasks": "Fusionar totes dues tasques a 'story-456'",
+        "completeWorkflow": "Entregar la història fusionant a través de 'dev' a 'master'"
+      },
+      "hints": {
+        "setupProject": "Crea l'estructura de branques per al projecte",
+        "createTasks": "Canvia a 'story-456' i crea dues branques a partir d'ella",
+        "implementTask1": "Canvia a 'task-1', fes canvis i confirma'ls",
+        "implementTask2": "Canvia a 'task-2', fes canvis i confirma'ls",
+        "integrateTasks": "Canvia a 'story-456' i fusiona totes dues branques de tasques",
+        "completeWorkflow": "Fusiona 'story-456' a 'dev', després 'dev' a 'master'"
+      }
+    },
+    "mergeConflicts": {
+      "tabTitle": "Merge Conflicts",
+      "title": "Resoldre Merge Conflicts",
+      "description": "Aprèn a identificar i resoldre merge conflicts que es produeixen en fusionar branques amb canvis conflictius.",
+      "steps": {
+        "setupRepo": "Configurar repositori amb branques 'master' i 'dev'",
+        "createFeatureA": "Crear i canviar a la branca 'feature-a' des de 'dev'",
+        "commitFeatureA": "Fer canvis al codi i confirmar-los a 'feature-a'",
+        "createFeatureB": "Canviar a 'dev' i crear la branca 'feature-b'",
+        "commitFeatureB": "Fer canvis conflictius a 'feature-b' i confirmar-los",
+        "resolveConflict": "Crear i resoldre un merge conflict"
+      },
+      "hints": {
+        "setupRepo": "Crea una branca 'dev' des de 'master'",
+        "createFeatureA": "Utilitza 'git checkout -b feature-a' des de la branca 'dev'",
+        "commitFeatureA": "Edita el codi, prepara i confirma els teus canvis",
+        "createFeatureB": "Torna a 'dev' i crea una nova branca amb 'git checkout -b feature-b'",
+        "commitFeatureB": "Edita la mateixa part del codi, prepara i confirma els teus canvis",
+        "resolveConflict": "Canvia a 'dev', intenta fusionar ambdues branques de característiques i resol el conflicte"
+      },
+      "conflict": {
+        "title": "Merge Conflict Detectat!",
+        "description": "Hi ha un merge conflict al teu arxiu. Necessites resoldre'l manualment editant el contingut a continuació.",
+        "fileTitle": "Contingut de l'Arxiu amb Conflictes:",
+        "placeholder": "Edita aquest codi per resoldre el conflicte...",
+        "instruction": "Elimina els marcadors de conflicte (<<<<<<< HEAD, =======, >>>>>>>), i edita el codi per crear una solució funcional.",
+        "validate": "Validar Resolució",
+        "success": "Conflicte resolt correctament!",
+        "error": "Encara hi ha conflictes sense resoldre. Elimina els marcadors de conflicte i proporciona una solució.",
+        "incomplete": "Has eliminat els marcadors de conflicte, però la teva solució ha d'incloure tant la funcionalitat de registre com les millores de rendiment."
+      },
+      "scenario": {
+        "title": "Escenari: Conflicte de Col·laboració en Equip",
+        "description": "El teu equip està treballant en una funcionalitat. Dos desenvolupadors han modificat la mateixa funció de diferents maneres:",
+        "dev1": "Desenvolupador 1 (branca feature-a)",
+        "dev1desc": "Va implementar una versió enfocada en el rendiment.",
+        "dev2": "Desenvolupador 2 (branca feature-b)",
+        "dev2desc": "Va implementar una versió amb registres addicionals.",
+        "task": "En fusionar aquestes branques a dev, s'ha produït un conflicte. La teva tasca és resoldre aquest conflicte creant una solució que conservi tant les millores de rendiment com la funcionalitat de registre."
+      },
+      "resolution": {
+        "title": "Com Resoldre Aquest Conflicte:",
+        "step1": "Elimina els marcadors de conflicte (<<<<<<< HEAD, =======, >>>>>>>)",
+        "step2": "Combina ambdues implementacions per mantenir les millores de rendiment de feature-a",
+        "step3": "Conserva la funcionalitat de registre de la branca actual (HEAD)",
+        "step4": "Assegura't que el resultat sigui JavaScript vàlid que s'executi sense errors"
+      },
+      "startExplanation": "Se't presentarà un conflicte per resoldre. Has d'editar el codi per crear una versió que combini correctament ambdues implementacions."
+    }
   }
 } 

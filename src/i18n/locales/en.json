@@ -1,8 +1,7 @@
 {
   "general": {
     "title": "Git Game",
-    "subtitle": "Learn Git concepts visually with this interactive playground",
-    "languageChanged": "Language changed to English"
+    "subtitle": "Learn Git concepts visually with this interactive playground"
   },
   "git": {
     "controls": "Git Controls",
@@ -254,5 +253,142 @@
     "master": "Master",
     "yourWork": "Your Work",
     "head": "HEAD"
+  },
+  "exercises": {
+    "title": "Git Exercises",
+    "description": "Complete these exercises to learn Git branching and team workflows",
+    "challenges": "Challenges",
+    "progress": "Progress",
+    "steps": "Steps to complete",
+    "stepsCompleted": "completed",
+    "reference": "Command Reference",
+    "terminalCommands": "Terminal Commands",
+    "uiActions": "UI Actions",
+    "exerciseCompleted": "Exercise completed! 🎉",
+    "exerciseFullyCompleted": "All steps completed! 🎉",
+    
+    "reset": "Reset Progress",
+    "close": "Close",
+    "cancel": "Cancel",
+    "completionMessage": "Congratulations! You've successfully completed all steps of this exercise.",
+    "readyToStart": "Ready to start?",
+    "startExplanation": "When you start the exercise, we'll track your progress on each step until you complete it.",
+    "start": "Start Exercise",
+    "exerciseFinished": "Exercise Completed!",
+    "finishedExplanation": "You've completed this exercise. You can reset it or continue with another one.",
+    "startAgain": "Start Again",
+    "nextExercise": "Next Exercise",
+    "checkProgress": "Check Progress",
+    "markAsDone": "Mark as Completed",
+    "featureBranch": {
+      "tabTitle": "Feature Branch",
+      "title": "Feature Branch Workflow",
+      "description": "Learn how to work with feature branches to develop new functionality without affecting the main codebase.",
+      "steps": {
+        "createDev": "Create a 'dev' branch from 'master'",
+        "switchDev": "Switch to the 'dev' branch",
+        "createFeature": "Create and switch to a new feature branch called 'feature-login'",
+        "makeChanges": "Modify the code (add a new function or comment)",
+        "commitChanges": "Stage and commit your changes with a descriptive message",
+        "mergeToDev": "Switch to 'dev' branch and merge your feature branch"
+      },
+      "hints": {
+        "createDev": "Use 'git branch dev' in terminal mode or use the branch creation UI control",
+        "switchDev": "Use 'git checkout dev' in terminal mode or use the branch switch dropdown",
+        "createFeature": "Use 'git checkout -b feature-login' in terminal mode or create the branch from UI and then switch to it",
+        "makeChanges": "Edit the code in the editor to make any change",
+        "commitChanges": "Use 'git add .' and 'git commit -m \"your message\"' in terminal or use the UI buttons",
+        "mergeToDev": "First use 'git checkout dev' then 'git merge feature-login', or use the UI controls"
+      }
+    },
+    "teamWorkflow": {
+      "tabTitle": "Team Workflow",
+      "title": "Team Collaboration Workflow",
+      "description": "Learn how a team collaborates using branches, pull and merge operations.",
+      "steps": {
+        "createStructure": "Create a structure with 'master', 'dev', and 'release' branches",
+        "createStory": "Create a story branch called 'story-123' from 'dev'",
+        "implementStory": "Make changes on 'story-123' and commit them",
+        "mergeToDev": "Merge 'story-123' into 'dev' and then 'dev' into 'release'",
+        "prepareProduction": "Merge 'release' into 'master' for production"
+      },
+      "hints": {
+        "createStructure": "Create each branch from master using 'git branch' or the UI",
+        "createStory": "First switch to 'dev', then create 'story-123' branch",
+        "implementStory": "Switch to 'story-123', make changes, stage and commit them",
+        "mergeToDev": "First merge to 'dev', then merge 'dev' to 'release'",
+        "prepareProduction": "Switch to 'master' and merge from 'release'"
+      }
+    },
+    "technicalTasks": {
+      "tabTitle": "Technical Tasks",
+      "title": "Technical Tasks Workflow",
+      "description": "Learn how to break down a story into technical tasks and work on them in parallel.",
+      "steps": {
+        "setupProject": "Create 'master', 'dev', and 'story-456' branches",
+        "createTasks": "Create two technical task branches: 'task-1' and 'task-2' from 'story-456'",
+        "implementTask1": "Implement 'task-1' with changes and commit",
+        "implementTask2": "Implement 'task-2' with different changes and commit",
+        "integrateTasks": "Merge both tasks into 'story-456'",
+        "completeWorkflow": "Deliver the story by merging through 'dev' to 'master'"
+      },
+      "hints": {
+        "setupProject": "Create the branch structure for the project",
+        "createTasks": "Switch to 'story-456' and create two branches from it",
+        "implementTask1": "Switch to 'task-1', make changes and commit",
+        "implementTask2": "Switch to 'task-2', make changes and commit",
+        "integrateTasks": "Switch to 'story-456' and merge both task branches",
+        "completeWorkflow": "Merge 'story-456' to 'dev', then 'dev' to 'master'"
+      }
+    },
+    "mergeConflicts": {
+      "tabTitle": "Merge Conflicts",
+      "title": "Resolving Merge Conflicts",
+      "description": "Learn how to identify and resolve merge conflicts that occur when merging branches with conflicting changes.",
+      "steps": {
+        "setupRepo": "Setup repository with 'master' and 'dev' branches",
+        "createFeatureA": "Create and switch to 'feature-a' branch from 'dev'",
+        "commitFeatureA": "Make changes to code and commit on 'feature-a'",
+        "createFeatureB": "Switch to 'dev' and create 'feature-b' branch",
+        "commitFeatureB": "Make conflicting changes on 'feature-b' and commit",
+        "resolveConflict": "Create and resolve a merge conflict"
+      },
+      "hints": {
+        "setupRepo": "Create a 'dev' branch from 'master'",
+        "createFeatureA": "Use 'git checkout -b feature-a' from the 'dev' branch",
+        "commitFeatureA": "Edit the code, stage and commit your changes",
+        "createFeatureB": "Switch back to 'dev' and create a new branch with 'git checkout -b feature-b'",
+        "commitFeatureB": "Edit the same part of the code, stage and commit your changes",
+        "resolveConflict": "Switch to 'dev', try to merge both feature branches, and resolve the conflict"
+      },
+      "conflict": {
+        "title": "Merge Conflict Detected!",
+        "description": "There is a merge conflict in your file. You need to resolve it manually by editing the content below.",
+        "fileTitle": "Conflicted File Content:",
+        "placeholder": "Edit this code to resolve the conflict...",
+        "instruction": "Remove the conflict markers (<<<<<<< HEAD, =======, >>>>>>>), and edit the code to create a working solution.",
+        "validate": "Validate Resolution",
+        "success": "Conflict resolved correctly!",
+        "error": "There are still unresolved conflicts. Remove the conflict markers and provide a solution.",
+        "incomplete": "You've removed the conflict markers, but your solution should include both the logging and the performance improvements."
+      },
+      "scenario": {
+        "title": "Scenario: Team Collaboration Conflict",
+        "description": "Your team is working on a feature. Two developers have modified the same function in different ways:",
+        "dev1": "Developer 1 (feature-a branch)",
+        "dev1desc": "Implemented a version focused on performance.",
+        "dev2": "Developer 2 (feature-b branch)",
+        "dev2desc": "Implemented a version with additional logging.",
+        "task": "When merging these branches into dev, a conflict occurred. Your task is to resolve this conflict by creating a solution that preserves both the performance improvements and the logging functionality."
+      },
+      "resolution": {
+        "title": "How to Resolve This Conflict:",
+        "step1": "Remove the conflict markers (<<<<<<< HEAD, =======, >>>>>>>)",
+        "step2": "Combine both implementations to keep the performance improvements from feature-a",
+        "step3": "Preserve the logging functionality from the current branch (HEAD)",
+        "step4": "Make sure the result is valid JavaScript that would run without errors"
+      },
+      "startExplanation": "You'll be presented with a conflict to resolve. You need to edit the code to create a version that combines both implementations correctly."
+    }
   }
 } 

@@ -31,21 +31,23 @@ if [ -n "$(git status --porcelain)" ]; then
   fi
 fi
 
-# Update dependencies
-echo "📦 Updating dependencies..."
+# Update dependencies securely
+echo "📦 Updating dependencies and checking for security issues..."
 npm update
+npm audit fix
+npm audit --omit=dev
 
-# Install production dependencies only
-echo "📦 Installing production dependencies..."
-npm ci --omit=dev
+# Asegurar que todas las dependencias estén instaladas para la construcción
+echo "📦 Installing all dependencies for building..."
+npm install
 
 # Run linting
 echo "🔍 Linting code..."
 npm run lint
 
-# Run build
+# Run build with environment variables
 echo "🔨 Building production code..."
-npm run build
+ROLLUP_NATIVE=false NODE_ENV=production npm run build:prod
 
 # Check build directory exists
 if [ ! -d "dist" ]; then
@@ -53,10 +55,20 @@ if [ ! -d "dist" ]; then
     exit 1
 fi
 
+# Ahora sí podemos instalar solo dependencias de producción para el paquete final
+echo "📦 Cleaning up and installing only production dependencies..."
+npm ci --omit=dev
+
 echo "🔧 Optimizing assets..."
 # Gzip compression for text files
 echo "   - Adding Gzip compression..."
-find dist -type f -name "*.js" -o -name "*.css" -o -name "*.html" -o -name "*.svg" | xargs gzip -k -f
+find dist -type f \( -name "*.js" -o -name "*.css" -o -name "*.html" -o -name "*.svg" -o -name "*.json" \) | xargs gzip -k -f
+
+# Brotli compression if available
+if command -v brotli &> /dev/null; then
+    echo "   - Adding Brotli compression..."
+    find dist -type f \( -name "*.js" -o -name "*.css" -o -name "*.html" -o -name "*.svg" -o -name "*.json" \) | xargs brotli -k -f
+fi
 
 # Find and optimize any uncompressed images (if tools are available)
 echo "   - Checking for image optimization tools..."
@@ -69,9 +81,40 @@ if command -v jpegoptim &> /dev/null; then
     find dist -name "*.jpg" -exec jpegoptim --max=90 {} \;
 fi
 
-# Check for security issues in dependencies
-echo "🔒 Checking for security vulnerabilities..."
-npm audit --omit=dev
+# Create security headers file for hosting platforms
+echo "🔒 Creating security headers configuration files..."
+
+# Create _headers file for Netlify
+cat > dist/_headers << EOL
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: no-referrer-when-downgrade
+  Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com blob:; img-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net; worker-src 'self' blob:; font-src 'self' https://cdn.jsdelivr.net data:; frame-ancestors 'none';
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+EOL
+
+# Create vercel.json for Vercel
+cat > dist/vercel.json << EOL
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "no-referrer-when-downgrade" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com blob:; img-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net; worker-src 'self' blob:; font-src 'self' https://cdn.jsdelivr.net data:; frame-ancestors 'none';" },
+        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains; preload" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()" }
+      ]
+    }
+  ]
+}
+EOL
 
 # Output build size information
 echo "📊 Production build stats:"
@@ -91,4 +134,13 @@ echo "1. Static hosting: Copy the contents of the 'dist' directory to your web s
 echo "2. Netlify: Connect your repository and point to the 'dist' directory."
 echo "3. Vercel: Use the Vercel CLI with 'vercel --prod' command."
 echo "4. GitHub Pages: Push the 'dist' directory to the gh-pages branch."
+echo
+
+# Final security recommendations
+echo "🔐 Security Recommendations:"
+echo "1. Enable HTTPS on your hosting provider"
+echo "2. Set up regular dependency updates"
+echo "3. Consider adding a Content-Security-Policy Report-Only header initially to monitor issues"
+echo "4. Implement rate limiting on your hosting provider"
+echo "5. Set up monitoring for your application"
 echo

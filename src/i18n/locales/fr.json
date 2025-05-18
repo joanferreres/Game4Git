@@ -1,8 +1,7 @@
 {
   "general": {
     "title": "Git Game",
-    "subtitle": "Apprenez les concepts de Git visuellement avec ce terrain de jeu interactif",
-    "languageChanged": "Langue changée en Français"
+    "subtitle": "Apprenez les concepts de Git visuellement avec ce terrain de jeu interactif"
   },
   "git": {
     "controls": "Contrôles Git",
@@ -28,7 +27,10 @@
     "actions": "Actions",
     "resetChanges": "Réinitialiser les Changements",
     "clearSelection": "Effacer la Sélection",
-    "resetAll": "Tout Réinitialiser"
+    "resetAll": "Tout Réinitialiser",
+    "create": "Créer",
+    "gitAdd": "Git Add (Indexer les Changements)",
+    "gitCommit": "Git Commit"
   },
   "terminal": {
     "help": "Terminal Git Game - Tapez 'help' pour voir les commandes disponibles",
@@ -39,17 +41,20 @@
     "placeholder": "Tapez commande git..."
   },
   "messages": {
-    "changesStaged": "Changements indexés pour commit",
-    "enterCommitMessage": "Veuillez entrer un message de commit",
-    "noChangesStaged": "Aucun changement n'a été indexé pour commit. Utilisez Git Add d'abord.",
+    "changesStaged": "Changements préparés pour commit",
+    "enterCommitMessage": "Veuillez saisir un message de commit",
+    "noChangesStaged": "Aucun changement n'a été préparé pour commit. Utilisez Git Add d'abord.",
     "committedSuccessfully": "Changements validés avec succès",
-    "enterBranchName": "Veuillez entrer un nom de branche",
+    "enterBranchName": "Veuillez saisir un nom de branche",
     "branchExists": "La branche existe déjà",
     "branchCreated": "Branche créée",
     "switchedToBranch": "Basculé vers la branche",
     "changesReset": "Changements réinitialisés au HEAD actuel",
     "resetToInitial": "Réinitialisé au commit initial",
-    "selectSourceBranch": "Veuillez sélectionner une branche source pour fusionner.",
+    "noChangesToReset": "Pas de changements à réinitialiser",
+    "nothingToClear": "Rien à effacer",
+    "clearSelectionExplanation": "Cela réinitialise la vue du graphe à l'état initial, retourne à la branche master et efface votre sélection de commit.",
+    "selectSourceBranch": "Veuillez sélectionner une branche source à fusionner.",
     "selectTargetBranch": "Veuillez sélectionner une branche cible pour fusionner.",
     "sourceSameAsTarget": "Les branches source et cible ne peuvent pas être identiques.",
     "mergedBranch": "Branche fusionnée",
@@ -126,5 +131,151 @@
     "simulationFetch": "Ceci est une simulation : Dans le vrai Git, fetch téléchargerait des commits, des fichiers et des références depuis un dépôt distant.",
     "simulationPull": "Ceci est une simulation : Dans le vrai Git, pull récupèrerait et fusionnerait les changements distants dans votre branche actuelle.",
     "simulationPush": "Ceci est une simulation : Dans le vrai Git, push téléverserait les commits de votre branche vers le dépôt distant."
+  },
+  "exercises": {
+    "title": "Exercices Git",
+    "description": "Complétez ces exercices pour apprendre le branchement Git et les flux de travail en équipe",
+    "challenges": "Défis",
+    "progress": "Progression",
+    "steps": "Étapes à compléter",
+    "stepsCompleted": "complétées",
+    "reference": "Référence des Commandes",
+    "terminalCommands": "Commandes Terminal",
+    "uiActions": "Actions UI",
+    "exerciseCompleted": "Exercice terminé ! 🎉",
+    "exerciseFullyCompleted": "Toutes les étapes terminées ! 🎉",
+    "reset": "Réinitialiser la Progression",
+    "close": "Fermer",
+    "cancel": "Annuler",
+    "completionMessage": "Félicitations ! Vous avez terminé avec succès toutes les étapes de cet exercice.",
+    "readyToStart": "Prêt à commencer ?",
+    "startExplanation": "Lorsque vous commencez l'exercice, nous suivrons votre progression à chaque étape jusqu'à ce que vous la terminiez.",
+    "start": "Commencer l'Exercice",
+    "exerciseFinished": "Exercice Terminé !",
+    "finishedExplanation": "Vous avez terminé cet exercice. Vous pouvez le réinitialiser ou continuer avec un autre.",
+    "startAgain": "Recommencer",
+    "nextExercise": "Exercice Suivant",
+    "checkProgress": "Vérifier la Progression",
+    "markAsDone": "Marquer comme Terminé",
+    "featureBranch": {
+      "tabTitle": "Feature Branch",
+      "title": "Flux de Travail de Branche de Fonctionnalité",
+      "description": "Apprenez à travailler avec des branches de fonctionnalité pour développer de nouvelles fonctionnalités sans affecter le code principal.",
+      "steps": {
+        "createDev": "Créer une branche 'dev' à partir de 'master'",
+        "switchDev": "Basculer vers la branche 'dev'",
+        "createFeature": "Créer et basculer vers une nouvelle branche appelée 'feature-login'",
+        "makeChanges": "Modifier le code (ajouter une nouvelle fonction ou un commentaire)",
+        "commitChanges": "Indexer et valider vos modifications avec un message descriptif",
+        "mergeToDev": "Basculer vers la branche 'dev' et fusionner votre branche de fonctionnalité"
+      },
+      "hints": {
+        "createDev": "Utilisez 'git branch dev' en mode terminal ou utilisez le contrôle de création de branches de l'interface",
+        "switchDev": "Utilisez 'git checkout dev' en mode terminal ou utilisez le menu déroulant de changement de branche",
+        "createFeature": "Utilisez 'git checkout -b feature-login' en mode terminal ou créez la branche depuis l'interface puis basculez dessus",
+        "makeChanges": "Modifiez le code dans l'éditeur pour faire n'importe quel changement",
+        "commitChanges": "Utilisez 'git add .' et 'git commit -m \"votre message\"' en terminal ou utilisez les boutons de l'interface",
+        "mergeToDev": "D'abord utilisez 'git checkout dev' puis 'git merge feature-login', ou utilisez les contrôles de l'interface"
+      },
+      "uiActions": {
+        "createDev": "Créer branche 'dev'",
+        "switchDev": "Basculer vers branche 'dev'",
+        "createFeature": "Créer branche 'feature-login'",
+        "editCode": "Modifier le code",
+        "stageChanges": "Indexer les changements avec Git Add",
+        "commitChanges": "Valider les changements",
+        "switchBackDev": "Basculer vers branche 'dev'",
+        "mergeFeature": "Fusionner 'feature-login' dans 'dev'"
+      }
+    },
+    "teamWorkflow": {
+      "tabTitle": "Team Workflow",
+      "title": "Flux de Travail en Équipe",
+      "description": "Apprenez comment une équipe collabore en utilisant des branches, des opérations de pull et de merge.",
+      "steps": {
+        "createStructure": "Créer une structure avec branches 'master', 'dev' et 'release'",
+        "createStory": "Créer une branche d'histoire appelée 'story-123' depuis 'dev'",
+        "implementStory": "Faire des modifications sur 'story-123' et les valider",
+        "mergeToDev": "Fusionner 'story-123' dans 'dev' puis 'dev' dans 'release'",
+        "prepareProduction": "Fusionner 'release' dans 'master' pour la production"
+      },
+      "hints": {
+        "createStructure": "Créez chaque branche à partir de master en utilisant 'git branch' ou l'interface",
+        "createStory": "D'abord basculez vers 'dev', puis créez la branche 'story-123'",
+        "implementStory": "Basculez vers 'story-123', faites des modifications, indexez et validez-les",
+        "mergeToDev": "Fusionnez d'abord dans 'dev', puis fusionnez 'dev' dans 'release'",
+        "prepareProduction": "Basculez vers 'master' et fusionnez depuis 'release'"
+      }
+    },
+    "technicalTasks": {
+      "tabTitle": "Technical Tasks",
+      "title": "Flux de Travail de Tâches Techniques",
+      "description": "Apprenez comment décomposer une histoire en tâches techniques et travailler dessus en parallèle.",
+      "steps": {
+        "setupProject": "Créer les branches 'master', 'dev' et 'story-456'",
+        "createTasks": "Créer deux branches de tâches techniques: 'task-1' et 'task-2' depuis 'story-456'",
+        "implementTask1": "Implémenter 'task-1' avec des modifications et valider",
+        "implementTask2": "Implémenter 'task-2' avec différentes modifications et valider",
+        "integrateTasks": "Fusionner les deux tâches dans 'story-456'",
+        "completeWorkflow": "Livrer l'histoire en fusionnant à travers 'dev' vers 'master'"
+      },
+      "hints": {
+        "setupProject": "Créez la structure de branches pour le projet",
+        "createTasks": "Basculez vers 'story-456' et créez deux branches à partir de celle-ci",
+        "implementTask1": "Basculez vers 'task-1', faites des modifications et validez",
+        "implementTask2": "Basculez vers 'task-2', faites des modifications et validez",
+        "integrateTasks": "Basculez vers 'story-456' et fusionnez les deux branches de tâches",
+        "completeWorkflow": "Fusionnez 'story-456' dans 'dev', puis 'dev' dans 'master'"
+      }
+    },
+    "mergeConflicts": {
+      "tabTitle": "Merge Conflicts",
+      "title": "Résoudre les Merge Conflicts",
+      "description": "Apprenez à identifier et résoudre les merge conflicts qui se produisent lors de la fusion de branches avec des modifications contradictoires.",
+      "steps": {
+        "setupRepo": "Configurer un dépôt avec les branches 'master' et 'dev'",
+        "createFeatureA": "Créer et basculer vers la branche 'feature-a' depuis 'dev'",
+        "commitFeatureA": "Modifier le code et valider sur 'feature-a'",
+        "createFeatureB": "Basculer vers 'dev' et créer la branche 'feature-b'",
+        "commitFeatureB": "Faire des modifications contradictoires sur 'feature-b' et valider",
+        "resolveConflict": "Créer et résoudre un merge conflict"
+      },
+      "hints": {
+        "setupRepo": "Créez une branche 'dev' à partir de 'master'",
+        "createFeatureA": "Utilisez 'git checkout -b feature-a' depuis la branche 'dev'",
+        "commitFeatureA": "Modifiez le code, indexez et validez vos modifications",
+        "createFeatureB": "Revenez à 'dev' et créez une nouvelle branche avec 'git checkout -b feature-b'",
+        "commitFeatureB": "Modifiez la même partie du code, indexez et validez vos modifications",
+        "resolveConflict": "Basculez vers 'dev', essayez de fusionner les deux branches de fonctionnalités et résolvez le conflit"
+      },
+      "conflict": {
+        "title": "Merge Conflict Détecté !",
+        "description": "Il y a un merge conflict dans votre fichier. Vous devez le résoudre manuellement en modifiant le contenu ci-dessous.",
+        "fileTitle": "Contenu du Fichier en Conflit :",
+        "placeholder": "Modifiez ce code pour résoudre le conflit...",
+        "instruction": "Supprimez les marqueurs de conflit (<<<<<<< HEAD, =======, >>>>>>>), et modifiez le code pour créer une solution fonctionnelle.",
+        "validate": "Valider la Résolution",
+        "success": "Conflit résolu correctement !",
+        "error": "Il y a encore des conflits non résolus. Supprimez les marqueurs de conflit et fournissez une solution.",
+        "incomplete": "Vous avez supprimé les marqueurs de conflit, mais votre solution doit inclure à la fois la journalisation et les améliorations de performance."
+      },
+      "scenario": {
+        "title": "Scénario : Conflit de Collaboration en Équipe",
+        "description": "Votre équipe travaille sur une fonctionnalité. Deux développeurs ont modifié la même fonction de différentes manières :",
+        "dev1": "Développeur 1 (branche feature-a)",
+        "dev1desc": "A implémenté une version axée sur la performance.",
+        "dev2": "Développeur 2 (branche feature-b)",
+        "dev2desc": "A implémenté une version avec journalisation supplémentaire.",
+        "task": "Lors de la fusion de ces branches dans dev, un conflit s'est produit. Votre tâche est de résoudre ce conflit en créant une solution qui préserve à la fois les améliorations de performance et la fonctionnalité de journalisation."
+      },
+      "resolution": {
+        "title": "Comment Résoudre Ce Conflit :",
+        "step1": "Supprimez les marqueurs de conflit (<<<<<<< HEAD, =======, >>>>>>>)",
+        "step2": "Combinez les deux implémentations pour conserver les améliorations de performance de feature-a",
+        "step3": "Préservez la fonctionnalité de journalisation de la branche actuelle (HEAD)",
+        "step4": "Assurez-vous que le résultat est du JavaScript valide qui s'exécuterait sans erreurs"
+      },
+      "startExplanation": "Vous serez présenté avec un conflit à résoudre. Vous devez modifier le code pour créer une version qui combine correctement les deux implémentations."
+    }
   }
 } 

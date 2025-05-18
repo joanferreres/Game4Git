@@ -1,6 +1,7 @@
 export default {
   plugins: {
     tailwindcss: {},
-    autoprefixer: {},
-  },
+    // Autoprefixer desactivado temporalmente debido a problemas de compatibilidad
+    // ...(process.env.NODE_ENV === 'production' ? { autoprefixer: {} } : {})
+  }
 }

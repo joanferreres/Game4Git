@@ -349,19 +349,42 @@ const GitControls: React.FC = () => {
   
   // Handle reset working changes
   const handleReset = () => {
-    resetWorkingChanges();
-    toast.info("Changes reset to current HEAD");
+    if (workingChanges) {
+      // Solo resetear si hay cambios para resetear
+      const currentCommit = repository.commits.find(c => c.id === repository.HEAD);
+      if (currentCommit && currentCommit.content !== workingChanges) {
+        resetWorkingChanges();
+        toast.info(t('messages.changesReset', "Changes reset to current HEAD"));
+      } else {
+        toast.info(t('messages.noChangesToReset', "No changes to reset"));
+      }
+    } else {
+      toast.info(t('messages.noChangesToReset', "No changes to reset"));
+    }
   };
   
   // Handle clear selection and reset to initial commit
   const handleClearSelection = () => {
-    // Clear the selected commit
-    selectCommit(null);
-    
-    // Reset to the initial commit
-    resetToInitialCommit();
-    
-    toast.info("Reset to initial commit");
+    // Verificar si hay una selección para limpiar o si estamos en una rama diferente a master
+    if (selectedCommitId || activeBranchName !== "master") {
+      // Clear the selected commit
+      selectCommit(null);
+      
+      // Reset to the initial commit
+      resetToInitialCommit();
+      
+      toast.info(t('messages.resetToInitial', "Reset to initial commit"));
+      
+      // Mostrar una explicación más detallada de lo que hace esta acción
+      toast.info(
+        t('messages.clearSelectionExplanation', 'This resets the graph view to the initial state, returns to the master branch, and clears your commit selection.'),
+        {
+          duration: 4000
+        }
+      );
+    } else {
+      toast.info(t('messages.nothingToClear', "Nothing to clear"));
+    }
   };
   
   // Handle merge action
@@ -466,13 +489,15 @@ const GitControls: React.FC = () => {
                 onChange={(e) => setCommitMessage(e.target.value)}
               />
             </div>
-            <Button 
+            <Button
+              variant="default"
+              size="auto"
+              disabled={!commitMessage.trim() || !stagedChanges}
               onClick={handleCommit}
-              disabled={!hasStaged}
-              className="bg-git-commit hover:bg-git-commit/80 w-full sm:w-auto"
+              className="bg-git-commit hover:bg-git-commit/80"
             >
               <GitCommit className="mr-1 h-4 w-4 flex-shrink-0" />
-              <span className="whitespace-nowrap overflow-hidden text-ellipsis">{t('git.gitCommit')}</span>
+              {t('git.commitChanges')}
             </Button>
           </div>
           
@@ -526,12 +551,14 @@ const GitControls: React.FC = () => {
                 onChange={(e) => setBranchName(e.target.value)}
               />
             </div>
-            <Button 
+            <Button
               onClick={handleCreateBranch}
-              className="bg-git-branch hover:bg-git-branch/80 w-full sm:w-auto"
+              size="auto"
+              disabled={!branchName.trim()}
+              className="bg-git-branch hover:bg-git-branch/80"
             >
               <GitBranch className="mr-1 h-4 w-4 flex-shrink-0" />
-              {t('git.create')}
+              {t('git.createBranch')}
             </Button>
           </div>
         </div>
@@ -542,32 +569,34 @@ const GitControls: React.FC = () => {
         <div className="space-y-2">
           <h3 className="text-sm font-medium">{t('git.remoteName')} ({repository.remoteName})</h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <Button 
+            <Button
               variant="outline"
-              size="sm"
+              size="auto"
               onClick={handleFetch}
               className="w-full"
             >
               <DownloadCloud className="mr-1 h-4 w-4 flex-shrink-0" />
-              <span className="truncate">{t('git.gitFetch')}</span>
+              {t('git.gitFetch')}
             </Button>
-            <Button 
+            <Button
               variant="outline"
-              size="sm"
+              size="auto"
               onClick={handlePull}
+              disabled={!activeBranchName}
               className="w-full"
             >
               <ArrowDownUp className="mr-1 h-4 w-4 flex-shrink-0" />
-              <span className="truncate">{t('git.gitPull')}</span>
+              {t('git.gitPull')}
             </Button>
-            <Button 
+            <Button
               variant="outline"
-              size="sm"
+              size="auto"
               onClick={handlePush}
+              disabled={!activeBranchName}
               className="w-full"
             >
               <Upload className="mr-1 h-4 w-4 flex-shrink-0" />
-              <span className="truncate">{t('git.gitPush')}</span>
+              {t('git.gitPush')}
             </Button>
           </div>
           
@@ -645,6 +674,7 @@ const GitControls: React.FC = () => {
             </div>
             <Button 
               onClick={handleMerge}
+              size="auto"
               disabled={!sourceBranchToMerge || !targetBranchForMerge || sourceBranchToMerge === targetBranchForMerge}
               className="w-full bg-git-merge hover:bg-git-merge/80 mt-2"
             >
@@ -669,27 +699,7 @@ const GitControls: React.FC = () => {
         {/* Actions Section */}
         <div>
           <h3 className="text-sm font-medium mb-2">{t('git.actions')}</h3>
-          <div className="grid grid-cols-3 gap-2">
-            <Button 
-              variant="outline"
-              size="sm" 
-              onClick={handleReset}
-              className="w-full"
-            >
-              <RefreshCw className="mr-1 h-4 w-4 flex-shrink-0" />
-              <span className="truncate">{t('git.resetChanges')}</span>
-            </Button>
-            
-            <Button 
-              variant="outline"
-              size="sm"
-              onClick={handleClearSelection}
-              className="w-full"
-            >
-              <Code className="mr-1 h-4 w-4 flex-shrink-0" />
-              <span className="truncate">{t('git.clearSelection')}</span>
-            </Button>
-
+          <div className="grid grid-cols-1 gap-2">
             <Button 
               variant="outline"
               size="sm"
@@ -715,6 +725,14 @@ const GitControls: React.FC = () => {
             <span>{t('git.controls')}</span>
             <GitGuide />
           </div>
+          
+          <div className="flex items-center gap-2 px-3 py-1 bg-blue-600 text-white rounded">
+            <GitBranch className="h-4 w-4" />
+            <span className="font-medium text-sm">
+              {repository.branches.find(b => b.isActive)?.name || "none"}
+            </span>
+          </div>
+          
           <div className="flex items-center space-x-2">
             <Label htmlFor="terminal-mode" className={`text-xs ${useTerminal ? 'text-primary' : 'text-muted-foreground'}`}>
               {t('git.terminal')}
