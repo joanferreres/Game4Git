@@ -22,11 +22,40 @@ const nodeTypes: NodeTypes = {
   commit: GitCommitNode,
 };
 
-// Position constants
+// Position constants - responsive values based on screen size
 const NODE_WIDTH = 56;
 const NODE_HEIGHT = 56;
 const HORIZONTAL_SPACING = 180;
 const VERTICAL_SPACING = 100;
+
+// Helper to get responsive spacing
+const getResponsiveSpacing = () => {
+  if (typeof window !== 'undefined') {
+    if (window.innerWidth < 640) { // mobile
+      return {
+        horizontal: 120,
+        vertical: 70,
+        nodeWidth: 42,
+        nodeHeight: 42,
+      };
+    } else if (window.innerWidth < 1024) { // tablet
+      return {
+        horizontal: 150,
+        vertical: 85,
+        nodeWidth: 48,
+        nodeHeight: 48,
+      };
+    }
+  }
+  
+  // desktop default
+  return {
+    horizontal: HORIZONTAL_SPACING,
+    vertical: VERTICAL_SPACING,
+    nodeWidth: NODE_WIDTH,
+    nodeHeight: NODE_HEIGHT,
+  };
+};
 
 const GitGraph: React.FC = () => {
   const { repository, selectedCommitId, selectCommit } = useGitStore();
@@ -37,6 +66,9 @@ const GitGraph: React.FC = () => {
     const newEdges: Edge[] = [];
     
     if (!repository.commits.length) return { nodes: newNodes, edges: newEdges };
+
+    // Get responsive spacing for current screen size
+    const { horizontal, vertical, nodeWidth, nodeHeight } = getResponsiveSpacing();
 
     // Sort commits by timestamp (older first)
     const sortedCommits = [...repository.commits].sort(
@@ -59,10 +91,10 @@ const GitGraph: React.FC = () => {
     
     // Track X position of last commit on each lane
     const laneLastX: Record<number, number> = {
-      0: -HORIZONTAL_SPACING // Start master lane at X=0 (after adding spacing for first commit)
+      0: -horizontal // Start master lane at X=0 (after adding spacing for first commit)
     };
     
-    let nextLaneY = VERTICAL_SPACING; // Next available lane (Y position)
+    let nextLaneY = vertical; // Next available lane (Y position)
 
     // Map commit IDs to branches they are the head of
     const branchHeads: Record<string, string[]> = {};
@@ -75,8 +107,8 @@ const GitGraph: React.FC = () => {
       // Assign initial branch Y positions (except master which is already set)
       if (branch.name !== "master" && branchLanes[branch.name] === undefined) {
         branchLanes[branch.name] = nextLaneY;
-        laneLastX[nextLaneY] = -HORIZONTAL_SPACING; // Initialize lane's last X position
-        nextLaneY += VERTICAL_SPACING;
+        laneLastX[nextLaneY] = -horizontal; // Initialize lane's last X position
+        nextLaneY += vertical;
       }
     });
 
@@ -161,8 +193,8 @@ const GitGraph: React.FC = () => {
       // Ensure the branch has a lane assigned
       if (branchLanes[branch] === undefined && branch !== "master") {
         branchLanes[branch] = nextLaneY;
-        laneLastX[nextLaneY] = -HORIZONTAL_SPACING; // Initialize lane's last X position
-        nextLaneY += VERTICAL_SPACING;
+        laneLastX[nextLaneY] = -horizontal; // Initialize lane's last X position
+        nextLaneY += vertical;
       }
       
       // Always use the branch's lane for Y position
@@ -182,7 +214,7 @@ const GitGraph: React.FC = () => {
         
         if (parentPos) {
           // Always position the commit after its parent horizontally
-          commitX = parentPos.x + HORIZONTAL_SPACING;
+          commitX = parentPos.x + horizontal;
           
           // But maintain the vertical position based on its branch
           // This is key: we're ignoring parentPos.y and using the branch's assigned lane
@@ -192,107 +224,91 @@ const GitGraph: React.FC = () => {
           if (branch !== parentBranch) {
             // If this is the first commit in a different branch than its parent,
             // make sure it's at least as far right as any other commit in this lane
-            commitX = Math.max(commitX, (laneLastX[commitY] || 0) + HORIZONTAL_SPACING);
+            commitX = Math.max(commitX, (laneLastX[commitY] || 0) + horizontal);
           } else {
             // For commits continuing on the same branch, position after the latest commit on that branch
-            commitX = Math.max(commitX, (laneLastX[commitY] || 0) + HORIZONTAL_SPACING);
+            commitX = Math.max(commitX, (laneLastX[commitY] || 0) + horizontal);
           }
         } else {
-          // Fallback if parent position not available (shouldn't happen with sorted commits)
-          commitX = (laneLastX[commitY] || 0) + HORIZONTAL_SPACING;
+          // Fallback if parent not positioned (shouldn't happen with sorted commits)
+          commitX = laneLastX[commitY] + horizontal;
         }
-      } else {
-        // Merge commit - position after all parents
-        let maxParentX = 0;
-        
-        // Find the maximum X position of all parents
-        commit.parentIds.forEach(parentId => {
-          const parentPos = nodePositions[parentId];
-          if (parentPos) {
-            maxParentX = Math.max(maxParentX, parentPos.x);
-          }
+      } else if (commit.parentIds.length > 1) {
+        // This is a merge commit
+        // Position after the latest parent in the target branch
+        const parents = commit.parentIds.map(id => {
+          const pos = nodePositions[id];
+          return { id, x: pos ? pos.x : 0 };
         });
         
-        // Position merge commit after the furthest parent
-        commitX = maxParentX + HORIZONTAL_SPACING;
+        const maxParentX = Math.max(...parents.map(p => p.x));
+        commitX = maxParentX + horizontal;
+        
+        // Use the lane of the selected branch for this commit
+        commitY = branchLanes[branch];
+        
+        // Ensure it's after the last commit in its lane
+        commitX = Math.max(commitX, (laneLastX[commitY] || 0) + horizontal);
       }
       
-      // Update lane's last X position
+      // Update the latest X position for this lane
       laneLastX[commitY] = commitX;
       
-      // Store position
+      // Store this node's position
       nodePositions[commit.id] = { x: commitX, y: commitY };
       
       // Create node
+      const isBranchHead = Object.values(repository.branches).some(
+        b => b.commitId === commit.id
+      );
+      
+      const branchNames = repository.branches
+        .filter(b => b.commitId === commit.id)
+        .map(b => b.name);
+      
+      const isHead = repository.HEAD === commit.id;
+      
       newNodes.push({
         id: commit.id,
         type: "commit",
         position: { x: commitX, y: commitY },
         data: {
-          commit,
-          isHead: commit.id === repository.HEAD,
-          isSelected: commit.id === selectedCommitId,
-          branchLabels: branchHeads[commit.id] || [],
+          label: commit.message.slice(0, 20),
+          branch,
+          isHead,
+          isBranchHead,
+          branchNames,
+          isSelected: selectedCommitId === commit.id,
+          width: nodeWidth,
+          height: nodeHeight,
+        },
+        style: {
+          width: nodeWidth,
+          height: nodeHeight,
         },
       });
       
       // Create edges to parents
       commit.parentIds.forEach(parentId => {
-        if (nodePositions[parentId]) {
+        const parentPos = nodePositions[parentId];
+        if (parentPos) {
           const parentBranch = commitBranch[parentId];
-          const parentPos = nodePositions[parentId];
-          const commitPos = nodePositions[commit.id];
           
-          // Determine edge type and color based on relationship
-          let edgeType = ConnectionLineType.SmoothStep;
-          let stroke = "#555"; // Default color
-          let animated = false;
-          let strokeWidth = 2.5;
+          // Determine if this is a merge edge or a regular edge
+          const isMergeEdge = branch !== parentBranch;
           
-          // Is this a cross-branch edge?
-          const isCrossBranch = parentBranch !== branch;
-          
-          // Is this a merge edge? (commit has multiple parents)
-          const isMergeEdge = commit.parentIds.length > 1;
-          
-          // Vertical distance between nodes
-          const verticalDistance = Math.abs(commitPos.y - parentPos.y);
-          
-          // Choose edge appearance based on the relationship
-          if (parentBranch === "master") {
-            stroke = "#22c55e"; // Green for master
-          } else if (!isCrossBranch && branch !== "master") {
-            // Determine branch type based on name
-            if (branch.toLowerCase().includes("someone") || branch.toLowerCase().includes("else")) {
-              stroke = "#f97316"; // Orange for "Someone Else's Work"
-            } else {
-              stroke = "#3b82f6"; // Blue for "Your Work"
-            }
-          } else {
-            // This is either a branch-point or a merge
-            stroke = "#9333ea"; // Purple for cross-branch
-            
-            // If it's a significant vertical jump, make it more obvious
-            if (verticalDistance > 0) {
-              strokeWidth = 3;
-              // Animate merge edges for visual distinction
-              if (isMergeEdge) {
-                animated = true;
-              }
-            }
-          }
-          
-          // Create edge
           newEdges.push({
-            id: `${parentId}->${commit.id}`,
+            id: `${commit.id}-${parentId}`,
             source: parentId,
             target: commit.id,
-            type: edgeType,
-            animated: animated,
             style: {
-              strokeWidth: strokeWidth,
-              stroke: stroke,
+              stroke: isMergeEdge ? "#ff9800" : "#888",
+              strokeWidth: isMergeEdge ? 1.5 : 1,
+              strokeDasharray: isMergeEdge ? "5 5" : "none",
             },
+            
+            // Use a bezier curve for merges, and a straight line for direct commits
+            type: isMergeEdge ? "smoothstep" : "default",
           });
         }
       });
@@ -301,53 +317,52 @@ const GitGraph: React.FC = () => {
     return { nodes: newNodes, edges: newEdges };
   }, [repository, selectedCommitId]);
 
-  const onNodeClick = useCallback(
-    (_, node) => {
+  const handleNodeClick = useCallback(
+    (event: React.MouseEvent, node: Node) => {
       selectCommit(node.id);
     },
     [selectCommit]
   );
 
   return (
-    <Card className="w-full h-full overflow-hidden">
-      <CardHeader className="py-3 px-4">
-        <CardTitle className="text-sm">{t('gitGraph.title')}</CardTitle>
+    <Card className="w-full h-full">
+      <CardHeader className="p-3 sm:p-4 pb-1 sm:pb-2 flex flex-row items-center justify-between">
+        <CardTitle className="text-sm sm:text-base font-medium">
+          {t('git.commitGraph', "Commit Graph")}
+        </CardTitle>
       </CardHeader>
-      <CardContent className="p-0 h-[calc(100%-48px)]">
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          nodeTypes={nodeTypes}
-          onNodeClick={onNodeClick}
-          minZoom={0.2}
-          maxZoom={1.5}
-          defaultViewport={{ x: 0, y: 0, zoom: 0.8 }}
-          fitView
-          fitViewOptions={{ padding: 0.3 }}
-          attributionPosition="bottom-right"
-          connectionLineType={ConnectionLineType.SmoothStep}
-          className="bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800"
-        >
-          <Background gap={16} color="#aaa" variant={BackgroundVariant.Dots} />
-          <Controls className="bg-card shadow-md border-border" />
-          <Panel position="top-right" className="bg-card shadow-md border-border rounded-md p-2">
-            <div className="text-xs flex gap-2">
-              <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-green-500 mr-1"></div>
-                <span>{t('gitGraph.master')}</span>
-              </div>
-              <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-blue-500 mr-1"></div>
-                <span>{t('gitGraph.yourWork')}</span>
-              </div>
-              
-              <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-amber-500 mr-1"></div>
-                <span>{t('gitGraph.head')}</span>
-              </div>
-            </div>
-          </Panel>
-        </ReactFlow>
+      <CardContent className="p-0 overflow-hidden h-[calc(100%-2.5rem)]">
+        <div className="w-full h-full">
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            nodeTypes={nodeTypes}
+            fitView
+            maxZoom={2}
+            minZoom={0.2}
+            zoomOnScroll={true}
+            panOnScroll={true}
+            onNodeClick={handleNodeClick}
+            connectionLineType={ConnectionLineType.SmoothStep}
+            className="bg-muted/20"
+            fitViewOptions={{
+              padding: 0.2,
+            }}
+          >
+            <Background color="#aaa" size={1.5} variant={BackgroundVariant.Dots} />
+            <Controls
+              showInteractive={false}
+              className="bg-background/80 backdrop-blur-sm border"
+              style={{
+                fontSize: '0.75rem',
+                padding: '0.25rem',
+                borderRadius: '0.375rem',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+              }}
+            />
+           
+          </ReactFlow>
+        </div>
       </CardContent>
     </Card>
   );

@@ -463,20 +463,20 @@ const GitControls: React.FC = () => {
     }
 
     return (
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 p-3 sm:p-6">
         {/* Commit Section */}
         <div className="space-y-2">
-          <h3 className="text-sm font-medium">{t('git.commitChanges')}</h3>
+          <h3 className="text-xs sm:text-sm font-medium">{t('git.commitChanges')}</h3>
           
           {/* Git Add step */}
           <div className="flex items-end gap-2 mb-2">
             <Button 
               onClick={handleStageChanges}
               disabled={!hasChangesToStage}
-              className="bg-git-branch hover:bg-git-branch/80 w-full"
+              className="bg-git-branch hover:bg-git-branch/80 w-full text-xs sm:text-sm"
               size="sm"
             >
-              <Plus className="mr-1 h-4 w-4 flex-shrink-0" />
+              <Plus className="mr-1 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
               <span className="whitespace-nowrap overflow-hidden text-ellipsis">{t('git.gitAdd')}</span>
             </Button>
           </div>
@@ -487,28 +487,29 @@ const GitControls: React.FC = () => {
                 placeholder={t('git.commitChanges')}
                 value={commitMessage}
                 onChange={(e) => setCommitMessage(e.target.value)}
+                className="text-xs sm:text-sm h-8 sm:h-10"
               />
             </div>
             <Button
               variant="default"
-              size="auto"
+              size="sm"
               disabled={!commitMessage.trim() || !stagedChanges}
               onClick={handleCommit}
-              className="bg-git-commit hover:bg-git-commit/80"
+              className="bg-git-commit hover:bg-git-commit/80 text-xs sm:text-sm w-full sm:w-auto"
             >
-              <GitCommit className="mr-1 h-4 w-4 flex-shrink-0" />
+              <GitCommit className="mr-1 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
               {t('git.commitChanges')}
             </Button>
           </div>
           
           {hasStaged && (
-            <p className="text-xs text-muted-foreground">
+            <p className="text-[10px] sm:text-xs text-muted-foreground">
               {t('messages.stagedAndReady')}
             </p>
           )}
           
           {!hasStaged && hasChangesToStage && (
-            <p className="text-xs text-muted-foreground">
+            <p className="text-[10px] sm:text-xs text-muted-foreground">
               {t('messages.hasUnsavedChanges')}
             </p>
           )}
@@ -518,24 +519,24 @@ const GitControls: React.FC = () => {
         
         {/* Branch Section */}
         <div>
-          <h3 className="text-sm font-medium mb-2">{t('git.branches')}</h3>
+          <h3 className="text-xs sm:text-sm font-medium mb-2">{t('git.branches')}</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
             <div>
-              <p className="text-xs mb-1">{t('git.currentBranch')}</p>
-              <div className="bg-muted/50 p-2 rounded-md text-sm flex items-center">
-                <GitBranch className="mr-1 h-4 w-4 flex-shrink-0" />
+              <p className="text-[10px] sm:text-xs mb-1">{t('git.currentBranch')}</p>
+              <div className="bg-muted/50 p-2 rounded-md text-xs sm:text-sm flex items-center">
+                <GitBranch className="mr-1 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
                 <span className="truncate">{activeBranch?.name || "none"}</span>
               </div>
             </div>
             <div>
-              <p className="text-xs mb-1">{t('git.switchBranch')}</p>
+              <p className="text-[10px] sm:text-xs mb-1">{t('git.switchBranch')}</p>
               <Select onValueChange={handleSwitchBranch}>
-                <SelectTrigger>
+                <SelectTrigger className="h-8 sm:h-10 text-xs sm:text-sm">
                   <SelectValue placeholder={t('git.switchBranch')} />
                 </SelectTrigger>
                 <SelectContent>
                   {repository.branches.map((branch) => (
-                    <SelectItem key={branch.name} value={branch.name}>
+                    <SelectItem key={branch.name} value={branch.name} className="text-xs sm:text-sm">
                       {branch.name}
                     </SelectItem>
                   ))}
@@ -549,15 +550,16 @@ const GitControls: React.FC = () => {
                 placeholder={t('git.newBranchName')}
                 value={branchName}
                 onChange={(e) => setBranchName(e.target.value)}
+                className="text-xs sm:text-sm h-8 sm:h-10"
               />
             </div>
             <Button
               onClick={handleCreateBranch}
-              size="auto"
+              size="sm"
               disabled={!branchName.trim()}
-              className="bg-git-branch hover:bg-git-branch/80"
+              className="bg-git-branch hover:bg-git-branch/80 text-xs sm:text-sm w-full sm:w-auto"
             >
-              <GitBranch className="mr-1 h-4 w-4 flex-shrink-0" />
+              <GitBranch className="mr-1 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
               {t('git.createBranch')}
             </Button>
           </div>
@@ -567,53 +569,55 @@ const GitControls: React.FC = () => {
         
         {/* Remote Repository Section */}
         <div className="space-y-2">
-          <h3 className="text-sm font-medium">{t('git.remoteName')} ({repository.remoteName})</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <h3 className="text-xs sm:text-sm font-medium">{t('git.remoteName')} ({repository.remoteName})</h3>
+          <div className="grid grid-cols-3 gap-1 sm:gap-2">
             <Button
               variant="outline"
-              size="auto"
+              size="sm"
               onClick={handleFetch}
-              className="w-full"
+              className="w-full text-[10px] sm:text-xs px-1 sm:px-3 h-8 sm:h-10"
             >
-              <DownloadCloud className="mr-1 h-4 w-4 flex-shrink-0" />
-              {t('git.gitFetch')}
+              <DownloadCloud className="mr-0.5 sm:mr-1 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+              <span className="hidden xs:inline">{t('git.gitFetch')}</span>
             </Button>
             <Button
               variant="outline"
-              size="auto"
+              size="sm"
               onClick={handlePull}
               disabled={!activeBranchName}
-              className="w-full"
+              className="w-full text-[10px] sm:text-xs px-1 sm:px-3 h-8 sm:h-10"
             >
-              <ArrowDownUp className="mr-1 h-4 w-4 flex-shrink-0" />
-              {t('git.gitPull')}
+              <ArrowDownUp className="mr-0.5 sm:mr-1 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+              <span className="hidden xs:inline">{t('git.gitPull')}</span>
             </Button>
             <Button
               variant="outline"
-              size="auto"
+              size="sm"
               onClick={handlePush}
               disabled={!activeBranchName}
-              className="w-full"
+              className="w-full text-[10px] sm:text-xs px-1 sm:px-3 h-8 sm:h-10"
             >
-              <Upload className="mr-1 h-4 w-4 flex-shrink-0" />
-              {t('git.gitPush')}
+              <Upload className="mr-0.5 sm:mr-1 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+              <span className="hidden xs:inline">{t('git.gitPush')}</span>
             </Button>
           </div>
           
           {/* Mostrar información sobre el último fetch/push */}
-          <div className="text-xs text-muted-foreground">
-            {repository.lastFetchTime && (
-              <div>{t('git.lastFetch')}: {new Date(repository.lastFetchTime).toLocaleTimeString()}</div>
-            )}
-            {repository.lastPushTime && (
-              <div>{t('git.lastPush')}: {new Date(repository.lastPushTime).toLocaleTimeString()}</div>
-            )}
+          <div className="text-[10px] sm:text-xs text-muted-foreground">
+            <div className="flex flex-wrap gap-2">
+              {repository.lastFetchTime && (
+                <div>{t('git.lastFetch')}: {new Date(repository.lastFetchTime).toLocaleTimeString()}</div>
+              )}
+              {repository.lastPushTime && (
+                <div>{t('git.lastPush')}: {new Date(repository.lastPushTime).toLocaleTimeString()}</div>
+              )}
+            </div>
             {/* Mostrar las referencias remotas */}
             <div className="mt-1">
               {t('git.remoteReferences')}:
               <ul className="list-disc list-inside">
                 {repository.remoteReferences.map(ref => (
-                  <li key={ref.name}>{ref.name}</li>
+                  <li key={ref.name} className="truncate">{ref.name}</li>
                 ))}
               </ul>
             </div>
@@ -625,15 +629,15 @@ const GitControls: React.FC = () => {
         {/* Merge Section */}
         {repository.branches.length > 1 && (
           <div className="space-y-2">
-            <h3 className="text-sm font-medium">{t('git.mergeBranches')}</h3>
+            <h3 className="text-xs sm:text-sm font-medium">{t('git.mergeBranches')}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 items-end">
               <div>
-                <label htmlFor="sourceBranchSelect" className="text-xs mb-1 block">{t('git.mergeFrom')}:</label>
+                <label htmlFor="sourceBranchSelect" className="text-[10px] sm:text-xs mb-1 block">{t('git.mergeFrom')}:</label>
                 <Select 
                   onValueChange={setSourceBranchToMerge} 
                   value={sourceBranchToMerge}
                 >
-                  <SelectTrigger id="sourceBranchSelect">
+                  <SelectTrigger id="sourceBranchSelect" className="h-8 sm:h-10 text-xs sm:text-sm">
                     <SelectValue placeholder={t('git.mergeFrom')} />
                   </SelectTrigger>
                   <SelectContent>
@@ -642,6 +646,7 @@ const GitControls: React.FC = () => {
                         <SelectItem 
                           key={`source-${branch.name}`} 
                           value={branch.name}
+                          className="text-xs sm:text-sm"
                         >
                           {branch.name}
                         </SelectItem>
@@ -650,12 +655,12 @@ const GitControls: React.FC = () => {
                 </Select>
               </div>
               <div>
-                <label htmlFor="targetBranchSelect" className="text-xs mb-1 block">{t('git.mergeInto')}:</label>
+                <label htmlFor="targetBranchSelect" className="text-[10px] sm:text-xs mb-1 block">{t('git.mergeInto')}:</label>
                 <Select 
                   onValueChange={setTargetBranchForMerge} 
                   value={targetBranchForMerge || ""}
                 >
-                  <SelectTrigger id="targetBranchSelect">
+                  <SelectTrigger id="targetBranchSelect" className="h-8 sm:h-10 text-xs sm:text-sm">
                     <SelectValue placeholder={t('git.mergeInto')} />
                   </SelectTrigger>
                   <SelectContent>
@@ -664,6 +669,7 @@ const GitControls: React.FC = () => {
                         <SelectItem 
                           key={`target-${branch.name}`} 
                           value={branch.name}
+                          className="text-xs sm:text-sm"
                         >
                           {branch.name}
                         </SelectItem>
@@ -674,20 +680,20 @@ const GitControls: React.FC = () => {
             </div>
             <Button 
               onClick={handleMerge}
-              size="auto"
+              size="sm"
               disabled={!sourceBranchToMerge || !targetBranchForMerge || sourceBranchToMerge === targetBranchForMerge}
-              className="w-full bg-git-merge hover:bg-git-merge/80 mt-2"
+              className="w-full bg-git-merge hover:bg-git-merge/80 mt-2 text-xs sm:text-sm h-8 sm:h-10"
             >
-              <GitMerge className="mr-1 h-4 w-4 flex-shrink-0" />
+              <GitMerge className="mr-1 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
               {t('git.mergeBranches')}
             </Button>
             {sourceBranchToMerge === targetBranchForMerge && sourceBranchToMerge && targetBranchForMerge && (
-              <p className="text-xs text-red-500">
+              <p className="text-[10px] sm:text-xs text-red-500">
                 {t('messages.sourceSameAsTarget')}
               </p>
             )}
             {sourceBranchToMerge && targetBranchForMerge && sourceBranchToMerge !== targetBranchForMerge && (
-              <p className="text-xs text-muted-foreground">
+              <p className="text-[10px] sm:text-xs text-muted-foreground">
                 {t('messages.mergedBranch')} "{sourceBranchToMerge}" {t('messages.into')} "{targetBranchForMerge}".
               </p>
             )}
@@ -698,15 +704,15 @@ const GitControls: React.FC = () => {
         
         {/* Actions Section */}
         <div>
-          <h3 className="text-sm font-medium mb-2">{t('git.actions')}</h3>
+          <h3 className="text-xs sm:text-sm font-medium mb-2">{t('git.actions')}</h3>
           <div className="grid grid-cols-1 gap-2">
             <Button 
               variant="outline"
               size="sm"
               onClick={() => window.location.reload()}
-              className="bg-red-50 hover:bg-red-100 text-red-600 w-full"
+              className="bg-red-50 hover:bg-red-100 text-red-600 w-full text-xs sm:text-sm h-8 sm:h-10"
             >
-              <RefreshCcw className="mr-1 h-4 w-4 flex-shrink-0" />
+              <RefreshCcw className="mr-1 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
               <span className="truncate">{t('git.resetAll')}</span>
             </Button>
           </div>
@@ -718,31 +724,32 @@ const GitControls: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Card>
-      <CardHeader className="pb-3">
-        <CardTitle className="text-base flex items-center justify-between">
-          <div className="flex items-center gap-2">
+    <Card className="overflow-hidden">
+      <CardHeader className="pb-2 sm:pb-3 px-3 sm:px-6 pt-3 sm:pt-4">
+        <CardTitle className="text-sm sm:text-base flex items-center justify-between">
+          <div className="flex items-center gap-1 sm:gap-2">
             <span>{t('git.controls')}</span>
             <GitGuide />
           </div>
           
-          <div className="flex items-center gap-2 px-3 py-1 bg-blue-600 text-white rounded">
-            <GitBranch className="h-4 w-4" />
-            <span className="font-medium text-sm">
+          <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-0.5 sm:py-1 bg-blue-600 text-white rounded">
+            <GitBranch className="h-3 w-3 sm:h-4 sm:w-4" />
+            <span className="font-medium text-xs sm:text-sm">
               {repository.branches.find(b => b.isActive)?.name || "none"}
             </span>
           </div>
           
-          <div className="flex items-center space-x-2">
-            <Label htmlFor="terminal-mode" className={`text-xs ${useTerminal ? 'text-primary' : 'text-muted-foreground'}`}>
+          <div className="flex items-center space-x-1 sm:space-x-2">
+            <Label htmlFor="terminal-mode" className={`text-[10px] sm:text-xs hidden sm:inline-block ${useTerminal ? 'text-primary' : 'text-muted-foreground'}`}>
               {t('git.terminal')}
             </Label>
             <Switch
               id="terminal-mode"
               checked={useTerminal}
               onCheckedChange={toggleTerminal}
+              className="h-4 w-7 sm:h-5 sm:w-9"
             />
-            <Terminal className={`h-4 w-4 ${useTerminal ? 'text-primary' : 'text-muted-foreground'}`} />
+            <Terminal className={`h-3 w-3 sm:h-4 sm:w-4 ${useTerminal ? 'text-primary' : 'text-muted-foreground'}`} />
           </div>
         </CardTitle>
       </CardHeader>

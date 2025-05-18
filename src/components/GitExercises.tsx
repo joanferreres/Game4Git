@@ -669,10 +669,10 @@ const GitExercises: React.FC = () => {
       <SheetTrigger asChild>
         <Button
           variant="outline"
-          className="gap-2 fixed bottom-4 right-4 shadow-md rounded-full px-4"
+          className="gap-1.5 sm:gap-2 fixed bottom-4 right-4 shadow-md rounded-full px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 h-auto z-50"
         >
-          <Trophy className="h-5 w-5" />
-          <span>{t("exercises.challenges", "Challenges")}</span>
+          <Trophy className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" />
+          <span className="text-[10px] sm:text-xs md:text-sm">{t("exercises.challenges", "Challenges")}</span>
         </Button>
       </SheetTrigger>
       <SheetContent 
@@ -681,23 +681,23 @@ const GitExercises: React.FC = () => {
           selectedExercise === "merge-conflicts" ? "sm:max-w-full" : "sm:max-w-lg"
         }`}
       >
-        <div className="flex justify-between items-center p-6 pb-4 border-b sticky top-0 bg-background z-10">
-          <SheetTitle className="text-xl font-semibold flex items-center gap-2">
-            <Trophy className="h-5 w-5" />
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-3 sm:p-4 md:p-6 pb-2 sm:pb-3 md:pb-4 border-b sticky top-0 bg-background z-10">
+          <SheetTitle className="text-sm sm:text-base md:text-xl font-semibold flex items-center gap-1 sm:gap-2 mb-1 sm:mb-0">
+            <Trophy className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" />
             {t("exercises.title", "Git Exercises")}
           </SheetTitle>
           
-          <div className="flex items-center gap-2">
-            <SheetDescription className="hidden md:block">
+          <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+            <SheetDescription className="hidden sm:block text-[10px] sm:text-xs md:text-sm max-w-[200px] md:max-w-none">
               {t("exercises.description", "Complete these exercises to learn Git branching and team workflows")}
             </SheetDescription>
             <SheetClose asChild>
               <Button 
                 size="sm" 
                 variant="ghost"
-                className="rounded-full h-8 w-8 p-0 ml-2"
+                className="rounded-full h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 p-0"
               >
-                <XCircle className="h-5 w-5" />
+                <XCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" />
               </Button>
             </SheetClose>
           </div>
@@ -705,71 +705,83 @@ const GitExercises: React.FC = () => {
         
         <div className="p-0">
           <Tabs defaultValue="feature-branch" value={selectedExercise} onValueChange={setSelectedExercise}>
-            <div className="px-6 pt-4 pb-2">
-              <TabsList className="grid grid-cols-4 mb-2">
-                <TabsTrigger value="feature-branch">
+            <div className="px-3 sm:px-4 md:px-6 pt-2 sm:pt-3 md:pt-4 pb-1 sm:pb-2">
+              <TabsList className="grid grid-cols-4 mb-2 h-auto w-full overflow-hidden">
+                <TabsTrigger 
+                  value="feature-branch" 
+                  className="text-[8px] xs:text-[10px] sm:text-xs py-1 sm:py-1.5 px-0.5 sm:px-1 md:px-2 h-auto min-h-[2rem] overflow-hidden text-ellipsis whitespace-nowrap"
+                >
                   {t("exercises.featureBranch.tabTitle", "Feature Branch")}
                 </TabsTrigger>
-                <TabsTrigger value="team-workflow">
+                <TabsTrigger 
+                  value="team-workflow" 
+                  className="text-[8px] xs:text-[10px] sm:text-xs py-1 sm:py-1.5 px-0.5 sm:px-1 md:px-2 h-auto min-h-[2rem] overflow-hidden text-ellipsis whitespace-nowrap"
+                >
                   {t("exercises.teamWorkflow.tabTitle", "Team Workflow")}
                 </TabsTrigger>
-                <TabsTrigger value="technical-tasks">
+                <TabsTrigger 
+                  value="technical-tasks" 
+                  className="text-[8px] xs:text-[10px] sm:text-xs py-1 sm:py-1.5 px-0.5 sm:px-1 md:px-2 h-auto min-h-[2rem] overflow-hidden text-ellipsis whitespace-nowrap"
+                >
                   {t("exercises.technicalTasks.tabTitle", "Technical Tasks")}
                 </TabsTrigger>
-                <TabsTrigger value="merge-conflicts">
+                <TabsTrigger 
+                  value="merge-conflicts" 
+                  className="text-[8px] xs:text-[10px] sm:text-xs py-1 sm:py-1.5 px-0.5 sm:px-1 md:px-2 h-auto min-h-[2rem] overflow-hidden text-ellipsis whitespace-nowrap"
+                >
                   {t("exercises.mergeConflicts.tabTitle", "Merge Conflicts")}
                 </TabsTrigger>
               </TabsList>
             </div>
             
-            <TabsContent value="merge-conflicts" className="p-6 pt-0">
+            <TabsContent value="merge-conflicts" className="p-3 sm:p-6 pt-0">
               <Card className={`${selectedExercise === "merge-conflicts" && !exercises["merge-conflicts"].isCompleted ? "mx-auto max-w-5xl" : ""}`}>
-                <CardHeader>
+                <CardHeader className="p-3 sm:p-6">
                   <div className="flex justify-between items-start">
-                    <CardTitle className="text-lg font-semibold flex items-center gap-2">
-                      <GitMerge className="h-5 w-5 text-blue-500" />
+                    <CardTitle className="text-base sm:text-lg font-semibold flex items-center gap-1 sm:gap-2">
+                      <GitMerge className="h-4 w-4 sm:h-5 sm:w-5 text-blue-500" />
                       {exercises["merge-conflicts"].title}
                     </CardTitle>
                     {renderDifficultyBadge(exercises["merge-conflicts"].difficulty)}
                   </div>
-                  <CardDescription>
+                  <CardDescription className="text-xs sm:text-sm mt-1">
                     {exercises["merge-conflicts"].description}
                   </CardDescription>
                 </CardHeader>
                 
                 {!exercises["merge-conflicts"].isStarted ? (
-                  <CardContent className="space-y-6">
-                    <div className="bg-amber-50 p-4 rounded-md border border-amber-200 space-y-3">
-                      <h3 className="font-medium text-amber-800 flex items-center gap-2">
-                        <AlertTriangle className="h-4 w-4 text-amber-600" />
+                  <CardContent className="space-y-4 sm:space-y-6 p-3 sm:p-6">
+                    <div className="bg-amber-50 p-3 sm:p-4 rounded-md border border-amber-200 space-y-2 sm:space-y-3">
+                      <h3 className="font-medium text-amber-800 flex items-center gap-1 sm:gap-2 text-xs sm:text-sm">
+                        <AlertTriangle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-amber-600" />
                         {t("exercises.mergeConflicts.scenario.title", "Scenario: Team Collaboration Conflict")}
                       </h3>
-                      <p className="text-sm text-amber-700">
+                      <p className="text-xs sm:text-sm text-amber-700">
                         {t("exercises.mergeConflicts.scenario.description", "Your team is working on a feature. Two developers have modified the same function in different ways:")}
                       </p>
-                      <div className="space-y-2">
-                        <p className="text-sm text-amber-700">
+                      <div className="space-y-1 sm:space-y-2">
+                        <p className="text-xs sm:text-sm text-amber-700">
                           <strong>{t("exercises.mergeConflicts.scenario.dev1", "Developer 1 (feature-a branch)")}</strong>: {t("exercises.mergeConflicts.scenario.dev1desc", "Implemented a version focused on performance.")}
                         </p>
-                        <p className="text-sm text-amber-700">
+                        <p className="text-xs sm:text-sm text-amber-700">
                           <strong>{t("exercises.mergeConflicts.scenario.dev2", "Developer 2 (feature-b branch)")}</strong>: {t("exercises.mergeConflicts.scenario.dev2desc", "Implemented a version with additional logging.")}
                         </p>
                       </div>
-                      <p className="text-sm text-amber-700">
+                      <p className="text-xs sm:text-sm text-amber-700">
                         {t("exercises.mergeConflicts.scenario.task", "When merging these branches into dev, a conflict occurred. Your task is to resolve this conflict by creating a solution that preserves both the performance improvements and the logging functionality.")}
                       </p>
                     </div>
                     
-                    <div className="text-center space-y-2">
-                      <h3 className="text-lg font-medium">{t("exercises.readyToStart", "¿Listo para empezar?")}</h3>
-                      <p className="text-sm text-muted-foreground">
+                    <div className="text-center space-y-1 sm:space-y-2">
+                      <h3 className="text-base sm:text-lg font-medium">{t("exercises.readyToStart", "¿Listo para empezar?")}</h3>
+                      <p className="text-xs sm:text-sm text-muted-foreground">
                         {t("exercises.mergeConflicts.startExplanation", "You'll be presented with a conflict to resolve. You need to edit the code to create a version that combines both implementations correctly.")}
                       </p>
                     </div>
                     <div className="flex justify-center">
                       <Button 
                         onClick={startExercise}
-                        className="px-8"
+                        className="px-4 sm:px-8 text-xs sm:text-sm h-8 sm:h-10"
                         size="auto"
                       >
                         {t("exercises.start", "Iniciar Ejercicio")}
@@ -777,18 +789,19 @@ const GitExercises: React.FC = () => {
                     </div>
                   </CardContent>
                 ) : exercises["merge-conflicts"].isCompleted ? (
-                  <CardContent className="flex flex-col items-center justify-center py-8 space-y-4">
-                    <div className="text-center space-y-2 mb-2">
-                      <h3 className="text-lg font-medium text-green-600">{t("exercises.exerciseFinished", "¡Ejercicio Completado!")}</h3>
-                      <p className="text-sm text-muted-foreground">
+                  <CardContent className="flex flex-col items-center justify-center py-4 sm:py-8 space-y-3 sm:space-y-4 p-3 sm:p-6">
+                    <div className="text-center space-y-1 sm:space-y-2 mb-1 sm:mb-2">
+                      <h3 className="text-base sm:text-lg font-medium text-green-600">{t("exercises.exerciseFinished", "¡Ejercicio Completado!")}</h3>
+                      <p className="text-xs sm:text-sm text-muted-foreground">
                         {t("exercises.finishedExplanation", "Has completado este ejercicio. Puedes reiniciarlo o continuar con otro.")}
                       </p>
                     </div>
-                    <div className="flex gap-4">
+                    <div className="flex gap-2 sm:gap-4">
                       <Button 
                         onClick={resetExercise}
                         variant="outline"
                         size="auto"
+                        className="text-xs sm:text-sm h-8 sm:h-10"
                       >
                         {t("exercises.startAgain", "Comenzar de nuevo")}
                       </Button>
@@ -796,30 +809,31 @@ const GitExercises: React.FC = () => {
                         onClick={() => setSelectedExercise(selectedExercise === "feature-branch" ? "team-workflow" : selectedExercise === "team-workflow" ? "technical-tasks" : selectedExercise === "merge-conflicts" ? "feature-branch" : "team-workflow")}
                         variant="default"
                         size="auto"
+                        className="text-xs sm:text-sm h-8 sm:h-10"
                       >
                         {t("exercises.nextExercise", "Siguiente ejercicio")}
                       </Button>
                     </div>
                   </CardContent>
                 ) : (
-                  <CardContent className="space-y-6">
+                  <CardContent className="space-y-3 sm:space-y-6 p-3 sm:p-6">
                     <Alert className="bg-amber-50 border-amber-200">
-                      <AlertTriangle className="h-4 w-4 text-amber-600" />
-                      <AlertTitle className="text-amber-800">
+                      <AlertTriangle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-amber-600" />
+                      <AlertTitle className="text-amber-800 text-xs sm:text-sm">
                         {t("exercises.mergeConflicts.conflict.title", "Merge Conflict Detected!")}
                       </AlertTitle>
-                      <AlertDescription className="text-amber-700 mt-2">
+                      <AlertDescription className="text-amber-700 mt-1 sm:mt-2 text-xs sm:text-sm">
                         {t("exercises.mergeConflicts.conflict.description", "There is a merge conflict in your file. You need to resolve it manually by editing the content below.")}
                       </AlertDescription>
                     </Alert>
                     
-                    <div className="space-y-4">
+                    <div className="space-y-2 sm:space-y-4">
                       <div className="flex justify-between items-center">
-                        <h4 className="text-sm font-medium flex items-center gap-1">
-                          <Code className="h-3.5 w-3.5" />
+                        <h4 className="text-xs sm:text-sm font-medium flex items-center gap-1">
+                          <Code className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                           {t("exercises.mergeConflicts.conflict.fileTitle", "Conflicted File Content:")}
                         </h4>
-                        <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700">utils/feature.js</Badge>
+                        <Badge variant="outline" className="text-[10px] sm:text-xs bg-blue-50 text-blue-700">utils/feature.js</Badge>
                       </div>
                       <div className="border rounded-md">
                         <Textarea 
@@ -858,14 +872,14 @@ function addFeature(data) {
 }
 >>>>>>> feature-a`}
                           onChange={(e) => setConflictResolution(e.target.value)}
-                          className="font-mono text-xs min-h-[350px] md:min-h-[450px] p-4 w-full"
+                          className="font-mono text-[9px] xs:text-[10px] sm:text-xs min-h-[250px] xs:min-h-[300px] sm:min-h-[350px] md:min-h-[450px] p-2 sm:p-4 w-full"
                           placeholder={t("exercises.mergeConflicts.conflict.placeholder", "Edit this code to resolve the conflict...")}
                         />
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="bg-blue-50 p-4 rounded-md space-y-3 border border-blue-100">
-                          <h4 className="font-medium text-blue-800">{t("exercises.mergeConflicts.resolution.title", "How to Resolve This Conflict:")}</h4>
-                          <ul className="space-y-2 text-sm text-blue-700 list-disc pl-5">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4">
+                        <div className="bg-blue-50 p-2 sm:p-4 rounded-md space-y-1.5 sm:space-y-3 border border-blue-100">
+                          <h4 className="font-medium text-blue-800 text-[10px] sm:text-xs">{t("exercises.mergeConflicts.resolution.title", "How to Resolve This Conflict:")}</h4>
+                          <ul className="space-y-1 sm:space-y-2 text-[9px] xs:text-[10px] sm:text-xs text-blue-700 list-disc pl-3 sm:pl-5">
                             <li>{t("exercises.mergeConflicts.resolution.step1", "Remove the conflict markers (<<<<<<< HEAD, =======, >>>>>>>)")}</li>
                             <li>{t("exercises.mergeConflicts.resolution.step2", "Combine both implementations to keep the performance improvements from feature-a")}</li>
                             <li>{t("exercises.mergeConflicts.resolution.step3", "Preserve the logging functionality from the current branch (HEAD)")}</li>
@@ -875,9 +889,9 @@ function addFeature(data) {
                         
                         <div className="flex flex-col justify-end">
                           <Button
-                            size="auto"
+                            size="sm"
                             variant="default"
-                            className="w-full mt-auto"
+                            className="w-full mt-auto text-[10px] xs:text-xs sm:text-sm h-7 sm:h-8 md:h-10"
                             onClick={() => {
                               const resolution = conflictResolution;
                               if (
@@ -934,10 +948,10 @@ function addFeature(data) {
                         </div>
                       </div>
                       
-                      <div className="flex justify-between items-center pt-6 mt-6 border-t">
+                      <div className="flex justify-between items-center pt-4 sm:pt-6 mt-4 sm:mt-6 border-t">
                         <Button 
                           variant="outline" 
-                          size="default"
+                          size="sm"
                           onClick={() => {
                             setConflictResolution("");
                             setExercises(prev => ({
@@ -953,17 +967,17 @@ function addFeature(data) {
                               }
                             }));
                           }}
-                          className="gap-2"
+                          className="gap-1 sm:gap-2 text-xs sm:text-sm"
                         >
-                          <XCircle className="h-4 w-4" />
+                          <XCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                           {t("exercises.cancel", "Cancelar")}
                         </Button>
                         
                         <SheetClose asChild>
                           <Button 
-                            size="auto" 
+                            size="sm" 
                             variant="secondary"
-                            className="gap-2"
+                            className="gap-1 sm:gap-2 text-xs sm:text-sm"
                           >
                             {t("exercises.close", "Cerrar")}
                           </Button>
@@ -976,49 +990,50 @@ function addFeature(data) {
             </TabsContent>
             
             {Object.entries(exercises).filter(([id]) => id !== "merge-conflicts").map(([id, exercise]) => (
-              <TabsContent key={id} value={id} className="p-6 pt-0">
+              <TabsContent key={id} value={id} className="p-3 sm:p-6 pt-0">
                 <Card>
-                  <CardHeader>
+                  <CardHeader className="p-3 sm:p-6">
                     <div className="flex justify-between items-start">
-                      <CardTitle className="text-lg font-semibold">
+                      <CardTitle className="text-base sm:text-lg font-semibold">
                         {exercise.title}
                       </CardTitle>
                       {renderDifficultyBadge(exercise.difficulty)}
                     </div>
-                    <CardDescription>
+                    <CardDescription className="text-xs sm:text-sm mt-1">
                       {exercise.description}
                     </CardDescription>
                   </CardHeader>
                   
                   {!exercise.isStarted ? (
-                    <CardContent className="flex flex-col items-center justify-center py-8 space-y-4">
-                      <div className="text-center space-y-2 mb-2">
-                        <h3 className="text-lg font-medium">{t("exercises.readyToStart", "¿Listo para empezar?")}</h3>
-                        <p className="text-sm text-muted-foreground">
+                    <CardContent className="flex flex-col items-center justify-center py-4 sm:py-8 space-y-3 sm:space-y-4 p-3 sm:p-6">
+                      <div className="text-center space-y-1 sm:space-y-2 mb-1 sm:mb-2">
+                        <h3 className="text-base sm:text-lg font-medium">{t("exercises.readyToStart", "¿Listo para empezar?")}</h3>
+                        <p className="text-xs sm:text-sm text-muted-foreground">
                           {t("exercises.startExplanation", "Al iniciar el ejercicio, se rastreará tu progreso en cada paso hasta que lo completes.")}
                         </p>
                       </div>
                       <Button 
                         onClick={startExercise}
-                        className="px-8"
+                        className="px-4 sm:px-8 text-xs sm:text-sm h-8 sm:h-10"
                         size="auto"
                       >
                         {t("exercises.start", "Iniciar Ejercicio")}
                       </Button>
                     </CardContent>
                   ) : exercise.isCompleted ? (
-                    <CardContent className="flex flex-col items-center justify-center py-8 space-y-4">
-                      <div className="text-center space-y-2 mb-2">
-                        <h3 className="text-lg font-medium text-green-600">{t("exercises.exerciseFinished", "¡Ejercicio Completado!")}</h3>
-                        <p className="text-sm text-muted-foreground">
+                    <CardContent className="flex flex-col items-center justify-center py-4 sm:py-8 space-y-3 sm:space-y-4 p-3 sm:p-6">
+                      <div className="text-center space-y-1 sm:space-y-2 mb-1 sm:mb-2">
+                        <h3 className="text-base sm:text-lg font-medium text-green-600">{t("exercises.exerciseFinished", "¡Ejercicio Completado!")}</h3>
+                        <p className="text-xs sm:text-sm text-muted-foreground">
                           {t("exercises.finishedExplanation", "Has completado este ejercicio. Puedes reiniciarlo o continuar con otro.")}
                         </p>
                       </div>
-                      <div className="flex gap-4">
+                      <div className="flex gap-2 sm:gap-4">
                         <Button 
                           onClick={resetExercise}
                           variant="outline"
                           size="auto"
+                          className="text-xs sm:text-sm h-8 sm:h-10"
                         >
                           {t("exercises.startAgain", "Comenzar de nuevo")}
                         </Button>
@@ -1026,34 +1041,35 @@ function addFeature(data) {
                           onClick={() => setSelectedExercise(selectedExercise === "feature-branch" ? "team-workflow" : selectedExercise === "team-workflow" ? "technical-tasks" : selectedExercise === "merge-conflicts" ? "feature-branch" : "team-workflow")}
                           variant="default"
                           size="auto"
+                          className="text-xs sm:text-sm h-8 sm:h-10"
                         >
                           {t("exercises.nextExercise", "Siguiente ejercicio")}
                         </Button>
                       </div>
                     </CardContent>
                   ) : (
-                    <CardContent className="space-y-4">
+                    <CardContent className="space-y-3 sm:space-y-4 p-3 sm:p-6">
                       {/* Steps list */}
-                      <div className="space-y-3">
-                        <h3 className="font-medium flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Clock className="h-4 w-4" />
+                      <div className="space-y-2 sm:space-y-3">
+                        <h3 className="font-medium flex items-center justify-between text-xs sm:text-sm">
+                          <div className="flex items-center gap-1 sm:gap-2">
+                            <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                             {t("exercises.steps", "Steps to complete")}
                           </div>
                         </h3>
                         
-                        <ol className="space-y-2">
+                        <ol className="space-y-1 sm:space-y-1.5 md:space-y-2">
                           {exercise.steps.map((step, index) => (
-                            <li key={step.id} className={`flex items-start gap-2 p-2 rounded ${step.isCompleted ? 'bg-green-50 border border-green-100' : 'bg-muted/50'}`}>
-                              <div className={`flex-shrink-0 mt-0.5 rounded-full h-6 w-6 flex items-center justify-center ${step.isCompleted ? 'bg-green-100 text-green-600' : 'bg-blue-100 text-blue-600'}`}>
-                                {step.isCompleted ? <CheckCircle2 className="h-4 w-4" /> : (index + 1)}
+                            <li key={step.id} className={`flex items-start gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded ${step.isCompleted ? 'bg-green-50 border border-green-100' : 'bg-muted/50'}`}>
+                              <div className={`flex-shrink-0 mt-0.5 rounded-full h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 flex items-center justify-center ${step.isCompleted ? 'bg-green-100 text-green-600' : 'bg-blue-100 text-blue-600'}`}>
+                                {step.isCompleted ? <CheckCircle2 className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" /> : (index + 1)}
                               </div>
-                              <div className="flex-1 space-y-1">
-                                <p className={`text-sm ${step.isCompleted ? 'text-green-700 font-medium' : 'font-medium'}`}>
+                              <div className="flex-1 space-y-0.5 sm:space-y-1">
+                                <p className={`text-[10px] xs:text-xs sm:text-sm ${step.isCompleted ? 'text-green-700 font-medium' : 'font-medium'}`}>
                                   {step.description}
                                 </p>
                                 {!step.isCompleted && (
-                                  <p className="text-xs text-muted-foreground">
+                                  <p className="text-[8px] xs:text-[9px] sm:text-[10px] md:text-xs text-muted-foreground">
                                     💡 {step.hint}
                                   </p>
                                 )}
@@ -1066,48 +1082,46 @@ function addFeature(data) {
                       <Separator />
                       
                       {/* Commands reference */}
-                      <div className="space-y-3">
-                        <h3 className="font-medium flex items-center gap-2">
-                          <BookOpen className="h-4 w-4" />
+                      <div className="space-y-2 sm:space-y-3">
+                        <h3 className="font-medium flex items-center gap-1 sm:gap-2 text-xs sm:text-sm">
+                          <BookOpen className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                           {t("exercises.reference", "Command Reference")}
                         </h3>
                         
-                        <div className="space-y-3">
-                          <div className="space-y-2">
-                            <h4 className="text-sm font-medium flex items-center gap-1">
-                              <Terminal className="h-3.5 w-3.5" />
-                              {t("exercises.terminalCommands", "Terminal Commands")}
-                            </h4>
-                            <div className="bg-zinc-950 rounded-md p-3 overflow-x-auto">
-                              <ul className="space-y-1">
-                                {exercise.terminalCommands.map((cmd, i) => (
-                                  <li key={i} className="text-xs text-green-400 font-mono">$ {cmd}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          </div>
-                          
-                          <div className="space-y-2">
-                            <h4 className="text-sm font-medium flex items-center gap-1">
-                              <Users className="h-3.5 w-3.5" />
-                              {t("exercises.uiActions", "UI Actions")}
-                            </h4>
-                            <ul className="space-y-1 text-xs bg-muted p-3 rounded-md">
-                              {exercise.uiActions.map((action, i) => (
-                                <li key={i} className="flex items-center gap-1">
-                                  <span className="text-primary">•</span> {action}
-                                </li>
+                        <div className="space-y-1 sm:space-y-2">
+                          <h4 className="text-[9px] xs:text-[10px] sm:text-xs font-medium flex items-center gap-1">
+                            <Terminal className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" />
+                            {t("exercises.terminalCommands", "Terminal Commands")}
+                          </h4>
+                          <div className="bg-zinc-950 rounded-md p-1.5 sm:p-2 md:p-3 overflow-x-auto">
+                            <ul className="space-y-0.5 sm:space-y-1">
+                              {exercise.terminalCommands.map((cmd, i) => (
+                                <li key={i} className="text-[8px] xs:text-[9px] sm:text-xs text-green-400 font-mono">$ {cmd}</li>
                               ))}
                             </ul>
                           </div>
+                        </div>
+                        
+                        <div className="space-y-1 sm:space-y-2">
+                          <h4 className="text-[9px] xs:text-[10px] sm:text-xs font-medium flex items-center gap-1">
+                            <Users className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" />
+                            {t("exercises.uiActions", "UI Actions")}
+                          </h4>
+                          <ul className="space-y-0.5 sm:space-y-1 text-[8px] xs:text-[9px] sm:text-xs bg-muted p-1.5 sm:p-2 md:p-3 rounded-md">
+                            {exercise.uiActions.map((action, i) => (
+                              <li key={i} className="flex items-center gap-1">
+                                <span className="text-primary">•</span> {action}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                       </div>
                       
                       {progress === 100 && (
                         <Alert className="bg-green-100 border-green-200">
-                          <CheckCircle2 className="h-4 w-4 text-green-600" />
-                          <AlertTitle className="text-green-800">¡Todos los pasos completados!</AlertTitle>
-                          <AlertDescription className="text-green-700">
+                          <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-600" />
+                          <AlertTitle className="text-green-800 text-xs sm:text-sm">¡Todos los pasos completados!</AlertTitle>
+                          <AlertDescription className="text-green-700 text-xs sm:text-sm">
                             {t("exercises.completionMessage", "Felicidades! Has completado todos los pasos de este ejercicio.")}
                           </AlertDescription>
                         </Alert>
@@ -1115,7 +1129,7 @@ function addFeature(data) {
                     </CardContent>
                   )}
                   
-                  <CardFooter className="flex justify-between border-t pt-4">
+                  <CardFooter className="flex justify-between border-t pt-3 sm:pt-4 p-3 sm:p-6">
                     {exercise.isStarted && !exercise.isCompleted ? (
                       <>
                         <div className="flex gap-2">
@@ -1127,8 +1141,9 @@ function addFeature(data) {
                         <div></div>
                         <SheetClose asChild>
                           <Button 
-                            size="auto" 
+                            size="sm" 
                             variant="default"
+                            className="text-xs sm:text-sm"
                           >
                             {t("exercises.close", "Cerrar")}
                           </Button>
@@ -1139,21 +1154,22 @@ function addFeature(data) {
                   
                   {/* Nueva sección para botones de completar/cerrar */}
                   {exercise.isStarted && !exercise.isCompleted && (
-                    <div className="px-6 pb-4 flex justify-end gap-2 mt-2">
+                    <div className="px-3 sm:px-4 md:px-6 pb-3 sm:pb-4 flex justify-end gap-2 mt-1 sm:mt-2">
                       <Button 
-                        size="auto"
+                        size="sm"
                         onClick={completeExercise}
                         variant="outline"
-                        className="gap-1 text-green-600 border-green-200 hover:bg-green-50"
+                        className="gap-1 text-[10px] xs:text-xs sm:text-sm text-green-600 border-green-200 hover:bg-green-50 h-7 sm:h-8"
                       >
-                        <CheckCircle2 className="h-3.5 w-3.5" />
+                        <CheckCircle2 className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                         {t("exercises.markAsDone", "Marcar como completado")}
                       </Button>
                       
                       <SheetClose asChild>
                         <Button 
-                          size="auto" 
+                          size="sm" 
                           variant="ghost"
+                          className="text-[10px] xs:text-xs sm:text-sm h-7 sm:h-8"
                         >
                           {t("exercises.close", "Cerrar")}
                         </Button>

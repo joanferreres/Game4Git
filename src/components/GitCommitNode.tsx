@@ -1,36 +1,44 @@
 import React from "react";
 import { Handle, Position } from "@xyflow/react";
-import { GitCommit } from "@/types/git";
 import { Badge } from "./ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 import { GitCommit as GitCommitIcon } from "lucide-react";
 
 interface GitCommitNodeProps {
   data: {
-    commit: GitCommit;
+    label: string;
+    branch: string;
     isHead: boolean;
     isSelected: boolean;
-    branchLabels: string[];
-    isMaster?: boolean;
+    branchNames: string[];
+    isBranchHead: boolean;
+    width: number;
+    height: number;
   };
 }
 
 const GitCommitNode: React.FC<GitCommitNodeProps> = ({ data }) => {
-  const { commit, isHead, isSelected, branchLabels, isMaster } = data;
+  const { 
+    label, 
+    branch, 
+    isHead, 
+    isSelected, 
+    branchNames, 
+    isBranchHead,
+    width = 56, 
+    height = 56 
+  } = data;
   
   // Truncate commit message for display
-  const shortMessage = commit.message.length > 30
-    ? commit.message.substring(0, 27) + '...'
-    : commit.message;
+  const shortMessage = label.length > 20
+    ? label.substring(0, 17) + '...'
+    : label;
     
-  // Format the commit ID (first 7 chars is standard for Git)
-  const shortId = commit.id.substring(0, 7);
-
   // Determine node style based on branch
   const getBgColor = () => {
     if (isHead) return 'bg-amber-500';
-    if (isMaster) return 'bg-green-500';
-    if (branchLabels.some(label => label.toLowerCase().includes('someone') || label.toLowerCase().includes('else'))) {
+    if (branch === 'master') return 'bg-green-500';
+    if (branch.toLowerCase().includes('someone') || branch.toLowerCase().includes('else')) {
       return 'bg-orange-500';
     }
     return 'bg-blue-500';
@@ -42,12 +50,23 @@ const GitCommitNode: React.FC<GitCommitNodeProps> = ({ data }) => {
   
   const getBorderColor = () => {
     if (isHead) return 'border-amber-600 border-2';
-    if (isMaster) return 'border-green-600';
-    if (branchLabels.some(label => label.toLowerCase().includes('someone') || label.toLowerCase().includes('else'))) {
+    if (branch === 'master') return 'border-green-600';
+    if (branch.toLowerCase().includes('someone') || branch.toLowerCase().includes('else')) {
       return 'border-orange-600';
     }
     return 'border-blue-600';
   };
+
+  // Calculate font size based on node width
+  const fontSize = width <= 42 ? 'text-[8px]' : width <= 48 ? 'text-[10px]' : 'text-xs';
+  const iconSize = width <= 42 ? 12 : width <= 48 ? 14 : 16;
+  
+  // Calculate badge sizes
+  const badgeClass = width <= 42 
+    ? 'text-[8px] px-1 py-0.5' 
+    : width <= 48 
+      ? 'text-[9px] px-1.5 py-0.5' 
+      : 'text-xs px-2 py-0.5';
 
   return (
     <TooltipProvider>
@@ -57,41 +76,44 @@ const GitCommitNode: React.FC<GitCommitNodeProps> = ({ data }) => {
             className={`
               node relative flex items-center justify-center
               ${isSelected ? 'node-active' : ''}
-              rounded-full w-14 h-14 border-2
+              rounded-full border-2
               ${getBgColor()}
               ${getBorderColor()}
               ${isSelected ? 'ring-2 ring-white' : ''}
-              cursor-pointer
+              cursor-pointer transition-colors duration-200
             `}
+            style={{ width: `${width}px`, height: `${height}px` }}
           >
             <div className={`flex flex-col items-center justify-center ${getTextColor()}`}>
-              <GitCommitIcon size={16} />
+              <GitCommitIcon size={iconSize} />
             </div>
             
             {/* Branches */}
-            <div className="absolute -top-9 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1">
-              {branchLabels.map((label) => (
-                <Badge 
-                  key={label} 
-                  className={`text-xs px-2 py-0.5 font-medium shadow-sm
-                    ${label === 'master' ? 'bg-green-600' : 
-                    label.toLowerCase().includes('someone') || label.toLowerCase().includes('else') ? 'bg-orange-600' : 'bg-blue-600'}`}
-                >
-                  {label}
-                </Badge>
-              ))}
-            </div>
+            {isBranchHead && (
+              <div className="absolute -top-7 sm:-top-8 md:-top-9 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1">
+                {branchNames.map((label) => (
+                  <Badge 
+                    key={label} 
+                    className={`${badgeClass} font-medium shadow-sm
+                      ${label === 'master' ? 'bg-green-600' : 
+                      label.toLowerCase().includes('someone') || label.toLowerCase().includes('else') ? 'bg-orange-600' : 'bg-blue-600'}`}
+                  >
+                    {label}
+                  </Badge>
+                ))}
+              </div>
+            )}
             
             {/* Commit message */}
             {shortMessage && (
-              <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs whitespace-nowrap text-muted-foreground">
+              <div className={`absolute -bottom-6 sm:-bottom-7 md:-bottom-8 left-1/2 transform -translate-x-1/2 ${fontSize} whitespace-nowrap text-muted-foreground max-w-[80px] sm:max-w-[120px] truncate`}>
                 {shortMessage}
               </div>
             )}
             
             {/* HEAD indicator */}
             {isHead && (
-              <div className="absolute top-[100%] right px-1 py-0.5 rounded-sm bg-amber-500/10 text-amber-600 text-xs font-semibold">
+              <div className={`absolute top-[100%] right-0 px-1 py-0.5 rounded-sm bg-amber-500/10 text-amber-600 ${fontSize} font-semibold`}>
                 HEAD
               </div>
             )}
@@ -112,8 +134,8 @@ const GitCommitNode: React.FC<GitCommitNodeProps> = ({ data }) => {
           </div>
         </TooltipTrigger>
         <TooltipContent>
-          <p>{commit.message}</p>
-          <p className="text-xs text-muted-foreground">{new Date(commit.timestamp).toLocaleString()}</p>
+          <p>{label}</p>
+          <p className="text-xs text-muted-foreground">Branch: {branch}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

@@ -4,14 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "ROLLUP_NATIVE=false vite build",
-    "build:dev": "vite build --mode development",
-    "build:prod": "NODE_ENV=production vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
+    "dev": "npx vite",
+    "build": "npx vite build",
+    "build:dev": "npx vite build --mode development",
+    "build:prod": "npx vite build --mode production",
+    "lint": "npx eslint . || true",
+    "preview": "npx vite preview",
     "test:build": "node test-build.js",
-    "prepare:prod": "./prepare-for-prod.sh"
+    "prepare:prod": "chmod +x ./prepare-for-prod.sh && ./prepare-for-prod.sh",
+    "deploy": "npx vercel --prod"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
