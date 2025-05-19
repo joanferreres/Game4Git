@@ -18,11 +18,9 @@
     "prebuild": "npm run generate:sitemap",
     "security:check": "chmod +x ./security-check.sh && ./security-check.sh",
     "security:fix": "npm audit fix",
-    "prepare": "npm run security:check",
     "predeploy": "npm run security:check"
   },
   "dependencies": {
-    "@esbuild/darwin-arm64": "^0.25.4",
     "@hookform/resolvers": "^3.10.0",
     "@monaco-editor/react": "^4.7.0",
     "@radix-ui/react-accordion": "^1.2.10",

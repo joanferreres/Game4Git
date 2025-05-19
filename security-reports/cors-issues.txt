@@ -1,7 +1,0 @@
-./node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:        key: 'Access-Control-Allow-Origin',
-./node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:        key: 'Access-Control-Allow-Origin',
-./node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:        key: 'Access-Control-Allow-Origin',
-./node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:      key: 'Access-Control-Allow-Methods',
-./node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:        key: 'Access-Control-Allow-Credentials',
-./node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:        key: 'Access-Control-Allow-Headers',
-./node_modules/vite/dist/node/index.d.ts:     * Configures the Access-Control-Allow-Origin CORS header.

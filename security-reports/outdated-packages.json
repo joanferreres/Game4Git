@@ -124,5 +124,12 @@
     "latest": "1.1.2",
     "dependent": "commit-quest-visualizer",
     "location": "/Users/joanferreres/Desktop/commit-quest-visualizer/node_modules/vaul"
+  },
+  "zod": {
+    "current": "3.25.3",
+    "wanted": "3.25.6",
+    "latest": "3.25.6",
+    "dependent": "commit-quest-visualizer",
+    "location": "/Users/joanferreres/Desktop/commit-quest-visualizer/node_modules/zod"
   }
 }
