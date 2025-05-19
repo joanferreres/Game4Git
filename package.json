@@ -12,7 +12,7 @@
     "preview": "npx vite preview",
     "test:build": "node test-build.js",
     "prepare:prod": "chmod +x ./prepare-for-prod.sh && ./prepare-for-prod.sh",
-    "deploy": "chmod +x ./deploy.sh && ./deploy.sh",
+    "deploy": "npm run build && vercel --prod",
     "deploy:vercel": "npm run security:check && npx vercel --prod",
     "generate:sitemap": "node generate-sitemap.js",
     "prebuild": "npm run generate:sitemap",
