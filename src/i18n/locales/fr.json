@@ -30,7 +30,16 @@
     "resetAll": "Tout Réinitialiser",
     "create": "Créer",
     "gitAdd": "Git Add (Indexer les Changements)",
-    "gitCommit": "Git Commit"
+    "gitCommit": "Git Commit",
+    "conflict": "Conflit",
+    "conflictView": "Vue de Conflit de Fusion",
+    "mergeConflict": "Conflit de Fusion",
+    "resolvingConflict": "Résolution de conflit entre",
+    "and": "et",
+    "resolveConflicts": "Éditez pour résoudre les conflits",
+    "abortMerge": "Annuler la Fusion",
+    "completeResolve": "Terminer la Fusion",
+    "conflictsRemaining": "conflits restants"
   },
   "terminal": {
     "help": "Terminal Git Game - Tapez 'help' pour voir les commandes disponibles",
@@ -276,6 +285,23 @@
         "step4": "Assurez-vous que le résultat est du JavaScript valide qui s'exécuterait sans erreurs"
       },
       "startExplanation": "Vous serez présenté avec un conflit à résoudre. Vous devez modifier le code pour créer une version qui combine correctement les deux implémentations."
+    }
+  },
+  "features": {
+    "visualization": {
+      "title": "Visualisation des Dépôts Git",
+      "description": "L'application permet de créer et de visualiser des dépôts Git virtuels, montrant graphiquement comment les commits et les branches sont liés. Les commits maintiennent leur position verticale une fois assignés à une branche, ce qui facilite le suivi de l'historique des modifications."
+    },
+    "conflictResolution": {
+      "title": "Résolution des Conflits de Fusion",
+      "description": "Lorsque vous tentez de fusionner deux branches qui ont modifié les mêmes lignes de code, l'application détecte automatiquement le conflit et vous fournit une interface pour le résoudre :",
+      "point1": "La visualisation des conflits montre clairement les sections en conflit",
+      "point2": "L'éditeur permet de modifier manuellement le contenu pour résoudre les conflits",
+      "point3": "Une fois tous les conflits résolus (en supprimant les marqueurs), vous pouvez terminer la fusion",
+      "howTo": "Pour résoudre un conflit :",
+      "step1": "Éditez le contenu dans l'éditeur pour supprimer les marqueurs <<<<<<< HEAD, ======= et >>>>>>>",
+      "step2": "Sélectionnez ou combinez le code des deux versions selon vos besoins",
+      "step3": "Cliquez sur \"Terminer la Fusion\" lorsque vous avez terminé"
     }
   }
 } 

@@ -142,11 +142,15 @@
 }
 
 .diff-add {
-  @apply bg-green-200 bg-opacity-20;
+  @apply bg-green-100;
 }
 
 .diff-remove {
-  @apply bg-red-200 bg-opacity-20;
+  @apply bg-red-100;
+}
+
+.diff-conflict {
+  @apply bg-yellow-100;
 }
 
 /* Git Graph Styles */
@@ -193,6 +197,10 @@
 
 .dark .diff-remove {
   @apply bg-red-900 bg-opacity-30;
+}
+
+.dark .diff-conflict {
+  @apply bg-yellow-900 bg-opacity-30;
 }
 
 /* ReactFlow Controls Styling */

@@ -4,6 +4,7 @@ export interface GitCommit {
   content: string;
   timestamp: number;
   parentIds: string[];
+  hasConflict?: boolean;
 }
 
 export interface GitBranch {
@@ -25,6 +26,14 @@ export interface GitRepository {
   remoteName: string; // Nombre del repositorio remoto (ejemplo: "origin")
   lastFetchTime?: number; // Última vez que se hizo fetch (timestamp)
   lastPushTime?: number; // Última vez que se hizo push (timestamp)
+  pendingMergeConflict?: {
+    sourceCommitId: string;
+    targetCommitId: string;
+    sourceBranch: string;
+    targetBranch: string;
+    conflictContent: string;
+    resolvedContent?: string;
+  };
 }
 
 export interface CodeFile {
@@ -34,7 +43,8 @@ export interface CodeFile {
 }
 
 export type DiffType = {
-  type: 'add' | 'remove' | 'unchanged';
+  type: 'add' | 'remove' | 'unchanged' | 'conflict';
   content: string;
   lineNumber: number;
+  isResolved?: boolean;
 };

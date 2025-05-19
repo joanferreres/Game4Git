@@ -12,9 +12,14 @@
     "preview": "npx vite preview",
     "test:build": "node test-build.js",
     "prepare:prod": "chmod +x ./prepare-for-prod.sh && ./prepare-for-prod.sh",
-    "deploy": "npx vercel --prod",
+    "deploy": "chmod +x ./deploy.sh && ./deploy.sh",
+    "deploy:vercel": "npm run security:check && npx vercel --prod",
     "generate:sitemap": "node generate-sitemap.js",
-    "prebuild": "npm run generate:sitemap"
+    "prebuild": "npm run generate:sitemap",
+    "security:check": "chmod +x ./security-check.sh && ./security-check.sh",
+    "security:fix": "npm audit fix",
+    "prepare": "npm run security:check",
+    "predeploy": "npm run security:check"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -88,6 +93,7 @@
     "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
+    "eslint-plugin-security": "^2.1.0",
     "globals": "^15.9.0",
     "lovable-tagger": "^1.1.7",
     "postcss": "^8.5.3",

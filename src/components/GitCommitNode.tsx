@@ -14,6 +14,7 @@ interface GitCommitNodeProps {
     isBranchHead: boolean;
     width: number;
     height: number;
+    hasConflict?: boolean;
   };
 }
 
@@ -26,7 +27,8 @@ const GitCommitNode: React.FC<GitCommitNodeProps> = ({ data }) => {
     branchNames, 
     isBranchHead,
     width = 56, 
-    height = 56 
+    height = 56,
+    hasConflict
   } = data;
   
   // Truncate commit message for display
@@ -36,25 +38,21 @@ const GitCommitNode: React.FC<GitCommitNodeProps> = ({ data }) => {
 
   // Determine node style based on branch
   const getBgColor = () => {
-    if (isHead) return 'bg-amber-500';
-    if (branch === 'master') return 'bg-green-500';
-    if (branch.toLowerCase().includes('someone') || branch.toLowerCase().includes('else')) {
-      return 'bg-orange-500';
-    }
-    return 'bg-blue-500';
+    if (isHead) return 'bg-yellow-600';
+    if (hasConflict) return 'bg-orange-600';
+    if (branch === 'master') return 'bg-green-600';
+    return 'bg-blue-600';
   };
   
   const getTextColor = () => {
     return 'text-white';
-  }
+  };
   
   const getBorderColor = () => {
-    if (isHead) return 'border-amber-600 border-2';
-    if (branch === 'master') return 'border-green-600';
-    if (branch.toLowerCase().includes('someone') || branch.toLowerCase().includes('else')) {
-      return 'border-orange-600';
-    }
-    return 'border-blue-600';
+    if (isHead) return 'border-yellow-500';
+    if (hasConflict) return 'border-orange-500';
+    if (isSelected) return 'border-white';
+    return 'border-gray-500';
   };
 
   // Calculate font size based on node width

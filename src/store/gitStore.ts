@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { GitRepository, GitCommit, GitBranch, CodeFile, RemoteReference } from '../types/git';
 import { toast } from 'sonner';
+import * as diffLib from 'diff';
 
 // Initial C file content
 const initialContent = `#include <stdio.h>
@@ -13,6 +14,62 @@ int main() {
 // Generate a random ID (simple implementation for demo)
 const generateId = (): string => {
   return Math.random().toString(36).substring(2, 15);
+};
+
+// Detect if there's a conflict between two versions of content
+const detectConflict = (sourceContent: string, targetContent: string): boolean => {
+  // Basic conflict detection - if the contents differ and both have content
+  if (sourceContent === targetContent) return false;
+  
+  // Get differences between the two contents
+  const differences = diffLib.diffLines(targetContent, sourceContent);
+  
+  // Check if there are actual changes on both sides
+  const hasAdditions = differences.some(part => part.added);
+  const hasRemovals = differences.some(part => part.removed);
+  
+  // If there are both additions and removals, we consider it a conflict
+  return hasAdditions && hasRemovals;
+};
+
+// Generate content with conflict markers
+const generateConflictContent = (
+  sourceContent: string,
+  targetContent: string,
+  sourceBranchName: string,
+  targetBranchName: string
+): string => {
+  const differences = diffLib.diffLines(targetContent, sourceContent);
+  let result = '';
+  let inConflict = false;
+  
+  // Iterate through the differences to mark conflicts
+  differences.forEach(part => {
+    if (part.added && !inConflict) {
+      // Start a conflict section
+      result += `<<<<<<< HEAD (${targetBranchName})\n`;
+      result += targetContent;
+      result += `=======\n`;
+      result += sourceContent;
+      result += `>>>>>>> ${sourceBranchName}\n`;
+      inConflict = true;
+    } else if (!part.added && !part.removed) {
+      // Unchanged parts
+      result += part.value;
+      inConflict = false;
+    }
+  });
+  
+  // If no conflict sections were added, create a single conflict for the whole file
+  if (!inConflict && result === targetContent) {
+    result = `<<<<<<< HEAD (${targetBranchName})\n`;
+    result += targetContent;
+    result += `=======\n`;
+    result += sourceContent;
+    result += `>>>>>>> ${sourceBranchName}\n`;
+  }
+  
+  return result;
 };
 
 interface GitStore {
@@ -32,6 +89,11 @@ interface GitStore {
   stageChanges: (content: string) => void;
   resetToInitialCommit: () => void;
   mergeBranch: (sourceBranchName: string, targetBranchName: string) => void;
+  
+  // Conflict resolution
+  hasPendingConflict: () => boolean;
+  resolveConflict: (resolvedContent: string) => void;
+  abortMerge: () => void;
   
   // Operaciones Remotas
   fetchRemote: () => void;
@@ -254,10 +316,40 @@ const useGitStore = create<GitStore>((set, get) => ({
       return;
     }
     
-    // Prevent merging if source is already an ancestor of target (fast-forward possibility, though we always create a merge commit here)
-    // Or if target is an ancestor of source (already merged in a sense, or should rebase source)
-    // For simplicity, this check is omitted, but in a real system, it would be important.
+    // Detect merge conflicts
+    // For simplicity, we'll say there's a conflict if both branches modified the same file
+    // and the content is different
+    const hasConflict = detectConflict(sourceBranchHeadCommit.content, targetBranchHeadCommit.content);
 
+    if (hasConflict) {
+      // Create conflict content with markers
+      const conflictContent = generateConflictContent(
+        sourceBranchHeadCommit.content, 
+        targetBranchHeadCommit.content,
+        sourceBranchName,
+        targetBranchName
+      );
+
+      // Store conflict information
+      set({
+        repository: {
+          ...repository,
+          pendingMergeConflict: {
+            sourceCommitId: sourceBranchHeadCommit.id,
+            targetCommitId: targetBranchHeadCommit.id,
+            sourceBranch: sourceBranchName,
+            targetBranch: targetBranchName,
+            conflictContent
+          }
+        },
+        workingChanges: conflictContent,
+      });
+
+      toast.error("Merge conflict detected. Please resolve the conflicts and commit the changes.");
+      return;
+    }
+    
+    // If no conflict, continue with normal merge
     const newCommitId = generateId();
     const mergeCommitMessage = `Merge branch '${sourceBranchName}' into ${targetBranchName}`;
     
@@ -532,6 +624,88 @@ const useGitStore = create<GitStore>((set, get) => ({
     });
     
     toast.success(`Pushed local changes from '${sourceBranchName}' to '${remoteRefName}'`);
+  },
+
+  // Conflict resolution
+  hasPendingConflict: () => {
+    return !!get().repository.pendingMergeConflict;
+  },
+  
+  resolveConflict: (resolvedContent: string) => {
+    const { repository } = get();
+    const conflict = repository.pendingMergeConflict;
+    
+    if (!conflict) {
+      toast.error("No pending conflict to resolve.");
+      return;
+    }
+    
+    // Create a merge commit with the resolved content
+    const newCommitId = generateId();
+    const mergeCommitMessage = `Merge branch '${conflict.sourceBranch}' into ${conflict.targetBranch}`;
+    
+    const mergeCommit: GitCommit = {
+      id: newCommitId,
+      message: mergeCommitMessage,
+      content: resolvedContent,
+      timestamp: Date.now(),
+      parentIds: [conflict.targetCommitId, conflict.sourceCommitId].sort(),
+      hasConflict: true // Marcar que este commit resolvió conflictos
+    };
+    
+    // Update the target branch to point to the new merge commit
+    const updatedBranches = repository.branches.map(branch => {
+      if (branch.name === conflict.targetBranch) {
+        return { ...branch, commitId: newCommitId, isActive: true };
+      }
+      return { ...branch, isActive: false };
+    });
+    
+    // Update the repository with the resolved conflict
+    set({
+      repository: {
+        ...repository,
+        commits: [...repository.commits, mergeCommit],
+        branches: updatedBranches,
+        HEAD: newCommitId,
+        pendingMergeConflict: undefined, // Clear the conflict
+      },
+      workingChanges: resolvedContent,
+      stagedChanges: null,
+      selectedCommitId: newCommitId,
+    });
+    
+    toast.success(`Conflicts resolved and branch '${conflict.sourceBranch}' merged into '${conflict.targetBranch}'.`);
+  },
+  
+  abortMerge: () => {
+    const { repository } = get();
+    const conflict = repository.pendingMergeConflict;
+    
+    if (!conflict) {
+      toast.error("No pending conflict to abort.");
+      return;
+    }
+    
+    // Find the commit content for the target branch
+    const targetCommit = repository.commits.find(c => c.id === conflict.targetCommitId);
+    
+    if (!targetCommit) {
+      toast.error("Could not find target commit to abort merge.");
+      return;
+    }
+    
+    // Reset working changes to target branch's content
+    set({
+      repository: {
+        ...repository,
+        pendingMergeConflict: undefined, // Clear the conflict
+      },
+      workingChanges: targetCommit.content,
+      stagedChanges: null,
+    });
+    
+    toast.info(`Merge aborted. Branch '${conflict.targetBranch}' remains unchanged.`);
   }
 }));
 

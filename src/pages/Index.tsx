@@ -35,6 +35,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import ConflictResolver from "@/components/ConflictResolver";
 
 // Language selector component
 const LanguageSelector: React.FC = () => {
@@ -78,7 +79,7 @@ const LanguageSelector: React.FC = () => {
 
 const GitGame: React.FC = () => {
   const [showDiff, setShowDiff] = useState(false);
-  const { repository, workingChanges, selectedCommitId, stagedChanges } = useGitStore();
+  const { repository, workingChanges, selectedCommitId, stagedChanges, hasPendingConflict } = useGitStore();
   const { t } = useTranslation();
   
   // Get the selected commit if any
@@ -100,6 +101,9 @@ const GitGame: React.FC = () => {
       setShowDiff(true); // Show diff when changes are staged
     }
   }, [stagedChanges]);
+  
+  // Check if there's a pending merge conflict
+  const conflictExists = hasPendingConflict();
   
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
@@ -189,7 +193,9 @@ const GitGame: React.FC = () => {
         
         {/* Right Column - Diff or Selected Commit View */}
         <div className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] md:col-span-2 lg:col-span-1">
-          {selectedCommit ? (
+          {conflictExists ? (
+            <ConflictResolver />
+          ) : selectedCommit ? (
             <CodeEditor 
               readOnly={true} 
               content={selectedCommit.content} 

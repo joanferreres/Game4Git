@@ -30,7 +30,16 @@
     "resetAll": "Resetear Todo",
     "create": "Crear",
     "gitAdd": "Git Add (Preparar Cambios)",
-    "gitCommit": "Git Commit"
+    "gitCommit": "Git Commit",
+    "conflict": "Conflicto",
+    "conflictView": "Vista de Conflicto de Fusión",
+    "mergeConflict": "Conflicto de Fusión",
+    "resolvingConflict": "Resolviendo conflicto entre",
+    "and": "y",
+    "resolveConflicts": "Edita para resolver conflictos",
+    "abortMerge": "Abortar Fusión",
+    "completeResolve": "Completar Fusión",
+    "conflictsRemaining": "conflictos restantes"
   },
   "terminal": {
     "help": "Terminal Git Game - Escribe 'help' para ver los comandos disponibles",
@@ -466,6 +475,23 @@
         "editFile": "Editar archivo para resolver conflicto",
         "stageAndCommit": "Preparar y confirmar cambios resueltos"
       }
+    }
+  },
+  "features": {
+    "visualization": {
+      "title": "Visualización de Repositorios Git",
+      "description": "La aplicación permite crear y visualizar repositorios Git virtuales, mostrando gráficamente cómo se relacionan los commits y las ramas entre sí. Los commits mantienen su posición vertical una vez asignados a una rama, lo que facilita seguir el historial de cambios."
+    },
+    "conflictResolution": {
+      "title": "Resolución de Conflictos de Fusión",
+      "description": "Cuando intentas fusionar dos ramas que han modificado las mismas líneas de código, la aplicación detecta automáticamente el conflicto y te proporciona una interfaz para resolverlo:",
+      "point1": "La visualización de conflictos muestra claramente las secciones en conflicto",
+      "point2": "El editor permite modificar manualmente el contenido para resolver los conflictos",
+      "point3": "Una vez resueltos todos los conflictos (eliminando los marcadores), puedes completar la fusión",
+      "howTo": "Para resolver un conflicto:",
+      "step1": "Edita el contenido en el editor para eliminar los marcadores <<<<<<< HEAD, ======= y >>>>>>>",
+      "step2": "Selecciona o combina el código de ambas versiones según sea necesario",
+      "step3": "Haz clic en \"Completar Fusión\" cuando hayas terminado"
     }
   }
 } 

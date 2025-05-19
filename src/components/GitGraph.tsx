@@ -262,6 +262,10 @@ const GitGraph: React.FC = () => {
       
       const isHead = repository.HEAD === commit.id;
       
+      // Determine if this commit is a merge commit with resolved conflicts
+      const hadConflict = commit.hasConflict || 
+        (commit.parentIds.length > 1 && commit.message.includes('Merge branch'));
+      
       newNodes.push({
         id: commit.id,
         type: "commit",
@@ -275,6 +279,7 @@ const GitGraph: React.FC = () => {
           isSelected: selectedCommitId === commit.id,
           width: nodeWidth,
           height: nodeHeight,
+          hasConflict: hadConflict
         },
         style: {
           width: nodeWidth,

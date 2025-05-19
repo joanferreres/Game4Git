@@ -29,7 +29,16 @@
     "clearSelection": "Netejar Selecció",
     "resetAll": "Restablir Tot",
     "create": "Crear",
-    "gitAdd": "Git Add (Afegir Canvis)"
+    "gitAdd": "Git Add (Afegir Canvis)",
+    "conflict": "Conflicte",
+    "conflictView": "Vista de Conflicte de Fusió",
+    "mergeConflict": "Conflicte de Fusió",
+    "resolvingConflict": "Resolent conflicte entre",
+    "and": "i",
+    "resolveConflicts": "Edita per resoldre conflictes",
+    "abortMerge": "Abortar Fusió",
+    "completeResolve": "Completar Fusió",
+    "conflictsRemaining": "conflictes restants"
   },
   "terminal": {
     "help": "Terminal Git Game - Escriu 'help' per veure les comandes disponibles",
@@ -275,6 +284,23 @@
         "step4": "Assegura't que el resultat sigui JavaScript vàlid que s'executi sense errors"
       },
       "startExplanation": "Se't presentarà un conflicte per resoldre. Has d'editar el codi per crear una versió que combini correctament ambdues implementacions."
+    }
+  },
+  "features": {
+    "visualization": {
+      "title": "Visualització de Repositoris Git",
+      "description": "L'aplicació permet crear i visualitzar repositoris Git virtuals, mostrant gràficament com es relacionen els commits i les branques entre si. Els commits mantenen la seva posició vertical una vegada assignats a una branca, la qual cosa facilita seguir l'historial de canvis."
+    },
+    "conflictResolution": {
+      "title": "Resolució de Conflictes de Fusió",
+      "description": "Quan intentes fusionar dues branques que han modificat les mateixes línies de codi, l'aplicació detecta automàticament el conflicte i et proporciona una interfície per resoldre'l:",
+      "point1": "La visualització de conflictes mostra clarament les seccions en conflicte",
+      "point2": "L'editor permet modificar manualment el contingut per resoldre els conflictes",
+      "point3": "Un cop resolts tots els conflictes (eliminant els marcadors), pots completar la fusió",
+      "howTo": "Per resoldre un conflicte:",
+      "step1": "Edita el contingut a l'editor per eliminar els marcadors <<<<<<< HEAD, ======= i >>>>>>>",
+      "step2": "Selecciona o combina el codi d'ambdues versions segons sigui necessari",
+      "step3": "Fes clic a \"Completar Fusió\" quan hagis acabat"
     }
   }
 } 

@@ -12,6 +12,7 @@ Una aplicación web interactiva para aprender conceptos de Git visualmente. Perm
 - Visor de diferencias (diff)
 - Interfaz moderna y responsiva con Tailwind CSS y Shadcn/ui
 - Experiencia de usuario guiada con instrucciones paso a paso
+- Detección y resolución de conflictos en merges
 
 ## Requisitos previos
 
@@ -152,4 +153,60 @@ npm install --legacy-peer-deps
 ## Licencia
 
 © 2024 Joan Ferreres Vivero. Todos los derechos reservados.
-# Game4Git
+
+## Funcionalidades clave
+
+### Visualización de repositorios Git
+
+La aplicación permite crear y visualizar repositorios Git virtuales, mostrando gráficamente cómo se relacionan los commits y las ramas entre sí. Los commits mantienen su posición vertical una vez asignados a una rama, lo que facilita seguir el historial de cambios.
+
+### Resolución de conflictos de merge
+
+Cuando intentas fusionar dos ramas que han modificado las mismas líneas de código, la aplicación detecta automáticamente el conflicto y te proporciona una interfaz para resolverlo:
+
+1. La visualización de conflictos muestra claramente las secciones en conflicto
+2. El editor permite modificar manualmente el contenido para resolver los conflictos
+3. Una vez resueltos todos los conflictos (eliminando los marcadores), puedes completar el merge
+
+Para resolver un conflicto:
+- Edita el contenido en el editor para eliminar los marcadores `<<<<<<< HEAD`, `=======` y `>>>>>>>`
+- Selecciona o combina el código de ambas versiones según sea necesario
+- Haz clic en "Completar Fusión" cuando hayas terminado
+
+## Funcionalitats clau (Català)
+
+### Visualització de repositoris Git
+
+L'aplicació permet crear i visualitzar repositoris Git virtuals, mostrant gràficament com es relacionen els commits i les branques entre si. Els commits mantenen la seva posició vertical una vegada assignats a una branca, la qual cosa facilita seguir l'historial de canvis.
+
+### Resolució de conflictes de fusió
+
+Quan intentes fusionar dues branques que han modificat les mateixes línies de codi, l'aplicació detecta automàticament el conflicte i et proporciona una interfície per resoldre'l:
+
+1. La visualització de conflictes mostra clarament les seccions en conflicte
+2. L'editor permet modificar manualment el contingut per resoldre els conflictes
+3. Un cop resolts tots els conflictes (eliminant els marcadors), pots completar la fusió
+
+Per resoldre un conflicte:
+- Edita el contingut a l'editor per eliminar els marcadors `<<<<<<< HEAD`, `=======` i `>>>>>>>`
+- Selecciona o combina el codi d'ambdues versions segons sigui necessari
+- Fes clic a "Completar Fusió" quan hagis acabat
+
+## Fonctionnalités clés (Français)
+
+### Visualisation des dépôts Git
+
+L'application permet de créer et de visualiser des dépôts Git virtuels, montrant graphiquement comment les commits et les branches sont liés. Les commits maintiennent leur position verticale une fois assignés à une branche, ce qui facilite le suivi de l'historique des modifications.
+
+### Résolution des conflits de fusion
+
+Lorsque vous tentez de fusionner deux branches qui ont modifié les mêmes lignes de code, l'application détecte automatiquement le conflit et vous fournit une interface pour le résoudre :
+
+1. La visualisation des conflits montre clairement les sections en conflit
+2. L'éditeur permet de modifier manuellement le contenu pour résoudre les conflits
+3. Une fois tous les conflits résolus (en supprimant les marqueurs), vous pouvez terminer la fusion
+
+Pour résoudre un conflit :
+- Éditez le contenu dans l'éditeur pour supprimer les marqueurs `<<<<<<< HEAD`, `=======` et `>>>>>>>`
+- Sélectionnez ou combinez le code des deux versions selon vos besoins
+- Cliquez sur "Terminer la Fusion" lorsque vous avez terminé
