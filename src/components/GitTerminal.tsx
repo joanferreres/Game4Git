@@ -125,7 +125,7 @@ const GitTerminal: React.FC = () => {
       const gitSubCommand = parts[1].toLowerCase();
       
       switch (gitSubCommand) {
-        case "add":
+        case "add": {
           if (parts.length === 2) {
             // Git add (stage all changes)
             stageChanges(workingChanges);
@@ -140,8 +140,9 @@ const GitTerminal: React.FC = () => {
             }
           }
           break;
+        }
           
-        case "commit":
+        case "commit": {
           // Parse commit message from args (-m "message")
           const mIndex = parts.indexOf("-m");
           if (mIndex !== -1 && mIndex + 1 < parts.length) {
@@ -163,8 +164,10 @@ const GitTerminal: React.FC = () => {
             addToHistory({ type: "error", content: "Error: Commit message required. Use 'git commit -m \"your message\"'." });
             return;
           }
+          break;
+        }
           
-        case "branch":
+        case "branch": {
           if (parts.length === 2) {
             // List branches
             const branches = repository.branches.map(b => 
@@ -184,8 +187,9 @@ const GitTerminal: React.FC = () => {
             return;
           }
           break;
+        }
           
-        case "checkout":
+        case "checkout": {
           if (parts.length === 3 && parts[2] === "-b") {
             addToHistory({ type: "error", content: "Error: Missing branch name. Use 'git checkout -b <branch-name>'." });
             return;
@@ -213,8 +217,9 @@ const GitTerminal: React.FC = () => {
             return;
           }
           break;
+        }
           
-        case "merge":
+        case "merge": {
           if (parts.length === 3) {
             const sourceBranch = parts[2];
             const targetBranch = repository.branches.find(b => b.isActive)?.name;
@@ -246,8 +251,10 @@ const GitTerminal: React.FC = () => {
             addToHistory({ type: "error", content: "Error: Specify which branch to merge. Use 'git merge <branch-name>'." });
             return;
           }
+          break;
+        }
           
-        case "reset":
+        case "reset": {
           if (parts.length >= 3 && parts[2] === "--hard") {
             if (parts.length === 3) {
               // Reset to HEAD
@@ -268,8 +275,9 @@ const GitTerminal: React.FC = () => {
             return;
           }
           break;
+        }
           
-        case "status":
+        case "status": {
           const activeBranch = repository.branches.find(b => b.isActive);
           let status = `On branch ${activeBranch?.name || "unknown"}\n`;
           
@@ -308,8 +316,10 @@ const GitTerminal: React.FC = () => {
           
           addToHistory({ type: "output", content: status });
           return;
-          
-        case "fetch":
+          break;
+        }
+        
+        case "fetch": {
           toast.info(
             t("git.gitFetch"), 
             { 
@@ -319,8 +329,10 @@ const GitTerminal: React.FC = () => {
           );
           addToHistory({ type: "output", content: t("explanations.simulationFetch") });
           return;
+          break;
+        }
           
-        case "pull":
+        case "pull": {
           toast.info(
             t("git.gitPull"), 
             { 
@@ -332,8 +344,10 @@ const GitTerminal: React.FC = () => {
           const currentBranch = repository.branches.find(b => b.isActive)?.name;
           addToHistory({ type: "output", content: t("explanations.simulationPull").replace('current', currentBranch || '') });
           return;
+          break;
+        }
           
-        case "push":
+        case "push": {
           toast.info(
             t("git.gitPush"), 
             { 
@@ -345,10 +359,14 @@ const GitTerminal: React.FC = () => {
           const pushBranch = repository.branches.find(b => b.isActive)?.name;
           addToHistory({ type: "output", content: t("explanations.simulationPush").replace('branch', pushBranch || '') });
           return;
+          break;
+        }
           
-        default:
+        default: {
           addToHistory({ type: "error", content: `Error: Unknown git command '${gitSubCommand}'` });
           return;
+          break;
+        }
       }
     } else if (mainCommand === "clear") {
       // Clear terminal with current language

@@ -438,7 +438,7 @@ const GitExercises: React.FC = () => {
         t("exercises.mergeConflicts.uiActions.stageAndCommit", "Stage and commit resolved changes")
       ]
     }
-  }), [t, i18n.language]);
+  }), [t, repository.HEAD, repository.branches, repository.commits, workingChanges, conflictResolution]);
   
   // Inicializar los ejercicios
   const [exercises, setExercises] = useState<Record<string, Exercise>>(getInitialExercises());
@@ -480,7 +480,7 @@ const GitExercises: React.FC = () => {
     // Forzar actualización de la interfaz
     setForceUpdate(prev => prev + 1);
     
-  }, [i18n.language]);  // Eliminar t de las dependencias para evitar múltiples actualizaciones
+  }, [i18n.language, getInitialExercises, exercises]);  
   
   // Efecto para actualizar la visualización cuando cambia el ejercicio seleccionado
   useEffect(() => {
@@ -516,7 +516,7 @@ const GitExercises: React.FC = () => {
     
     // Forzar actualización cuando cambia la pestaña seleccionada
     setForceUpdate(prev => prev + 1);
-  }, [selectedExercise]);
+  }, [selectedExercise, getInitialExercises]);
   
   // Método para iniciar un ejercicio
   const startExercise = () => {
@@ -619,7 +619,7 @@ const GitExercises: React.FC = () => {
         }
       }));
     }
-  }, [repository, workingChanges, stagedChanges, selectedExercise, exercises, t, forceUpdate]);
+  }, [repository, workingChanges, stagedChanges, selectedExercise, exercises, t, forceUpdate, setExercises, setProgress]);
   
   const resetExercise = () => {
     // Obtener la versión actualizada de los ejercicios con las traducciones actuales

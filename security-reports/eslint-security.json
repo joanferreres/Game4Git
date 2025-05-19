@@ -2,3 +2,55 @@
 > vite_react_shadcn_ts@0.0.0 lint
 > npx eslint . || true --rule security/detect-possible-timing-attacks:error --rule security/detect-eval-with-expression:error --rule security/detect-non-literal-require:error --rule security/detect-non-literal-fs-filename:error --rule security/detect-unsafe-regex:error --rule security/detect-buffer-noassert:error --rule security/detect-child-process:error --rule security/detect-disable-mustache-escape:error --rule security/detect-new-buffer:error --rule security/detect-no-csrf-before-method-override:error --rule security/detect-pseudoRandomBytes:error --format json
 
+
+/Users/joanferreres/Desktop/commit-quest-visualizer/src/components/GitExercises.tsx
+  441:7  warning  React Hook useCallback has missing dependencies: 'conflictResolution', 'repository.HEAD', 'repository.branches', 'repository.commits', and 'workingChanges'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  483:6  warning  React Hook useEffect has missing dependencies: 'exercises' and 'getInitialExercises'. Either include them or remove the dependency array                                                                         react-hooks/exhaustive-deps
+  519:6  warning  React Hook useEffect has a missing dependency: 'getInitialExercises'. Either include it or remove the dependency array                                                                                           react-hooks/exhaustive-deps
+
+/Users/joanferreres/Desktop/commit-quest-visualizer/src/components/GitTerminal.tsx
+  146:11  error  Unexpected lexical declaration in case block  no-case-declarations
+  273:11  error  Unexpected lexical declaration in case block  no-case-declarations
+  274:11  error  Unexpected lexical declaration in case block  no-case-declarations
+  277:11  error  Unexpected lexical declaration in case block  no-case-declarations
+  283:11  error  Unexpected lexical declaration in case block  no-case-declarations
+  284:11  error  Unexpected lexical declaration in case block  no-case-declarations
+  295:11  error  Unexpected lexical declaration in case block  no-case-declarations
+  332:11  error  Unexpected lexical declaration in case block  no-case-declarations
+  345:11  error  Unexpected lexical declaration in case block  no-case-declarations
+
+/Users/joanferreres/Desktop/commit-quest-visualizer/src/components/theme-provider.tsx
+  66:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/joanferreres/Desktop/commit-quest-visualizer/src/components/ui/badge.tsx
+  36:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/joanferreres/Desktop/commit-quest-visualizer/src/components/ui/button.tsx
+  57:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/joanferreres/Desktop/commit-quest-visualizer/src/components/ui/command.tsx
+  24:11  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+/Users/joanferreres/Desktop/commit-quest-visualizer/src/components/ui/form.tsx
+  168:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/joanferreres/Desktop/commit-quest-visualizer/src/components/ui/navigation-menu.tsx
+  119:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/joanferreres/Desktop/commit-quest-visualizer/src/components/ui/sidebar.tsx
+  760:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/joanferreres/Desktop/commit-quest-visualizer/src/components/ui/sonner.tsx
+  29:19  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/joanferreres/Desktop/commit-quest-visualizer/src/components/ui/textarea.tsx
+  5:18  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+/Users/joanferreres/Desktop/commit-quest-visualizer/src/components/ui/toggle.tsx
+  43:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/joanferreres/Desktop/commit-quest-visualizer/tailwind.config.ts
+  118:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+✖ 23 problems (12 errors, 11 warnings)
+

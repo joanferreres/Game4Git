@@ -164,8 +164,8 @@ const GitGraph: React.FC = () => {
         // If no parent branch found, try to use active branch (for new commits)
         const activeBranch = repository.branches.find(b => b.isActive);
         if (activeBranch) return activeBranch.name;
-      }
-      
+        }
+        
       // Initial commit or fallback
       return "master";
     };
@@ -179,7 +179,7 @@ const GitGraph: React.FC = () => {
     
     // Update branch lanes cache for future renders
     branchLanesCache.current = { ...branchLanes };
-    
+
     // Second pass: Position commits
     sortedCommits.forEach(commit => {
       const branch = commitBranch[commit.id];

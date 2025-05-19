@@ -183,22 +183,22 @@ const DiffViewer: React.FC<DiffViewerProps> = ({ oldContent, newContent, showCon
             }
             
             return (
-              <div 
-                key={index}
+            <div 
+              key={index}
                 className={`${typeClass} flex hover:bg-opacity-80`}
               >
                 <span className="line-number text-xs shrink-0">{line.lineNumber}</span>
                 <span className={`${
-                  line.type === "add" 
+                line.type === "add" 
                     ? "text-git-add" 
-                    : line.type === "remove" 
+                  : line.type === "remove" 
                       ? "text-git-delete" 
                       : line.type === "conflict"
                         ? "text-yellow-500"
                         : ""
                 } shrink-0`}>{typeIndicator}</span>
                 <span className="whitespace-pre-wrap break-all">{line.content}</span>
-              </div>
+            </div>
             );
           })}
         </pre>

@@ -26,14 +26,14 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       "@typescript-eslint/no-unused-vars": "off",
-      // Seguridad
+      // Security rules - disabled incompatible rules that use context.getScope()
       "security/detect-possible-timing-attacks": "warn",
       "security/detect-eval-with-expression": "error",
-      "security/detect-non-literal-require": "warn",
-      "security/detect-non-literal-fs-filename": "warn",
+      // "security/detect-non-literal-require": "warn", // Disabled - incompatible with ESLint 9
+      // "security/detect-non-literal-fs-filename": "warn", // Disabled - incompatible with ESLint 9
       "security/detect-unsafe-regex": "error",
       "security/detect-buffer-noassert": "error",
-      "security/detect-child-process": "warn",
+      // "security/detect-child-process": "warn", // Disabled - incompatible with ESLint 9
       "security/detect-disable-mustache-escape": "error",
       "security/detect-new-buffer": "error",
       "security/detect-no-csrf-before-method-override": "error",

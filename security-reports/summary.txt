@@ -1,8 +1,8 @@
-Security Check Summary (Mon May 19 20:08:52 CEST 2025)
+Security Check Summary (Mon May 19 21:00:29 CEST 2025)
 ===============================
 - Dependencies with vulnerabilities: 0
 0
-- Security headers check: Failed
+- Security headers check: Passed
 - Potential exposed secrets: 3
 - Outdated packages: 149
 - CORS issues: 0
