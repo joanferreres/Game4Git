@@ -1,10 +1,8 @@
 {
   "@hookform/resolvers": {
-    "current": "3.10.0",
     "wanted": "3.10.0",
     "latest": "5.0.1",
-    "dependent": "commit-quest-visualizer",
-    "location": "/Users/joanferreres/Desktop/commit-quest-visualizer/node_modules/@hookform/resolvers"
+    "dependent": "commit-quest-visualizer"
   },
   "@types/react": {
     "current": "18.3.21",

@@ -6,26 +6,15 @@ import { useTranslation } from "react-i18next";
 
 /**
  * Banner informativo que se muestra al iniciar la aplicación
- * Se almacena en localStorage si fue cerrado para no volver a mostrarlo
+ * Se mostrará cada vez que se cargue la página.
  */
 const WelcomeBanner: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const { t } = useTranslation();
 
-  // Al cargar el componente, verificar si ya se cerró el banner anteriormente
-  useEffect(() => {
-    const bannerClosed = localStorage.getItem("welcomeBannerClosed");
-    // Mostrar el banner solo si no se ha cerrado antes
-    if (!bannerClosed) {
-      setIsVisible(true);
-    }
-  }, []);
-
-  // Función para cerrar el banner
+  // Función para cerrar el banner (solo para la sesión actual del componente)
   const closeBanner = () => {
     setIsVisible(false);
-    // Guardar en localStorage que el banner se cerró
-    localStorage.setItem("welcomeBannerClosed", "true");
   };
 
   if (!isVisible) return null;

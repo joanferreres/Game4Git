@@ -26,7 +26,7 @@ jobs:
         cache: 'npm'
 
     - name: Install dependencies
-      run: npm ci --no-audit
+      run: npm ci --no-audit # Audit will be done in a separate, dedicated step
 
     - name: Run linter
       run: npm run lint
@@ -37,7 +37,7 @@ jobs:
   security-scans:
     runs-on: ubuntu-latest
     needs: build-and-test
-    continue-on-error: true
+    # Removed continue-on-error: true to make the job fail on critical vulnerabilities
 
     steps:
     - uses: actions/checkout@v3
@@ -51,12 +51,12 @@ jobs:
     - name: Install dependencies
       run: npm ci --no-audit
 
-    - name: Run npm audit
-      run: npm audit --production || true
+    - name: Run npm audit for critical vulnerabilities
+      run: npm audit --production --audit-level=critical
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [build-and-test]
+    needs: [build-and-test, security-scans] # Added security-scans as a dependency
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
 
     steps:
