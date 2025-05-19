@@ -1,0 +1,4 @@
+
+> vite_react_shadcn_ts@0.0.0 lint
+> npx eslint . || true --rule security/detect-possible-timing-attacks:error --rule security/detect-eval-with-expression:error --rule security/detect-non-literal-require:error --rule security/detect-non-literal-fs-filename:error --rule security/detect-unsafe-regex:error --rule security/detect-buffer-noassert:error --rule security/detect-child-process:error --rule security/detect-disable-mustache-escape:error --rule security/detect-new-buffer:error --rule security/detect-no-csrf-before-method-override:error --rule security/detect-pseudoRandomBytes:error --format json
+

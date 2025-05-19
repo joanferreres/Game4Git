@@ -34,6 +34,13 @@
     "dependent": "commit-quest-visualizer",
     "location": "/Users/joanferreres/Desktop/commit-quest-visualizer/node_modules/date-fns"
   },
+  "eslint-plugin-security": {
+    "current": "2.1.1",
+    "wanted": "2.1.1",
+    "latest": "3.0.1",
+    "dependent": "commit-quest-visualizer",
+    "location": "/Users/joanferreres/Desktop/commit-quest-visualizer/node_modules/eslint-plugin-security"
+  },
   "globals": {
     "current": "15.15.0",
     "wanted": "15.15.0",
@@ -131,5 +138,12 @@
     "latest": "1.1.2",
     "dependent": "commit-quest-visualizer",
     "location": "/Users/joanferreres/Desktop/commit-quest-visualizer/node_modules/vaul"
+  },
+  "zod": {
+    "current": "3.24.4",
+    "wanted": "3.25.3",
+    "latest": "3.25.3",
+    "dependent": "commit-quest-visualizer",
+    "location": "/Users/joanferreres/Desktop/commit-quest-visualizer/node_modules/zod"
   }
 }
