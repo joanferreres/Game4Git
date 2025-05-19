@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import {
   ReactFlow,
   Background,
@@ -61,6 +61,12 @@ const GitGraph: React.FC = () => {
   const { repository, selectedCommitId, selectCommit } = useGitStore();
   const { t } = useTranslation();
   
+  // Cache for branch lanes and commit positions to ensure stability
+  const branchLanesCache = useRef<Record<string, number>>({
+    "master": 0
+  });
+  const commitBranchCache = useRef<Record<string, string>>({});
+  
   const { nodes, edges } = useMemo(() => {
     const newNodes: Node[] = [];
     const newEdges: Edge[] = [];
@@ -79,22 +85,26 @@ const GitGraph: React.FC = () => {
     sortedCommits.forEach(commit => (commitMap[commit.id] = commit));
 
     // Track which commit belongs to which branch
-    const commitBranch: Record<string, string> = {};
+    // Initialize with cached branch assignments if available
+    const commitBranch: Record<string, string> = { ...commitBranchCache.current };
     
     // Map commitId to its position
     const nodePositions: Record<string, { x: number; y: number }> = {};
     
-    // Track branch Y-positions
-    const branchLanes: Record<string, number> = {
-      "master": 0 // Master branch is always on lane 0
-    };
+    // Track branch Y-positions - use cached positions to maintain stability
+    const branchLanes: Record<string, number> = { ...branchLanesCache.current };
     
     // Track X position of last commit on each lane
-    const laneLastX: Record<number, number> = {
-      0: -horizontal // Start master lane at X=0 (after adding spacing for first commit)
-    };
+    const laneLastX: Record<number, number> = {};
+    Object.values(branchLanes).forEach(laneY => {
+      laneLastX[laneY] = -horizontal;
+    });
     
-    let nextLaneY = vertical; // Next available lane (Y position)
+    let nextLaneY = vertical;
+    // Find the highest lane Y value to continue from
+    if (Object.values(branchLanes).length > 0) {
+      nextLaneY = Math.max(...Object.values(branchLanes)) + vertical;
+    }
 
     // Map commit IDs to branches they are the head of
     const branchHeads: Record<string, string[]> = {};
@@ -114,10 +124,13 @@ const GitGraph: React.FC = () => {
 
     // Helper function to determine which branch a commit belongs to
     const determineBranchForCommit = (commit: GitCommit): string => {
-      // If this commit is the head of any branch, it belongs to that branch
-      const headBranches = branchHeads[commit.id] || [];
+      // Check if we have a cached assignment for this commit
+      if (commitBranchCache.current[commit.id]) {
+        return commitBranchCache.current[commit.id];
+      }
       
       // First check if this commit is the head of any branch
+      const headBranches = branchHeads[commit.id] || [];
       if (headBranches.length > 0) {
         // Prioritize master if it's a head of master
         if (headBranches.includes("master")) return "master";
@@ -127,20 +140,16 @@ const GitGraph: React.FC = () => {
       
       // If this is a merge commit, consider it part of the target branch
       if (commit.parentIds.length > 1) {
-        // Find the active branch at the time this commit was created
-        const activeBranch = repository.branches.find(b => b.isActive && b.commitId === commit.id);
-        if (activeBranch) return activeBranch.name;
-        
-        // Try to find a branch that has this commit as its head
+        // Try to find which branch has this commit as its head
         const branchHead = repository.branches.find(b => b.commitId === commit.id);
         if (branchHead) return branchHead.name;
         
-        // If still undetermined, assume it's in the same branch as the first parent
+        // Default to the first parent's branch
         const firstParentBranch = commitBranch[commit.parentIds[0]];
         if (firstParentBranch) return firstParentBranch;
       }
       
-      // For non-merge commits with one parent
+      // For regular commits with one parent
       if (commit.parentIds.length === 1) {
         const parentId = commit.parentIds[0];
         const parentBranch = commitBranch[parentId];
@@ -149,43 +158,28 @@ const GitGraph: React.FC = () => {
         const currentBranch = repository.branches.find(b => b.commitId === commit.id);
         if (currentBranch) return currentBranch.name;
         
-        // Find the active branch at commit time
-        const activeBranch = repository.branches.find(b => b.isActive);
-        
-        // Important: Check the branch ancestry
-        // This is the key fix: Every commit in a non-master branch should stay in that branch
-        // until a merge happens
-        if (activeBranch && activeBranch.name !== "master") {
-          // Check if the parent commit belongs to the same branch
-          const parentInActiveBranch = commitMap[parentId] && 
-                                      commitBranch[parentId] === activeBranch.name;
-          
-          // Check if this is part of an active branch's history
-          if (parentInActiveBranch || 
-              (repository.branches.find(b => b.name === activeBranch.name)?.commitId === commit.id)) {
-            return activeBranch.name;
-          }
-          
-          // Check if parent is from a different branch - this could be a branch point
-          if (parentBranch && parentBranch !== activeBranch.name) {
-            // This commit is on a different branch than its parent
-            return activeBranch.name;
-          }
-        }
-        
-        // If parent exists and we didn't determine another branch, use parent's branch
+        // If parent exists, use parent's branch - this ensures commits stay in their original branch
         if (parentBranch) return parentBranch;
+        
+        // If no parent branch found, try to use active branch (for new commits)
+        const activeBranch = repository.branches.find(b => b.isActive);
+        if (activeBranch) return activeBranch.name;
       }
       
-      // Initial commit or fallback to master
+      // Initial commit or fallback
       return "master";
     };
 
     // First pass: Determine which branch each commit belongs to
     sortedCommits.forEach(commit => {
       commitBranch[commit.id] = determineBranchForCommit(commit);
+      // Cache this assignment for future stability
+      commitBranchCache.current[commit.id] = commitBranch[commit.id];
     });
-
+    
+    // Update branch lanes cache for future renders
+    branchLanesCache.current = { ...branchLanes };
+    
     // Second pass: Position commits
     sortedCommits.forEach(commit => {
       const branch = commitBranch[commit.id];
@@ -258,7 +252,7 @@ const GitGraph: React.FC = () => {
       nodePositions[commit.id] = { x: commitX, y: commitY };
       
       // Create node
-      const isBranchHead = Object.values(repository.branches).some(
+      const isBranchHead = repository.branches.some(
         b => b.commitId === commit.id
       );
       
