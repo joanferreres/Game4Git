@@ -35,7 +35,7 @@ const GitTerminal: React.FC = () => {
     { command: "git add hello.c", description: t("gitCommands.stageFile") },
     { command: "git commit -m \"message\"", description: t("gitCommands.commit") },
     { command: "git branch", description: t("gitCommands.listBranches") },
-    { command: "git branch <n>", description: t("gitCommands.createBranch") },
+    { command: "git branch <name>", description: t("gitCommands.createBranch") },
     { command: "git checkout <branch>", description: t("gitCommands.switchBranch") },
     { command: "git checkout -b <branch>", description: t("gitCommands.createAndSwitch") },
     { command: "git merge <branch>", description: t("gitCommands.merge") },
@@ -359,25 +359,28 @@ const GitTerminal: React.FC = () => {
       return;
     } else if (mainCommand === "help") {
       // Show help using current language translations
-      const help = `
-${t("terminal.availableCommandsTitle")}:
-  git add [.]                  - ${t("gitCommands.stageAll")}
-  git add hello.c              - ${t("gitCommands.stageFile")}
-  git commit -m "message"      - ${t("gitCommands.commit")}
-  git branch                   - ${t("gitCommands.listBranches")}
-  git branch <n>               - ${t("gitCommands.createBranch")}
-  git checkout <branch>        - ${t("gitCommands.switchBranch")}
-  git checkout -b <branch>     - ${t("gitCommands.createAndSwitch")}
-  git merge <branch>           - ${t("gitCommands.merge")}
-  git fetch                    - ${t("gitCommands.fetch")}
-  git pull                     - ${t("gitCommands.pull")}
-  git push                     - ${t("gitCommands.push")}
-  git reset [--hard]           - ${t("gitCommands.reset")}
-  git status                   - ${t("gitCommands.status")}
-  clear                        - ${t("gitCommands.clear")}
-  help                         - ${t("gitCommands.help")}
-      `;
-      addToHistory({ type: "output", content: help.trim() });
+      const help = [
+        `${t("terminal.availableCommandsTitle")}:`,
+        "",
+        `git add [.]                 - ${t("gitCommands.stageAll")}`,
+        `git add hello.c             - ${t("gitCommands.stageFile")}`,
+        `git commit -m "message"     - ${t("gitCommands.commit")}`,
+        `git branch                  - ${t("gitCommands.listBranches")}`,
+        `git branch <name>           - ${t("gitCommands.createBranch")}`,
+        `git checkout <branch>       - ${t("gitCommands.switchBranch")}`,
+        `git checkout -b <branch>    - ${t("gitCommands.createAndSwitch")}`,
+        `git merge <branch>          - ${t("gitCommands.merge")}`,
+        `git fetch                   - ${t("gitCommands.fetch")}`,
+        `git pull                    - ${t("gitCommands.pull")}`,
+        `git push                    - ${t("gitCommands.push")}`,
+        `git reset [--hard]          - ${t("gitCommands.reset")}`,
+        `git status                  - ${t("gitCommands.status")}`,
+        "",
+        `clear                       - ${t("gitCommands.clear")}`,
+        `help                        - ${t("gitCommands.help")}`
+      ].join('\n');
+      
+      addToHistory({ type: "output", content: help });
       return;
     }
     
@@ -412,42 +415,42 @@ ${t("terminal.availableCommandsTitle")}:
                 <span>{t("terminal.availableCommands")}</span>
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-[300px]">
-              <DropdownMenuLabel>{t("terminal.availableCommands")}</DropdownMenuLabel>
+            <DropdownMenuContent align="end" className="w-[300px] max-h-[520px] overflow-y-auto p-1">
+              <DropdownMenuLabel className="px-2 py-1.5">{t("terminal.availableCommands")}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuGroup>
+              <div className="space-y-1">
                 {gitCommands.map((cmd, index) => (
                   <DropdownMenuItem 
                     key={index} 
-                    className="flex flex-col items-start cursor-pointer"
+                    className="flex flex-col items-start cursor-pointer rounded-md"
                     onClick={() => insertCommand(cmd.command)}
                   >
-                    <span className="font-medium">{cmd.command}</span>
+                    <span className="font-medium text-sm">{cmd.command}</span>
                     <span className="text-xs text-muted-foreground">{cmd.description}</span>
                   </DropdownMenuItem>
                 ))}
-              </DropdownMenuGroup>
-              <DropdownMenuSeparator />
-              <DropdownMenuLabel>{t("git.actions")}</DropdownMenuLabel>
-              <DropdownMenuGroup>
+              </div>
+              <DropdownMenuSeparator className="my-1" />
+              <DropdownMenuLabel className="px-2 py-1.5">{t("git.actions")}</DropdownMenuLabel>
+              <div className="space-y-1">
                 {otherCommands.map((cmd, index) => (
                   <DropdownMenuItem 
                     key={index} 
-                    className="flex flex-col items-start cursor-pointer"
+                    className="flex flex-col items-start cursor-pointer rounded-md"
                     onClick={() => insertCommand(cmd.command)}
                   >
-                    <span className="font-medium">{cmd.command}</span>
+                    <span className="font-medium text-sm">{cmd.command}</span>
                     <span className="text-xs text-muted-foreground">{cmd.description}</span>
                   </DropdownMenuItem>
                 ))}
-              </DropdownMenuGroup>
+              </div>
             </DropdownMenuContent>
           </DropdownMenu>
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
         <div className="h-[calc(100%-48px)] flex flex-col">
-          <ScrollArea className="flex-1 p-4 font-mono text-sm bg-black text-green-400" ref={scrollAreaRef}>
+          <ScrollArea className="flex-1 p-4 font-mono text-sm bg-black text-green-400 max-h-[400px]" ref={scrollAreaRef}>
             {history.map((line, index) => (
               <div key={index} className={`mb-1 ${line.type === "error" ? "text-red-400" : ""}`}>
                 {line.content.split("\\n").map((text, i) => (

@@ -3,6 +3,17 @@
     "title": "Git Game",
     "subtitle": "Learn Git concepts visually with this interactive playground"
   },
+  "welcome": {
+    "title": "Welcome to Git Game",
+    "intro": "This application helps you learn and practice Git in a visual and interactive way.",
+    "features": "Main features:",
+    "feature1": "Visual representation of Git history",
+    "feature2": "Branch creation and management",
+    "feature3": "Conflict simulation and resolution",
+    "feature4": "Practical exercises to reinforce concepts",
+    "getStarted": "To get started, try modifying the code, committing changes, creating branches, and exploring all Git features.",
+    "startNow": "Start now"
+  },
   "git": {
     "controls": "Git Controls",
     "terminal": "Terminal Mode",

@@ -5,6 +5,7 @@ import GitGraph from "@/components/GitGraph";
 import DiffViewer from "@/components/DiffViewer";
 import GitControls from "@/components/GitControls";
 import GitHistory from "@/components/GitHistory";
+import WelcomeBanner from "@/components/WelcomeBanner";
 import useGitStore from "@/store/gitStore";
 import {
   Sheet,
@@ -107,6 +108,8 @@ const GitGame: React.FC = () => {
   
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
+      <WelcomeBanner />
+      
       <header className="mb-4 sm:mb-6 relative">
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
           <ThemeToggle />
