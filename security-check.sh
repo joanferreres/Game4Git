@@ -56,7 +56,8 @@ echo "$OUTDATED_COUNT" > $REPORT_DIR/outdated-count.txt
 
 # Check for weak CORS configuration
 echo "🌐 Checking for weak CORS configuration..."
-grep -r "Access-Control-Allow" --include="*.js" --include="*.ts" --include="*.tsx" . | grep -v "node_modules" | grep -v "same-origin" > $REPORT_DIR/cors-issues.txt || true
+# Use find to pre-filter files and skip problematic directories
+find . -type f \( -name "*.js" -o -name "*.ts" -o -name "*.tsx" \) -not -path "*/node_modules/*" -not -path "*/dist/*" -not -path "*/.git/*" | xargs -n 50 grep -l "Access-Control-Allow" 2>/dev/null | grep -v "same-origin" > $REPORT_DIR/cors-issues.txt || true
 CORS_COUNT=$(cat $REPORT_DIR/cors-issues.txt | wc -l)
 echo "$CORS_COUNT" > $REPORT_DIR/cors-count.txt
 echo "$CORS_COUNT"
@@ -77,7 +78,8 @@ fi
 # Check for exposed API keys or secrets
 echo "🔑 Checking for exposed API keys or secrets..."
 SECRETS_PATTERN="(api[_-]?key|api[_-]?secret|access[_-]?key|access[_-]?secret|password|secret|token)[\"']?\s*[:=]\s*[\"'][a-zA-Z0-9_\-]{16,}[\"']"
-grep -r -E -o "$SECRETS_PATTERN" --include="*.js" --include="*.jsx" --include="*.ts" --include="*.tsx" --include="*.json" . | grep -v "node_modules" | grep -v "eslint" | grep -v "dist" > $REPORT_DIR/exposed-secrets.txt || true
+# Use find to pre-filter files and skip problematic directories
+find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" -o -name "*.json" \) -not -path "*/node_modules/*" -not -path "*/dist/*" -not -path "*/.git/*" -not -path "*/eslint/*" | xargs -n 50 grep -E -o "$SECRETS_PATTERN" 2>/dev/null > $REPORT_DIR/exposed-secrets.txt || true
 SECRETS_COUNT=$(cat $REPORT_DIR/exposed-secrets.txt | wc -l)
 echo "$SECRETS_COUNT" > $REPORT_DIR/secrets-count.txt
 

@@ -135,47 +135,76 @@ const GitGame: React.FC = () => {
             <Info className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" />
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-full sm:w-[540px] p-0">
+        <SheetContent side="left" className="w-full sm:w-[540px] p-0 flex flex-col h-full">
           <SheetHeader className="p-4 sm:p-6 pb-3 sm:pb-4 border-b">
             <SheetTitle className="text-lg sm:text-xl font-semibold">{t('howToUse.title')}</SheetTitle>
             <SheetDescription>
               {t('howToUse.subtitle')}
             </SheetDescription>
           </SheetHeader>
-          <div className="p-4 sm:p-6 overflow-y-auto h-[calc(100vh-80px)]"> {/* Adjust height as needed */}
-            <ol className="list-decimal list-inside space-y-2 sm:space-y-3 text-xs sm:text-sm">
-              <li>
-                <strong>{t('howToUse.switchBranch')}</strong>: {t('howToUse.switchBranchDesc')}
-              </li>
-              <li>
-                <strong>{t('howToUse.editCode')}</strong>: {t('howToUse.editCodeDesc')}
-              </li>
-              <li>
-                <strong>{t('howToUse.stageChanges')}</strong>: {t('howToUse.stageChangesDesc')}
-              </li>
-              <li>
-                <strong>{t('howToUse.commitChanges')}</strong>: {t('howToUse.commitChangesDesc')}
-              </li>
-              <li>
-                <strong>{t('howToUse.createBranch')}</strong>: {t('howToUse.createBranchDesc')}
-              </li>
-              <li>
-                <strong>{t('howToUse.mergeBranches')}</strong>:
-                <ul className="list-disc list-inside pl-4 sm:pl-6 space-y-1 sm:space-y-1.5 mt-1 sm:mt-1.5">
-                  <li>{t('howToUse.mergeBranchesDesc1')}</li>
-                  <li>{t('howToUse.mergeBranchesDesc2')}</li>
-                </ul>
-              </li>
-              <li>
-                <strong>{t('howToUse.viewHistory')}</strong>: {t('howToUse.viewHistoryDesc')}
-              </li>
-              <li>
-                <strong>{t('howToUse.viewChanges')}</strong>: {t('howToUse.viewChangesDesc')}
-              </li>
-              <li>
-                <strong>{t('howToUse.experiment')}</strong>: {t('howToUse.experimentDesc')}
-              </li>
-            </ol>
+          <div className="p-4 sm:p-6 overflow-y-auto flex-1 space-y-4"> {/* Adjust height as needed */}
+            <div className="space-y-3">
+              <h3 className="text-md sm:text-lg font-medium text-primary">{t('howToUse.basicsTitle', 'Basic Operations')}</h3>
+              <ol className="list-decimal list-inside space-y-2 sm:space-y-3 text-xs sm:text-sm">
+                <li>
+                  <strong className="font-semibold">{t('howToUse.editCode')}</strong>: {t('howToUse.editCodeDesc')}
+                </li>
+                <li>
+                  <strong className="font-semibold">{t('howToUse.stageChanges')}</strong>: {t('howToUse.stageChangesDesc')}
+                </li>
+                <li>
+                  <strong className="font-semibold">{t('howToUse.commitChanges')}</strong>: {t('howToUse.commitChangesDesc')}
+                </li>
+              </ol>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-md sm:text-lg font-medium text-primary">{t('howToUse.branchingTitle', 'Branching & Merging')}</h3>
+              <ol className="list-decimal list-inside space-y-2 sm:space-y-3 text-xs sm:text-sm">
+                <li>
+                  <strong className="font-semibold">{t('howToUse.createBranch')}</strong>: {t('howToUse.createBranchDesc')}
+                </li>
+                <li>
+                  <strong className="font-semibold">{t('howToUse.switchBranch')}</strong>: {t('howToUse.switchBranchDesc')}
+                </li>
+                <li>
+                  <strong className="font-semibold">{t('howToUse.mergeBranches')}</strong>:
+                  <ul className="list-disc list-inside pl-4 sm:pl-6 space-y-1 sm:space-y-1.5 mt-1 sm:mt-1.5">
+                    <li>{t('howToUse.mergeBranchesDesc1')}</li>
+                    <li>{t('howToUse.mergeBranchesDesc2')}</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong className="font-semibold">{t('howToUse.resolveConflicts')}</strong>: {t('howToUse.resolveConflictsDesc')}
+                </li>
+              </ol>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-md sm:text-lg font-medium text-primary">{t('howToUse.viewingTitle', 'Viewing History & Changes')}</h3>
+              <ol className="list-decimal list-inside space-y-2 sm:space-y-3 text-xs sm:text-sm">
+                <li>
+                  <strong className="font-semibold">{t('howToUse.viewHistory')}</strong>: {t('howToUse.viewHistoryDesc')}
+                </li>
+                <li>
+                  <strong className="font-semibold">{t('howToUse.viewChanges')}</strong>: {t('howToUse.viewChangesDesc')}
+                </li>
+              </ol>
+            </div>
+            
+            <div className="space-y-3">
+              <h3 className="text-md sm:text-lg font-medium text-primary">{t('howToUse.remoteTitle', 'Remote Operations (Simulated)')}</h3>
+              <ol className="list-decimal list-inside space-y-2 sm:space-y-3 text-xs sm:text-sm">
+                <li>
+                  <strong className="font-semibold">{t('howToUse.remoteOperations')}</strong>: {t('howToUse.remoteOperationsDesc')}
+                </li>
+              </ol>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-md sm:text-lg font-medium text-primary">{t('howToUse.exploreTitle', 'Explore & Experiment')}</h3>
+               <p className="text-xs sm:text-sm text-muted-foreground">{t('howToUse.experimentDesc')}</p>
+            </div>
           </div>
         </SheetContent>
       </Sheet>
