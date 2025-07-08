@@ -37,12 +37,5 @@
     }
   ],
   "trailingSlash": false,
-  "cleanUrls": true,
-  "redirects": [
-    {
-      "source": "/admin",
-      "destination": "/",
-      "permanent": true
-    }
-  ]
+  "cleanUrls": true
 } 

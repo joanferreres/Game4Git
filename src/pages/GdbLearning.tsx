@@ -1,396 +1,150 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { 
-  Bug, 
-  Play, 
-  Square, 
-  SkipForward, 
-  ArrowRight, 
+  Home, 
   Terminal, 
   Code, 
-  Zap, 
-  Eye, 
-  Search,
-  Home,
+  Bug, 
+  Target,
+  BookOpen,
   Info,
-  AlertCircle,
-  BookOpen
+  ArrowRight 
 } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import CodeEditor from "@/components/CodeEditor";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { Link } from "react-router-dom";
-import InteractiveTerminal from "@/components/InteractiveTerminal";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import CodeEditor from "@/components/CodeEditor";
+import RealisticGdbTerminal from "@/components/RealisticGdbTerminal";
+import MemoryVisualizer from "@/components/MemoryVisualizer";
 
-const GdbLearning: React.FC = () => {
-  const { t } = useTranslation();
-  const [selectedExample, setSelectedExample] = useState("basic-debug");
-  const [gdbOutput, setGdbOutput] = useState("");
-  const [currentStep, setCurrentStep] = useState(0);
-
-  // Example C code with bugs for debugging
-  const exampleCode = {
-    "basic-debug": `#include <stdio.h>
-#include <stdlib.h>
+// Example code with realistic bugs
+const exampleCode = {
+  "basic-debug": `#include <stdio.h>
 
 int main() {
-    int *ptr = malloc(sizeof(int) * 10);
+    int arr[10] = {1,2,3,4,5,6,7,8,9,10};
+    int i;
     
-    // Bug: Writing past allocated memory
-    for (int i = 0; i <= 10; i++) {
-        ptr[i] = i * 2;
+    for(i = 0; i <= 10; i++) {
+        arr[10] = 42;  // ← Buffer overflow!
+        printf("arr[%d] = %d\\n", i, arr[i]);
     }
-    
-    printf("Array values:\\n");
-    for (int i = 0; i < 10; i++) {
-        printf("ptr[%d] = %d\\n", i, ptr[i]);
-    }
-    
-    free(ptr);
     return 0;
 }`,
-    "segfault": `#include <stdio.h>
-#include <string.h>
+
+  "segfault": `#include <stdio.h>
 
 int main() {
-    char *str = NULL;
+    int *ptr = NULL;
     
-    // Bug: Dereferencing NULL pointer
-    strcpy(str, "Hello World");
+    *ptr = 10;  // ← NULL pointer dereference!
+    printf("Valor: %d\\n", *ptr);
     
-    printf("String: %s\\n", str);
     return 0;
 }`,
-    "infinite-loop": `#include <stdio.h>
+
+  "infinite-loop": `#include <stdio.h>
 
 int factorial(int n) {
-    // Bug: Missing base case
-    return n * factorial(n - 1);
+    if (n <= 0) return 1;  // Missing n == 1 case!
+    return n * factorial(n - 1);  // ← Infinite recursion!
 }
 
 int main() {
-    int result = factorial(5);
-    printf("Factorial: %d\\n", result);
+    int result = factorial(20000);
+    printf("Resultado: %d\\n", result);
     return 0;
 }`
-  };
+};
 
-  const gdbCommands = [
-    { command: "gcc -g -o program program.c", description: "Compile with debug symbols" },
-    { command: "gdb ./program", description: "Start GDB with your program" },
-    { command: "run", description: "Execute the program" },
-    { command: "break main", description: "Set breakpoint at main function" },
-    { command: "break 10", description: "Set breakpoint at line 10" },
-    { command: "next", description: "Execute next line (step over)" },
-    { command: "step", description: "Execute next line (step into)" },
-    { command: "continue", description: "Continue execution" },
-    { command: "print variable", description: "Print variable value" },
-    { command: "info locals", description: "Show local variables" },
-    { command: "backtrace", description: "Show call stack" },
-    { command: "list", description: "Show source code around current line" },
-    { command: "quit", description: "Exit GDB" }
-  ];
+// Essential GDB commands
+const gdbCommands = [
+  { command: "run (r)", description: "Ejecuta el programa hasta que termine o crashee" },
+  { command: "backtrace (bt)", description: "Muestra el stack trace completo" },
+  { command: "list (l)", description: "Muestra el código fuente actual" },
+  { command: "print <var>", description: "Muestra el valor de una variable" },
+  { command: "info locals", description: "Lista todas las variables locales" },
+  { command: "info registers", description: "Muestra todos los registros del CPU" },
+  { command: "break <line>", description: "Establece un breakpoint en una línea" },
+  { command: "continue (c)", description: "Continúa ejecución hasta el siguiente breakpoint" },
+  { command: "step (s)", description: "Ejecuta una línea (entra en funciones)" },
+  { command: "next (n)", description: "Ejecuta una línea (no entra en funciones)" },
+  { command: "disassemble", description: "Muestra el código ensamblador" },
+  { command: "quit (q)", description: "Sale de GDB" }
+];
 
-  const debuggingSteps = [
-    {
-      step: "Compilation",
-      command: "gcc -g -o debug_program program.c",
-      explanation: "Compile your C program with the -g flag to include debugging information"
-    },
-    {
-      step: "Start GDB",
-      command: "gdb ./debug_program",
-      explanation: "Launch GDB with your compiled program"
-    },
-    {
-      step: "Set Breakpoints",
-      command: "break main",
-      explanation: "Set a breakpoint at the main function to pause execution"
-    },
-    {
-      step: "Run Program",
-      command: "run",
-      explanation: "Start executing your program. It will stop at the breakpoint"
-    },
-    {
-      step: "Step Through",
-      command: "next",
-      explanation: "Execute the program line by line to find issues"
-    },
-    {
-      step: "Inspect Variables",
-      command: "print ptr",
-      explanation: "Check variable values to understand program state"
-    }
-  ];
-
-  // Enhanced GDB command simulator that returns realistic output
-  const handleGdbCommand = (command: string): string => {
-    const cmd = command.toLowerCase().trim();
-    
-    // Help command
-    if (cmd === 'help' || cmd === 'h') {
-      return `Lista de comandos disponibles:
-run, r          -- Ejecutar el programa
-break, b        -- Establecer punto de interrupción
-continue, c     -- Continuar ejecución
-step, s         -- Ejecutar línea por línea (entrar en funciones)
-next, n         -- Ejecutar línea por línea (sin entrar en funciones)
-print, p        -- Imprimir valor de variable
-backtrace, bt   -- Mostrar stack trace
-list, l         -- Mostrar código fuente
-info locals     -- Mostrar variables locales
-info args       -- Mostrar argumentos de función
-where           -- Mostrar ubicación actual
-quit, q         -- Salir de GDB
-
-Ejemplo: print variable_name
-Ejemplo: break main
-Ejemplo: break 10 (línea 10)`;
-    }
-    
-    // Run command
-    if (cmd === 'run' || cmd === 'r') {
-      if (selectedExample === 'basic-debug') {
-        return `Starting program: ./debug_example
-
-Program received signal SIGSEGV, Segmentation fault.
-0x0000555555555169 in main () at debug.c:8
-8           arr[10] = 42;  // Error: fuera de límites!
-(gdb)`;
-      } else if (selectedExample === 'segfault') {
-        return `Starting program: ./segfault_example
-
-Program received signal SIGSEGV, Segmentation fault.
-0x0000555555555155 in main () at segfault.c:6
-6           *ptr = 10;  // Error: puntero NULL!
-(gdb)`;
-      } else {
-        return `Starting program: ./stack_example
-
-Program received signal SIGSEGV, Segmentation fault.
-0x0000555555555142 in factorial (n=19998) at stack.c:5
-5           return n * factorial(n - 1);  // Error: stack overflow!
-(gdb)`;
-      }
-    }
-    
-    // Backtrace command
-    if (cmd === 'backtrace' || cmd === 'bt' || cmd === 'where') {
-      if (selectedExample === 'basic-debug') {
-        return `#0  0x0000555555555169 in main () at debug.c:8`;
-      } else if (selectedExample === 'segfault') {
-        return `#0  0x0000555555555155 in main () at segfault.c:6`;
-      } else {
-        return `#0  0x0000555555555142 in factorial (n=19998) at stack.c:5
-#1  0x0000555555555142 in factorial (n=19999) at stack.c:5
-#2  0x0000555555555142 in factorial (n=20000) at stack.c:5
-#3  0x000055555555515a in main () at stack.c:10
-(Muchos más frames... stack overflow!)`;
-      }
-    }
-    
-    // Print commands
-    if (cmd.startsWith('print ') || cmd.startsWith('p ')) {
-      const variable = cmd.split(' ')[1];
-      if (variable === 'ptr') {
-        return `$1 = (int *) 0x0`;
-      } else if (variable === 'arr') {
-        return `$1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}`;
-      } else if (variable === 'n') {
-        return `$1 = 19998`;
-      } else if (variable === 'i') {
-        return `$1 = 10`;
-      } else {
-        return `No symbol "${variable}" in current context.`;
-      }
-    }
-    
-    // Info commands
-    if (cmd === 'info locals') {
-      if (selectedExample === 'basic-debug') {
-        return `arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-i = 10`;
-      } else if (selectedExample === 'segfault') {
-        return `ptr = 0x0`;
-      } else {
-        return `n = 19998`;
-      }
-    }
-    
-    if (cmd === 'info args') {
-      if (selectedExample === 'stack-overflow') {
-        return `n = 19998`;
-      } else {
-        return `No arguments.`;
-      }
-    }
-    
-    // List command
-    if (cmd === 'list' || cmd === 'l') {
-      if (selectedExample === 'basic-debug') {
-        return `1   #include <stdio.h>
-2   
-3   int main() {
-4       int arr[10] = {1,2,3,4,5,6,7,8,9,10};
-5       int i;
-6       
-7       for(i = 0; i <= 10; i++) {
-8  >>       arr[10] = 42;  // Error: fuera de límites!
-9           printf("arr[%d] = %d\\n", i, arr[i]);
-10      }`;
-      } else if (selectedExample === 'segfault') {
-        return `1   #include <stdio.h>
-2   
-3   int main() {
-4       int *ptr = NULL;
-5       
-6  >>   *ptr = 10;  // Error: puntero NULL!
-7       printf("Valor: %d\\n", *ptr);
-8       
-9       return 0;
-10  }`;
-      } else {
-        return `1   #include <stdio.h>
-2   
-3   int factorial(int n) {
-4       if (n <= 0) return 1;  // Falta caso n == 1!
-5  >>   return n * factorial(n - 1);  // Error: stack overflow!
-6   }
-7   
-8   int main() {
-9       int result = factorial(20000);
-10      printf("Resultado: %d\\n", result);`;
-      }
-    }
-    
-    // Break commands
-    if (cmd.startsWith('break ') || cmd.startsWith('b ')) {
-      const target = cmd.split(' ')[1];
-      return `Breakpoint 1 at 0x555555555155: file debug.c, line ${target}.`;
-    }
-    
-    // Continue command
-    if (cmd === 'continue' || cmd === 'c') {
-      return `Continuing.
-
-Program received signal SIGSEGV, Segmentation fault.
-Programa terminado con error.`;
-    }
-    
-    // Step commands
-    if (cmd === 'step' || cmd === 's') {
-      return `8           arr[10] = 42;  // Error: fuera de límites!`;
-    }
-    
-    if (cmd === 'next' || cmd === 'n') {
-      return `9           printf("arr[%d] = %d\\n", i, arr[i]);`;
-    }
-    
-    // Quit command
-    if (cmd === 'quit' || cmd === 'q') {
-      return `¿Realmente quieres salir de GDB? (y/n) 
-[Simulación: GDB cerrado]`;
-    }
-    
-    // Unknown command
-    return `Comando no definido: "${command}". Prueba "help".`;
-  };
+const GdbLearning: React.FC = () => {
+  const [selectedExample, setSelectedExample] = useState("basic-debug");
 
   return (
-    <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
-      <header className="mb-4 sm:mb-6 relative">
-        <div className="absolute left-2 top-1/2 -translate-y-1/2">
+    <div className="container mx-auto p-4 max-w-7xl">
+      {/* Header */}
+      <div className="mb-6 text-center relative">
+        <div className="absolute left-0 top-1/2 -translate-y-1/2">
           <Link to="/">
             <Button variant="outline" size="icon">
               <Home className="h-4 w-4" />
             </Button>
           </Link>
         </div>
-        <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
+        <div className="absolute right-0 top-1/2 -translate-y-1/2">
           <ThemeToggle />
         </div>
-        <div className="text-center">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
-            GDB Debugger Learning
-          </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-1 md:mt-2">
-            Master debugging C programs with GDB through interactive examples
-          </p>
-        </div>
-      </header>
+        <h1 className="text-3xl md:text-4xl font-bold mb-2">🐛 GDB Debugger Master Class</h1>
+        <p className="text-muted-foreground">
+          Experiencia 100% realista: terminal auténtico + visualización de memoria
+        </p>
+      </div>
 
-      {/* Welcome Guide */}
-      <Card className="mb-6 border-l-4 border-l-blue-500">
-        <CardContent className="pt-6">
-          <div className="flex items-start gap-4">
-            <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded-full">
-              <Info className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-            </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-lg mb-2">¡Bienvenido al Simulador de GDB!</h3>
-              <p className="text-sm text-muted-foreground mb-3">
-                Aprende a depurar programas paso a paso. Sigue estos pasos para comenzar:
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="bg-blue-50 text-blue-700">1</Badge>
-                  <span>Selecciona un ejemplo de código con bugs</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="bg-green-50 text-green-700">2</Badge>
-                  <span>Revisa los comandos GDB en el centro</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="bg-purple-50 text-purple-700">3</Badge>
-                  <span>Simula comandos en el panel derecho</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Ultra-realistic Tutorial Banner */}
+      <Alert className="mb-6 border-blue-200 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 dark:border-blue-800">
+        <Terminal className="h-4 w-4" />
+        <AlertTitle className="flex items-center gap-2">
+          🎯 Tutorial Completamente Realista
+          <Badge variant="secondary" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+            <Target className="h-3 w-3 mr-1" />
+            100% Auténtico
+          </Badge>
+        </AlertTitle>
+        <AlertDescription>
+          <strong>1.</strong> Selecciona un bug realista →{' '}
+          <strong>2.</strong> Ve la visualización de memoria →{' '}
+          <strong>3.</strong> Usa el terminal GDB exactamente como en la vida real
+        </AlertDescription>
+      </Alert>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 flex-1">
-        {/* Left Panel - Code Examples */}
+      {/* Main Content - 4 Column Grid */}
+      <div className="grid gap-6 lg:grid-cols-4 lg:gap-6">
+        
+        {/* Column 1 - Code Examples */}
         <div className="lg:col-span-1">
           <Card className="h-full">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Code className="h-5 w-5" />
-                <span>Paso 1: Elige un Ejemplo</span>
-                <Badge variant="secondary" className="ml-auto">Código con Bugs</Badge>
+              <CardTitle className="flex items-center gap-2 text-sm">
+                <Code className="h-4 w-4" />
+                <span>🔍 Código con Bugs</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <Alert className="mb-4">
-                <Bug className="h-4 w-4" />
-                <AlertTitle>Código con Errores</AlertTitle>
-                <AlertDescription>
-                  Cada ejemplo contiene bugs típicos que puedes depurar con GDB
-                </AlertDescription>
-              </Alert>
-              
               <Tabs value={selectedExample} onValueChange={setSelectedExample}>
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="basic-debug" className="text-xs">
-                    🧠 Memory Bug
+                <TabsList className="grid w-full grid-cols-1 gap-1">
+                  <TabsTrigger value="basic-debug" className="text-xs justify-start">
+                    🧠 Buffer Overflow
                   </TabsTrigger>
-                  <TabsTrigger value="segfault" className="text-xs">
-                    💥 Segfault
+                  <TabsTrigger value="segfault" className="text-xs justify-start">
+                    💥 NULL Pointer
                   </TabsTrigger>
-                  <TabsTrigger value="infinite-loop" className="text-xs">
-                    🔄 Stack Overflow
+                  <TabsTrigger value="infinite-loop" className="text-xs justify-start">
+                    📚 Stack Overflow
                   </TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value={selectedExample} className="mt-4">
-                  <div className="h-[400px] sm:h-[500px]">
+                  <div className="h-[300px]">
                     <CodeEditor 
                       content={exampleCode[selectedExample as keyof typeof exampleCode]}
                       language="c"
@@ -399,10 +153,10 @@ Programa terminado con error.`;
                   </div>
                   
                   <div className="mt-3 p-3 bg-muted/50 rounded text-xs">
-                    <strong>🎯 Bug en este código:</strong>
-                    {selectedExample === 'basic-debug' && " Escritura fuera de los límites del array (línea 8)"}
-                    {selectedExample === 'segfault' && " Intento de escribir en un puntero NULL (línea 6)"}
-                    {selectedExample === 'infinite-loop' && " Recursión infinita sin caso base (línea 5)"}
+                    <strong>🎯 Bug:</strong>
+                    {selectedExample === 'basic-debug' && " Array out of bounds en línea 8"}
+                    {selectedExample === 'segfault' && " NULL pointer dereference en línea 6"}
+                    {selectedExample === 'infinite-loop' && " Recursión infinita en línea 5"}
                   </div>
                 </TabsContent>
               </Tabs>
@@ -410,68 +164,64 @@ Programa terminado con error.`;
           </Card>
         </div>
 
-        {/* Middle Panel - GDB Commands & Tutorial */}
+        {/* Column 2 - Memory Visualization */}
+        <div className="lg:col-span-1">
+          <MemoryVisualizer 
+            selectedExample={selectedExample} 
+            className="h-full"
+          />
+        </div>
+
+        {/* Column 3 - GDB Commands Reference */}
         <div className="lg:col-span-1">
           <Card className="h-full">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Terminal className="h-5 w-5" />
-                <span>Paso 2: Aprende los Comandos</span>
-                <Badge variant="secondary" className="ml-auto">Guía de GDB</Badge>
+              <CardTitle className="flex items-center gap-2 text-sm">
+                <BookOpen className="h-4 w-4" />
+                <span>📚 Referencia GDB</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <Alert>
                 <Terminal className="h-4 w-4" />
-                <AlertTitle>Flujo de Depuración</AlertTitle>
-                <AlertDescription>
-                  Sigue estos pasos en orden para depurar eficientemente
+                <AlertTitle className="text-sm">Comandos Esenciales</AlertTitle>
+                <AlertDescription className="text-xs">
+                  Estos comandos funcionan igual que en GDB real
                 </AlertDescription>
               </Alert>
 
               <div className="space-y-2">
-                <h4 className="font-medium text-sm flex items-center gap-2">
-                  🎯 Pasos de Depuración Interactivos:
-                </h4>
-                <div className="space-y-2">
-                  {debuggingSteps.map((step, index) => (
-                    <div 
-                      key={index} 
-                      className={`p-3 rounded border cursor-pointer transition-all ${
-                        currentStep === index 
-                          ? 'bg-primary/10 border-primary shadow-sm scale-[1.02]' 
-                          : 'hover:bg-muted/50 hover:shadow-sm'
-                      }`}
-                      onClick={() => setCurrentStep(index)}
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <Badge variant={currentStep === index ? "default" : "outline"} className="text-xs">
-                          {index + 1}
-                        </Badge>
-                        <span className="font-medium text-sm">{step.step}</span>
-                        {currentStep === index && (
-                          <ArrowRight className="h-4 w-4 text-primary ml-auto animate-pulse" />
-                        )}
-                      </div>
-                      <code className="text-xs font-mono block p-2 bg-background rounded text-primary">
-                        {step.command}
-                      </code>
-                      <p className="text-xs text-muted-foreground mt-2">
-                        {step.explanation}
-                      </p>
-                    </div>
-                  ))}
+                <h4 className="font-medium text-sm">🚀 Flujo de Debug:</h4>
+                <div className="space-y-1 text-xs">
+                  <div className="flex items-center gap-2 p-2 bg-blue-50 dark:bg-blue-900/20 rounded">
+                    <span className="bg-blue-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">1</span>
+                    <code className="font-mono">run</code>
+                    <span className="text-muted-foreground">Ejecutar programa</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 bg-green-50 dark:bg-green-900/20 rounded">
+                    <span className="bg-green-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">2</span>
+                    <code className="font-mono">backtrace</code>
+                    <span className="text-muted-foreground">Ver stack trace</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 bg-purple-50 dark:bg-purple-900/20 rounded">
+                    <span className="bg-purple-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">3</span>
+                    <code className="font-mono">list</code>
+                    <span className="text-muted-foreground">Ver código</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 bg-orange-50 dark:bg-orange-900/20 rounded">
+                    <span className="bg-orange-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">4</span>
+                    <code className="font-mono">print var</code>
+                    <span className="text-muted-foreground">Inspeccionar</span>
+                  </div>
                 </div>
               </div>
 
               <Separator />
 
               <div className="space-y-2">
-                <h4 className="font-medium text-sm flex items-center gap-2">
-                  📚 Comandos Esenciales:
-                </h4>
-                <div className="space-y-1 max-h-[150px] overflow-y-auto">
-                  {gdbCommands.slice(0, 6).map((cmd, index) => (
+                <h4 className="font-medium text-sm">⚡ Todos los comandos:</h4>
+                <div className="space-y-1 max-h-[200px] overflow-y-auto">
+                  {gdbCommands.map((cmd, index) => (
                     <div key={index} className="p-2 bg-muted/30 rounded text-xs hover:bg-muted/50 transition-colors">
                       <code className="font-mono text-primary font-semibold">{cmd.command}</code>
                       <p className="text-muted-foreground mt-1">{cmd.description}</p>
@@ -483,22 +233,82 @@ Programa terminado con error.`;
           </Card>
         </div>
 
-        {/* Right Panel - Interactive GDB Terminal */}
+        {/* Column 4 - Realistic GDB Terminal */}
         <div className="lg:col-span-1">
-          <InteractiveTerminal
-            title="Paso 3: Terminal GDB Interactivo"
-            subtitle="Escribe comandos GDB como en un terminal real"
-            onCommand={handleGdbCommand}
-            initialMessage={`GNU gdb (GDB) 12.1
-Copyright (C) 2022 Free Software Foundation, Inc.
-Programa cargado: ./debug_example
-
-Programa listo para depurar. Escribe 'help' para ver comandos.
-Tip: Empieza con 'run' para ejecutar el programa.`}
-            prompt="(gdb)"
+          <RealisticGdbTerminal 
+            selectedExample={selectedExample}
             className="h-[600px]"
           />
         </div>
+      </div>
+
+      {/* Bottom Enhancement - Advanced Tips */}
+      <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm flex items-center gap-2">
+              🎯 Debugging Pro Tips
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="text-xs space-y-2">
+            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded">
+              <strong>💡 Compila siempre con:</strong>
+              <code className="block mt-1 font-mono bg-white dark:bg-gray-800 p-1 rounded">gcc -g -O0 programa.c</code>
+            </div>
+            <div className="p-2 bg-green-50 dark:bg-green-900/20 rounded">
+              <strong>🔍 Para arrays:</strong>
+              <code className="block mt-1 font-mono bg-white dark:bg-gray-800 p-1 rounded">print arr@length</code>
+            </div>
+            <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded">
+              <strong>📍 Breakpoints condicionales:</strong>
+              <code className="block mt-1 font-mono bg-white dark:bg-gray-800 p-1 rounded">break 10 if i &gt; 5</code>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm flex items-center gap-2">
+              🧠 Análisis de Memoria
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="text-xs space-y-2">
+            <div className="p-2 bg-red-50 dark:bg-red-900/20 rounded">
+              <strong>🚨 Buffer Overflow:</strong>
+              <p className="text-muted-foreground mt-1">Escribir fuera del array corrompe memoria adyacente</p>
+            </div>
+            <div className="p-2 bg-orange-50 dark:bg-orange-900/20 rounded">
+              <strong>💥 Segfault:</strong>
+              <p className="text-muted-foreground mt-1">Acceso a memoria no válida (NULL, no inicializada)</p>
+            </div>
+            <div className="p-2 bg-yellow-50 dark:bg-yellow-900/20 rounded">
+              <strong>📚 Stack Overflow:</strong>
+              <p className="text-muted-foreground mt-1">Demasiadas llamadas recursivas agotan el stack</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm flex items-center gap-2">
+              ⚡ Comandos Avanzados
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="text-xs space-y-2">
+            <div className="space-y-1">
+              <code className="font-mono bg-muted p-1 rounded block">info registers</code>
+              <p className="text-muted-foreground">Ver estado de registros CPU</p>
+            </div>
+            <div className="space-y-1">
+              <code className="font-mono bg-muted p-1 rounded block">disassemble</code>
+              <p className="text-muted-foreground">Ver código ensamblador</p>
+            </div>
+            <div className="space-y-1">
+              <code className="font-mono bg-muted p-1 rounded block">x/10x $rsp</code>
+              <p className="text-muted-foreground">Examinar memoria del stack</p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
