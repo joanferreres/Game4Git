@@ -6,7 +6,7 @@ import DiffViewer from "@/components/DiffViewer";
 import GitControls from "@/components/GitControls";
 import GitHistory from "@/components/GitHistory";
 import WelcomeBanner from "@/components/WelcomeBanner";
-import useGitStore from "@/store/gitStore";
+import useGitStore, { useAdminStore } from "@/store/gitStore";
 import {
   Sheet,
   SheetContent,
@@ -37,6 +37,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import ConflictResolver from "@/components/ConflictResolver";
+import { Link } from "react-router-dom";
+import { Bug, Shield } from "lucide-react";
 
 // Language selector component
 const LanguageSelector: React.FC = () => {
@@ -81,6 +83,7 @@ const LanguageSelector: React.FC = () => {
 const GitGame: React.FC = () => {
   const [showDiff, setShowDiff] = useState(false);
   const { repository, workingChanges, selectedCommitId, stagedChanges, hasPendingConflict } = useGitStore();
+  const { isGdbEnabled, isValgrindEnabled } = useAdminStore();
   const { t } = useTranslation();
   
   // Get the selected commit if any
@@ -120,6 +123,28 @@ const GitGame: React.FC = () => {
           <p className="text-xs sm:text-sm text-muted-foreground mt-1 md:mt-2">
             {t('general.subtitle')}
           </p>
+          
+          {/* Navigation to additional tools - Only show if enabled in admin */}
+          {(isGdbEnabled || isValgrindEnabled) && (
+            <div className="flex justify-center gap-2 mt-3 md:mt-4">
+              {isGdbEnabled && (
+                <Link to="/gdb">
+                  <Button variant="outline" size="sm" className="text-xs">
+                    <Bug className="h-3 w-3 mr-1" />
+                    GDB Debugger
+                  </Button>
+                </Link>
+              )}
+              {isValgrindEnabled && (
+                <Link to="/valgrind">
+                  <Button variant="outline" size="sm" className="text-xs">
+                    <Shield className="h-3 w-3 mr-1" />
+                    Valgrind Memory
+                  </Button>
+                </Link>
+              )}
+            </div>
+          )}
         </div>
       </header>
       

@@ -258,6 +258,32 @@
     "title": "Git Visualization",
     "description": "Select a commit from the graph to view its contents, or use \"Git Add\" to stage changes and see the differences with the current HEAD commit."
   },
+  "gdb": {
+    "title": "GDB Debugger Learning",
+    "subtitle": "Master debugging C programs with GDB through interactive examples",
+    "codeExamples": "Code Examples",
+    "commands": "GDB Commands",
+    "simulator": "GDB Simulator",
+    "interactiveDebugging": "Interactive Debugging",
+    "tryCommands": "Try common GDB commands below to see how they work",
+    "quickTips": "Quick Tips",
+    "essentialCommands": "Essential Commands",
+    "debuggingSteps": "Debugging Steps"
+  },
+  "valgrind": {
+    "title": "Valgrind Memory Debugging", 
+    "subtitle": "Detect memory errors and leaks with Valgrind's powerful analysis tools",
+    "memoryIssues": "Memory Issue Examples",
+    "toolsAndErrors": "Valgrind Tools & Error Types",
+    "outputAnalysis": "Valgrind Output Analysis",
+    "memoryAnalysis": "Memory Analysis",
+    "selectExample": "Select an example and run Valgrind to see detailed memory error reports",
+    "availableTools": "Available Tools",
+    "commonErrors": "Common Memory Errors",
+    "keyFeatures": "Key Valgrind Features",
+    "performanceTips": "Performance Tips",
+    "runAnalysis": "Run Valgrind Analysis"
+  },
   "gitHistory": {
     "title": "Git History",
     "currentBranch": "Current branch:",

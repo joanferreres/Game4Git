@@ -7,9 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 interface CodeEditorProps {
   readOnly?: boolean;
   content?: string;
+  language?: string;
 }
 
-const CodeEditor: React.FC<CodeEditorProps> = ({ readOnly = false, content }) => {
+const CodeEditor: React.FC<CodeEditorProps> = ({ readOnly = false, content, language = "c" }) => {
   const { workingChanges, updateWorkingChanges } = useGitStore();
   
   const editorContent = content ?? workingChanges;
@@ -45,7 +46,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ readOnly = false, content }) =>
         {mounted && (
           <Editor
             height="100%"
-            defaultLanguage="c"
+            defaultLanguage={language}
             value={editorContent}
             onChange={handleEditorChange}
             options={{

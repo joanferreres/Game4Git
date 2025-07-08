@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { GitRepository, GitCommit, GitBranch, CodeFile, RemoteReference } from '../types/git';
 import { toast } from 'sonner';
 import * as diffLib from 'diff';
@@ -193,6 +194,13 @@ interface GitStore {
   fetchRemote: () => void;
   pullRemote: (branchName?: string) => void;
   pushToRemote: (branchName?: string) => void;
+}
+
+interface AdminState {
+  isGdbEnabled: boolean;
+  isValgrindEnabled: boolean;
+  setGdbEnabled: (enabled: boolean) => void;
+  setValgrindEnabled: (enabled: boolean) => void;
 }
 
 // Create initial repository with a master branch and initial commit
@@ -802,5 +810,19 @@ const useGitStore = create<GitStore>((set, get) => ({
     toast.info(`Merge aborted. Branch '${conflict.targetBranch}' remains unchanged.`);
   }
 }));
+
+export const useAdminStore = create<AdminState>()(
+  persist(
+    (set) => ({
+      isGdbEnabled: false,
+      isValgrindEnabled: false,
+      setGdbEnabled: (enabled: boolean) => set({ isGdbEnabled: enabled }),
+      setValgrindEnabled: (enabled: boolean) => set({ isValgrindEnabled: enabled }),
+    }),
+    {
+      name: 'admin-settings',
+    }
+  )
+);
 
 export default useGitStore;

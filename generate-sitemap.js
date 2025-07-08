@@ -14,7 +14,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Configuración
-const BASE_URL = 'https://www.game4git.games';
+const BASE_URL = 'https://game4git.games';
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const PAGES_DIR = path.join(__dirname, 'src', 'pages');
 const OUTPUT_FILE = path.join(PUBLIC_DIR, 'sitemap.xml');
@@ -29,37 +29,12 @@ const getCurrentDate = () => {
 const detectRoutes = () => {
   const routes = [
     { path: '/', priority: '1.0', changefreq: 'weekly' },
+    { path: '/gdb', priority: '0.8', changefreq: 'monthly' },
+    { path: '/valgrind', priority: '0.8', changefreq: 'monthly' },
+    { path: '/privacy-policy.html', priority: '0.5', changefreq: 'yearly' },
+    { path: '/.well-known/security.txt', priority: '0.3', changefreq: 'yearly' },
+    { path: '/404', priority: '0.3', changefreq: 'yearly' }
   ];
-
-  try {
-    if (fs.existsSync(PAGES_DIR)) {
-      const files = fs.readdirSync(PAGES_DIR);
-      
-      files.forEach(file => {
-        // Detectar solo archivos .tsx que no sean Index.tsx (ya incluido como '/')
-        if (file.endsWith('.tsx') && file !== 'Index.tsx') {
-          const routeName = file.replace('.tsx', '');
-          let path = `/${routeName.toLowerCase()}`;
-          
-          // Caso especial para NotFound.tsx
-          if (routeName === 'NotFound') {
-            path = '/404';
-          }
-          
-          // Evitar duplicados
-          if (!routes.some(r => r.path === path)) {
-            routes.push({
-              path,
-              priority: path === '/' ? '1.0' : '0.7',
-              changefreq: path === '/' ? 'weekly' : 'monthly'
-            });
-          }
-        }
-      });
-    }
-  } catch (error) {
-    console.error(`❌ Error al detectar rutas: ${error.message}`);
-  }
 
   return routes;
 };

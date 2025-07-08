@@ -270,6 +270,32 @@
     "title": "Visualización de Git",
     "description": "Selecciona un commit del gráfico para ver su contenido, o usa \"Git Add\" para preparar cambios y ver las diferencias con el commit HEAD actual."
   },
+  "gdb": {
+    "title": "Aprendizaje del Depurador GDB",
+    "subtitle": "Domina la depuración de programas en C con GDB a través de ejemplos interactivos",
+    "codeExamples": "Ejemplos de Código",
+    "commands": "Comandos GDB",
+    "simulator": "Simulador GDB",
+    "interactiveDebugging": "Depuración Interactiva",
+    "tryCommands": "Prueba los comandos comunes de GDB para ver cómo funcionan",
+    "quickTips": "Consejos Rápidos",
+    "essentialCommands": "Comandos Esenciales",
+    "debuggingSteps": "Pasos de Depuración"
+  },
+  "valgrind": {
+    "title": "Depuración de Memoria con Valgrind",
+    "subtitle": "Detecta errores de memoria y fugas con las potentes herramientas de análisis de Valgrind",
+    "memoryIssues": "Ejemplos de Problemas de Memoria",
+    "toolsAndErrors": "Herramientas de Valgrind y Tipos de Error",
+    "outputAnalysis": "Análisis de Salida de Valgrind",
+    "memoryAnalysis": "Análisis de Memoria",
+    "selectExample": "Selecciona un ejemplo y ejecuta Valgrind para ver informes detallados de errores de memoria",
+    "availableTools": "Herramientas Disponibles",
+    "commonErrors": "Errores Comunes de Memoria",
+    "keyFeatures": "Características Clave de Valgrind",
+    "performanceTips": "Consejos de Rendimiento",
+    "runAnalysis": "Ejecutar Análisis de Valgrind"
+  },
   "gitHistory": {
     "title": "Historial de Git",
     "currentBranch": "Rama actual:",

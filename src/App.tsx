@@ -11,6 +11,9 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import GdbLearning from "./pages/GdbLearning";
+import ValgrindLearning from "./pages/ValgrindLearning";
+import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +24,21 @@ const router = createBrowserRouter([
     element: <Index />,
     errorElement: <NotFound />,
     hydrateFallbackElement: <div>Loading...</div>
+  },
+  {
+    path: "/gdb",
+    element: <GdbLearning />,
+    errorElement: <NotFound />
+  },
+  {
+    path: "/valgrind",
+    element: <ValgrindLearning />,
+    errorElement: <NotFound />
+  },
+  {
+    path: "/admin",
+    element: <Admin />,
+    errorElement: <NotFound />
   },
   {
     path: "*",

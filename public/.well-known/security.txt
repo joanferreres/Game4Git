@@ -1,0 +1,9 @@
+Contact: mailto:security@game4git.games
+Expires: 2026-01-01T00:00:00.000Z
+Preferred-Languages: en, es
+Canonical: https://game4git.games/.well-known/security.txt
+
+# Security Policy for Git Game Educational Platform
+# This is an educational platform for learning Git, GDB, and Valgrind
+# No sensitive data is collected or stored
+# All content is educational and open source 

@@ -1,0 +1,310 @@
+==============================================================================
+                    GDB DEBUGGER Y VALGRIND - GUÍA COMPLETA
+==============================================================================
+
+=====================================
+1. GDB DEBUGGER (GNU Debugger)
+=====================================
+
+¿QUÉ ES GDB?
+-------------
+GDB es el depurador oficial del proyecto GNU. Es una herramienta que permite 
+examinar programas mientras se ejecutan, pausar la ejecución en puntos 
+específicos, inspeccionar variables y seguir el flujo del programa paso a paso.
+
+CONCEPTOS CLAVE:
+----------------
+• Breakpoints (Puntos de ruptura): Pausan la ejecución en líneas específicas
+• Watchpoints: Pausan cuando una variable cambia de valor
+• Stack trace: Muestra la pila de llamadas de funciones
+• Step-by-step execution: Ejecuta línea por línea
+
+COMANDOS ESENCIALES DE GDB:
+---------------------------
+
+1. COMPILACIÓN CON SÍMBOLOS DE DEBUG:
+   gcc -g -o programa programa.c
+   
+   El flag -g incluye información de depuración en el ejecutable.
+
+2. INICIAR GDB:
+   gdb ./programa
+   
+3. COMANDOS BÁSICOS:
+   • run (r)                 - Ejecuta el programa
+   • break main (b main)     - Pone breakpoint en función main
+   • break 15 (b 15)         - Pone breakpoint en línea 15
+   • continue (c)            - Continúa la ejecución
+   • next (n)                - Ejecuta siguiente línea (step over)
+   • step (s)                - Entra en funciones (step into)
+   • finish                  - Sale de la función actual
+   
+4. INSPECCIÓN DE VARIABLES:
+   • print variable (p var)  - Imprime valor de variable
+   • info locals             - Muestra variables locales
+   • info args               - Muestra argumentos de función
+   • display variable        - Muestra variable automáticamente
+   
+5. NAVEGACIÓN DEL CÓDIGO:
+   • list (l)                - Muestra código fuente
+   • list 10,20              - Muestra líneas 10-20
+   • backtrace (bt)          - Muestra pila de llamadas
+   • frame 2                 - Cambia al frame 2 del stack
+   
+6. CONTROL DE BREAKPOINTS:
+   • info breakpoints        - Lista todos los breakpoints
+   • delete 1                - Elimina breakpoint 1
+   • disable 1               - Desactiva breakpoint 1
+   • enable 1                - Activa breakpoint 1
+
+EJEMPLO PRÁCTICO DE DEPURACIÓN:
+-------------------------------
+1. Tienes un programa que hace segfault:
+   
+   #include <stdio.h>
+   int main() {
+       int *ptr = NULL;
+       *ptr = 42;  // ← Error aquí
+       return 0;
+   }
+
+2. Pasos de depuración:
+   $ gcc -g -o test test.c
+   $ gdb ./test
+   (gdb) run
+   → Programa recibe SIGSEGV
+   (gdb) backtrace
+   → Muestra dónde ocurrió el error
+   (gdb) print ptr
+   → $1 = (int *) 0x0  (NULL pointer)
+
+CASOS DE USO TÍPICOS:
+--------------------
+• Encontrar dónde ocurre un segmentation fault
+• Verificar el valor de variables en puntos específicos
+• Seguir el flujo de ejecución paso a paso
+• Examinar la pila de llamadas cuando el programa falla
+• Depurar loops infinitos o condiciones incorrectas
+
+=====================================
+2. VALGRIND MEMORY DEBUGGER
+=====================================
+
+¿QUÉ ES VALGRIND?
+-----------------
+Valgrind es una suite de herramientas para depuración y profiling. Su herramienta
+principal, Memcheck, detecta errores de memoria como memory leaks, buffer 
+overflows, use-after-free, y otros problemas relacionados con la gestión de memoria.
+
+HERRAMIENTAS DE VALGRIND:
+------------------------
+
+1. MEMCHECK (Principal):
+   • Detecta memory leaks
+   • Encuentra buffer overflows
+   • Identifica use-after-free
+   • Detecta double-free
+   • Encuentra lecturas de memoria no inicializada
+
+2. CACHEGRIND:
+   • Profiler de caché
+   • Analiza misses de caché L1, L2
+   • Mide rendimiento de memoria
+
+3. CALLGRIND:
+   • Profiler de llamadas de función
+   • Mide costos de llamadas
+   • Genera gráficos de call graphs
+
+4. HELGRIND:
+   • Detector de race conditions
+   • Encuentra deadlocks
+   • Analiza problemas de threading
+
+COMANDOS ESENCIALES DE VALGRIND:
+-------------------------------
+
+1. USO BÁSICO:
+   valgrind ./programa
+   
+2. MEMCHECK COMPLETO:
+   valgrind --tool=memcheck --leak-check=full ./programa
+   
+3. OPCIONES ÚTILES:
+   --show-leak-kinds=all     - Muestra todos los tipos de leaks
+   --track-origins=yes       - Rastrea origen de valores no inicializados
+   --verbose                 - Salida detallada
+   --log-file=salida.txt     - Guarda output en archivo
+
+TIPOS DE ERRORES QUE DETECTA:
+----------------------------
+
+1. MEMORY LEAKS:
+   Ejemplo:
+   int *ptr = malloc(100 * sizeof(int));
+   // No hay free(ptr) ← LEAK
+   
+   Valgrind reporta:
+   "definitely lost: 400 bytes in 1 blocks"
+
+2. BUFFER OVERFLOW:
+   Ejemplo:
+   char buffer[10];
+   strcpy(buffer, "Texto muy largo"); ← OVERFLOW
+   
+   Valgrind reporta:
+   "Invalid write of size 1"
+
+3. USE AFTER FREE:
+   Ejemplo:
+   int *ptr = malloc(sizeof(int));
+   free(ptr);
+   *ptr = 42; ← USE AFTER FREE
+   
+   Valgrind reporta:
+   "Invalid read/write of size 4"
+
+4. DOUBLE FREE:
+   Ejemplo:
+   int *ptr = malloc(sizeof(int));
+   free(ptr);
+   free(ptr); ← DOUBLE FREE
+   
+   Valgrind reporta:
+   "Invalid free() / delete / delete[]"
+
+EJEMPLO COMPLETO DE ANÁLISIS:
+-----------------------------
+Programa con múltiples errores:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    // Memory leak
+    int *ptr1 = malloc(100 * sizeof(int));
+    
+    // Buffer overflow
+    char buffer[5];
+    strcpy(buffer, "Demasiado largo");
+    
+    // Use after free
+    int *ptr2 = malloc(sizeof(int));
+    *ptr2 = 42;
+    free(ptr2);
+    printf("Valor: %d\n", *ptr2);  // ← Error
+    
+    return 0; // ptr1 nunca se libera
+}
+
+Comando de análisis:
+$ gcc -g -o test test.c
+$ valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all ./test
+
+Output de Valgrind:
+==12345== Invalid write of size 1
+==12345==    at strcpy
+==12345==    by main (test.c:11)
+==12345== 
+==12345== Invalid read of size 4
+==12345==    at main (test.c:17)
+==12345== Address 0x522d040 is 0 bytes inside a block of size 4 free'd
+==12345== 
+==12345== LEAK SUMMARY:
+==12345==     definitely lost: 400 bytes in 1 blocks
+
+INTERPRETACIÓN DE REPORTES:
+---------------------------
+
+1. FORMATO DE ERRORES:
+   ==PID== Tipo de error
+   ==PID==    at función (archivo:línea)
+   ==PID==    by función_padre (archivo:línea)
+
+2. TIPOS DE LEAKS:
+   • definitely lost: Memory leak confirmado
+   • indirectly lost: Leak por punteros perdidos
+   • possibly lost: Posible leak (punteros internos)
+   • still reachable: Memoria accesible al final
+
+3. SEVERIDAD:
+   • Invalid read/write: CRÍTICO - Corrupción de memoria
+   • Uninitialized value: ALTO - Comportamiento impredecible
+   • Memory leak: MEDIO - Desperdicio de memoria
+
+MEJORES PRÁCTICAS:
+------------------
+
+1. PARA GDB:
+   • Compila siempre con -g para símbolos de debug
+   • Usa breakpoints estratégicamente
+   • Inspecciona variables antes y después de operaciones críticas
+   • Examina el backtrace cuando hay crashes
+
+2. PARA VALGRIND:
+   • Ejecuta Valgrind regularmente durante desarrollo
+   • Corrige errores en orden de aparición
+   • Usa datos de prueba pequeños (Valgrind es lento)
+   • Compila con -g para ubicaciones precisas de errores
+
+3. FLUJO DE TRABAJO RECOMENDADO:
+   a) Desarrolla la funcionalidad
+   b) Prueba con GDB para lógica
+   c) Analiza con Valgrind para memoria
+   d) Corrige errores encontrados
+   e) Repite el ciclo
+
+DIFERENCIAS CLAVE:
+------------------
+
+GDB:                          VALGRIND:
+• Depuración interactiva      • Análisis automático
+• Control de ejecución        • Detección de errores
+• Inspección en tiempo real   • Reporte post-ejecución
+• Rapidez normal              • Ejecución 10-50x más lenta
+• Problemas de lógica         • Problemas de memoria
+• Debugging paso a paso       • Análisis completo del programa
+
+CUÁNDO USAR CADA UNO:
+--------------------
+
+USA GDB CUANDO:
+• El programa funciona mal (lógica incorrecta)
+• Hay segmentation faults
+• Necesitas ver el flujo de ejecución
+• Quieres inspeccionar valores en tiempo real
+• Debugging interactivo
+
+USA VALGRIND CUANDO:
+• Sospechas memory leaks
+• Hay comportamiento errático sin crash evidente
+• Antes de releases de producción
+• Testing de estabilidad
+• Análisis preventivo de memoria
+
+HERRAMIENTAS COMPLEMENTARIAS:
+----------------------------
+• AddressSanitizer (ASan): Más rápido que Valgrind para algunos errores
+• Static analyzers: Clang Static Analyzer, Cppcheck
+• Dynamic analyzers: Dr. Memory, Intel Inspector
+• Profilers: gprof, perf, Intel VTune
+
+=====================================
+CONCLUSIÓN
+=====================================
+
+GDB y Valgrind son herramientas complementarias esenciales para cualquier 
+desarrollador en C/C++. GDB te ayuda a entender QUÉ está haciendo tu programa
+(debugging de lógica), mientras que Valgrind te ayuda a entender CÓMO está 
+manejando la memoria (debugging de memoria).
+
+El uso conjunto de ambas herramientas te permitirá:
+• Crear código más robusto y confiable
+• Detectar errores antes de producción  
+• Mejorar el rendimiento y uso de memoria
+• Desarrollar mejores hábitos de programación
+
+¡La práctica regular con estas herramientas te convertirá en un mejor programador!
+
+============================================================================== 
