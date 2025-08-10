@@ -37,18 +37,10 @@ const Admin = () => {
     setValgrindEnabled 
   } = useAdminStore();
 
-  // Fetch global flags on mount
+  // Always enabled locally too
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch('/api/admin-settings');
-        if (res.ok) {
-          const data = await res.json();
-          if (typeof data.isGdbEnabled === 'boolean') setGdbEnabled(data.isGdbEnabled);
-          if (typeof data.isValgrindEnabled === 'boolean') setValgrindEnabled(data.isValgrindEnabled);
-        }
-      } catch (_) {}
-    })();
+    setGdbEnabled(true);
+    setValgrindEnabled(true);
   }, [setGdbEnabled, setValgrindEnabled]);
 
   // Restore session if present
@@ -90,15 +82,7 @@ const Admin = () => {
       setValgrindEnabled(enabled);
       toast.success(`Valgrind ${enabled ? 'activado' : 'desactivado'} exitosamente`);
     }
-    // Persist globally
-    fetch('/api/admin-settings', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        isGdbEnabled: feature === 'gdb' ? enabled : isGdbEnabled,
-        isValgrindEnabled: feature === 'valgrind' ? enabled : isValgrindEnabled,
-      })
-    }).catch(() => {});
+    // No remote persistence needed when always enabled
   };
 
   if (!isAuthenticated) {

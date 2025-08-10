@@ -512,7 +512,7 @@ const useGitStore = create<GitStore>((set, get) => ({
 
       if (branchesToUpdate.length === 0) return null;
 
-      const randomBranch = branchesToUpdate[Math.floor(Math.random() * branchesToUpdate.length)];
+      const randomBranch = branchesToUpdate[Math.floor(Math.random() * branchesToUpdate.length)]!;
       const remoteRefName = `${repository.remoteName}/${randomBranch.name}`;
       
       // Crear un nuevo commit simulando que viene del remoto
@@ -701,7 +701,7 @@ const useGitStore = create<GitStore>((set, get) => ({
     
     // La rama existe, verificar si es un fast-forward (el remoto es ancestro del local)
     // Simplificado: si el remoto no ha avanzado más allá del punto donde lo dejamos
-    if (remoteRef.commitId === sourceBranch.commitId) {
+    if (remoteRef && remoteRef.commitId === sourceBranch.commitId) {
       toast.info(`Branch '${sourceBranchName}' is already up to date on remote`);
       return;
     }
@@ -814,8 +814,8 @@ const useGitStore = create<GitStore>((set, get) => ({
 export const useAdminStore = create<AdminState>()(
   persist(
     (set) => ({
-      isGdbEnabled: false,
-      isValgrindEnabled: false,
+      isGdbEnabled: true,
+      isValgrindEnabled: true,
       setGdbEnabled: (enabled: boolean) => set({ isGdbEnabled: enabled }),
       setValgrindEnabled: (enabled: boolean) => set({ isValgrindEnabled: enabled }),
     }),

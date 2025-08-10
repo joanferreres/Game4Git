@@ -33,18 +33,10 @@ const GitGame: React.FC = () => {
   const { repository, workingChanges, selectedCommitId, stagedChanges, hasPendingConflict } = useGitStore();
   const { isGdbEnabled, isValgrindEnabled, setGdbEnabled, setValgrindEnabled } = useAdminStore();
 
-  // Fetch global flags on mount
+  // Always enabled; no remote fetch needed
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch('/api/admin-settings');
-        if (res.ok) {
-          const data = await res.json();
-          if (typeof data.isGdbEnabled === 'boolean') setGdbEnabled(data.isGdbEnabled);
-          if (typeof data.isValgrindEnabled === 'boolean') setValgrindEnabled(data.isValgrindEnabled);
-        }
-      } catch (_) {}
-    })();
+    setGdbEnabled(true);
+    setValgrindEnabled(true);
   }, [setGdbEnabled, setValgrindEnabled]);
   const { t } = useTranslation();
   
