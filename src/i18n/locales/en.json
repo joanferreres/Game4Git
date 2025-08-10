@@ -1,4 +1,44 @@
 {
+  "common": {
+    "selectLanguage": "Select Language",
+    "language": "Language",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "remove": "Remove",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "export": "Export",
+    "import": "Import",
+    "settings": "Settings",
+    "help": "Help",
+    "about": "About",
+    "version": "Version",
+    "copy": "Copy",
+    "paste": "Paste",
+    "cut": "Cut",
+    "undo": "Undo",
+    "redo": "Redo",
+    "refresh": "Refresh",
+    "reload": "Reload",
+    "reset": "Reset",
+    "clear": "Clear",
+    "submit": "Submit",
+    "apply": "Apply",
+    "ok": "OK",
+    "yes": "Yes",
+    "no": "No",
+    "whatsHappening": "What's happening?",
+    "backToHome": "Back to Home"
+  },
   "general": {
     "title": "Git Game",
     "subtitle": "Learn Git concepts visually with this interactive playground"
@@ -41,7 +81,8 @@
     "resetAll": "Reset All",
     "create": "Create",
     "gitAdd": "Git Add (Stage Changes)",
-    "gitCommit": "Git Commit"
+    "gitCommit": "Git Commit",
+    "commitGraph": "Commit Graph"
   },
   "terminal": {
     "help": "Git Game Terminal - Type 'help' for available commands",
@@ -259,30 +300,549 @@
     "description": "Select a commit from the graph to view its contents, or use \"Git Add\" to stage changes and see the differences with the current HEAD commit."
   },
   "gdb": {
-    "title": "GDB Debugger Learning",
-    "subtitle": "Master debugging C programs with GDB through interactive examples",
-    "codeExamples": "Code Examples",
-    "commands": "GDB Commands",
-    "simulator": "GDB Simulator",
-    "interactiveDebugging": "Interactive Debugging",
-    "tryCommands": "Try common GDB commands below to see how they work",
-    "quickTips": "Quick Tips",
-    "essentialCommands": "Essential Commands",
-    "debuggingSteps": "Debugging Steps"
+    "ui": {
+      "whatIsTitle": "What is GDB?",
+      "whatIsSubtitle": "GNU Debugger",
+      "whatIsParagraph": "GDB is a powerful debugger for C/C++ and other languages. It helps you find and fix issues by pausing execution, inspecting variables, and stepping through code.",
+      "canDoTitle": "What can you do with GDB?",
+      "canDo": [
+        "Debug programs in multiple languages",
+        "Set breakpoints to pause execution",
+        "Inspect program state at runtime",
+        "Modify variables during execution"
+      ],
+      "whenTitle": "When to use GDB?",
+      "when": [
+        "When your program crashes with a segmentation fault",
+        "When you need to understand the execution flow",
+        "To inspect the state of complex variables"
+      ],
+      "proTipTitle": "Pro Tip: Starting GDB",
+      "sampleCommand": "gdb ./your_program",
+      "compileDebugHint": "Compile your program with the -g flag to include debug information.",
+      "searchPlaceholder": "Search commands...",
+      "quickTipTitle": "Quick Tip",
+      "quickTipAutocomplete": "Use TAB to autocomplete commands and variable names. Press TAB twice to see suggestions.",
+      "quickTipHelp": "Useful shortcut: use help [command] inside GDB to get detailed help about any command.",
+      "bestPracticesTitle": "Best Practices",
+      "bp1Title": "Always compile with",
+      "bp1Desc": "Add debug symbols required by GDB (e.g., gcc -g program.c).",
+      "bp2Title": "Enable core dumps",
+      "bp2Desc": "Analyze crashes with gdb program core. Use ulimit -c unlimited to enable them.",
+      "bp3Title": "Do not be afraid to experiment!",
+      "bp3Desc": "Try commands and explore the program step by step. You will learn much more!",
+      "commonErrorsTitle": "Common errors & how to avoid them",
+      "commonErrors": [
+        "Forgetting to compile with -g",
+        "Not using strategic breakpoints",
+        "Confusing next and step"
+      ],
+      "playgroundTitle": "Interactive Playground (Simulated)",
+      "playgroundDesc": "Simulate a basic GDB step-by-step session over a simple program.",
+      "playgroundNote": "* Simulated playground to learn the flow of most used commands."
+    },
+    "subtitle": "Powerful debugging for C/C++ programs with step-by-step execution, breakpoints and memory inspection.",
+    "concepts": {
+      "title": "Core Concepts",
+      "breakpoints": {"title": "Breakpoints", "desc": "Pause execution at specific lines or functions to inspect program state."},
+      "watchpoints": {"title": "Watchpoints", "desc": "Pause when a variable or memory location changes its value."},
+      "stack": {"title": "Call Stack & Frames", "desc": "Navigate frames to see where you are and how you got there (backtrace, frame)."},
+      "memory": {"title": "Inspecting Memory", "desc": "Use print/x and examine commands to inspect variables and memory regions."},
+      "stepping": {"title": "Stepping", "desc": "step (into), next (over), finish (until function returns), continue."}
+    },
+    "cheatsheet": {
+      "title": "GDB Cheat Sheet",
+      "description": "Essential GDB commands",
+      "items": {
+        "run": "Run the program",
+        "break": "Set breakpoint at line N",
+        "breakLine": "Set breakpoint at file:line",
+        "next": "Step over (don't enter functions)",
+        "step": "Step into (enter functions)",
+        "continue": "Continue until next breakpoint",
+        "print": "Print a variable value",
+        "backtrace": "Show call stack",
+        "quit": "Quit GDB"
+      }
+    },
+    "uiCommands": {
+      "commandsTitle": "GDB Commands",
+      "commandsDesc": "Full reference of commands organized by category"
+    },
+    "pageTitle": "GDB Learning",
+    "backToHome": "Back to Home",
+    "interactive": {
+      "title": "Interactive GDB Terminal",
+      "placeholder": "Enter GDB commands here...",
+      "commandsAvailable": "Available commands",
+      "commandsTitle": "Available GDB Commands",
+      "currentExample": "Current example:",
+      "currentSourceCode": "Current source code:",
+      "exampleCode": "Example Code:",
+      "clear": "Clear",
+      "tryCommands": "💡 Try: run, backtrace, list, print, help, clear",
+      "basicCommands": "Basic Commands:",
+      "breakpoints": "Breakpoints:",
+      "inspection": "Inspection:",
+      "navigation": "Navigation:",
+      "watchPoints": "Watch Points:",
+      "help": "Help:",
+      "commands": {
+        "run": "Runs the program",
+        "step": "Execute line by line (enters functions)",
+        "next": "Execute line by line (skips functions)",
+        "continue": "Continues execution until next breakpoint",
+        "quit": "Quits GDB",
+        "clear": "Clears the terminal screen",
+        "breakMain": "Breakpoint at main function",
+        "breakLine": "Breakpoint at line 10",
+        "breakFile": "Breakpoint at specific file and line",
+        "infoBreakpoints": "Shows all breakpoints",
+        "printVar": "Shows value of a variable",
+        "printPtr": "Shows content of a pointer",
+        "infoLocals": "Shows local variables",
+        "infoRegisters": "Shows processor registers",
+        "examineBuffer": "Examines memory as characters",
+        "backtrace": "Shows the call stack",
+        "bt": "Alias for backtrace",
+        "frame": "Changes to frame N",
+        "up": "Goes up one level in the stack",
+        "down": "Goes down one level in the stack",
+        "list": "Shows source code",
+        "where": "Shows current location",
+        "watchVar": "Pauses when variable changes",
+        "watchAddr": "Pauses when address changes",
+        "rwatch": "Pauses when read",
+        "awatch": "Pauses when read or write",
+        "helpGeneral": "Shows general help",
+        "helpCommand": "Specific help for a command"
+      }
+    },
+    "seeDetails": "See Details",
+    "commonUseCases": {
+      "title": "Common Use Cases",
+      "useCase1": {
+        "title": "Compile with debug information",
+        "description": "Use -g and -O0 flags to enable effective debugging",
+        "explanation": "Compiling with debug information is the first crucial step:\n\n• -g: Includes debug information\n• -O0: Disables optimizations for clearer debugging\n• -Wall: Shows compiler warnings\n• -Wextra: Additional warnings\n\nThis combination ensures you have all the necessary information for effective debugging.",
+        "example": "gcc -g -O0 -Wall -Wextra -o my_program my_program.c\ngdb ./my_program"
+      },
+      "useCase2": {
+        "title": "Set strategic breakpoints",
+        "description": "Place breakpoints at key points to control execution",
+        "explanation": "Strategic breakpoints are fundamental to controlling execution:\n\n• break function: Pauses when entering a function\n• break file.c:line: Pauses at specific line\n• break +N: Pauses N lines after current\n• break -N: Pauses N lines before current\n\nUsing breakpoints allows you to jump directly to problematic parts of the code.",
+        "example": "(gdb) break main\n(gdb) break problematic_function\n(gdb) break file.c:42\n(gdb) run"
+      },
+      "useCase3": {
+        "title": "Inspect variables and memory",
+        "description": "Examine the state of variables and data structures",
+        "explanation": "Variable inspection is essential to understand program state:\n\n• print var: Shows the value of a variable\n• print *ptr: Shows the value pointed by a pointer\n• print arr[0]@10: Shows 10 elements of an array\n• display var: Automatically shows variable at each step\n\nThis allows you to see exactly what's happening with your data.",
+        "example": "(gdb) print counter\n(gdb) print *pointer\n(gdb) print array[0]@5\n(gdb) display important_var"
+      },
+      "useCase4": {
+        "title": "Analyze stack traces",
+        "description": "Understand execution flow through stack analysis",
+        "explanation": "Stack trace analysis is crucial to understand execution flow:\n\n• backtrace: Shows complete call stack\n• frame N: Changes to frame N of the stack\n• up: Goes up one level in the stack\n• down: Goes down one level in the stack\n• info locals: Shows local variables of current frame\n\nThis helps you understand how you reached the current execution point.",
+        "example": "(gdb) backtrace\n(gdb) frame 2\n(gdb) info locals"
+      }
+    },
+    "bestPractices": {
+      "title": "Best Practices",
+      "description": "Recommended practices to use Valgrind effectively",
+      "practicesTitle": "Recommended Practices",
+      "practice1": {
+        "title": "Compile with debug information",
+        "description": "Use -g and -O0 flags to get detailed debug information"
+      },
+      "practice2": {
+        "title": "Use descriptive variable names",
+        "description": "Name variables clearly to facilitate debugging"
+      },
+      "practice3": {
+        "title": "Set strategic breakpoints",
+        "description": "Place breakpoints at key points in the code"
+      },
+      "practice4": {
+        "title": "Master basic commands",
+        "description": "Learn the fundamental GDB commands"
+      },
+      "practice5": {
+        "title": "Use watch points to monitor variables",
+        "description": "Set up watch points to detect variable changes"
+      }
+    },
+    "introduction": {
+      "title": "Introduction",
+      "whatIs": "What is GDB?",
+      "whatIsDescription": "GDB (GNU Debugger) is a powerful and versatile debugging tool that allows you to examine running programs, find errors, and understand code behavior.",
+      "keyFeatures": "Key features:",
+      "feature1": "Execute programs step by step",
+      "feature2": "Set breakpoints to pause execution",
+      "feature3": "Inspect variables and memory",
+      "feature4": "Analyze stack traces and function calls",
+      "feature5": "Debug running programs or core dumps",
+      "whenToUse": "When to use GDB?",
+      "useCase1": "For debugging segmentation faults and memory errors",
+      "useCase2": "When you need to understand complex execution flow",
+      "useCase3": "To inspect variable state at runtime",
+      "useCase4": "When analyzing unexpected program behavior"
+    },
+    "examples": {
+      "title": "Examples",
+      "example1": {
+        "title": "Buffer Overflow Debugging",
+        "description": "Example of buffer overflow using strcpy and how to detect it"
+      },
+      "example2": {
+        "title": "Array Out of Bounds Debugging",
+        "description": "Off-by-one error in array and techniques to identify it"
+      },
+      "example3": {
+        "title": "Recursive Function Debugging",
+        "description": "Analysis of problematic recursion with negative values"
+      },
+      "titles": {
+        "segfault": "Segmentation Fault",
+        "bufferoverflow": "Buffer Overflow",
+        "arrayoutofbounds": "Array Out of Bounds"
+      }
+    },
+    "categories": {
+      "startup": "Startup",
+      "execution": "Execution",
+      "breakpoints": "Breakpoints",
+      "examining": "Examining"
+    },
+    "commands": {
+      "startProgram": "Start program",
+      "startTUI": "Start TUI mode",
+      "setArgs": "Set program arguments",
+      "showArgs": "Show program arguments",
+      "run": "Run the program",
+      "runWithInput": "Run with input redirection",
+      "continue": "Continue execution",
+      "step": "Step into (line by line)",
+      "next": "Step over (line by line)",
+      "finish": "Finish current function",
+      "until": "Run until a location",
+      "kill": "Kill the program",
+      "quit": "Quit GDB",
+      "breakMain": "Breakpoint at main",
+      "breakLine": "Breakpoint at file:line",
+      "breakRelative": "Breakpoint relative to current line",
+      "watchVariable": "Watch a variable",
+      "infoBreakpoints": "List all breakpoints",
+      "deleteBreakpoint": "Delete breakpoint",
+      "clearBreakpoint": "Clear breakpoint at current line",
+      "disableBreakpoints": "Disable breakpoints",
+      "enableBreakpoints": "Enable breakpoints",
+      "printVariable": "Print a variable",
+      "printMemory": "Print memory via pointer",
+      "printSizeof": "Print sizeof of a type",
+      "infoLocals": "Show local variables",
+      "infoArgs": "Show function arguments",
+      "infoRegisters": "Show CPU registers",
+      "backtrace": "Show call stack",
+      "frame": "Change current frame",
+      "examineMemory": "Examine memory",
+      "disassemble": "Disassemble"
+    }
   },
   "valgrind": {
-    "title": "Valgrind Memory Debugging", 
-    "subtitle": "Detect memory errors and leaks with Valgrind's powerful analysis tools",
-    "memoryIssues": "Memory Issue Examples",
-    "toolsAndErrors": "Valgrind Tools & Error Types",
-    "outputAnalysis": "Valgrind Output Analysis",
-    "memoryAnalysis": "Memory Analysis",
-    "selectExample": "Select an example and run Valgrind to see detailed memory error reports",
-    "availableTools": "Available Tools",
-    "commonErrors": "Common Memory Errors",
-    "keyFeatures": "Key Valgrind Features",
-    "performanceTips": "Performance Tips",
-    "runAnalysis": "Run Valgrind Analysis"
+    "cheatsheet": {
+      "title": "Valgrind Cheat Sheet",
+      "description": "Essential Valgrind commands and options",
+      "basic": {
+        "title": "Basic Commands",
+        "items": [
+          {"desc": "Basic Valgrind execution"},
+          {"desc": "Detailed memory leak check"},
+          {"desc": "Track origin of uninitialized values"},
+          {"desc": "Run Memcheck explicitly (default tool)"},
+          {"desc": "Cache and performance analysis"},
+          {"desc": "Generate call graphs and profiles"}
+        ]
+      },
+      "options": {
+        "title": "Common Options"
+      },
+      "tips": {
+        "title": "Quick Tips",
+        "compileDebug": "Use -g when compiling to get debug information",
+        "cppInline": "For C++, use -fno-inline for better results",
+        "suppressions": "Use --suppressions=filename to suppress known errors"
+      }
+    },
+    
+    "codeExample": {
+      "explanation": "This code demonstrates a common memory error scenario explained below."
+    },
+    "commands": {
+      "intro": "Below are the most useful Valgrind commands to debug memory issues in your programs. Each command includes a detailed description and usage examples.",
+      "header": {
+        "title": "Basic Commands",
+        "description": "Essential commands to start using Valgrind effectively"
+      },
+      "basic": {
+        "title": "Basic Analysis",
+        "description": "Run a basic memory analysis of your program",
+        "whenTitle": "When to use?",
+        "when": [
+          "For a quick scan of memory issues",
+          "As a first step in memory debugging"
+        ]
+      },
+      "leak": {
+        "title": "Memory Leak Detection",
+        "description": "Identify and analyze memory leaks in your program",
+        "noteTitle": "Important note:",
+        "optionsTitle": "Included options:",
+        "options": {
+          "leakCheckFull": "Detailed leak search",
+          "showLeakKinds": "Show all types of leaks",
+          "trackOrigins": "Track origins of uninitialized values"
+        }
+      },
+      "perf": {
+        "title": "Performance Analysis",
+        "description": "Identify performance bottlenecks in your code",
+        "tipTitle": "Usage tip:",
+        "tipText": "Use kcachegrind to visualize Callgrind results with a graphical interface:"
+      }
+    },
+    "errorTypes": {
+      "title": "Common Error Types",
+      "description": "Identify and fix the most common errors detected by Valgrind",
+      "memoryLeaks": {
+        "title": "Memory Leaks",
+        "description": "Memory that was allocated but not freed, causing excessive resource usage.",
+        "example": "#include <stdlib.h>\n\nint main() {\n    // Memory leak example\n    int *leak = (int*)malloc(sizeof(int) * 10);\n    // Forgot to free the allocated memory\n    return 0;\n}",
+        "explanation": "Valgrind detects a memory leak: memory was allocated with malloc() but never freed. Look for lines starting with 'definitely lost' or 'indirectly lost' in the report."
+      },
+      "invalidAccess": {
+        "title": "Invalid Memory Access",
+        "description": "Reading or writing outside the bounds of allocated memory.",
+        "example": "#include <stdlib.h>\n\nint main() {\n    // Invalid read/write example\n    int *arr = (int*)malloc(sizeof(int) * 5);\n    arr[5] = 10;  // Out of bounds access\n    free(arr);\n    return 0;\n}",
+        "explanation": "Valgrind reports an invalid read/write: the program accessed memory outside the allocated range. This often leads to undefined behavior and crashes."
+      },
+      "uninitializedValue": {
+        "title": "Use of Uninitialized Value",
+        "description": "Using a variable that hasn't been initialized.",
+        "example": "#include <stdio.h>\n\nint main() {\n    int x;  // Uninitialized\n    if (x > 0) {  // Using uninitialized value\n        printf(\"Positive\n\");\n    }\n    return 0;\n}",
+        "explanation": "Valgrind detects that the program is using an uninitialized variable. This can lead to unpredictable behavior as the value is whatever was in memory at that location."
+      },
+      "doubleFree": {
+        "title": "Double Free",
+        "description": "Freeing memory that has already been freed.",
+        "example": "#include <stdlib.h>\n\nint main() {\n    int *ptr = (int*)malloc(sizeof(int));\n    free(ptr);\n    free(ptr);  // Double free\n    return 0;\n}",
+        "explanation": "Valgrind reports a double free error: the program is trying to free memory that has already been freed. This can corrupt the memory manager's data structures."
+      },
+      "mismatchedFree": {
+        "title": "Mismatched Free/Delete/Delete[]",
+        "description": "Using the wrong deallocation function.",
+        "example": "#include <stdlib.h>\n\nint main() {\n    int *arr = (int*)malloc(10 * sizeof(int));\n    delete[] arr;  // Wrong deallocation function\n    return 0;\n}",
+        "explanation": "Valgrind detects that the program is using the wrong deallocation function. In C++, it's important to match new with delete and new[] with delete[]."
+      },
+      "overlappingMemory": {
+        "title": "Source and Destination Overlap",
+        "description": "Source and destination memory regions overlap in memcpy or similar functions.",
+        "example": "#include <string.h>\n\nint main() {\n    char str[20] = \"Hello, World!\";\n    memcpy(str + 5, str, 10);  // Overlapping memory\n    return 0;\n}",
+        "explanation": "Valgrind reports that the source and destination memory regions overlap in a call to memcpy(). Use memmove() instead when memory regions might overlap."
+      }
+    },
+    "tabs": {
+      "introduction": "Introduction",
+      "errors": "Error Types",
+      "commands": "Commands",
+      "practices": "Best Practices",
+      "cheatsheet": "Cheat Sheet"
+    },
+    "commonOptions": {
+      "title": "Common Options",
+      "memoryOptions": "Memory Options",
+      "outputOptions": "Output Options",
+      "quickTips": "Quick Tips",
+      "memoryOptionsList": [
+        {"option": "--leak-check=full", "description": "Show details of memory leaks"},
+        {"option": "--show-leak-kinds=all", "description": "Show all types of leaks"},
+        {"option": "--track-origins=yes", "description": "Track origin of uninitialized values"},
+        {"option": "--leak-resolution=high", "description": "Improve leak tracking precision"},
+        {"option": "--num-callers=<n>", "description": "Show n stack frames in reports"}
+      ],
+      "outputOptionsList": [
+        {"option": "--log-file=filename", "description": "Save output to a file"},
+        {"option": "--quiet", "description": "Only show important errors"},
+        {"option": "--verbose", "description": "Show additional information"},
+        {"option": "--trace-children=yes", "description": "Trace child processes"},
+        {"option": "--track-fds=yes", "description": "Show open file descriptors"}
+      ],
+      "tips": [
+        "Use {{flag}} when compiling to get debug information",
+        "For C++, use {{flag}} for better results",
+        "Use {{option}} to suppress known errors"
+      ]
+    },
+    "intro": {
+      "whatIs": "What is Valgrind?",
+      "detection": "Valgrind can detect a wide range of memory-related issues in your programs.",
+      "subtitle": "Memory error detection and profiling toolkit",
+      "description": "Valgrind is a powerful suite of memory debugging and profiling tools.",
+      "detectTitle": "What can Valgrind detect?",
+      "detect": {
+        "memoryLeaks": "Memory leaks",
+        "invalidAccess": "Invalid or freed memory access",
+        "uninit": "Use of uninitialized memory",
+        "cache": "Cache performance issues"
+      },
+      "whenTitle": "When to use Valgrind?",
+      "when": {
+        "leaks": "When your program has unexpected memory leaks",
+        "segfault": "When experiencing segmentation faults",
+        "optimize": "To optimize your application's memory usage"
+      },
+      "proTip": "💡 Pro tip: run Valgrind regularly in your CI to catch regressions early."
+    },
+    "pageTitle": "Valgrind Learning",
+    "backToHome": "Back to Home",
+    "interactive": {
+      "title": "Interactive Valgrind Terminal",
+      "placeholder": "Enter Valgrind commands here...",
+      "commandsAvailable": "Available commands",
+      "commandsTitle": "Available Valgrind Commands",
+      "currentExample": "Current example:",
+      "currentSourceCode": "Current source code:",
+      "exampleCode": "Example Code:",
+      "clear": "Clear",
+      "tryCommands": "💡 Try: valgrind --leak-check=full ./program, help, clear",
+      "basicCommands": "Basic Commands:",
+      "memcheck": "Memcheck (Memory Detector):",
+      "massif": "Massif (Heap Profiler):",
+      "cachegrind": "Cachegrind (Cache Profiler):",
+      "helgrind": "Helgrind (Race Condition Detector):",
+      "outputOptions": "Output Options:",
+      "compilationOptions": "Recommended Compilation Options:",
+      "commands": {
+        "valgrindDefault": "Runs with Memcheck by default",
+        "valgrindVersion": "Shows Valgrind version",
+        "help": "Shows general help",
+        "clear": "Clears the terminal screen",
+        "memcheckExplicit": "Uses Memcheck explicitly",
+        "leakCheckFull": "Full leak detection",
+        "leakCheckYes": "Basic leak detection",
+        "trackOrigins": "Tracks origin of values",
+        "showLeakKinds": "Shows all types of leaks",
+        "massifTool": "Analyzes heap memory usage",
+        "msPrint": "Prints Massif report",
+        "cachegrindTool": "Analyzes cache behavior",
+        "cgAnnotate": "Annotates code with statistics",
+        "helgrindTool": "Detects race conditions",
+        "trackLockorders": "Tracks lock orders",
+        "logFile": "Saves output to file",
+        "xml": "XML format output",
+        "quiet": "Quiet mode",
+        "verbose": "Verbose mode",
+        "basicCompile": "Basic compilation",
+        "optimizedCompile": "Optimized compilation for Valgrind"
+      }
+    },
+    "seeDetails": "See Details",
+    "tools": {
+      "title": "Tools",
+      "tool1": {
+        "title": "Memcheck",
+        "description": "Memcheck is Valgrind's main tool for detecting memory errors:",
+        "features": [
+          "Detects access to uninitialized memory",
+          "Identifies reads/writes out of bounds",
+          "Finds memory leaks and double frees",
+          "Detects use of memory after freeing it"
+        ],
+        "summary": "It's the most important tool and should be your first choice for memory analysis.",
+        "command": "valgrind --tool=memcheck --leak-check=full ./program"
+      },
+      "tool2": {
+        "title": "Massif",
+        "description": "Heap profiler that tracks memory usage over time"
+      },
+      "tool3": {
+        "title": "Cachegrind",
+        "description": "Cache profiler that simulates processor cache behavior"
+      },
+      "tool4": {
+        "title": "Helgrind",
+        "description": "Race condition detector and synchronization error detector for multithreaded programs"
+      }
+    },
+    "bestPractices": {
+      "title": "Best Practices",
+      "description": "Recommended practices to use Valgrind effectively",
+      "practicesTitle": "Recommended Practices",
+      "practice1": {
+        "title": "Compile with debug information",
+        "description": "Use -g and -O0 flags to get detailed debug information"
+      },
+      "practice2": {
+        "title": "Use correct Valgrind options",
+        "description": "Configure appropriate options based on the type of analysis you need"
+      },
+      "practice3": {
+        "title": "Automate analysis with scripts",
+        "description": "Create scripts to run Valgrind regularly in your development process"
+      },
+      "practice4": {
+        "title": "Interpret reports correctly",
+        "description": "Understand the different types of errors and leaks that Valgrind reports"
+      },
+      "practice5": {
+        "title": "Check for false positives",
+        "description": "Review reports carefully to identify potential false positives"
+      },
+      "practice6": {
+        "title": "Use suppression files",
+        "description": "Create suppression files to ignore known, acceptable issues"
+      }
+    },
+    "introduction": {
+      "title": "Introduction",
+      "whatIs": "What is Valgrind?",
+      "whatIsDescription": "Valgrind is a suite of instrumentation tools for debugging and profiling programs. It is especially useful for detecting memory errors and analyzing the performance of C/C++ applications.",
+      "keyFeatures": "Key features:",
+      "feature1": "Automatic memory leak detection",
+      "feature2": "Identification of invalid memory accesses",
+      "feature3": "Performance analysis and cache usage",
+      "feature4": "Race condition detection in multithreaded programs",
+      "whenToUse": "When to use Valgrind?",
+      "useCase1": "To detect and fix memory leaks in your application",
+      "useCase2": "When you need to optimize memory performance",
+      "useCase3": "For debugging hard-to-reproduce memory errors",
+      "useCase4": "When developing multithreaded applications to detect race conditions",
+      "detect": {
+        "title": "What can Valgrind detect?",
+        "memoryLeaks": "Memory leaks",
+        "invalidAccess": "Invalid or freed memory access",
+        "uninit": "Use of uninitialized memory"
+      }
+    },
+    "examples": {
+      "title": "Examples",
+      "example1": {
+        "title": "Memory Leak Analysis",
+        "description": "Complex memory leak example with nested structures"
+      },
+      "example2": {
+        "title": "Double Free Detection",
+        "description": "Program demonstrating double free error and its detection"
+      },
+      "example3": {
+        "title": "Cache Analysis with Cachegrind",
+        "description": "Comparison of cache-friendly vs cache-unfriendly memory access patterns"
+      },
+      "titles": {
+        "memoryleak": "Memory Leak",
+        "doublefree": "Double Free",
+        "cacheanalysis": "Cache Analysis"
+      }
+    }
   },
   "gitHistory": {
     "title": "Git History",
@@ -296,140 +856,137 @@
     "head": "HEAD"
   },
   "exercises": {
-    "title": "Git Exercises",
-    "description": "Complete these exercises to learn Git branching and team workflows",
+    "readyToStart": "Ready to start?",
+    "startExplanation": "When you start the exercise, we will track your progress at each step until you complete it.",
     "challenges": "Challenges",
-    "progress": "Progress",
-    "steps": "Steps to complete",
-    "stepsCompleted": "completed",
+    "title": "Practical Exercises",
+    "subtitle": "Practice with real Git scenarios",
+    "currentExercise": "Current Exercise",
+    "start": "Start",
+    "reset": "Reset",
+    "complete": "Complete",
+    "next": "Next",
+    "description": "Description",
+    "objectives": "Objectives",
+    "completed": "Completed",
+    "pending": "Pending",
+    "step": "Step",
+    "featureBranch": {
+      "title": "Feature Branch Workflow",
+      "tabTitle": "Feature Branch",
+      "description": "Learn how to work with feature branches to develop new functionality without affecting the main codebase.",
+      "objectives": {
+        "1": "Create a feature branch for new functionality",
+        "2": "Make changes and commit them to the feature branch",
+        "3": "Merge the feature branch back to main",
+        "4": "Clean up by deleting the feature branch"
+      },
+      "steps": {
+        "1": "Create a feature branch called 'add-header' from main",
+        "2": "Switch to the feature branch",
+        "3": "Add a header to the file (e.g., '# My Project')",
+        "4": "Commit the changes with message 'Add project header'",
+        "5": "Switch back to main branch",
+        "6": "Merge the feature branch into main"
+      },
+      "uiActions": [
+        "Create branch 'add-header'",
+        "Switch to add-header branch",
+        "Edit file content",
+        "Commit changes",
+        "Switch to main",
+        "Merge add-header into main"
+      ]
+    },
+    "teamWorkflow": {
+      "title": "Team Collaboration Workflow",
+      "tabTitle": "Team Workflow",
+      "description": "Simulate a team environment with remote repository operations.",
+      "objectives": {
+        "1": "Fetch updates from remote repository",
+        "2": "Create a feature branch for your changes",
+        "3": "Make changes and push them to remote",
+        "4": "Simulate team collaboration with pull and merge"
+      },
+      "steps": {
+        "1": "Fetch latest changes from remote",
+        "2": "Create a feature branch 'team-feature'",
+        "3": "Make changes to the file",
+        "4": "Commit and push changes to remote",
+        "5": "Pull changes from remote to simulate team updates",
+        "6": "Merge your feature branch"
+      },
+      "uiActions": [
+        "Fetch from remote",
+        "Create feature branch",
+        "Edit and commit",
+        "Push to remote",
+        "Pull from remote",
+        "Merge feature branch"
+      ]
+    },
+    "technicalTasks": {
+      "title": "Technical Tasks Workflow",
+      "tabTitle": "Technical Tasks",
+      "description": "Practice with technical tasks like hotfixes and releases.",
+      "objectives": {
+        "1": "Create a hotfix branch for urgent fixes",
+        "2": "Apply the fix and test it",
+        "3": "Merge hotfix to main and develop",
+        "4": "Clean up temporary branches"
+      },
+      "steps": {
+        "1": "Create hotfix branch from main",
+        "2": "Apply the urgent fix",
+        "3": "Test and commit the fix",
+        "4": "Merge hotfix to main",
+        "5": "Tag the release version",
+        "6": "Clean up hotfix branch"
+      },
+      "uiActions": [
+        "Create hotfix branch",
+        "Apply fix",
+        "Test and commit",
+        "Merge to main",
+        "Tag release",
+        "Delete hotfix branch"
+      ]
+    },
+    "mergeConflicts": {
+      "title": "Merge Conflicts Resolution",
+      "tabTitle": "Merge Conflicts",
+      "description": "Learn how to resolve merge conflicts when branches have competing changes.",
+      "objectives": {
+        "1": "Create conflicting changes in different branches",
+        "2": "Attempt to merge and encounter conflicts",
+        "3": "Resolve conflicts manually",
+        "4": "Complete the merge successfully"
+      },
+      "steps": {
+        "1": "Create two branches with conflicting changes",
+        "2": "Attempt to merge them",
+        "3": "Resolve the conflicts in the editor",
+        "4": "Stage the resolved changes",
+        "5": "Complete the merge commit"
+      },
+      "uiActions": [
+        "Edit file to resolve conflict",
+        "Stage and commit resolved changes"
+      ]
+    },
+    "close": "Close",
+    "cancel": "Cancel",
+    "startAgain": "Start Again",
+    "nextExercise": "Next Exercise",
+    "exerciseFinished": "Exercise Completed!",
+    "finishedExplanation": "You have completed this exercise. You can restart it or continue with another one.",
+    "exerciseCompleted": "Exercise completed!",
+    "exerciseFullyCompleted": "All steps completed!",
+    "completionMessage": "Congratulations! You have successfully completed all the steps in this exercise.",
     "reference": "Command Reference",
     "terminalCommands": "Terminal Commands",
     "uiActions": "UI Actions",
-    "exerciseCompleted": "Exercise completed! 🎉",
-    "exerciseFullyCompleted": "All steps completed! 🎉",
-    
-    "reset": "Reset Progress",
-    "close": "Close",
-    "cancel": "Cancel",
-    "completionMessage": "Congratulations! You've successfully completed all steps of this exercise.",
-    "readyToStart": "Ready to start?",
-    "startExplanation": "When you start the exercise, we'll track your progress on each step until you complete it.",
-    "start": "Start Exercise",
-    "exerciseFinished": "Exercise Completed!",
-    "finishedExplanation": "You've completed this exercise. You can reset it or continue with another one.",
-    "startAgain": "Start Again",
-    "nextExercise": "Next Exercise",
-    "checkProgress": "Check Progress",
-    "markAsDone": "Mark as Completed",
-    "featureBranch": {
-      "tabTitle": "Feature Branch",
-      "title": "Feature Branch Workflow",
-      "description": "Learn how to work with feature branches to develop new functionality without affecting the main codebase.",
-      "steps": {
-        "createDev": "Create a 'dev' branch from 'master'",
-        "switchDev": "Switch to the 'dev' branch",
-        "createFeature": "Create and switch to a new feature branch called 'feature-login'",
-        "makeChanges": "Modify the code (add a new function or comment)",
-        "commitChanges": "Stage and commit your changes with a descriptive message",
-        "mergeToDev": "Switch to 'dev' branch and merge your feature branch"
-      },
-      "hints": {
-        "createDev": "Use 'git branch dev' in terminal mode or use the branch creation UI control",
-        "switchDev": "Use 'git checkout dev' in terminal mode or use the branch switch dropdown",
-        "createFeature": "Use 'git checkout -b feature-login' in terminal mode or create the branch from UI and then switch to it",
-        "makeChanges": "Edit the code in the editor to make any change",
-        "commitChanges": "Use 'git add .' and 'git commit -m \"your message\"' in terminal or use the UI buttons",
-        "mergeToDev": "First use 'git checkout dev' then 'git merge feature-login', or use the UI controls"
-      }
-    },
-    "teamWorkflow": {
-      "tabTitle": "Team Workflow",
-      "title": "Team Collaboration Workflow",
-      "description": "Learn how a team collaborates using branches, pull and merge operations.",
-      "steps": {
-        "createStructure": "Create a structure with 'master', 'dev', and 'release' branches",
-        "createStory": "Create a story branch called 'story-123' from 'dev'",
-        "implementStory": "Make changes on 'story-123' and commit them",
-        "mergeToDev": "Merge 'story-123' into 'dev' and then 'dev' into 'release'",
-        "prepareProduction": "Merge 'release' into 'master' for production"
-      },
-      "hints": {
-        "createStructure": "Create each branch from master using 'git branch' or the UI",
-        "createStory": "First switch to 'dev', then create 'story-123' branch",
-        "implementStory": "Switch to 'story-123', make changes, stage and commit them",
-        "mergeToDev": "First merge to 'dev', then merge 'dev' to 'release'",
-        "prepareProduction": "Switch to 'master' and merge from 'release'"
-      }
-    },
-    "technicalTasks": {
-      "tabTitle": "Technical Tasks",
-      "title": "Technical Tasks Workflow",
-      "description": "Learn how to break down a story into technical tasks and work on them in parallel.",
-      "steps": {
-        "setupProject": "Create 'master', 'dev', and 'story-456' branches",
-        "createTasks": "Create two technical task branches: 'task-1' and 'task-2' from 'story-456'",
-        "implementTask1": "Implement 'task-1' with changes and commit",
-        "implementTask2": "Implement 'task-2' with different changes and commit",
-        "integrateTasks": "Merge both tasks into 'story-456'",
-        "completeWorkflow": "Deliver the story by merging through 'dev' to 'master'"
-      },
-      "hints": {
-        "setupProject": "Create the branch structure for the project",
-        "createTasks": "Switch to 'story-456' and create two branches from it",
-        "implementTask1": "Switch to 'task-1', make changes and commit",
-        "implementTask2": "Switch to 'task-2', make changes and commit",
-        "integrateTasks": "Switch to 'story-456' and merge both task branches",
-        "completeWorkflow": "Merge 'story-456' to 'dev', then 'dev' to 'master'"
-      }
-    },
-    "mergeConflicts": {
-      "tabTitle": "Merge Conflicts",
-      "title": "Resolving Merge Conflicts",
-      "description": "Learn how to identify and resolve merge conflicts that occur when merging branches with conflicting changes.",
-      "steps": {
-        "setupRepo": "Setup repository with 'master' and 'dev' branches",
-        "createFeatureA": "Create and switch to 'feature-a' branch from 'dev'",
-        "commitFeatureA": "Make changes to code and commit on 'feature-a'",
-        "createFeatureB": "Switch to 'dev' and create 'feature-b' branch",
-        "commitFeatureB": "Make conflicting changes on 'feature-b' and commit",
-        "resolveConflict": "Create and resolve a merge conflict"
-      },
-      "hints": {
-        "setupRepo": "Create a 'dev' branch from 'master'",
-        "createFeatureA": "Use 'git checkout -b feature-a' from the 'dev' branch",
-        "commitFeatureA": "Edit the code, stage and commit your changes",
-        "createFeatureB": "Switch back to 'dev' and create a new branch with 'git checkout -b feature-b'",
-        "commitFeatureB": "Edit the same part of the code, stage and commit your changes",
-        "resolveConflict": "Switch to 'dev', try to merge both feature branches, and resolve the conflict"
-      },
-      "conflict": {
-        "title": "Merge Conflict Detected!",
-        "description": "There is a merge conflict in your file. You need to resolve it manually by editing the content below.",
-        "fileTitle": "Conflicted File Content:",
-        "placeholder": "Edit this code to resolve the conflict...",
-        "instruction": "Remove the conflict markers (<<<<<<< HEAD, =======, >>>>>>>), and edit the code to create a working solution.",
-        "validate": "Validate Resolution",
-        "success": "Conflict resolved correctly!",
-        "error": "There are still unresolved conflicts. Remove the conflict markers and provide a solution.",
-        "incomplete": "You've removed the conflict markers, but your solution should include both the logging and the performance improvements."
-      },
-      "scenario": {
-        "title": "Scenario: Team Collaboration Conflict",
-        "description": "Your team is working on a feature. Two developers have modified the same function in different ways:",
-        "dev1": "Developer 1 (feature-a branch)",
-        "dev1desc": "Implemented a version focused on performance.",
-        "dev2": "Developer 2 (feature-b branch)",
-        "dev2desc": "Implemented a version with additional logging.",
-        "task": "When merging these branches into dev, a conflict occurred. Your task is to resolve this conflict by creating a solution that preserves both the performance improvements and the logging functionality."
-      },
-      "resolution": {
-        "title": "How to Resolve This Conflict:",
-        "step1": "Remove the conflict markers (<<<<<<< HEAD, =======, >>>>>>>)",
-        "step2": "Combine both implementations to keep the performance improvements from feature-a",
-        "step3": "Preserve the logging functionality from the current branch (HEAD)",
-        "step4": "Make sure the result is valid JavaScript that would run without errors"
-      },
-      "startExplanation": "You'll be presented with a conflict to resolve. You need to edit the code to create a version that combines both implementations correctly."
-    }
+    "steps": "Steps to complete",
+    "markAsDone": "Mark as completed"
   }
 } 

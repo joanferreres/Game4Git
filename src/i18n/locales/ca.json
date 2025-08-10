@@ -1,9 +1,49 @@
 {
+  "common": {
+    "selectLanguage": "Seleccionar Idioma",
+    "language": "Idioma",
+    "loading": "Carregant...",
+    "error": "Error",
+    "success": "Èxit",
+    "cancel": "Cancel·lar",
+    "confirm": "Confirmar",
+    "close": "Tancar",
+    "save": "Desar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "add": "Afegir",
+    "remove": "Eliminar",
+    "search": "Cercar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "export": "Exportar",
+    "import": "Importar",
+    "settings": "Configuració",
+    "help": "Ajuda",
+    "about": "Quant a",
+    "version": "Versió",
+    "copy": "Copiar",
+    "paste": "Enganxar",
+    "cut": "Retallar",
+    "undo": "Desfer",
+    "redo": "Refer",
+    "refresh": "Actualitzar",
+    "reload": "Recarregar",
+    "reset": "Restablir",
+    "clear": "Netejar",
+    "submit": "Enviar",
+    "apply": "Aplicar",
+    "ok": "D'acord",
+    "yes": "Sí",
+    "no": "No",
+    "whatsHappening": "Què està passant?"
+  },
   "general": {
     "title": "Git Game",
     "subtitle": "Aprèn conceptes de Git visualment amb aquest playground interactiu"
   },
   "git": {
+    "commitGraph": "Gràfic de Commits",
     "controls": "Controls de Git",
     "terminal": "Mode Terminal",
     "visualizer": "Visualització de Git",
@@ -305,6 +345,492 @@
       "step1": "Edita el contingut a l'editor per eliminar els marcadors <<<<<<< HEAD, ======= i >>>>>>>",
       "step2": "Selecciona o combina el codi d'ambdues versions segons sigui necessari",
       "step3": "Fes clic a \"Completar Fusió\" quan hagis acabat"
+    }
+  },
+  "gdb": {
+    "concepts": {
+      "title": "Conceptes Clau",
+      "breakpoints": {"title": "Breakpoints", "desc": "Pausa l'execució en línies o funcions específiques per inspeccionar l'estat del programa."},
+      "watchpoints": {"title": "Watchpoints", "desc": "Pausa quan una variable o ubicació de memòria canvia el seu valor."},
+      "stack": {"title": "Pila de Trucades i Frames", "desc": "Navega pels frames per veure on ets i com hi has arribat (backtrace, frame)."},
+      "memory": {"title": "Inspecció de Memòria", "desc": "Utilitza print/x i examine per inspeccionar variables i regions de memòria."},
+      "stepping": {"title": "Execució Pas a Pas", "desc": "step (entrar), next (saltar), finish (fins que la funció retorni), continue."}
+    },
+    "subtitle": "Depuració potent per a programes C/C++ amb execució pas a pas, punts d'aturada i inspecció de memòria.",
+    "ui": {
+      "whatIsTitle": "Què és GDB?",
+      "whatIsSubtitle": "Depurador GNU",
+      "whatIsParagraph": "GDB és un depurador potent per a C/C++ i altres llenguatges. Ajuda a trobar i corregir errors pausant l'execució, inspeccionant variables i avançant pas a pas.",
+      "canDoTitle": "Què pots fer amb GDB?",
+      "canDo": [
+        "Depurar programes en múltiples llenguatges",
+        "Establir breakpoints per pausar l'execució",
+        "Inspeccionar l'estat del programa en temps d'execució",
+        "Modificar variables durant l'execució"
+      ],
+      "whenTitle": "Quan usar GDB?",
+      "when": [
+        "Quan el programa falla amb un segmentation fault",
+        "Quan necessites entendre el flux d'execució",
+        "Per inspeccionar l'estat de variables complexes"
+      ],
+      "proTipTitle": "Consell: Iniciant GDB",
+      "sampleCommand": "gdb ./el_teu_programa",
+      "compileDebugHint": "Compila amb -g per incloure informació de depuració.",
+      "searchPlaceholder": "Cerca comandos...",
+      "quickTipTitle": "Consell Ràpid",
+      "quickTipAutocomplete": "Usa TAB per autocompletar comandos i noms de variables. Prem TAB dues vegades per veure suggeriments.",
+      "quickTipHelp": "Drecera útil: usa help [comando] dins GDB per obtenir ajuda detallada.",
+      "bestPracticesTitle": "Bones Pràctiques",
+      "bp1Title": "Compila sempre amb",
+      "bp1Desc": "Afegeix símbols de depuració necessaris (p. ex., gcc -g programa.c).",
+      "bp2Title": "Activa core dumps",
+      "bp2Desc": "Analitza bloquejos amb gdb programa core. Usa ulimit -c unlimited per habilitar-los.",
+      "bp3Title": "No tinguis por d'experimentar!",
+      "bp3Desc": "Prova comandos i explora el programa pas a pas.",
+      "commonErrorsTitle": "Errors comuns i com evitar-los",
+      "commonErrors": [
+        "Oblidar compilar amb -g",
+        "No usar breakpoints estratègics",
+        "Confondre next i step"
+      ],
+      "playgroundTitle": "Playground Interactiu (Simulat)",
+      "playgroundDesc": "Simula una sessió bàsica de GDB pas a pas.",
+      "playgroundNote": "* Playground simulat per aprendre el flux dels comandos més utilitzats."
+    },
+    "pageTitle": "Aprenentatge de GDB",
+    "backToHome": "Tornar a l'inici",
+    "interactive": {
+      "title": "Terminal Interactiu de GDB",
+      "placeholder": "Introdueix comandos GDB aquí...",
+      "commandsAvailable": "Comandos disponibles",
+      "commandsTitle": "Comandos GDB Disponibles",
+      "currentExample": "Exemple actual:",
+      "currentSourceCode": "Codi font actual:",
+      "exampleCode": "Codi d'Exemple:",
+      "clear": "Netejar",
+      "tryCommands": "💡 Prova: run, backtrace, list, print, help, clear",
+      "basicCommands": "Comandos Bàsics:",
+      "breakpoints": "Breakpoints:",
+      "inspection": "Inspecció:",
+      "navigation": "Navegació:",
+      "watchPoints": "Watch Points:",
+      "help": "Ajuda:",
+      "commands": {
+        "run": "Executa el programa",
+        "step": "Executa línia per línia (entra en funcions)",
+        "next": "Executa línia per línia (salta funcions)",
+        "continue": "Continua l'execució fins al següent breakpoint",
+        "quit": "Surt de GDB",
+        "clear": "Neteja la pantalla del terminal",
+        "breakMain": "Breakpoint en funció main",
+        "breakLine": "Breakpoint en línia 10",
+        "breakFile": "Breakpoint en arxiu i línia específica",
+        "infoBreakpoints": "Mostra tots els breakpoints",
+        "printVar": "Mostra valor d'una variable",
+        "printPtr": "Mostra contingut d'un punter",
+        "infoLocals": "Mostra variables locals",
+        "infoRegisters": "Mostra registres del processador",
+        "examineBuffer": "Examina memòria com a caràcters",
+        "backtrace": "Mostra la pila de crides",
+        "bt": "Àlies per a backtrace",
+        "frame": "Canvia al frame N",
+        "up": "Puja un nivell en la pila",
+        "down": "Baixa un nivell en la pila",
+        "list": "Mostra codi font",
+        "where": "Mostra ubicació actual",
+        "watchVar": "Pausa quan la variable canvia",
+        "watchAddr": "Pausa quan canvia l'adreça",
+        "rwatch": "Pausa quan es llegeix",
+        "awatch": "Pausa quan es llegeix o escriu",
+        "helpGeneral": "Mostra ajuda general",
+        "helpCommand": "Ajuda específica per a un comando"
+      }
+    },
+    "uiCommands": {
+      "commandsTitle": "Comandos de GDB",
+      "commandsDesc": "Referència completa de comandos organitzats per categoria"
+    },
+    "seeDetails": "Veure detalls",
+    "commonUseCases": {
+      "title": "Casos d'Ús Comuns",
+      "useCase1": {
+        "title": "Compilar amb informació de debug",
+        "description": "Usar flags -g i -O0 per habilitar debugging efectiu",
+        "explanation": "La compilació amb informació de debug és el primer pas crucial:\n\n• -g: Inclou informació de debug\n• -O0: Desactiva optimitzacions per debugging més clar\n• -Wall: Mostra advertències del compilador\n• -Wextra: Advertències addicionals\n\nAquesta combinació assegura que tinguis tota la informació necessària per un debugging efectiu.",
+        "example": "gcc -g -O0 -Wall -Wextra -o el_meu_programa el_meu_programa.c\ngdb ./el_meu_programa"
+      },
+      "useCase2": {
+        "title": "Establir breakpoints estratègics",
+        "description": "Col·locar breakpoints en punts clau per controlar l'execució",
+        "explanation": "Els breakpoints estratègics són fonamentals per controlar l'execució:\n\n• break funció: Pausa en entrar a una funció\n• break arxiu.c:línia: Pausa en línia específica\n• break +N: Pausa N línies després de l'actual\n• break -N: Pausa N línies abans de l'actual\n\nUsar breakpoints et permet saltar directament a les parts problemàtiques del codi.",
+        "example": "(gdb) break main\n(gdb) break problematic_function\n(gdb) break file.c:42\n(gdb) run"
+      },
+      "useCase3": {
+        "title": "Inspeccionar variables i memòria",
+        "description": "Examinar l'estat de variables i estructures de dades",
+        "explanation": "La inspecció de variables és essencial per entendre l'estat del programa:\n\n• print var: Mostra el valor d'una variable\n• print *ptr: Mostra el valor apuntat per un punter\n• print arr[0]@10: Mostra 10 elements d'un array\n• display var: Mostra automàticament la variable en cada pas\n\nAixò et permet veure exactament què està passant amb les teves dades.",
+        "example": "(gdb) print counter\n(gdb) print *pointer\n(gdb) print array[0]@5\n(gdb) display important_var"
+      },
+      "useCase4": {
+        "title": "Analitzar stack traces",
+        "description": "Entendre el flux d'execució mitjançant anàlisi de pila",
+        "explanation": "L'anàlisi de stack traces és crucial per entendre el flux d'execució:\n\n• backtrace: Mostra la pila de crides completa\n• frame N: Canvia al frame N de la pila\n• up: Puja un nivell en la pila\n• down: Baixa un nivell en la pila\n• info locals: Mostra variables locals del frame actual\n\nAixò t'ajuda a entendre com vas arribar al punt actual d'execució.",
+        "example": "(gdb) backtrace\n(gdb) frame 2\n(gdb) info locals"
+      }
+    },
+    "bestPractices": {
+      "title": "Millors Pràctiques",
+      "description": "Pràctiques recomanades per utilitzar Valgrind de manera efectiva",
+      "practicesTitle": "Pràctiques Recomanades",
+      "practice1": {
+        "title": "Compilar amb informació de debug",
+        "description": "Usar flags -g i -O0 per obtenir informació detallada de debug"
+      },
+      "practice2": {
+        "title": "Usar noms de variables descriptius",
+        "description": "Nomenar variables de forma clara per facilitar el debugging"
+      },
+      "practice3": {
+        "title": "Establir breakpoints estratègics",
+        "description": "Col·locar breakpoints en punts clau del codi"
+      },
+      "practice4": {
+        "title": "Dominar comandos bàsics",
+        "description": "Aprendre els comandos fonamentals de GDB"
+      },
+      "practice5": {
+        "title": "Usar watch points per monitorar variables",
+        "description": "Configurar watch points per detectar canvis en variables"
+      }
+    },
+    "introduction": {
+      "title": "Introducció",
+      "whatIs": "Què és GDB?",
+      "whatIsDescription": "GDB (GNU Debugger) és una eina de debugging potent i versàtil que permet examinar programes en execució, trobar errors i entendre el comportament del codi.",
+      "keyFeatures": "Característiques principals:",
+      "feature1": "Executar programes pas a pas",
+      "feature2": "Establir breakpoints per pausar l'execució",
+      "feature3": "Inspeccionar variables i memòria",
+      "feature4": "Analitzar stack traces i crides de funció",
+      "feature5": "Debugging de programes en execució o core dumps",
+      "whenToUse": "Quan usar GDB?",
+      "useCase1": "Per al debugging de segmentation faults i errors de memòria",
+      "useCase2": "Quan necessitis entendre el flux d'execució complex",
+      "useCase3": "Per inspeccionar l'estat de variables en temps d'execució",
+      "useCase4": "En analitzar comportaments inesperats del programa"
+    },
+    "examples": {
+      "title": "Exemples",
+      "example1": {
+        "title": "Debugging de Buffer Overflow",
+        "description": "Exemple de buffer overflow usant strcpy i com detectar-lo"
+      },
+      "example2": {
+        "title": "Debugging d'Array Out of Bounds",
+        "description": "Error off-by-one en array i tècniques per identificar-lo"
+      },
+      "example3": {
+        "title": "Debugging de Funció Recursiva",
+        "description": "Anàlisi de recursió problemàtica amb valors negatius"
+      },
+      "titles": {
+        "segfault": "Segmentation Fault",
+        "bufferoverflow": "Buffer Overflow",
+        "arrayoutofbounds": "Array Out of Bounds"
+      }
+    }
+  },
+  "valgrind": {
+    "errorTypes": {
+      "title": "Tipus d'Errors Comuns",
+      "description": "Identifica i corregeix els errors més freqüents detectats per Valgrind",
+      "memoryLeaks": {
+        "title": "Fuites de Memòria",
+        "description": "Memòria que ha estat assignada però no alliberada, causant un ús excessiu de recursos.",
+        "example": "#include <stdlib.h>\n\nint main() {\n    // Exemple de fuita de memòria\n    int *leak = (int*)malloc(sizeof(int) * 10);\n    // S'ha oblidat alliberar la memòria assignada\n    return 0;\n}",
+        "explanation": "Valgrind detecta una fuita de memòria: s'ha assignat memòria amb malloc() que no s'ha alliberat. Busca línies que comencin amb 'definitely lost' o 'indirectly lost' a l'informe."
+      },
+      "invalidAccess": {
+        "title": "Accés de Memòria Invàlid",
+        "description": "Lectura o escriptura fora dels límits de la memòria assignada.",
+        "example": "#include <stdlib.h>\n\nint main() {\n    // Exemple de lectura/escriptura invàlida\n    int *arr = (int*)malloc(sizeof(int) * 5);\n    arr[5] = 10;  // Accés fora de límits\n    free(arr);\n    return 0;\n}",
+        "explanation": "Valgrind informa d'una lectura/escriptura invàlida: el programa ha accedit a memòria fora del rang assignat. Això acostuma a provocar comportament no definit i fallades."
+      },
+      "uninitializedValue": {
+        "title": "Ús de Valor No Inicialitzat",
+        "description": "Ús d'una variable que no ha estat inicialitzada.",
+        "example": "#include <stdio.h>\n\nint main() {\n    int x;  // No inicialitzada\n    if (x > 0) {  // Ús de valor no inicialitzat\n        printf(\"Positiu\\n\");\n    }\n    return 0;\n}",
+        "explanation": "Valgrind detecta que el programa està utilitzant una variable no inicialitzada. Això pot conduir a comportaments imprevisibles."
+      },
+      "doubleFree": {
+        "title": "Doble Alliberament",
+        "description": "Alliberar memòria que ja s'havia alliberat anteriorment.",
+        "example": "#include <stdlib.h>\n\nint main() {\n    int *ptr = (int*)malloc(sizeof(int));\n    free(ptr);\n    free(ptr);  // Doble alliberament\n    return 0;\n}",
+        "explanation": "Valgrind informa d'un error de doble alliberament: el programa intenta alliberar memòria que ja s'havia alliberat. Això pot corrompre les estructures del gestor de memòria."
+      },
+      "mismatchedFree": {
+        "title": "Desassignació Incompatible",
+        "description": "Ús de la funció d'alliberament incorrecta.",
+        "example": "#include <stdlib.h>\n\nint main() {\n    int *arr = (int*)malloc(10 * sizeof(int));\n    delete[] arr;  // Funció d'alliberament incorrecta\n    return 0;\n}",
+        "explanation": "Valgrind detecta que s'està utilitzant una funció d'alliberament incorrecta. En C++, cal emparellar new amb delete i new[] amb delete[]."
+      },
+      "overlappingMemory": {
+        "title": "Superposició de Memòria",
+        "description": "Les regions de memòria d'origen i destinació se superposen en memcpy o funcions similars.",
+        "example": "#include <string.h>\n\nint main() {\n    char str[20] = \"Hola, Món!\";\n    memcpy(str + 5, str, 10);  // Superposició de memòria\n    return 0;\n}",
+        "explanation": "Valgrind informa que les regions de memòria d'origen i destinació se superposen en una crida a memcpy(). Usa memmove() quan les regions es puguin solapar."
+      }
+    },
+    "cheatsheet": {
+      "title": "Cheat Sheet Valgrind",
+      "description": "Comandes i opcions essencials de Valgrind",
+      "basic": {
+        "title": "Comandes Bàsiques",
+        "items": [
+          {"desc": "Execució bàsica de Valgrind"},
+          {"desc": "Verificació detallada de fuites de memòria"},
+          {"desc": "Rastreja l'origen de valors no inicialitzats"},
+          {"desc": "Executa l'eina Memcheck (per defecte)"},
+          {"desc": "Anàlisi de memòria cau i rendiment"},
+          {"desc": "Genera gràfics de crides i perfils"}
+        ]
+      },
+      "options": {
+        "title": "Opcions Comunes"
+      },
+      "tips": {
+        "title": "Consells Ràpids",
+        "compileDebug": "Utilitza -g en compilar per obtenir informació de depuració",
+        "cppInline": "Per a C++, utilitza -fno-inline per a millors resultats",
+        "suppressions": "Utilitza --suppressions=filename per suprimir errors coneguts"
+      }
+    },
+    
+    
+    "introSection": {
+      "detection": "Valgrind pot detectar una àmplia gamma de problemes relacionats amb la memòria en els teus programes.",
+      "subtitle": "Eina de detecció d'errors de memòria i perfilatge"
+    },
+    "codeExample": {
+      "explanation": "Aquest codi demostra un cas habitual d'error de memòria explicat a continuació."
+    },
+    "commandsLegacy": {
+      "intro": "A continuació es presenten les comandes més útils de Valgrind per depurar problemes de memòria. Cada comanda inclou una descripció detallada i exemples d'ús.",
+      "header": {
+        "title": "Comandes Bàsiques",
+        "description": "Comandes essencials per començar a utilitzar Valgrind de manera efectiva"
+      },
+      "basic": {
+        "title": "Anàlisi Bàsica",
+        "description": "Executa una anàlisi bàsica de memòria del teu programa",
+        "whenTitle": "Quan usar?",
+        "when": [
+          "Per a una anàlisi ràpida de problemes de memòria",
+          "Com a primer pas en la depuració de memòria"
+        ]
+      },
+      "leak": {
+        "title": "Detecció de Fuites de Memòria",
+        "description": "Identifica i analitza fuites de memòria en el teu programa",
+        "noteTitle": "Nota important:",
+        "optionsTitle": "Opcions incloses:",
+        "options": {
+          "leakCheckFull": "Cerca detallada de fuites",
+          "showLeakKinds": "Mostra tots els tipus de fuites",
+          "trackOrigins": "Rastreja orígens de valors no inicialitzats"
+        }
+      },
+      "perf": {
+        "title": "Anàlisi de Rendiment",
+        "description": "Identifica colls d'ampolla en el rendiment del teu codi",
+        "tipTitle": "Consell d'ús:",
+        "tipText": "Utilitza kcachegrind per visualitzar els resultats de Callgrind amb una interfície gràfica:"
+      }
+    },
+    "commonOptions": {
+      "title": "Opcions Comunes",
+      "memoryOptions": "Opcions de Memòria",
+      "outputOptions": "Opcions de Sortida",
+      "quickTips": "Consells Ràpids",
+      "memoryOptionsList": [
+        {"option": "--leak-check=full", "description": "Mostra detalls de les fuites de memòria"},
+        {"option": "--show-leak-kinds=all", "description": "Mostra tots els tipus de fuites"},
+        {"option": "--track-origins=yes", "description": "Rastreja l'origen de valors no inicialitzats"},
+        {"option": "--leak-resolution=high", "description": "Millora la precisió del seguiment de fuites"},
+        {"option": "--num-callers=<n>", "description": "Mostra n marcs de pila als informes"}
+      ],
+      "outputOptionsList": [
+        {"option": "--log-file=filename", "description": "Desa la sortida en un fitxer"},
+        {"option": "--quiet", "description": "Només mostra errors importants"},
+        {"option": "--verbose", "description": "Mostra informació addicional"},
+        {"option": "--trace-children=yes", "description": "Rastreja processos fills"},
+        {"option": "--track-fds=yes", "description": "Mostra els descriptors de fitxer oberts"}
+      ],
+      "tips": [
+        "Utilitza {{flag}} en compilar per obtenir informació de depuració",
+        "Per a C++, utilitza {{flag}} per a millors resultats",
+        "Utilitza {{option}} per suprimir errors coneguts"
+      ]
+    },
+    "tabs": {
+      "introduction": "Introducció",
+      "errors": "Tipus d'Errors",
+      "commands": "Comandes",
+      "practices": "Bones Pràctiques",
+      "cheatsheet": "Cheat Sheet"
+    },
+    "intro": {
+      "whatIs": "Què és Valgrind?",
+      "description": "Valgrind és una potent suite d'eines de depuració i perfilatge de memòria.",
+      "detectTitle": "Què pot detectar Valgrind?",
+      "detect": {
+        "memoryLeaks": "Fugues de memòria (memory leaks)",
+        "invalidAccess": "Accés a memòria no vàlid o alliberat",
+        "uninit": "Ús de memòria no inicialitzada",
+        "cache": "Problemes de rendiment de la memòria cau"
+      },
+      "whenTitle": "Quan utilitzar Valgrind?",
+      "when": {
+        "leaks": "Quan el teu programa té fugues de memòria inesperades",
+        "segfault": "En experimentar errors de segmentació (segmentation fault)",
+        "optimize": "Per optimitzar l'ús de memòria de la teva aplicació"
+      },
+      "proTip": "💡 Consell: executa Valgrind regularment a la teva CI per detectar regressions d'hora."
+    },
+    "pageTitle": "Aprenentatge de Valgrind",
+    "backToHome": "Tornar a l'inici",
+    "interactive": {
+      "title": "Terminal Interactiu de Valgrind",
+      "placeholder": "Introdueix comandos Valgrind aquí...",
+      "commandsTitle": "Comandos Valgrind Disponibles",
+      "currentExample": "Exemple actual:",
+      "currentSourceCode": "Codi font actual:",
+      "exampleCode": "Codi d'Exemple:",
+      "clear": "Netejar",
+      "tryCommands": "💡 Prova: valgrind --leak-check=full ./programa, help, clear",
+      "basicCommands": "Comandos Bàsics:",
+      "memcheck": "Memcheck (Detector de Memòria):",
+      "massif": "Massif (Profiler de Heap):",
+      "cachegrind": "Cachegrind (Profiler de Cache):",
+      "helgrind": "Helgrind (Detector de Race Conditions):",
+      "outputOptions": "Opcions de Sortida:",
+      "compilationOptions": "Opcions de Compilació Recomanades:",
+      "commands": {
+        "valgrindDefault": "Executa amb Memcheck per defecte",
+        "valgrindVersion": "Mostra versió de Valgrind",
+        "help": "Mostra ajuda general",
+        "clear": "Neteja la pantalla del terminal",
+        "memcheckExplicit": "Usa Memcheck explícitament",
+        "leakCheckFull": "Detecció completa de leaks",
+        "leakCheckYes": "Detecció bàsica de leaks",
+        "trackOrigins": "Rastreja origen de valors",
+        "showLeakKinds": "Mostra tots els tipus de leaks",
+        "massifTool": "Analitza ús de memòria heap",
+        "msPrint": "Imprimeix reporte de Massif",
+        "cachegrindTool": "Analitza comportament de cache",
+        "cgAnnotate": "Anota codi amb estadístiques",
+        "helgrindTool": "Detecta race conditions",
+        "trackLockorders": "Rastreja ordre de locks",
+        "logFile": "Guarda sortida en arxiu",
+        "xml": "Sortida en format XML",
+        "quiet": "Mode silenciós",
+        "verbose": "Mode verbós",
+        "basicCompile": "Compilació bàsica",
+        "optimizedCompile": "Compilació optimitzada per Valgrind"
+      }
+    },
+    "seeDetails": "Veure detalls",
+    "tools": {
+      "title": "Eines",
+      "tool1": {
+        "title": "Memcheck",
+        "description": "Memcheck és l'eina principal de Valgrind per detectar errors de memòria:",
+        "features": [
+          "Detecta accés a memòria no inicialitzada",
+          "Identifica lectures/escriptures fora dels límits",
+          "Troba fuites de memòria i alliberaments dobles",
+          "Detecta l'ús de memòria després d'haver-la alliberada"
+        ],
+        "summary": "És l'eina més important i hauria de ser la teva primera opció per a l'anàlisi de memòria.",
+        "command": "valgrind --tool=memcheck --leak-check=full ./program"
+      },
+      "tool2": {
+        "title": "Massif",
+        "description": "Profiler de heap que rastreja l'ús de memòria al llarg del temps"
+      },
+      "tool3": {
+        "title": "Cachegrind",
+        "description": "Profiler de cache que simula el comportament de cache del processador"
+      },
+      "tool4": {
+        "title": "Helgrind",
+        "description": "Detector de race conditions i errors de sincronització en programes multifil"
+      }
+    },
+    "bestPractices": {
+      "title": "Millors Pràctiques",
+      "description": "Pràctiques recomanades per utilitzar Valgrind de manera efectiva",
+      "practicesTitle": "Pràctiques Recomanades",
+      "practice1": {
+        "title": "Compilar amb informació de debug",
+        "description": "Utilitza els flags -g i -O0 per obtenir informació de depuració detallada"
+      },
+      "practice2": {
+        "title": "Fer servir les opcions correctes de Valgrind",
+        "description": "Configura les opcions adequades segons el tipus d'anàlisi que necessitis"
+      },
+      "practice3": {
+        "title": "Automatitzar l'anàlisi amb scripts",
+        "description": "Crea scripts per executar Valgrind de manera regular en el teu flux de treball"
+      },
+      "practice4": {
+        "title": "Interpretar correctament els informes",
+        "description": "Entén els diferents tipus d'errors i fuites que reporta Valgrind"
+      },
+      "practice5": {
+        "title": "Comprovar falsos positius",
+        "description": "Revisa acuradament els informes per identificar possibles falsos positius"
+      },
+      "practice6": {
+        "title": "Fer servir fitxers de supressió",
+        "description": "Crea fitxers de supressió per ignorar problemes coneguts i acceptables"
+      }
+    },
+    "introduction": {
+      "title": "Introducció",
+      "whatIs": "Què és Valgrind?",
+      "whatIsDescription": "Valgrind és una suite d'eines d'instrumentació per al debugging i profiling de programes. És especialment útil per detectar errors de memòria i analitzar el rendiment d'aplicacions C/C++.",
+      "keyFeatures": "Característiques principals:",
+      "feature1": "Detecció automàtica de memory leaks",
+      "feature2": "Identificació d'accessos a memòria invàlids",
+      "feature3": "Anàlisi de rendiment i ús de cache",
+      "feature4": "Detecció de race conditions en programes multifil",
+      "whenToUse": "Quan usar Valgrind?",
+      "useCase1": "Per detectar i corregir memory leaks en la teva aplicació",
+      "useCase2": "Quan necessitis optimitzar el rendiment de memòria",
+      "useCase3": "Per al debugging d'errors de memòria difícils de reproduir",
+      "useCase4": "En desenvolupar aplicacions multifil per detectar race conditions"
+    },
+    "examples": {
+      "title": "Exemples",
+      "example1": {
+        "title": "Anàlisi de Memory Leak",
+        "description": "Exemple complex de memory leak amb estructures anidades"
+      },
+      "example2": {
+        "title": "Detecció de Double Free",
+        "description": "Programa que demostra l'error de double free i la seva detecció"
+      },
+      "example3": {
+        "title": "Anàlisi de Cache amb Cachegrind",
+        "description": "Comparació de patrons d'accés a memòria cache-friendly vs cache-unfriendly"
+      },
+      "titles": {
+        "memoryleak": "Memory Leak",
+        "doublefree": "Double Free",
+        "cacheanalysis": "Anàlisi de Cache"
+      }
     }
   }
 } 

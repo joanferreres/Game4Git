@@ -4,6 +4,10 @@
 User-agent: *
 Allow: /
 
+# Disallow specific pages from being indexed
+Disallow: /privacy-policy.html
+Disallow: /.well-known/security.txt
+
 # Educational platform - safe for all audiences
 # Contains: Git tutorials, GDB debugging guides, Valgrind memory analysis
 # Target audience: Students, developers, educators
@@ -16,5 +20,5 @@ Crawl-delay: 10
 Sitemap: https://game4git.games/sitemap.xml
 
 # Security policy
-# Security contact: security@game4git.games
+# Security contact: game4git@gmail.com
 # This is an educational platform with no sensitive data collection

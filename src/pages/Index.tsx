@@ -16,69 +16,17 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Info, Globe } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { toast } from "sonner";
+import { Info } from "lucide-react";
+ 
 import { useTranslation } from "react-i18next";
 import "../i18n"; // Importamos la configuración de i18n
 import GitExercises from "@/components/GitExercises";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import ConflictResolver from "@/components/ConflictResolver";
 import { Link } from "react-router-dom";
 import { Bug, Shield } from "lucide-react";
 
-// Language selector component
-const LanguageSelector: React.FC = () => {
-  const { i18n, t } = useTranslation();
-  
-  const languages = [
-    { code: "en", name: "English" },
-    { code: "es", name: "Español" },
-    { code: "ca", name: "Català" },
-    { code: "fr", name: "Français" }
-  ];
-  
-  const handleLanguageChange = (lang: string) => {
-    i18n.changeLanguage(lang);
-  };
-  
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" className="relative">
-          <Globe className="h-4 w-4" />
-          <span className="absolute top-0 right-0 -mt-1 -mr-1 bg-primary text-primary-foreground text-[8px] font-bold rounded-full w-3 h-3 flex items-center justify-center uppercase">
-            {i18n.language.substring(0, 2)}
-          </span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        {languages.map((lang) => (
-          <DropdownMenuItem 
-            key={lang.code}
-            onClick={() => handleLanguageChange(lang.code)}
-            className={i18n.language.startsWith(lang.code) ? "bg-muted" : ""}
-          >
-            {lang.name}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-};
+import LanguageSelector from "@/components/LanguageSelector";
 
 const GitGame: React.FC = () => {
   const [showDiff, setShowDiff] = useState(false);
@@ -94,10 +42,7 @@ const GitGame: React.FC = () => {
   // Get the current HEAD commit
   const headCommit = repository.commits.find(c => c.id === repository.HEAD);
   
-  // Function to toggle diff view
-  const toggleDiff = () => {
-    setShowDiff(!showDiff);
-  };
+  // toggleDiff unused; removed
   
   // Listen for changes to stagedChanges
   useEffect(() => {

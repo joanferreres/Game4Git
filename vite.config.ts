@@ -1,57 +1,91 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import path from "path";
-import { componentTagger } from "lovable-tagger";
-import customResolve from "./vite.resolve";
-
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+
+export default defineConfig({
   server: {
-    host: "::",
-    port: 8080,
+    host: '0.0.0.0',
+    port: 5173,
+    strictPort: true,
+    open: false,
+    fs: {
+      strict: true,
+    },
+    hmr: {
+      protocol: 'ws',
+      host: 'localhost',
+      port: 24678,
+      clientPort: 24678,
+      overlay: false
+    },
     watch: {
       usePolling: true,
+      interval: 100
     },
-    fs: {
-      strict: true, // Enhanced security for production
+    cors: true,
+    proxy: {
+      '^/api/.*': {
+        target: 'http://localhost:5173',
+        changeOrigin: true,
+        secure: false,
+        ws: true
+      },
+      '^/__vite_ping': {
+        target: 'http://localhost:5173',
+        changeOrigin: true,
+        secure: false,
+        ws: true
+      },
+      '^/sockjs-node/.*': {
+        target: 'http://localhost:5173',
+        changeOrigin: true,
+        secure: false,
+        ws: true
+      }
     },
+    headers: {
+      'Content-Security-Policy': [
+        "default-src 'self'",
+        "connect-src 'self' ws: http: https: ws://localhost:24678 http://localhost:24678",
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com",
+        "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
+        "img-src 'self' data: blob:",
+        "font-src 'self' data: https://cdn.jsdelivr.net",
+        "worker-src 'self' blob:",
+        "frame-src 'self'",
+        "object-src 'none'"
+      ].join('; ')
+    }
   },
-  plugins: [
-    react(),
-    mode === 'development' &&
-    componentTagger(),
-    customResolve(),
-  ].filter(Boolean),
+  plugins: [react()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
   build: {
-    sourcemap: mode === 'development',
-    minify: mode !== 'development' ? 'terser' : false,
-    cssMinify: mode !== 'development',
-    target: 'esnext',
-    terserOptions: {
-      compress: {
-        drop_console: mode === 'production',
-        drop_debugger: mode === 'production',
-      }
-    },
+    target: "esnext",
+    minify: 'esbuild' as const,
+    sourcemap: true,
+    outDir: 'dist',
+    assetsDir: 'assets',
+    emptyOutDir: true,
+    reportCompressedSize: false,
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
-      // Disable native plugins to avoid platform-specific dependencies
-      context: 'globalThis',
       output: {
         manualChunks: {
-          react: ['react', 'react-dom'],
+          react: ['react', 'react-dom', 'react-router-dom'],
           reactflow: ['@xyflow/react'],
           ui: ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-popover'],
           store: ['zustand'],
+          form: ['react-hook-form', '@hookform/resolvers', 'zod'],
           utils: ['date-fns', 'clsx', 'tailwind-merge']
         },
-        chunkFileNames: mode === 'production' ? 'assets/[name].[hash].js' : 'assets/[name].js',
-        entryFileNames: mode === 'production' ? 'assets/[name].[hash].js' : 'assets/[name].js'
+        chunkFileNames: 'assets/[name].[hash].js',
+        entryFileNames: 'assets/[name].[hash].js'
       }
     }
-  },
-}));
+  }
+});

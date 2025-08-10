@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,10 +6,22 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { AlertCircle, Shield, Eye, EyeOff } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import LanguageSelector from '@/components/LanguageSelector';
 import { useAdminStore } from "@/store/gitStore";
 import { toast } from "sonner";
 
-const ADMIN_PASSWORD = "shyro";
+// Store only a SHA-256 hash of the admin password (precomputed for "shyro")
+const ADMIN_PASSWORD_SHA256 = "41fe4b638c7b489a40acfda3f63aab7926f703eb76a2e889004b1e68c12bb9da";
+
+async function hashTextSha256(text: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Removed plaintext password
 
 const Admin = () => {
   const [password, setPassword] = useState("");
@@ -24,23 +36,35 @@ const Admin = () => {
     setValgrindEnabled 
   } = useAdminStore();
 
-  const handleLogin = () => {
-    if (password === ADMIN_PASSWORD) {
+  // Restore session if present
+  if (!isAuthenticated && typeof window !== 'undefined') {
+    const hasSession = sessionStorage.getItem('admin_session') === '1';
+    if (hasSession) {
       setIsAuthenticated(true);
-      setAttempts(0);
-      toast.success("¡Acceso autorizado! Bienvenido al panel de administración.");
-    } else {
-      setAttempts(prev => prev + 1);
-      toast.error(`Contraseña incorrecta. Intento ${attempts + 1}/3`);
-      
-      if (attempts >= 2) {
-        toast.error("Demasiados intentos fallidos. Recargando página...");
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      }
     }
-    setPassword("");
+  }
+
+  const handleLogin = async () => {
+    try {
+      const inputHash = await hashTextSha256(password);
+      if (inputHash === ADMIN_PASSWORD_SHA256) {
+        setIsAuthenticated(true);
+        setAttempts(0);
+        sessionStorage.setItem('admin_session', '1');
+        toast.success("¡Acceso autorizado! Bienvenido al panel de administración.");
+      } else {
+        setAttempts(prev => prev + 1);
+        toast.error(`Contraseña incorrecta. Intento ${attempts + 1}/3`);
+        if (attempts >= 2) {
+          toast.error("Demasiados intentos fallidos. Recargando página...");
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        }
+      }
+    } finally {
+      setPassword("");
+    }
   };
 
   const handleFeatureToggle = (feature: 'gdb' | 'valgrind', enabled: boolean) => {
@@ -55,7 +79,10 @@ const Admin = () => {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center p-4">
+      <div className="relative min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center p-4">
+        <div className="absolute top-4 right-4">
+          <LanguageSelector />
+        </div>
         <Card className="w-full max-w-md bg-gray-800/90 border-gray-700">
           <CardHeader className="text-center">
             <div className="mx-auto w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center mb-4">
@@ -119,7 +146,10 @@ const Admin = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 p-4">
+    <div className="relative min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 p-4">
+      <div className="absolute top-4 right-4">
+        <LanguageSelector />
+      </div>
       <div className="max-w-4xl mx-auto">
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-white mb-2">

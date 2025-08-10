@@ -451,36 +451,51 @@ const GitExercises: React.FC = () => {
     // Obtener ejercicios con textos traducidos actualizados
     const updatedExercises = getInitialExercises();
     
-    // Crear una copia actualizada que preserve el estado pero use los nuevos textos
-    const newExercisesState = {...updatedExercises};
-    
-    // Para cada ejercicio, preservamos su estado pero actualizamos sus textos
-    Object.keys(updatedExercises).forEach(key => {
-      if (exercises[key]) {
-        // Conservar estado (isStarted, isCompleted)
-        newExercisesState[key] = {
-          ...updatedExercises[key], // Nuevos textos traducidos
-          isStarted: exercises[key].isStarted,
-          isCompleted: exercises[key].isCompleted,
-        };
-        
-        // Conservar el estado de completado de cada paso, pero usar textos actualizados
-        if (updatedExercises[key].steps.length === exercises[key].steps.length) {
-          newExercisesState[key].steps = updatedExercises[key].steps.map((step, index) => ({
-            ...step, // Nuevos textos traducidos para el paso
-            isCompleted: exercises[key].steps[index]?.isCompleted || false
-          }));
-        }
-      }
+    // Verificar si hay cambios reales antes de actualizar el estado
+    const hasChanges = Object.keys(updatedExercises).some(key => {
+      if (!exercises[key]) return true;
+      
+      // Verificar si hay diferencias en los textos traducidos
+      const exerciseChanged = 
+        updatedExercises[key].title !== exercises[key].title ||
+        updatedExercises[key].description !== exercises[key].description ||
+        updatedExercises[key].steps.some((step, index) => 
+          step.description !== exercises[key].steps[index]?.description ||
+          step.hint !== exercises[key].steps[index]?.hint
+        );
+      
+      return exerciseChanged;
     });
     
-    // Actualizar el estado con la nueva estructura que tiene textos traducidos actualizados
-    setExercises(newExercisesState);
+    if (hasChanges) {
+      // Crear una copia actualizada que preserve el estado pero use los nuevos textos
+      const newExercisesState = {...updatedExercises};
+      
+      // Para cada ejercicio, preservamos su estado pero actualizamos sus textos
+      Object.keys(updatedExercises).forEach(key => {
+        if (exercises[key]) {
+          // Conservar estado (isStarted, isCompleted)
+          newExercisesState[key] = {
+            ...updatedExercises[key], // Nuevos textos traducidos
+            isStarted: exercises[key].isStarted,
+            isCompleted: exercises[key].isCompleted,
+          };
+          
+          // Conservar el estado de completado de cada paso, pero usar textos actualizados
+          if (updatedExercises[key].steps.length === exercises[key].steps.length) {
+            newExercisesState[key].steps = updatedExercises[key].steps.map((step, index) => ({
+              ...step, // Nuevos textos traducidos para el paso
+              isCompleted: exercises[key].steps[index]?.isCompleted || false
+            }));
+          }
+        }
+      });
+      
+      // Actualizar el estado solo si hay cambios reales
+      setExercises(newExercisesState);
+    }
     
-    // Forzar actualización de la interfaz
-    setForceUpdate(prev => prev + 1);
-    
-  }, [i18n.language, getInitialExercises, exercises]);  
+  }, [i18n.language, getInitialExercises]); // Eliminamos exercises de las dependencias  
   
   // Efecto para actualizar la visualización cuando cambia el ejercicio seleccionado
   useEffect(() => {

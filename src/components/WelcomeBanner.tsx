@@ -6,15 +6,26 @@ import { useTranslation } from "react-i18next";
 
 /**
  * Banner informativo que se muestra al iniciar la aplicación
- * Se mostrará cada vez que se cargue la página.
+ * Se mostrará solo una vez por sesión usando sessionStorage.
  */
 const WelcomeBanner: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   const { t } = useTranslation();
 
-  // Función para cerrar el banner (solo para la sesión actual del componente)
+  useEffect(() => {
+    // Verificar si el banner ya fue cerrado en esta sesión
+    const bannerDismissed = sessionStorage.getItem('welcomeBannerDismissed');
+    
+    if (!bannerDismissed) {
+      setIsVisible(true);
+    }
+  }, []);
+
+  // Función para cerrar el banner y recordar que fue cerrado en esta sesión
   const closeBanner = () => {
     setIsVisible(false);
+    // Marcar como cerrado en sessionStorage (solo para esta sesión)
+    sessionStorage.setItem('welcomeBannerDismissed', 'true');
   };
 
   if (!isVisible) return null;
