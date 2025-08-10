@@ -80,6 +80,7 @@
       "memory": {"title": "Inspection de la Mémoire", "desc": "Utilisez print/x et examine pour inspecter des variables et des zones mémoire."},
       "stepping": {"title": "Exécution Pas à Pas", "desc": "step (entrer), next (passer), finish (jusqu'au retour de la fonction), continue."}
     },
+    "subtitle": "Débogage puissant pour les programmes C/C++ avec exécution pas à pas, points d'arrêt et inspection de la mémoire.",
     "ui": {
       "whatIsTitle": "Qu'est-ce que GDB ?",
       "whatIsSubtitle": "Débogueur GNU",

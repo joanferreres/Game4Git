@@ -319,7 +319,7 @@
       "memory": {"title": "Inspección de Memoria", "desc": "Usa print/x y examine para inspeccionar variables y regiones de memoria."},
       "stepping": {"title": "Ejecución Paso a Paso", "desc": "step (entrar), next (saltar), finish (hasta que la función retorne), continue."}
     },
-    "subtitle": "Depuración potente para programas C/C++ con ejecución paso a paso, breakpoints e inspección de memoria.",
+    "subtitle": "Depuración potente para programas C/C++ con ejecución paso a paso, puntos de interrupción e inspección de memoria.",
     "ui": {
       "whatIsTitle": "¿Qué es GDB?",
       "whatIsSubtitle": "Depurador GNU",
