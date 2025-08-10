@@ -1,6 +1,10 @@
 {
   "version": 2,
   "framework": "vite",
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
