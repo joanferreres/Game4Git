@@ -1,0 +1,83 @@
+# GitHub Actions workflow for CI/CD
+# Required secrets:
+# - VERCEL_TOKEN: Authentication token for Vercel
+# - VERCEL_ORG_ID: Organization ID for your Vercel account
+# - VERCEL_PROJECT_ID: ID of your Vercel project
+
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci --no-audit # Audit will be done in a separate, dedicated step
+
+    - name: Run linter
+      run: npm run lint
+
+    - name: Build project
+      run: npm run build
+
+  security-scans:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    # Removed continue-on-error: true to make the job fail on critical vulnerabilities
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci --no-audit
+
+    - name: Run npm audit for critical vulnerabilities
+      run: npm audit --production --audit-level=critical
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build-and-test, security-scans] # Added security-scans as a dependency
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci --no-audit
+
+    - name: Build project
+      run: npm run build
+
+    - name: Deploy to Vercel
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        vercel-args: '--prod'

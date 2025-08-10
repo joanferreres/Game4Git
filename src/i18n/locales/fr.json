@@ -1,0 +1,660 @@
+{
+  "common": {
+    "selectLanguage": "Sélectionner la langue",
+    "language": "Langue",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "close": "Fermer",
+    "save": "Enregistrer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "add": "Ajouter",
+    "remove": "Retirer",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "export": "Exporter",
+    "import": "Importer",
+    "settings": "Paramètres",
+    "help": "Aide",
+    "about": "À propos",
+    "version": "Version",
+    "copy": "Copier",
+    "paste": "Coller",
+    "cut": "Couper",
+    "undo": "Annuler",
+    "redo": "Rétablir",
+    "refresh": "Actualiser",
+    "reload": "Recharger",
+    "reset": "Réinitialiser",
+    "clear": "Effacer",
+    "submit": "Soumettre",
+    "apply": "Appliquer",
+    "ok": "OK",
+    "yes": "Oui",
+    "no": "Non",
+    "whatsHappening": "Que se passe-t-il ?"
+  },
+  "general": {
+    "title": "Git Game",
+    "subtitle": "Apprenez les concepts de Git visuellement avec ce terrain de jeu interactif"
+  },
+  "git": {
+    "commitGraph": "Graphe des commits",
+    "controls": "Contrôles Git",
+    "terminal": "Mode Terminal",
+    "visualizer": "Visualisation Git",
+    "commitChanges": "Valider les Changements",
+    "stageChanges": "Indexer les Changements",
+    "branches": "Branches",
+    "createBranch": "Créer Branche",
+    "switchBranch": "Changer de Branche",
+    "currentBranch": "Branche Actuelle",
+    "newBranchName": "Nom de nouvelle branche",
+    "remoteName": "Dépôt Distant",
+    "gitFetch": "Git Fetch",
+    "gitPull": "Git Pull",
+    "gitPush": "Git Push"
+  },
+  "howToUse": {
+    "title": "Comment Utiliser Ce Terrain de Jeu Git",
+    "subtitle": "Apprenez les concepts Git grâce à la pratique avec notre terrain de jeu visuel et interactif.",
+    "switchBranch": "Changer/Sélectionner de Branche",
+    "switchBranchDesc": "Utilisez la section 'Branches' dans 'Contrôles Git' (panneau inférieur) pour passer à une branche existante ou en créer une nouvelle. Vos modifications et nouveaux commits s'appliqueront à cette branche active."
+  },
+  "features": {
+    "visualization": {
+      "title": "Visualisation des Dépôts Git",
+      "description": "L'application permet de créer et de visualiser des dépôts Git virtuels, montrant graphiquement comment les commits et les branches sont liés. Les commits maintiennent leur position verticale une fois assignés à une branche, ce qui facilite le suivi de l'historique des modifications."
+    }
+  },
+  "gdb": {
+    "concepts": {
+      "title": "Concepts Clés",
+      "breakpoints": {"title": "Points d'arrêt", "desc": "Met en pause l'exécution à des lignes ou fonctions spécifiques pour inspecter l'état du programme."},
+      "watchpoints": {"title": "Watchpoints", "desc": "Met en pause lorsque qu'une variable ou une adresse mémoire change de valeur."},
+      "stack": {"title": "Pile d'appels et Frames", "desc": "Naviguez dans les frames pour voir où vous êtes et comment vous y êtes arrivé (backtrace, frame)."},
+      "memory": {"title": "Inspection de la Mémoire", "desc": "Utilisez print/x et examine pour inspecter des variables et des zones mémoire."},
+      "stepping": {"title": "Exécution Pas à Pas", "desc": "step (entrer), next (passer), finish (jusqu'au retour de la fonction), continue."}
+    },
+    "ui": {
+      "whatIsTitle": "Qu'est-ce que GDB ?",
+      "whatIsSubtitle": "Débogueur GNU",
+      "whatIsParagraph": "GDB est un puissant débogueur pour C/C++ et d'autres langages. Il vous aide à trouver et corriger des erreurs en mettant en pause l'exécution, en inspectant des variables et en avançant pas à pas.",
+      "canDoTitle": "Que pouvez-vous faire avec GDB ?",
+      "canDo": [
+        "Déboguer des programmes dans plusieurs langages",
+        "Définir des points d'arrêt pour mettre en pause l'exécution",
+        "Inspecter l'état du programme à l'exécution",
+        "Modifier des variables pendant l'exécution"
+      ],
+      "whenTitle": "Quand utiliser GDB ?",
+      "when": [
+        "Quand votre programme plante avec une erreur de segmentation",
+        "Quand vous devez comprendre le flux d'exécution",
+        "Pour inspecter l'état de variables complexes"
+      ],
+      "proTipTitle": "Astuce : Démarrer GDB",
+      "sampleCommand": "gdb ./votre_programme",
+      "compileDebugHint": "Compilez avec -g pour inclure les informations de débogage.",
+      "searchPlaceholder": "Rechercher des commandes...",
+      "quickTipTitle": "Astuce Rapide",
+      "quickTipAutocomplete": "Utilisez TAB pour autocompléter les commandes et noms de variables. Appuyez deux fois sur TAB pour voir des suggestions.",
+      "quickTipHelp": "Raccourci utile : utilisez help [commande] dans GDB pour obtenir de l'aide détaillée.",
+      "bestPracticesTitle": "Bonnes Pratiques",
+      "bp1Title": "Toujours compiler avec",
+      "bp1Desc": "Ajoutez des symboles de débogage requis (ex. gcc -g programme.c).",
+      "bp2Title": "Activer les core dumps",
+      "bp2Desc": "Analysez les plantages avec gdb programme core. Utilisez ulimit -c unlimited pour les activer.",
+      "bp3Title": "N'ayez pas peur d'expérimenter !",
+      "bp3Desc": "Essayez des commandes et explorez le programme pas à pas.",
+      "commonErrorsTitle": "Erreurs courantes et comment les éviter",
+      "commonErrors": [
+        "Oublier de compiler avec -g",
+        "Ne pas utiliser des points d'arrêt stratégiques",
+        "Confondre next et step"
+      ],
+      "playgroundTitle": "Playground Interactif (Simulé)",
+      "playgroundDesc": "Simulez une session GDB de base étape par étape.",
+      "playgroundNote": "* Playground simulé pour apprendre le flux des commandes les plus utilisées."
+    },
+    "pageTitle": "Apprentissage de GDB",
+    "backToHome": "Retour à l'accueil",
+    "interactive": {
+      "title": "Terminal Interactif de GDB",
+      "placeholder": "Entrez des commandes GDB ici...",
+      "commandsAvailable": "Commandes disponibles",
+      "commandsTitle": "Commandes GDB Disponibles",
+      "currentExample": "Exemple actuel :",
+      "currentSourceCode": "Code source actuel :",
+      "exampleCode": "Exemple de code :",
+      "clear": "Effacer",
+      "tryCommands": "💡 Essayez : run, backtrace, list, print, help, clear",
+      "basicCommands": "Commandes de Base :",
+      "breakpoints": "Points d'arrêt :",
+      "inspection": "Inspection :",
+      "navigation": "Navigation :",
+      "watchPoints": "Points de surveillance :",
+      "help": "Aide :",
+      "commands": {
+        "run": "Exécute le programme",
+        "step": "Exécute ligne par ligne (entre dans les fonctions)",
+        "next": "Exécute ligne par ligne (saute les fonctions)",
+        "continue": "Continue l'exécution jusqu'au prochain point d'arrêt",
+        "quit": "Quitte GDB",
+        "clear": "Efface l'écran du terminal",
+        "breakMain": "Point d'arrêt à la fonction main",
+        "breakLine": "Point d'arrêt à la ligne 10",
+        "breakFile": "Point d'arrêt à un fichier et une ligne spécifiques",
+        "infoBreakpoints": "Affiche tous les points d'arrêt",
+        "printVar": "Affiche la valeur d'une variable",
+        "printPtr": "Affiche le contenu d'un pointeur",
+        "infoLocals": "Affiche les variables locales",
+        "infoRegisters": "Affiche les registres du processeur",
+        "examineBuffer": "Examine la mémoire sous forme de caractères",
+        "backtrace": "Affiche la pile d'appels",
+        "bt": "Raccourci pour backtrace",
+        "frame": "Change de frame N",
+        "up": "Remonte d'un niveau dans la pile",
+        "down": "Descend d'un niveau dans la pile",
+        "list": "Affiche le code source",
+        "where": "Affiche l'emplacement actuel",
+        "watchVar": "Met en pause lorsque la variable change",
+        "watchAddr": "Met en pause lorsque l'adresse change",
+        "rwatch": "Met en pause à la lecture",
+        "awatch": "Met en pause à la lecture ou à l'écriture",
+        "helpGeneral": "Affiche l'aide générale",
+        "helpCommand": "Aide spécifique pour une commande"
+      }
+    },
+    "uiCommands": {
+      "commandsTitle": "Commandes GDB",
+      "commandsDesc": "Référence complète des commandes organisées par catégorie"
+    },
+    "commonUseCases": {
+      "title": "Cas d'Usage Courants",
+      "useCase1": {
+        "title": "Compiler avec informations de débogage",
+        "description": "Utilisez les flags -g et -O0 pour activer un débogage efficace",
+        "explanation": "La compilation avec informations de débogage est la première étape cruciale :\n\n• -g : Inclut les informations de débogage\n• -O0 : Désactive les optimisations pour un débogage plus clair\n• -Wall : Affiche les avertissements du compilateur\n• -Wextra : Avertissements supplémentaires\n\nCette combinaison garantit que vous disposez de toutes les informations nécessaires pour un débogage efficace.",
+        "example": "gcc -g -O0 -Wall -Wextra -o mon_programme mon_programme.c\ngdb ./mon_programme"
+      },
+      "useCase2": {
+        "title": "Définir des points d'arrêt stratégiques",
+        "description": "Placez des points d'arrêt à des points clés pour contrôler l'exécution",
+        "explanation": "Les points d'arrêt stratégiques sont fondamentaux pour contrôler l'exécution :\n\n• break fonction : Met en pause à l'entrée d'une fonction\n• break fichier.c:ligne : Met en pause à une ligne spécifique\n• break +N : Met en pause N lignes après la position actuelle\n• break -N : Met en pause N lignes avant la position actuelle\n\nL'utilisation de points d'arrêt vous permet d'aller directement aux parties problématiques du code.",
+        "example": "(gdb) break main\n(gdb) break fonction_problematique\n(gdb) break fichier.c:42\n(gdb) run"
+      },
+      "useCase3": {
+        "title": "Inspecter les variables et la mémoire",
+        "description": "Examinez l'état des variables et des structures de données",
+        "explanation": "L'inspection des variables est essentielle pour comprendre l'état du programme :\n\n• print var : Affiche la valeur d'une variable\n• print *ptr : Affiche la valeur pointée par un pointeur\n• print tab[0]@10 : Affiche 10 éléments d'un tableau\n• display var : Affiche automatiquement la variable à chaque étape\n\nCela vous permet de voir exactement ce qui se passe avec vos données.",
+        "example": "(gdb) print compteur\n(gdb) print *pointeur\n(gdb) print tableau[0]@5\n(gdb) display variable_importante"
+      },
+      "useCase4": {
+        "title": "Analyser les piles d'appel",
+        "description": "Comprenez le flux d'exécution grâce à l'analyse de la pile",
+        "explanation": "L'analyse de la pile d'appel est cruciale pour comprendre le flux d'exécution :\n\n• backtrace : Affiche la pile d'appels complète\n• frame N : Change vers le frame N de la pile\n• up : Remonte d'un niveau dans la pile\n• down : Descend d'un niveau dans la pile\n• info locals : Affiche les variables locales du frame actuel\n\nCela vous aide à comprendre comment vous êtes arrivé au point d'exécution actuel.",
+        "example": "(gdb) backtrace\n(gdb) frame 2\n(gdb) info locals"
+      }
+    },
+    "bestPractices": {
+      "title": "Bonnes Pratiques",
+      "description": "Pratiques recommandées pour utiliser Valgrind efficacement",
+      "practicesTitle": "Pratiques Recommandées",
+      "practice1": {
+        "title": "Compiler avec informations de débogage",
+        "description": "Utilisez les flags -g et -O0 pour obtenir des informations de débogage détaillées"
+      },
+      "practice2": {
+        "title": "Utiliser des noms de variables descriptifs",
+        "description": "Nommez clairement les variables pour faciliter le débogage"
+      },
+      "practice3": {
+        "title": "Définir des points d'arrêt stratégiques",
+        "description": "Placez des points d'arrêt à des endroits clés du code"
+      },
+      "practice4": {
+        "title": "Maîtriser les commandes de base",
+        "description": "Apprenez les commandes fondamentales de GDB"
+      },
+      "practice5": {
+        "title": "Utiliser les points de surveillance",
+        "description": "Configurez des points de surveillance pour détecter les changements de variables"
+      }
+    },
+    "introduction": {
+      "title": "Introduction",
+      "whatIs": "Qu'est-ce que GDB ?",
+      "whatIsDescription": "GDB (GNU Debugger) est un outil de débogage puissant et polyvalent qui vous permet d'examiner des programmes en cours d'exécution, de trouver des erreurs et de comprendre le comportement du code.",
+      "keyFeatures": "Caractéristiques principales :",
+      "feature1": "Exécuter des programmes étape par étape",
+      "feature2": "Définir des points d'arrêt pour mettre en pause l'exécution",
+      "feature3": "Inspecter des variables et la mémoire",
+      "feature4": "Analyser les piles d'appel et les appels de fonction",
+      "feature5": "Déboguer des programmes en cours d'exécution ou des core dumps",
+      "whenToUse": "Quand utiliser GDB ?",
+      "useCase1": "Pour déboguer des erreurs de segmentation et des erreurs mémoire",
+      "useCase2": "Lorsque vous devez comprendre un flux d'exécution complexe",
+      "useCase3": "Pour inspecter l'état des variables pendant l'exécution",
+      "useCase4": "Lors de l'analyse de comportements inattendus du programme"
+    },
+    "examples": {
+      "title": "Exemples",
+      "example1": {
+        "title": "Débogage de débordement de tampon",
+        "description": "Exemple de débordement de tampon utilisant strcpy et comment le détecter"
+      },
+      "example2": {
+        "title": "Débogage de dépassement de tableau",
+        "description": "Erreur de dépassement de tableau et techniques pour l'identifier"
+      },
+      "example3": {
+        "title": "Débogage de fonction récursive",
+        "description": "Analyse d'une récursion problématique avec des valeurs négatives"
+      },
+      "titles": {
+        "segfault": "Erreur de segmentation",
+        "bufferoverflow": "Débordement de tampon",
+        "arrayoutofbounds": "Dépassement de tableau"
+      }
+    }
+  },
+  "valgrind": {
+    "errorTypes": {
+      "title": "Types d'Erreurs Courants",
+      "description": "Identifiez et corrigez les erreurs les plus fréquentes détectées par Valgrind",
+      "memoryLeaks": {
+        "title": "Fuites de Mémoire",
+        "description": "Mémoire allouée mais non libérée, entraînant une utilisation excessive des ressources.",
+        "example": "#include <stdlib.h>\n\nint main() {\n    // Exemple de fuite de mémoire\n    int *leak = (int*)malloc(sizeof(int) * 10);\n    // Mémoire non libérée\n    return 0;\n}",
+        "explanation": "Valgrind détecte une fuite de mémoire: la mémoire a été allouée avec malloc() mais jamais libérée. Cherchez 'definitely lost' ou 'indirectly lost' dans le rapport."
+      },
+      "invalidAccess": {
+        "title": "Accès Mémoire Invalide",
+        "description": "Lecture ou écriture en dehors des limites de la mémoire allouée.",
+        "example": "#include <stdlib.h>\n\nint main() {\n    // Exemple de lecture/écriture invalide\n    int *arr = (int*)malloc(sizeof(int) * 5);\n    arr[5] = 10;  // Hors limites\n    free(arr);\n    return 0;\n}",
+        "explanation": "Valgrind signale une lecture/écriture invalide: le programme a accédé à de la mémoire hors du bloc alloué. Cela conduit souvent à un comportement indéfini."
+      },
+      "uninitializedValue": {
+        "title": "Utilisation de Valeur Non Initialisée",
+        "description": "Utilisation d'une variable qui n'a pas été initialisée.",
+        "example": "#include <stdio.h>\n\nint main() {\n    int x;  // Non initialisée\n    if (x > 0) {  // Utilisation de valeur non initialisée\n        printf(\"Positif\\n\");\n    }\n    return 0;\n}",
+        "explanation": "Valgrind détecte que le programme utilise une variable non initialisée. Cela peut entraîner un comportement imprévisible."
+      },
+      "doubleFree": {
+        "title": "Double Libération",
+        "description": "Libération d'une mémoire déjà libérée.",
+        "example": "#include <stdlib.h>\n\nint main() {\n    int *ptr = (int*)malloc(sizeof(int));\n    free(ptr);\n    free(ptr);  // Double libération\n    return 0;\n}",
+        "explanation": "Valgrind signale une double libération: le programme tente de libérer une mémoire déjà libérée. Cela peut corrompre les structures du gestionnaire mémoire."
+      },
+      "mismatchedFree": {
+        "title": "Libération Incompatible",
+        "description": "Utilisation d'une mauvaise fonction de désallocation.",
+        "example": "#include <stdlib.h>\n\nint main() {\n    int *arr = (int*)malloc(10 * sizeof(int));\n    delete[] arr;  // Mauvaise fonction\n    return 0;\n}",
+        "explanation": "Valgrind détecte l'utilisation d'une mauvaise fonction de désallocation. En C++, il faut associer new avec delete et new[] avec delete[]."
+      },
+      "overlappingMemory": {
+        "title": "Chevauchement de Mémoire",
+        "description": "Les régions mémoire source et destination se chevauchent dans memcpy ou des fonctions similaires.",
+        "example": "#include <string.h>\n\nint main() {\n    char str[20] = \"Bonjour !\";\n    memcpy(str + 5, str, 10);  // Chevauchement\n    return 0;\n}",
+        "explanation": "Valgrind signale que les régions mémoire source et destination se chevauchent lors d'un appel à memcpy(). Utilisez memmove() si un chevauchement est possible."
+      }
+    },
+    "cheatsheet": {
+      "title": "Valgrind Cheat Sheet",
+      "description": "Commandes et options essentielles de Valgrind",
+      "basic": {
+        "title": "Commandes de Base",
+        "items": [
+          {"desc": "Exécution basique de Valgrind"},
+          {"desc": "Vérification détaillée des fuites de mémoire"},
+          {"desc": "Tracer l'origine des valeurs non initialisées"},
+          {"desc": "Exécuter Memcheck explicitement (outil par défaut)"},
+          {"desc": "Analyse du cache et des performances"},
+          {"desc": "Générer des graphes d'appels et des profils"}
+        ]
+      },
+      "options": {
+        "title": "Options Courantes"
+      },
+      "tips": {
+        "title": "Astuces Rapides",
+        "compileDebug": "Utilisez -g lors de la compilation pour obtenir des informations de débogage",
+        "cppInline": "Pour le C++, utilisez -fno-inline pour de meilleurs résultats",
+        "suppressions": "Utilisez --suppressions=filename pour supprimer les erreurs connues"
+      }
+    },
+    
+    
+    "codeExample": {
+      "explanation": "Ce code illustre un scénario d'erreur mémoire courant expliqué ci-dessous."
+    },
+    "commandsLegacy": {
+      "intro": "Vous trouverez ci-dessous les commandes les plus utiles de Valgrind pour déboguer les problèmes de mémoire. Chaque commande comprend une description détaillée et des exemples d'utilisation.",
+      "header": {
+        "title": "Commandes de Base",
+        "description": "Commandes essentielles pour commencer à utiliser Valgrind efficacement"
+      },
+      "basic": {
+        "title": "Analyse de Base",
+        "description": "Exécute une analyse mémoire de base de votre programme",
+        "whenTitle": "Quand l'utiliser ?",
+        "when": [
+          "Pour un scan rapide des problèmes de mémoire",
+          "Comme première étape du débogage mémoire"
+        ]
+      },
+      "leak": {
+        "title": "Détection de Fuites de Mémoire",
+        "description": "Identifie et analyse les fuites de mémoire dans votre programme",
+        "noteTitle": "Note importante :",
+        "optionsTitle": "Options incluses :",
+        "options": {
+          "leakCheckFull": "Recherche détaillée des fuites",
+          "showLeakKinds": "Affiche tous les types de fuites",
+          "trackOrigins": "Trace l'origine des valeurs non initialisées"
+        }
+      },
+      "perf": {
+        "title": "Analyse de Performance",
+        "description": "Identifie les goulots d'étranglement de performance dans votre code",
+        "tipTitle": "Astuce d'utilisation :",
+        "tipText": "Utilisez kcachegrind pour visualiser les résultats de Callgrind avec une interface graphique :"
+      }
+    },
+    "commonOptions": {
+      "title": "Options Communes",
+      "memoryOptions": "Options de Mémoire",
+      "outputOptions": "Options de Sortie",
+      "quickTips": "Conseils Rapides",
+      "memoryOptionsList": [
+        {"option": "--leak-check=full", "description": "Affiche les détails des fuites de mémoire"},
+        {"option": "--show-leak-kinds=all", "description": "Affiche tous les types de fuites"},
+        {"option": "--track-origins=yes", "description": "Traque l'origine des valeurs non initialisées"},
+        {"option": "--leak-resolution=high", "description": "Améliore la précision du suivi des fuites"},
+        {"option": "--num-callers=<n>", "description": "Affiche n trames de pile dans les rapports"}
+      ],
+      "outputOptionsList": [
+        {"option": "--log-file=filename", "description": "Enregistre la sortie dans un fichier"},
+        {"option": "--quiet", "description": "N'affiche que les erreurs importantes"},
+        {"option": "--verbose", "description": "Affiche des informations supplémentaires"},
+        {"option": "--trace-children=yes", "description": "Traque les processus enfants"},
+        {"option": "--track-fds=yes", "description": "Affiche les descripteurs de fichiers ouverts"}
+      ],
+      "tips": [
+        "Utilisez {{flag}} lors de la compilation pour obtenir des informations de débogage",
+        "Pour le C++, utilisez {{flag}} pour de meilleurs résultats",
+        "Utilisez {{option}} pour supprimer les erreurs connues"
+      ]
+    },
+    "intro": {
+      "detection": "Valgrind peut détecter un large éventail de problèmes liés à la mémoire dans vos programmes.",
+      "subtitle": "Outil de détection des erreurs mémoire et de profilage"
+    },
+    "tabs": {
+      "introduction": "Introduction",
+      "errors": "Types d'erreurs",
+      "commands": "Commandes",
+      "practices": "Bonnes pratiques",
+      "cheatsheet": "Cheat Sheet"
+    },
+    "pageTitle": "Apprentissage de Valgrind",
+    "backToHome": "Retour à l'accueil",
+    "seeDetails": "Voir les détails",
+    "tools": {
+      "title": "Outils",
+      "tool1": {
+        "title": "Memcheck",
+        "description": "Memcheck est l'outil principal de Valgrind pour détecter les erreurs de mémoire :",
+        "features": [
+          "Détecte l'accès à la mémoire non initialisée",
+          "Identifie les lectures/écritures hors limites",
+          "Trouve les fuites de mémoire et les doubles libérations",
+          "Détecte l'utilisation de la mémoire après libération"
+        ],
+        "summary": "C'est l'outil le plus important et devrait être votre premier choix pour l'analyse mémoire.",
+        "command": "valgrind --tool=memcheck --leak-check=full ./programme"
+      },
+      "tool2": {
+        "title": "Massif",
+        "description": "Profileur de tas qui suit l'utilisation de la mémoire dans le temps"
+      },
+      "examples": {
+        "title": "Exemples Pratiques",
+        "example1": {
+          "title": "Analyse de Fuites de Mémoire",
+          "description": "Détection et correction de fuites mémoire dans un programme C",
+          "details": [
+            "Allocation non libérée de structures complexes",
+            "Pertes de mémoire dans les boucles et conditions",
+            "Utilisation de pointeurs perdus",
+            "Méthodes de diagnostic avec Memcheck"
+          ]
+        },
+        "example2": {
+          "title": "Détection d'Erreurs de Pointeurs",
+          "description": "Identification des accès mémoire invalides et des erreurs de pointeurs",
+          "details": [
+            "Accès hors limites des tableaux",
+            "Utilisation de pointeurs non initialisés",
+            "Accès à la mémoire après libération",
+            "Utilisation de pointeurs nuls ou invalides"
+          ]
+        },
+        "example3": {
+          "title": "Analyse de Performance avec Cachegrind",
+          "description": "Optimisation des performances du cache processeur",
+          "details": [
+            "Analyse des défauts de cache",
+            "Identification des problèmes de localité des données",
+            "Optimisation des structures de données",
+            "Analyse comparative des algorithmes"
+          ]
+        },
+        "example4": {
+          "title": "Détection de Conditions de Course avec Helgrind",
+          "description": "Identification des problèmes de synchronisation dans le code multithreadé",
+          "details": [
+            "Détection des accès concurrents non protégés",
+            "Problèmes d'ordre des verrous",
+            "Conditions de course sur les variables partagées",
+            "Utilisation incorrecte des primitives de synchronisation"
+          ]
+        },
+        "titles": {
+          "memoryleak": "Fuite de Mémoire",
+          "doublefree": "Double Libération",
+          "cacheanalysis": "Analyse du Cache",
+          "racecondition": "Condition de Course",
+          "pointererror": "Erreur de Pointeur",
+          "segfault": "Erreur de Segmentation"
+        },
+        "seeMore": "Voir plus d'exemples",
+        "tryYourself": "Essayez vous-même",
+        "codeSnippet": "Extrait de code",
+        "expectedOutput": "Sortie attendue",
+        "valgrindOutput": "Sortie de Valgrind",
+        "analysis": "Analyse"
+      },
+      "tool3": {
+        "title": "Cachegrind",
+        "description": "Profileur de cache qui simule le comportement du cache du processeur"
+      },
+      "tool4": {
+        "title": "Helgrind",
+        "description": "Détecteur de conditions de course et d'erreurs de synchronisation pour les programmes multithreads"
+      },
+      "tool5": {
+        "title": "DRD",
+        "description": "Détecteur de conditions de course et d'erreurs de synchronisation dans les programmes multithreads"
+      }
+    },
+    "interactive": {
+      "title": "Terminal Interactif de Valgrind",
+      "placeholder": "Entrez des commandes Valgrind ici...",
+      "commandsAvailable": "Commandes disponibles",
+      "commandsTitle": "Commandes Valgrind Disponibles",
+      "currentExample": "Exemple actuel :",
+      "currentSourceCode": "Code source actuel :",
+      "exampleCode": "Exemple de code :",
+      "clear": "Effacer",
+      "tryCommands": "💡 Essayez : valgrind --leak-check=full ./programme, help, clear",
+      "basicCommands": "Commandes de Base :",
+      "memcheck": "Memcheck (Détecteur de Mémoire) :",
+      "massif": "Massif (Profileur de Tas) :",
+      "cachegrind": "Cachegrind (Profileur de Cache) :",
+      "helgrind": "Helgrind (Détecteur de Conditions de Course) :",
+      "outputOptions": "Options de Sortie :",
+      "compilationOptions": "Options de Compilation Recommandées :",
+      "commands": {
+        "valgrindDefault": "Exécute avec Memcheck par défaut",
+        "valgrindVersion": "Affiche la version de Valgrind",
+        "help": "Affiche l'aide générale",
+        "clear": "Efface l'écran du terminal",
+        "memcheckExplicit": "Utilise Memcheck explicitement",
+        "leakCheckFull": "Détection complète des fuites",
+        "leakCheckYes": "Détection basique des fuites",
+        "trackOrigins": "Trace l'origine des valeurs non initialisées",
+        "showLeakKinds": "Affiche tous les types de fuites",
+        "massifTool": "Analyse l'utilisation du tas mémoire",
+        "msPrint": "Affiche le rapport Massif",
+        "cachegrindTool": "Analyse le comportement du cache",
+        "cgAnnotate": "Annote le code avec des statistiques détaillées",
+        "helgrindTool": "Détecte les conditions de course",
+        "trackLockorders": "Trace l'ordre des verrous",
+        "logFile": "Enregistre la sortie dans un fichier",
+        "xml": "Format de sortie XML",
+        "quiet": "Mode silencieux",
+        "verbose": "Mode verbeux",
+        "basicCompile": "Compilation de base",
+        "optimizedCompile": "Compilation optimisée pour Valgrind"
+      }
+    },
+    "bestPractices": {
+      "title": "Bonnes Pratiques",
+      "description": "Pratiques recommandées pour utiliser Valgrind efficacement",
+      "practicesTitle": "Pratiques Recommandées",
+      "practice1": {
+        "title": "Compiler avec les informations de débogage",
+        "description": "Utilisez les options -g et -O0 pour obtenir des informations de débogage détaillées"
+      },
+      "practice2": {
+        "title": "Utiliser les options appropriées de Valgrind",
+        "description": "Configurez les options adaptées selon le type d'analyse dont vous avez besoin"
+      },
+      "practice3": {
+        "title": "Automatiser l'analyse avec des scripts",
+        "description": "Créez des scripts pour exécuter Valgrind régulièrement dans votre processus de développement"
+      },
+      "practice4": {
+        "title": "Interpréter correctement les rapports",
+        "description": "Comprenez les différents types d'erreurs et de fuites signalés par Valgrind"
+      },
+      "practice5": {
+        "title": "Vérifier les faux positifs",
+        "description": "Examinez attentivement les rapports pour identifier d'éventuels faux positifs"
+      },
+      "practice6": {
+        "title": "Utiliser des fichiers de suppression",
+        "description": "Créez des fichiers de suppression pour ignorer les problèmes connus et acceptables"
+      }
+    },
+    "introduction": {
+      "title": "Introduction",
+      "whatIs": "Qu'est-ce que Valgrind ?",
+      "whatIsDescription": "Valgrind est une suite d'outils d'instrumentation pour le débogage et le profilage de programmes. Initialement développé pour Linux, il est particulièrement efficace pour détecter les erreurs de gestion de la mémoire et analyser les performances des applications C/C++.",
+      "keyFeatures": "Fonctionnalités principales :",
+      "feature1": "Détection automatique des fuites de mémoire et des accès mémoire invalides",
+      "feature2": "Identification précise des erreurs d'utilisation des pointeurs et des tableaux",
+      "feature3": "Analyse détaillée de l'utilisation du tas et des performances du cache",
+      "feature4": "Détection des conditions de course dans les programmes multithreads",
+      "feature5": "Profilage précis du temps d'exécution et de l'utilisation du processeur",
+      "whenToUse": "Quand utiliser Valgrind ?",
+      "useCase1": "Pour identifier et corriger les fuites de mémoire dans vos applications",
+      "useCase2": "Lorsque vous devez optimiser les performances mémoire de votre code",
+      "useCase3": "Pour déboguer des plantages aléatoires ou des erreurs mémoire difficiles à reproduire",
+      "useCase4": "Pendant le développement d'applications multithreadées pour détecter les conditions de course",
+      "useCase5": "Pour analyser et améliorer l'utilisation du cache processeur"
+    },
+    "examples": {
+      "title": "Exemples Pratiques",
+      "example1": {
+        "title": "Analyse de Fuites de Mémoire",
+        "description": "Détection et correction de fuites mémoire dans un programme C",
+        "details": [
+          "Allocation non libérée de structures complexes",
+          "Pertes de mémoire dans les boucles et conditions",
+          "Utilisation de pointeurs perdus",
+          "Méthodes de diagnostic avec Memcheck"
+        ]
+      },
+      "example2": {
+        "title": "Détection d'Erreurs de Pointeurs",
+        "description": "Identification des accès mémoire invalides et des erreurs de pointeurs",
+        "details": [
+          "Accès hors limites des tableaux",
+          "Utilisation de pointeurs non initialisés",
+          "Accès à la mémoire après libération",
+          "Utilisation de pointeurs nuls ou invalides"
+        ]
+      },
+      "example3": {
+        "title": "Analyse de Performance avec Cachegrind",
+        "description": "Optimisation des performances du cache processeur",
+        "details": [
+          "Analyse des défauts de cache",
+          "Identification des problèmes de localité des données",
+          "Optimisation des structures de données",
+          "Analyse comparative des algorithmes"
+        ]
+      },
+      "example4": {
+        "title": "Détection de Conditions de Course avec Helgrind",
+        "description": "Identification des problèmes de synchronisation dans le code multithreadé",
+        "details": [
+          "Détection des accès concurrents non protégés",
+          "Problèmes d'ordre des verrous",
+          "Conditions de course sur les variables partagées",
+          "Utilisation incorrecte des primitives de synchronisation"
+        ]
+      },
+      "titles": {
+        "memoryleak": "Fuite de Mémoire",
+        "doublefree": "Double Libération",
+        "cacheanalysis": "Analyse du Cache",
+        "racecondition": "Condition de Course",
+        "pointererror": "Erreur de Pointeur",
+        "segfault": "Erreur de Segmentation"
+      },
+      "seeMore": "Voir plus d'exemples",
+      "tryYourself": "Essayez vous-même",
+      "codeSnippet": "Extrait de code",
+      "expectedOutput": "Sortie attendue",
+      "valgrindOutput": "Sortie de Valgrind",
+      "analysis": "Analyse"
+    },
+    "introSection": {
+      "whatIs": "Qu'est-ce que Valgrind ?",
+      "description": "Valgrind est une suite d'outils puissants pour le débogage et le profilage de la mémoire.",
+      "detectTitle": "Que peut détecter Valgrind ?",
+      "detect": {
+        "leaks": "Fuite de mémoire",
+        "invalidAccess": "Accès mémoire invalide",
+        "uninitialized": "Utilisation de variables non initialisées",
+        "doubleFree": "Double libération de mémoire",
+        "memoryLeaks": "Fuite de mémoire"
+      },
+      "whenTitle": "Quand utiliser Valgrind ?",
+      "when": {
+        "leaks": "Lorsque votre programme a des fuites de mémoire inattendues",
+        "segfault": "En cas d'erreurs de segmentation (segmentation fault)",
+        "optimize": "Pour optimiser l'utilisation de la mémoire de votre application"
+      },
+      "proTip": "💡 Astuce : exécutez régulièrement Valgrind dans votre CI pour détecter rapidement les régressions."
+    }
+  }
+}

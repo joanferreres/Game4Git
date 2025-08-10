@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon Test</title>
+    
+    <!-- All possible favicon formats -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/logo.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        img {
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+            max-width: 100%;
+        }
+        .favicon-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .favicon-card {
+            border: 1px solid #eee;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Favicon Test Page</h1>
+    <p>This page is designed to test if the favicon appears properly in the browser tab.</p>
+    
+    <h2>Available Favicon Files</h2>
+    <div class="favicon-info">
+        <div class="favicon-card">
+            <h3>favicon.ico</h3>
+            <img src="/favicon.ico" alt="favicon.ico">
+            <p>Classic .ico format used by all browsers</p>
+        </div>
+        <div class="favicon-card">
+            <h3>favicon-16x16.png</h3>
+            <img src="/favicon-16x16.png" alt="favicon-16x16.png">
+            <p>16x16 PNG for older browsers</p>
+        </div>
+        <div class="favicon-card">
+            <h3>favicon-32x32.png</h3>
+            <img src="/favicon-32x32.png" alt="favicon-32x32.png">
+            <p>32x32 PNG for most browsers</p>
+        </div>
+        <div class="favicon-card">
+            <h3>apple-touch-icon.png</h3>
+            <img src="/apple-touch-icon.png" alt="apple-touch-icon.png">
+            <p>180x180 PNG for iOS</p>
+        </div>
+        <div class="favicon-card">
+            <h3>logo.png</h3>
+            <img src="/logo.png" alt="logo.png" style="max-width: 200px;">
+            <p>Full-size logo</p>
+        </div>
+    </div>
+    
+    <h2>How to Fix Favicon Issues</h2>
+    <ol>
+        <li>Clear browser cache (Ctrl+Shift+Delete or Cmd+Shift+Delete)</li>
+        <li>Hard refresh (Ctrl+F5 or Cmd+Shift+R)</li>
+        <li>Try a different browser</li>
+        <li>Try incognito/private mode</li>
+    </ol>
+</body>
+</html> 

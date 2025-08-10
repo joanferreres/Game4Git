@@ -1,0 +1,12 @@
+Security Check Summary (Tue May 20 10:28:00 CEST 2025)
+===============================
+- Dependencies with vulnerabilities: 0
+
+- Security headers check: Passed
+- Potential exposed secrets:        0
+- Outdated packages: 0
+0
+- CORS issues:        0
+No CORS issues found
+
+For detailed reports, check the security-reports directory.

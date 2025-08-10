@@ -1,0 +1,623 @@
+{
+  "general": {
+    "title": "Git Game",
+    "subtitle": "Apprenez les concepts de Git visuellement avec ce terrain de jeu interactif"
+  },
+  "git": {
+    "controls": "Contrôles Git",
+    "terminal": "Mode Terminal",
+    "visualizer": "Visualisation Git",
+    "commitChanges": "Valider les Changements",
+    "stageChanges": "Indexer les Changements",
+    "branches": "Branches",
+    "createBranch": "Créer Branche",
+    "switchBranch": "Changer de Branche",
+    "currentBranch": "Branche Actuelle",
+    "newBranchName": "Nom de nouvelle branche",
+    "remoteName": "Dépôt Distant",
+    "gitFetch": "Git Fetch",
+    "gitPull": "Git Pull",
+    "gitPush": "Git Push",
+    "mergeBranches": "Fusionner les Branches",
+    "mergeFrom": "Fusionner depuis",
+    "mergeInto": "Dans la branche",
+    "lastFetch": "Dernier fetch",
+    "lastPush": "Dernier push",
+    "remoteReferences": "Références distantes",
+    "actions": "Actions",
+    "resetChanges": "Réinitialiser les Changements",
+    "clearSelection": "Effacer la Sélection",
+    "resetAll": "Tout Réinitialiser",
+    "create": "Créer",
+    "gitAdd": "Git Add (Indexer les Changements)",
+    "gitCommit": "Git Commit",
+    "conflict": "Conflit",
+    "conflictView": "Vue de Conflit de Fusion",
+    "mergeConflict": "Conflit de Fusion",
+    "resolvingConflict": "Résolution de conflit entre",
+    "and": "et",
+    "resolveConflicts": "Éditez pour résoudre les conflits",
+    "abortMerge": "Annuler la Fusion",
+    "completeResolve": "Terminer la Fusion",
+    "conflictsRemaining": "conflits restants"
+  },
+  "terminal": {
+    "help": "Terminal Git Game - Tapez 'help' pour voir les commandes disponibles",
+    "currentBranch": "Branche actuelle:",
+    "commandNotRecognized": "Erreur: Commande non reconnue:",
+    "availableCommands": "Commandes disponibles",
+    "availableCommandsTitle": "Commandes disponibles",
+    "placeholder": "Tapez commande git..."
+  },
+  "messages": {
+    "changesStaged": "Changements préparés pour commit",
+    "enterCommitMessage": "Veuillez saisir un message de commit",
+    "noChangesStaged": "Aucun changement n'a été préparé pour commit. Utilisez Git Add d'abord.",
+    "committedSuccessfully": "Changements validés avec succès",
+    "enterBranchName": "Veuillez saisir un nom de branche",
+    "branchExists": "La branche existe déjà",
+    "branchCreated": "Branche créée",
+    "switchedToBranch": "Basculé vers la branche",
+    "changesReset": "Changements réinitialisés au HEAD actuel",
+    "resetToInitial": "Réinitialisé au commit initial",
+    "noChangesToReset": "Pas de changements à réinitialiser",
+    "nothingToClear": "Rien à effacer",
+    "clearSelectionExplanation": "Cela réinitialise la vue du graphe à l'état initial, retourne à la branche master et efface votre sélection de commit.",
+    "selectSourceBranch": "Veuillez sélectionner une branche source à fusionner.",
+    "selectTargetBranch": "Veuillez sélectionner une branche cible pour fusionner.",
+    "sourceSameAsTarget": "Les branches source et cible ne peuvent pas être identiques.",
+    "mergedBranch": "Branche fusionnée",
+    "into": "dans",
+    "noActiveBranch": "Pas de branche active",
+    "hasUnsavedChanges": "Vous avez des changements non sauvegardés. Utilisez \"Git Add\" pour les indexer.",
+    "stagedAndReady": "Changements indexés et prêts pour commit"
+  },
+  "tooltips": {
+    "selectCommit": "Sélectionnez un commit du graphique pour voir son contenu, ou utilisez \"Git Add\" pour indexer les changements et voir les différences avec le commit HEAD actuel."
+  },
+  "guide": {
+    "title": "Guide de Flux de Travail Git",
+    "description": "Apprenez les commandes et flux de travail essentiels de Git pour un contrôle de version efficace",
+    "daily": {
+      "title": "Flux de Travail Quotidien",
+      "description": "Étapes de base pour le travail quotidien avec Git"
+    },
+    "branching": {
+      "title": "Flux de Travail avec Branches", 
+      "description": "Comment travailler avec les branches"
+    },
+    "merging": {
+      "title": "Flux de Travail de Fusion",
+      "description": "Comment fusionner les changements entre branches"
+    },
+    "troubleshooting": {
+      "title": "Dépannage",
+      "description": "Problèmes courants de Git et leurs solutions"
+    }
+  },
+  "howToUse": {
+    "title": "Comment Utiliser Ce Terrain de Jeu Git",
+    "subtitle": "Apprenez les concepts Git grâce à la pratique avec notre terrain de jeu visuel et interactif.",
+    "switchBranch": "Changer/Sélectionner de Branche",
+    "switchBranchDesc": "Utilisez la section 'Branches' dans 'Contrôles Git' (panneau inférieur) pour passer à une branche existante ou en créer une nouvelle. Vos modifications et nouveaux commits s'appliqueront à cette branche active.",
+    "editCode": "Modifier le Code",
+    "editCodeDesc": "Modifiez le code dans l'Éditeur de Code' sur le panneau gauche. Les changements seront mis en évidence au fur et à mesure que vous les effectuez.",
+    "stageChanges": "Indexer les Changements (Git Add)",
+    "stageChangesDesc": "Une fois que vous avez effectué des modifications, cliquez sur 'Git Add (Indexer les Changements)' dans 'Contrôles Git'. Cela prépare vos modifications pour le prochain commit sur la branche active.",
+    "commitChanges": "Valider les Changements",
+    "commitChangesDesc": "Entrez un message de commit et cliquez sur 'Git Commit'. Cela enregistre un instantané de vos changements indexés sur la branche active actuelle. Le Graphe Git se mettra à jour pour afficher votre nouveau commit.",
+    "createBranch": "Créer une Nouvelle Branche",
+    "createBranchDesc": "Dans 'Contrôles Git', tapez un nouveau nom de branche dans la section 'Branches' et cliquez sur 'Créer'. Cela crée une nouvelle branche à partir du commit actuel (HEAD).",
+    "mergeBranches": "Fusionner des Branches",
+    "mergeBranchesDesc1": "Dans 'Contrôles Git', sous 'Fusionner des Branches', sélectionnez la branche que vous voulez fusionner (source) et la branche dans laquelle vous voulez la fusionner (cible).",
+    "mergeBranchesDesc2": "Cliquez sur 'Fusionner les Branches'. Un nouveau commit de fusion sera créé sur la branche cible, et le graphe se mettra à jour. La branche cible devient active.",
+    "resolveConflicts": "Résoudre les Conflits de Fusion",
+    "resolveConflictsDesc": "Si la fusion crée des conflits, le Résolveur de Conflits s'ouvrira automatiquement. Vous pouvez choisir entre 'Utiliser le Nôtre', 'Utiliser le Leur', ou éditer manuellement le contenu pour résoudre chaque conflit.",
+    "viewHistory": "Voir l'Historique et les Commits",
+    "viewHistoryDesc": "Le 'Graphe Git' (panneau central) visualise votre historique de commits. Cliquez sur n'importe quel nœud de commit dans le graphe pour voir ses détails et son contenu dans le panneau droit.",
+    "viewChanges": "Voir les Changements (Diff)",
+    "viewChangesDesc": "Lorsque vous indexez des changements avec 'Git Add', une vue diff apparaîtra automatiquement dans le panneau droit montrant les différences entre vos changements et le commit HEAD.",
+    "remoteOperations": "Opérations de Dépôt Distant",
+    "remoteOperationsDesc": "Utilisez les boutons 'Git Fetch', 'Git Pull', et 'Git Push' pour interagir avec les dépôts distants et synchroniser votre travail.",
+    "experiment": "Expérimentez",
+    "experimentDesc": "Essayez différentes séquences de commandes pour voir comment l'historique Git et les états des fichiers changent!"
+  },
+  "visualization": {
+    "title": "Visualisation Git",
+    "description": "Sélectionnez un commit du graphique pour voir son contenu, ou utilisez \"Git Add\" pour indexer les changements et voir les différences avec le commit HEAD actuel."
+  },
+  "gitHistory": {
+    "title": "Historique Git",
+    "currentBranch": "Branche actuelle:",
+    "head": "HEAD"
+  },
+  "gitGraph": {
+    "title": "Graphe Git",
+    "master": "Master",
+    "yourWork": "Votre Travail",
+    "head": "HEAD"
+  },
+  "explanations": {
+    "gitFetch": "Dans un vrai dépôt Git, cette commande téléchargerait des objets et des références depuis un dépôt distant. Elle met à jour vos branches de suivi distant sans modifier votre répertoire de travail ou vos branches locales.",
+    "gitPull": "Dans un vrai dépôt Git, cette commande récupèrerait et intègrerait les changements d'un autre dépôt ou d'une branche locale. Elle combine git fetch et git merge en une seule étape.",
+    "gitPush": "Dans un vrai dépôt Git, cette commande mettrait à jour les références distantes ainsi que les objets associés, en envoyant les commits de votre branche locale vers la branche du dépôt distant.",
+    "simulationFetch": "Ceci est une simulation : Dans le vrai Git, fetch téléchargerait des commits, des fichiers et des références depuis un dépôt distant.",
+    "simulationPull": "Ceci est une simulation : Dans le vrai Git, pull récupèrerait et fusionnerait les changements distants dans votre branche actuelle.",
+    "simulationPush": "Ceci est une simulation : Dans le vrai Git, push téléverserait les commits de votre branche vers le dépôt distant."
+  },
+  "exercises": {
+    "title": "Exercices Git",
+    "description": "Complétez ces exercices pour apprendre le branchement Git et les flux de travail en équipe",
+    "challenges": "Défis",
+    "progress": "Progression",
+    "steps": "Étapes à compléter",
+    "stepsCompleted": "complétées",
+    "reference": "Référence des Commandes",
+    "terminalCommands": "Commandes Terminal",
+    "uiActions": "Actions UI",
+    "exerciseCompleted": "Exercice terminé ! 🎉",
+    "exerciseFullyCompleted": "Toutes les étapes terminées ! 🎉",
+    "reset": "Réinitialiser la Progression",
+    "close": "Fermer",
+    "cancel": "Annuler",
+    "completionMessage": "Félicitations ! Vous avez terminé avec succès toutes les étapes de cet exercice.",
+    "readyToStart": "Prêt à commencer ?",
+    "startExplanation": "Lorsque vous commencez l'exercice, nous suivrons votre progression à chaque étape jusqu'à ce que vous la terminiez.",
+    "start": "Commencer l'Exercice",
+    "exerciseFinished": "Exercice Terminé !",
+    "finishedExplanation": "Vous avez terminé cet exercice. Vous pouvez le réinitialiser ou continuer avec un autre.",
+    "startAgain": "Recommencer",
+    "nextExercise": "Exercice Suivant",
+    "checkProgress": "Vérifier la Progression",
+    "markAsDone": "Marquer comme Terminé",
+    "featureBranch": {
+      "tabTitle": "Feature Branch",
+      "title": "Flux de Travail de Branche de Fonctionnalité",
+      "description": "Apprenez à travailler avec des branches de fonctionnalité pour développer de nouvelles fonctionnalités sans affecter le code principal.",
+      "steps": {
+        "createDev": "Créer une branche 'dev' à partir de 'master'",
+        "switchDev": "Basculer vers la branche 'dev'",
+        "createFeature": "Créer et basculer vers une nouvelle branche appelée 'feature-login'",
+        "makeChanges": "Modifier le code (ajouter une nouvelle fonction ou un commentaire)",
+        "commitChanges": "Indexer et valider vos modifications avec un message descriptif",
+        "mergeToDev": "Basculer vers la branche 'dev' et fusionner votre branche de fonctionnalité"
+      },
+      "hints": {
+        "createDev": "Utilisez 'git branch dev' en mode terminal ou utilisez le contrôle de création de branches de l'interface",
+        "switchDev": "Utilisez 'git checkout dev' en mode terminal ou utilisez le menu déroulant de changement de branche",
+        "createFeature": "Utilisez 'git checkout -b feature-login' en mode terminal ou créez la branche depuis l'interface puis basculez dessus",
+        "makeChanges": "Modifiez le code dans l'éditeur pour faire n'importe quel changement",
+        "commitChanges": "Utilisez 'git add .' et 'git commit -m \"votre message\"' en terminal ou utilisez les boutons de l'interface",
+        "mergeToDev": "D'abord utilisez 'git checkout dev' puis 'git merge feature-login', ou utilisez les contrôles de l'interface"
+      },
+      "uiActions": {
+        "createDev": "Créer branche 'dev'",
+        "switchDev": "Basculer vers branche 'dev'",
+        "createFeature": "Créer branche 'feature-login'",
+        "editCode": "Modifier le code",
+        "stageChanges": "Indexer les changements avec Git Add",
+        "commitChanges": "Valider les changements",
+        "switchBackDev": "Basculer vers branche 'dev'",
+        "mergeFeature": "Fusionner 'feature-login' dans 'dev'"
+      }
+    },
+    "teamWorkflow": {
+      "tabTitle": "Team Workflow",
+      "title": "Flux de Travail en Équipe",
+      "description": "Apprenez comment une équipe collabore en utilisant des branches, des opérations de pull et de merge.",
+      "steps": {
+        "createStructure": "Créer une structure avec branches 'master', 'dev' et 'release'",
+        "createStory": "Créer une branche d'histoire appelée 'story-123' depuis 'dev'",
+        "implementStory": "Faire des modifications sur 'story-123' et les valider",
+        "mergeToDev": "Fusionner 'story-123' dans 'dev' puis 'dev' dans 'release'",
+        "prepareProduction": "Fusionner 'release' dans 'master' pour la production"
+      },
+      "hints": {
+        "createStructure": "Créez chaque branche à partir de master en utilisant 'git branch' ou l'interface",
+        "createStory": "D'abord basculez vers 'dev', puis créez la branche 'story-123'",
+        "implementStory": "Basculez vers 'story-123', faites des modifications, indexez et validez-les",
+        "mergeToDev": "Fusionnez d'abord dans 'dev', puis fusionnez 'dev' dans 'release'",
+        "prepareProduction": "Basculez vers 'master' et fusionnez depuis 'release'"
+      }
+    },
+    "technicalTasks": {
+      "tabTitle": "Technical Tasks",
+      "title": "Flux de Travail de Tâches Techniques",
+      "description": "Apprenez comment décomposer une histoire en tâches techniques et travailler dessus en parallèle.",
+      "steps": {
+        "setupProject": "Créer les branches 'master', 'dev' et 'story-456'",
+        "createTasks": "Créer deux branches de tâches techniques: 'task-1' et 'task-2' depuis 'story-456'",
+        "implementTask1": "Implémenter 'task-1' avec des modifications et valider",
+        "implementTask2": "Implémenter 'task-2' avec différentes modifications et valider",
+        "integrateTasks": "Fusionner les deux tâches dans 'story-456'",
+        "completeWorkflow": "Livrer l'histoire en fusionnant à travers 'dev' vers 'master'"
+      },
+      "hints": {
+        "setupProject": "Créez la structure de branches pour le projet",
+        "createTasks": "Basculez vers 'story-456' et créez deux branches à partir de celle-ci",
+        "implementTask1": "Basculez vers 'task-1', faites des modifications et validez",
+        "implementTask2": "Basculez vers 'task-2', faites des modifications et validez",
+        "integrateTasks": "Basculez vers 'story-456' et fusionnez les deux branches de tâches",
+        "completeWorkflow": "Fusionnez 'story-456' dans 'dev', puis 'dev' dans 'master'"
+      }
+    },
+    "mergeConflicts": {
+      "tabTitle": "Merge Conflicts",
+      "title": "Résoudre les Merge Conflicts",
+      "description": "Apprenez à identifier et résoudre les merge conflicts qui se produisent lors de la fusion de branches avec des modifications contradictoires.",
+      "steps": {
+        "setupRepo": "Configurer un dépôt avec les branches 'master' et 'dev'",
+        "createFeatureA": "Créer et basculer vers la branche 'feature-a' depuis 'dev'",
+        "commitFeatureA": "Modifier le code et valider sur 'feature-a'",
+        "createFeatureB": "Basculer vers 'dev' et créer la branche 'feature-b'",
+        "commitFeatureB": "Faire des modifications contradictoires sur 'feature-b' et valider",
+        "resolveConflict": "Créer et résoudre un merge conflict"
+      },
+      "hints": {
+        "setupRepo": "Créez une branche 'dev' à partir de 'master'",
+        "createFeatureA": "Utilisez 'git checkout -b feature-a' depuis la branche 'dev'",
+        "commitFeatureA": "Modifiez le code, indexez et validez vos modifications",
+        "createFeatureB": "Revenez à 'dev' et créez une nouvelle branche avec 'git checkout -b feature-b'",
+        "commitFeatureB": "Modifiez la même partie du code, indexez et validez vos modifications",
+        "resolveConflict": "Basculez vers 'dev', essayez de fusionner les deux branches de fonctionnalités et résolvez le conflit"
+      },
+      "conflict": {
+        "title": "Merge Conflict Détecté !",
+        "description": "Il y a un merge conflict dans votre fichier. Vous devez le résoudre manuellement en modifiant le contenu ci-dessous.",
+        "fileTitle": "Contenu du Fichier en Conflit :",
+        "placeholder": "Modifiez ce code pour résoudre le conflit...",
+        "instruction": "Supprimez les marqueurs de conflit (<<<<<<< HEAD, =======, >>>>>>>), et modifiez le code pour créer une solution fonctionnelle.",
+        "validate": "Valider la Résolution",
+        "success": "Conflit résolu correctement !",
+        "error": "Il y a encore des conflits non résolus. Supprimez les marqueurs de conflit et fournissez une solution.",
+        "incomplete": "Vous avez supprimé les marqueurs de conflit, mais votre solution doit inclure à la fois la journalisation et les améliorations de performance."
+      },
+      "scenario": {
+        "title": "Scénario : Conflit de Collaboration en Équipe",
+        "description": "Votre équipe travaille sur une fonctionnalité. Deux développeurs ont modifié la même fonction de différentes manières :",
+        "dev1": "Développeur 1 (branche feature-a)",
+        "dev1desc": "A implémenté une version axée sur la performance.",
+        "dev2": "Développeur 2 (branche feature-b)",
+        "dev2desc": "A implémenté une version avec journalisation supplémentaire.",
+        "task": "Lors de la fusion de ces branches dans dev, un conflit s'est produit. Votre tâche est de résoudre ce conflit en créant une solution qui préserve à la fois les améliorations de performance et la fonctionnalité de journalisation."
+      },
+      "resolution": {
+        "title": "Comment Résoudre Ce Conflit :",
+        "step1": "Supprimez les marqueurs de conflit (<<<<<<< HEAD, =======, >>>>>>>)",
+        "step2": "Combinez les deux implémentations pour conserver les améliorations de performance de feature-a",
+        "step3": "Préservez la fonctionnalité de journalisation de la branche actuelle (HEAD)",
+        "step4": "Assurez-vous que le résultat est du JavaScript valide qui s'exécuterait sans erreurs"
+      },
+      "startExplanation": "Vous serez présenté avec un conflit à résoudre. Vous devez modifier le code pour créer une version qui combine correctement les deux implémentations."
+    }
+  },
+  "features": {
+    "visualization": {
+      "title": "Visualisation des Dépôts Git",
+      "description": "L'application permet de créer et de visualiser des dépôts Git virtuels, montrant graphiquement comment les commits et les branches sont liés. Les commits maintiennent leur position verticale une fois assignés à une branche, ce qui facilite le suivi de l'historique des modifications."
+    },
+    "conflictResolution": {
+      "title": "Résolution des Conflits de Fusion",
+      "description": "Lorsque vous tentez de fusionner deux branches qui ont modifié les mêmes lignes de code, l'application détecte automatiquement le conflit et vous fournit une interface pour le résoudre :",
+      "point1": "La visualisation des conflits montre clairement les sections en conflit",
+      "point2": "L'éditeur permet de modifier manuellement le contenu pour résoudre les conflits",
+      "point3": "Une fois tous les conflits résolus (en supprimant les marqueurs), vous pouvez terminer la fusion",
+      "howTo": "Pour résoudre un conflit :",
+      "step1": "Éditez le contenu dans l'éditeur pour supprimer les marqueurs <<<<<<< HEAD, ======= et >>>>>>>",
+      "step2": "Sélectionnez ou combinez le code des deux versions selon vos besoins",
+      "step3": "Cliquez sur \"Terminer la Fusion\" lorsque vous avez terminé"
+    }
+  },
+  "gdb": {
+    "pageTitle": "Apprentissage de GDB",
+    "backToHome": "Retour à l'accueil",
+    "interactive": {
+      "title": "Terminal Interactif de GDB",
+      "placeholder": "Entrez des commandes GDB ici...",
+      "commandsAvailable": "Commandes disponibles",
+      "commandsTitle": "Commandes GDB Disponibles",
+      "currentExample": "Exemple actuel:",
+      "currentSourceCode": "Code source actuel:",
+      "exampleCode": "Code d'Exemple:",
+      "clear": "Effacer",
+      "tryCommands": "💡 Essayez: run, backtrace, list, print, help, clear",
+      "basicCommands": "Commandes de Base:",
+      "breakpoints": "Breakpoints:",
+      "inspection": "Inspection:",
+      "navigation": "Navigation:",
+      "watchPoints": "Watch Points:",
+      "help": "Aide:",
+      "commands": {
+        "run": "Exécute le programme",
+        "step": "Exécute ligne par ligne (entre dans les fonctions)",
+        "next": "Exécute ligne par ligne (ignore les fonctions)",
+        "continue": "Continue l'exécution jusqu'au prochain breakpoint",
+        "quit": "Quitte GDB",
+        "clear": "Efface l'écran du terminal",
+        "breakMain": "Breakpoint à la fonction main",
+        "breakLine": "Breakpoint à la ligne 10",
+        "breakFile": "Breakpoint à un fichier et ligne spécifique",
+        "infoBreakpoints": "Affiche tous les breakpoints",
+        "printVar": "Affiche la valeur d'une variable",
+        "printPtr": "Affiche le contenu d'un pointeur",
+        "infoLocals": "Affiche les variables locales",
+        "infoRegisters": "Affiche les registres du processeur",
+        "examineBuffer": "Examine la mémoire comme caractères",
+        "backtrace": "Affiche la pile d'appels",
+        "bt": "Alias pour backtrace",
+        "frame": "Change vers le frame N",
+        "up": "Monte d'un niveau dans la pile",
+        "down": "Descend d'un niveau dans la pile",
+        "list": "Affiche le code source",
+        "where": "Affiche l'emplacement actuel",
+        "watchVar": "Pause quand la variable change",
+        "watchAddr": "Pause quand l'adresse change",
+        "rwatch": "Pause quand lu",
+        "awatch": "Pause quand lu ou écrit",
+        "helpGeneral": "Affiche l'aide générale",
+        "helpCommand": "Aide spécifique pour une commande"
+      }
+    },
+    "seeDetails": "Voir détails",
+    "commonUseCases": {
+      "title": "Cas d'Usage Courants",
+      "useCase1": {
+        "title": "Compiler avec informations de debug",
+        "description": "Utiliser les flags -g et -O0 pour activer un débogage efficace",
+        "explanation": "La compilation avec informations de debug est la première étape cruciale :\n\n• -g: Inclut les informations de debug\n• -O0: Désactive les optimisations pour un débogage plus clair\n• -Wall: Affiche les avertissements du compilateur\n• -Wextra: Avertissements supplémentaires\n\nCette combinaison assure que vous ayez toutes les informations nécessaires pour un débogage efficace.",
+        "example": "gcc -g -O0 -Wall -Wextra -o mon_programme mon_programme.c\ngdb ./mon_programme"
+      },
+      "useCase2": {
+        "title": "Définir des breakpoints stratégiques",
+        "description": "Placer des breakpoints aux points clés pour contrôler l'exécution",
+        "explanation": "Les breakpoints stratégiques sont fondamentaux pour contrôler l'exécution :\n\n• break fonction: Pause en entrant dans une fonction\n• break fichier.c:ligne: Pause à une ligne spécifique\n• break +N: Pause N lignes après l'actuelle\n• break -N: Pause N lignes avant l'actuelle\n\nUtiliser des breakpoints vous permet de sauter directement aux parties problématiques du code.",
+        "example": "(gdb) break main\n(gdb) break problematic_function\n(gdb) break file.c:42\n(gdb) run"
+      },
+      "useCase3": {
+        "title": "Inspecter variables et mémoire",
+        "description": "Examiner l'état des variables et structures de données",
+        "explanation": "L'inspection des variables est essentielle pour comprendre l'état du programme :\n\n• print var: Affiche la valeur d'une variable\n• print *ptr: Affiche la valeur pointée par un pointeur\n• print arr[0]@10: Affiche 10 éléments d'un tableau\n• display var: Affiche automatiquement la variable à chaque étape\n\nCela vous permet de voir exactement ce qui se passe avec vos données.",
+        "example": "(gdb) print counter\n(gdb) print *pointer\n(gdb) print array[0]@5\n(gdb) display important_var"
+      },
+      "useCase4": {
+        "title": "Analyser les stack traces",
+        "description": "Comprendre le flux d'exécution par l'analyse de la pile",
+        "explanation": "L'analyse des stack traces est cruciale pour comprendre le flux d'exécution :\n\n• backtrace: Affiche la pile d'appels complète\n• frame N: Change vers le frame N de la pile\n• up: Monte d'un niveau dans la pile\n• down: Descend d'un niveau dans la pile\n• info locals: Affiche les variables locales du frame actuel\n\nCela vous aide à comprendre comment vous êtes arrivé au point d'exécution actuel.",
+        "example": "(gdb) backtrace\n(gdb) frame 2\n(gdb) info locals"
+      }
+    },
+    "bestPractices": {
+      "title": "Meilleures Pratiques",
+      "practicesTitle": "Pratiques Recommandées",
+      "practice1": {
+        "title": "Compiler avec informations de debug",
+        "description": "Utiliser les flags -g et -O0 pour obtenir des informations détaillées de debug"
+      },
+      "practice2": {
+        "title": "Utiliser des noms de variables descriptifs",
+        "description": "Nommer les variables de manière claire pour faciliter le débogage"
+      },
+      "practice3": {
+        "title": "Définir des breakpoints stratégiques",
+        "description": "Placer des breakpoints aux points clés du code"
+      },
+      "practice4": {
+        "title": "Maîtriser les commandes de base",
+        "description": "Apprendre les commandes fondamentales de GDB"
+      },
+      "practice5": {
+        "title": "Utiliser des watch points pour surveiller les variables",
+        "description": "Configurer des watch points pour détecter les changements de variables"
+      }
+    },
+    "introduction": {
+      "title": "Introduction",
+      "whatIs": "Qu'est-ce que GDB?",
+      "whatIsDescription": "GDB (GNU Debugger) est un outil de débogage puissant et polyvalent qui permet d'examiner des programmes en cours d'exécution, de trouver des erreurs et de comprendre le comportement du code.",
+      "keyFeatures": "Caractéristiques principales:",
+      "feature1": "Exécuter des programmes pas à pas",
+      "feature2": "Définir des breakpoints pour interrompre l'exécution",
+      "feature3": "Inspecter variables et mémoire",
+      "feature4": "Analyser les stack traces et appels de fonction",
+      "feature5": "Débogage de programmes en cours d'exécution ou core dumps",
+      "whenToUse": "Quand utiliser GDB?",
+      "useCase1": "Pour déboguer les segmentation faults et erreurs mémoire",
+      "useCase2": "Quand vous devez comprendre un flux d'exécution complexe",
+      "useCase3": "Pour inspecter l'état des variables à l'exécution",
+      "useCase4": "Lors de l'analyse de comportements inattendus du programme"
+    },
+    "examples": {
+      "title": "Exemples",
+      "example1": {
+        "title": "Débogage de Buffer Overflow",
+        "description": "Exemple de buffer overflow utilisant strcpy et comment le détecter"
+      },
+      "example2": {
+        "title": "Débogage d'Array Out of Bounds",
+        "description": "Erreur off-by-one dans un tableau et techniques pour l'identifier"
+      },
+      "example3": {
+        "title": "Débogage de Fonction Récursive",
+        "description": "Analyse de récursion problématique avec des valeurs négatives"
+      },
+      "titles": {
+        "segfault": "Segmentation Fault",
+        "bufferoverflow": "Buffer Overflow",
+        "arrayoutofbounds": "Array Out of Bounds"
+      }
+    }
+  },
+  "valgrind": {
+    "pageTitle": "Apprentissage de Valgrind",
+    "backToHome": "Retour à l'accueil",
+    "tools": {
+      "title": "Outils",
+      "tool1": {
+        "title": "Memcheck",
+        "description": "Memcheck est l'outil principal de Valgrind pour détecter les erreurs de mémoire :",
+        "features": [
+          "Détecte les accès à la mémoire non initialisée",
+          "Identifie les lectures/écritures hors limites",
+          "Trouve les fuites de mémoire et les libérations doubles",
+          "Détecte l'utilisation de la mémoire après sa libération"
+        ],
+        "summary": "C'est l'outil le plus important et devrait être votre premier choix pour l'analyse de la mémoire.",
+        "command": "valgrind --tool=memcheck --leak-check=full ./program"
+      },
+      "tool2": {
+        "title": "Massif",
+        "description": "Profileur de heap qui suit l'utilisation de la mémoire dans le temps"
+      },
+      "tool3": {
+        "title": "Helgrind",
+        "description": "Détecteur de race conditions et erreurs de synchronisation dans les programmes multithreads"
+      },
+      "tool4": {
+        "title": "Cachegrind",
+        "description": "Profileur de cache qui simule le comportement du cache du processeur"
+      },
+      "tool5": {
+        "title": "DRD",
+        "description": "Détecteur de race conditions et erreurs de synchronisation dans les programmes multithreads"
+      },
+      "interactive": {
+        "title": "Terminal Interactif de Valgrind",
+        "placeholder": "Entrez des commandes Valgrind ici...",
+        "commandsAvailable": "Commandes disponibles",
+        "commandsTitle": "Commandes Valgrind Disponibles",
+        "currentExample": "Exemple actuel:",
+        "currentSourceCode": "Code source actuel:",
+        "exampleCode": "Code d'Exemple:",
+        "clear": "Effacer",
+        "tryCommands": "Essayez: valgrind --leak-check=full ./programme, help, clear",
+        "basicCommands": "Commandes de Base:",
+        "memcheck": "Memcheck (Détecteur de Mémoire):",
+        "massif": "Massif (Profileur de Heap):",
+        "cachegrind": "Cachegrind (Profileur de Cache):",
+        "helgrind": "Helgrind (Détecteur de Race Conditions):",
+        "outputOptions": "Options de Sortie:",
+        "compilationOptions": "Options de Compilation Recommandées:",
+        "commands": {
+          "valgrindDefault": "Exécute avec Memcheck par défaut",
+          "valgrindVersion": "Affiche la version de Valgrind",
+          "help": "Affiche l'aide générale",
+          "clear": "Efface l'écran du terminal",
+          "memcheckExplicit": "Utilise Memcheck explicitement",
+          "leakCheckFull": "Détection complète de fuites",
+          "leakCheckYes": "Détection basique de fuites",
+          "trackOrigins": "Trace l'origine des valeurs",
+          "showLeakKinds": "Affiche tous les types de fuites",
+          "massifTool": "Analyse l'utilisation de la mémoire heap",
+          "msPrint": "Imprime le rapport Massif",
+          "cachegrindTool": "Analyse le comportement du cache",
+          "cgAnnotate": "Annote le code avec des statistiques",
+          "helgrindTool": "Détecte les race conditions",
+          "trackLockorders": "Trace l'ordre des verrous",
+          "logFile": "Sauvegarde la sortie dans un fichier",
+          "xml": "Sortie en format XML",
+          "quiet": "Mode silencieux",
+          "verbose": "Mode verbeux",
+          "basicCompile": "Compilation de base",
+          "optimizedCompile": "Compilation optimisée pour Valgrind"
+        }
+      "currentExample": "Exemple actuel:",
+      "currentSourceCode": "Code source actuel:",
+      "exampleCode": "Code d'Exemple:",
+      "clear": "Effacer",
+      "tryCommands": "💡 Essayez: valgrind --leak-check=full ./programme, help, clear",
+      "basicCommands": "Commandes de Base:",
+      "memcheck": "Memcheck (Détecteur de Mémoire):",
+      "massif": "Massif (Profileur de Heap):",
+      "cachegrind": "Cachegrind (Profileur de Cache):",
+      "helgrind": "Helgrind (Détecteur de Race Conditions):",
+      "outputOptions": "Options de Sortie:",
+      "compilationOptions": "Options de Compilation Recommandées:",
+      "commands": {
+        "valgrindDefault": "Exécute avec Memcheck par défaut",
+        "valgrindVersion": "Affiche la version de Valgrind",
+        "help": "Affiche l'aide générale",
+        "clear": "Efface l'écran du terminal",
+        "memcheckExplicit": "Utilise Memcheck explicitement",
+        "leakCheckFull": "Détection complète de fuites",
+        "leakCheckYes": "Détection basique de fuites",
+        "trackOrigins": "Trace l'origine des valeurs",
+        "showLeakKinds": "Affiche tous les types de fuites",
+        "massifTool": "Analyse l'utilisation de la mémoire heap",
+        "msPrint": "Imprime le rapport Massif",
+        "cachegrindTool": "Analyse le comportement du cache",
+        "cgAnnotate": "Annote le code avec des statistiques",
+        "helgrindTool": "Détecte les race conditions",
+        "trackLockorders": "Trace l'ordre des verrous",
+        "logFile": "Sauvegarde la sortie dans un fichier",
+        "xml": "Sortie en format XML",
+        "quiet": "Mode silencieux",
+        "verbose": "Mode verbeux",
+        "basicCompile": "Compilation de base",
+        "optimizedCompile": "Compilation optimisée pour Valgrind"
+      }
+    },
+        "title": "Cachegrind",
+        "description": "Profileur de cache qui simule le comportement du cache du processeur"
+      },
+      "tool4": {
+        "title": "Helgrind",
+        "description": "Détecteur de race conditions et erreurs de synchronisation dans les programmes multithreads"
+      }
+    },
+    "bestPractices": {
+      "title": "Meilleures Pratiques",
+      "practicesTitle": "Pratiques Recommandées",
+      "practice1": {
+        "title": "Compiler avec informations de debug",
+        "description": "Utiliser les flags -g et -O0 pour obtenir des informations détaillées de debug"
+      },
+      "practice2": {
+        "title": "Utiliser les bonnes options de Valgrind",
+        "description": "Configurer les options appropriées selon le type d'analyse dont vous avez besoin"
+      },
+      "practice3": {
+        "title": "Automatiser l'analyse avec des scripts",
+        "description": "Créer des scripts pour exécuter Valgrind régulièrement dans votre processus de développement"
+      },
+      "practice4": {
+        "title": "Interpréter les rapports correctement",
+        "description": "Comprendre les différents types d'erreurs et fuites que Valgrind rapporte"
+      }
+    },
+    "introduction": {
+      "title": "Introduction",
+      "whatIs": "Qu'est-ce que Valgrind?",
+      "whatIsDescription": "Valgrind est une suite d'outils d'instrumentation pour le débogage et le profilage de programmes. Il est particulièrement utile pour détecter les erreurs de mémoire et analyser les performances des applications C/C++.",
+      "keyFeatures": "Caractéristiques principales:",
+      "feature1": "Détection automatique de fuites mémoire",
+      "feature2": "Identification d'accès mémoire invalides",
+      "feature3": "Analyse de performance et utilisation du cache",
+      "feature4": "Détection de race conditions dans les programmes multithreads",
+      "whenToUse": "Quand utiliser Valgrind?",
+      "useCase1": "Pour détecter et corriger les fuites mémoire dans votre application",
+      "useCase2": "Quand vous devez optimiser les performances mémoire",
+      "useCase3": "Pour déboguer des erreurs mémoire difficiles à reproduire",
+      "useCase4": "Lors du développement d'applications multithreads pour détecter les race conditions"
+    },
+    "examples": {
+      "title": "Exemples",
+      "example1": {
+        "title": "Analyse de Fuite Mémoire",
+        "description": "Exemple complexe de fuite mémoire avec structures imbriquées"
+      },
+      "example2": {
+        "title": "Détection de Double Free",
+        "description": "Programme démontrant l'erreur de double free et sa détection"
+      },
+      "example3": {
+        "title": "Analyse de Cache avec Cachegrind",
+        "description": "Comparaison de patterns d'accès mémoire cache-friendly vs cache-unfriendly"
+      },
+      "titles": {
+        "memoryleak": "Fuite Mémoire",
+        "doublefree": "Double Free",
+        "cacheanalysis": "Analyse de Cache"
+      }
+    }
+  }
+}

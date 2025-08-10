@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.2% 33.9%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Git color themes */
+    --git-master: 221 83% 53%;     /* blue-500 */
+    --git-branch: 269 97% 85%;     /* purple-500 */
+    --git-commit: 270 95% 75%;     /* lighter purple */
+    --git-head: 38 92% 50%;        /* amber-500 */
+    --git-editor: 12 76% 61%;      /* orange-ish */
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Git color themes (dark mode) */
+    --git-master: 217 91% 60%;     /* blue-400 */
+    --git-branch: 270 80% 70%;     /* purple-400 */
+    --git-commit: 270 76% 48%;     /* deep purple */
+    --git-head: 43 96% 58%;        /* amber-400 */
+    --git-editor: 21 90% 48%;      /* darker orange */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Code editor syntax highlighting */
+.editor {
+  @apply font-mono text-sm;
+}
+
+.line-number {
+  @apply text-gray-500 select-none mr-4 inline-block w-8 text-right;
+}
+
+.keyword {
+  @apply text-blue-500;
+}
+
+.type {
+  @apply text-green-500;
+}
+
+.string {
+  @apply text-orange-500;
+}
+
+.comment {
+  @apply text-gray-500 italic;
+}
+
+.function {
+  @apply text-yellow-500;
+}
+
+.variable {
+  @apply text-purple-500;
+}
+
+.diff-add {
+  @apply bg-green-100;
+}
+
+.diff-remove {
+  @apply bg-red-100;
+}
+
+.diff-conflict {
+  @apply bg-yellow-100;
+}
+
+/* Git Graph Styles */
+.node {
+  @apply transition-all;
+}
+
+.node-active {
+  @apply animate-pulse;
+}
+
+.edge {
+  @apply transition-all;
+}
+
+/* Edge animation */
+.animated-edge {
+  stroke-dasharray: 5;
+  animation: dash 0.5s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -10;
+  }
+}
+
+@keyframes commit-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Dark mode specific styles */
+.dark .diff-add {
+  @apply bg-green-900 bg-opacity-30;
+}
+
+.dark .diff-remove {
+  @apply bg-red-900 bg-opacity-30;
+}
+
+.dark .diff-conflict {
+  @apply bg-yellow-900 bg-opacity-30;
+}
+
+/* ReactFlow Controls Styling */
+.react-flow__controls {
+  @apply border border-border bg-card/90 backdrop-blur-sm !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.react-flow__controls button {
+  @apply bg-card text-foreground border-border hover:bg-muted/70 !important;
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.dark .react-flow__controls {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dark .react-flow__controls button svg {
+  @apply text-foreground fill-current !important;
+}
