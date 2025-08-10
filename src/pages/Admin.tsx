@@ -9,6 +9,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import LanguageSelector from '@/components/LanguageSelector';
 import { useAdminStore } from "@/store/gitStore";
 import { toast } from "sonner";
+import { useEffect } from 'react';
 
 // Store only a SHA-256 hash of the admin password (precomputed for "shyro")
 const ADMIN_PASSWORD_SHA256 = "41fe4b638c7b489a40acfda3f63aab7926f703eb76a2e889004b1e68c12bb9da";
@@ -35,6 +36,20 @@ const Admin = () => {
     setGdbEnabled, 
     setValgrindEnabled 
   } = useAdminStore();
+
+  // Fetch global flags on mount
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch('/api/admin-settings');
+        if (res.ok) {
+          const data = await res.json();
+          if (typeof data.isGdbEnabled === 'boolean') setGdbEnabled(data.isGdbEnabled);
+          if (typeof data.isValgrindEnabled === 'boolean') setValgrindEnabled(data.isValgrindEnabled);
+        }
+      } catch (_) {}
+    })();
+  }, [setGdbEnabled, setValgrindEnabled]);
 
   // Restore session if present
   if (!isAuthenticated && typeof window !== 'undefined') {
@@ -75,6 +90,15 @@ const Admin = () => {
       setValgrindEnabled(enabled);
       toast.success(`Valgrind ${enabled ? 'activado' : 'desactivado'} exitosamente`);
     }
+    // Persist globally
+    fetch('/api/admin-settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        isGdbEnabled: feature === 'gdb' ? enabled : isGdbEnabled,
+        isValgrindEnabled: feature === 'valgrind' ? enabled : isValgrindEnabled,
+      })
+    }).catch(() => {});
   };
 
   if (!isAuthenticated) {

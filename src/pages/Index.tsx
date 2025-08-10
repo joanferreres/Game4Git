@@ -31,7 +31,21 @@ import LanguageSelector from "@/components/LanguageSelector";
 const GitGame: React.FC = () => {
   const [showDiff, setShowDiff] = useState(false);
   const { repository, workingChanges, selectedCommitId, stagedChanges, hasPendingConflict } = useGitStore();
-  const { isGdbEnabled, isValgrindEnabled } = useAdminStore();
+  const { isGdbEnabled, isValgrindEnabled, setGdbEnabled, setValgrindEnabled } = useAdminStore();
+
+  // Fetch global flags on mount
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch('/api/admin-settings');
+        if (res.ok) {
+          const data = await res.json();
+          if (typeof data.isGdbEnabled === 'boolean') setGdbEnabled(data.isGdbEnabled);
+          if (typeof data.isValgrindEnabled === 'boolean') setValgrindEnabled(data.isValgrindEnabled);
+        }
+      } catch (_) {}
+    })();
+  }, [setGdbEnabled, setValgrindEnabled]);
   const { t } = useTranslation();
   
   // Get the selected commit if any
