@@ -58,6 +58,11 @@ export default defineConfig({
       ].join('; ')
     }
   },
+  preview: {
+    // Ensure SPA fallback in preview too
+    port: 4173,
+    strictPort: true,
+  },
   plugins: [react()],
   resolve: {
     alias: {
