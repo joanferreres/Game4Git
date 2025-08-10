@@ -6,7 +6,7 @@ Allow: /
 
 # Disallow specific pages from being indexed
 Disallow: /privacy-policy.html
-Disallow: /.well-known/security.txt
+Disallow: /.well-known/
 
 # Educational platform - safe for all audiences
 # Contains: Git tutorials, GDB debugging guides, Valgrind memory analysis

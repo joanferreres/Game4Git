@@ -34,8 +34,7 @@ const detectRoutes = () => {
   add('/', '1.0', 'weekly');
   add('/gdb', '0.9', 'weekly');
   add('/valgrind', '0.9', 'weekly');
-  add('/privacy-policy.html', '0.5', 'yearly');
-  add('/.well-known/security.txt', '0.3', 'yearly');
+  // Exclude privacy policy and security.txt from sitemap
   add('/404', '0.2', 'yearly');
 
   // Language variants for main pages (en, es, ca, fr) via query param to reflect i18n
