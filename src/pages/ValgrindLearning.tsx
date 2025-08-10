@@ -106,35 +106,35 @@ const ValgrindLearning: React.FC = () => {
             <TabsList className="w-full grid grid-cols-3 sm:grid-cols-6 gap-1 p-1 h-auto bg-muted/20 rounded-lg">
               <TabsTrigger 
                 value="introduction" 
-                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm"
+                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
               >
                 <Lightbulb className="h-4 w-4 flex-shrink-0" />
                 <span>{t('valgrind.tabs.introduction', 'Introduction')}</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="errors" 
-                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm"
+                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
               >
                 <AlertTriangle className="h-4 w-4 flex-shrink-0" />
                 <span>{t('valgrind.tabs.errors', 'Error Types')}</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="commands" 
-                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm"
+                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
               >
                 <Terminal className="h-4 w-4 flex-shrink-0" />
                 <span>{t('valgrind.tabs.commands', 'Commands')}</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="best-practices" 
-                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm"
+                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
               >
                 <Shield className="h-4 w-4 flex-shrink-0" />
                 <span className="whitespace-nowrap">{t('valgrind.tabs.practices', 'Best Practices')}</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="cheatsheet" 
-                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm"
+                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
               >
                 <Code className="h-4 w-4 flex-shrink-0" />
                 <span>{t('valgrind.tabs.cheatsheet', 'Cheat Sheet')}</span>

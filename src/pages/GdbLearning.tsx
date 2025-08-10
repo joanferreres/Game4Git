@@ -118,7 +118,7 @@ const GdbLearning: React.FC = () => {
           <TabsList className="w-full grid grid-cols-2 md:grid-cols-5 gap-1 p-1 h-auto bg-muted/20 rounded-lg">
             <TabsTrigger 
               value="introduction"
-              className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 dark:data-[state=active]:bg-gray-700 dark:data-[state=active]:text-blue-400 rounded-md"
+              className="data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
             >
               <span className="flex items-center gap-2">
                 <Lightbulb className="h-4 w-4" />
@@ -127,7 +127,7 @@ const GdbLearning: React.FC = () => {
             </TabsTrigger>
             <TabsTrigger 
               value="concepts"
-              className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 dark:data-[state=active]:bg-gray-700 dark:data-[state=active]:text-blue-400 rounded-md"
+              className="data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
             >
               <span className="flex items-center gap-2">
                 <Code className="h-4 w-4" />
@@ -136,7 +136,7 @@ const GdbLearning: React.FC = () => {
             </TabsTrigger>
             <TabsTrigger 
               value="commands"
-              className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 dark:data-[state=active]:bg-gray-700 dark:data-[state=active]:text-blue-400 rounded-md"
+              className="data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
             >
               <span className="flex items-center gap-2">
                 <Terminal className="h-4 w-4" />
@@ -145,7 +145,7 @@ const GdbLearning: React.FC = () => {
             </TabsTrigger>
             <TabsTrigger 
               value="practices"
-              className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 dark:data-[state=active]:bg-gray-700 dark:data-[state=active]:text-blue-400 rounded-md"
+              className="data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
             >
               <span className="flex items-center gap-2">
                 <AlertCircle className="h-4 w-4" />
@@ -154,7 +154,7 @@ const GdbLearning: React.FC = () => {
             </TabsTrigger>
             <TabsTrigger 
               value="cheatsheet"
-              className="data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 dark:data-[state=active]:bg-gray-700 dark:data-[state=active]:text-blue-400 rounded-md"
+              className="data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
             >
               <span className="flex items-center gap-2">
                 <Copy className="h-4 w-4" />
