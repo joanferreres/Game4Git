@@ -4,10 +4,6 @@
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
   ],
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/" }
-  ],
   "headers": [
     {
       "source": "/(.*)",
