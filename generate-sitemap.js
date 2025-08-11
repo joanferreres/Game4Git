@@ -37,14 +37,7 @@ const detectRoutes = () => {
   // Exclude privacy policy and security.txt from sitemap
   add('/404', '0.2', 'yearly');
 
-  // Language variants for main pages (en, es, ca, fr) via query param to reflect i18n
-  const locales = ['en', 'es', 'ca', 'fr'];
-  ['/', '/gdb', '/valgrind'].forEach(base => {
-    locales.forEach(lng => {
-      const urlWithLng = base + (base.includes('?') ? '&' : '?') + `lng=${lng}`;
-      add(urlWithLng, base === '/' ? '0.9' : '0.8', 'weekly');
-    });
-  });
+  // No i18n variants in sitemap to avoid URL inflation
 
   // Return unique list
   return Array.from(routes.values());
@@ -58,23 +51,14 @@ const generateSitemap = () => {
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
   
-  // Agregar cada ruta
-  const locales = ['en', 'es', 'ca', 'fr'];
+  // Agregar cada ruta (sin xhtml alternates; hreflang va en HTML)
   routes.forEach(route => {
     xml += '  <url>\n';
     xml += `    <loc>${BASE_URL}${route.path}</loc>\n`;
     xml += `    <lastmod>${getCurrentDate()}</lastmod>\n`;
     xml += `    <changefreq>${route.changefreq}</changefreq>\n`;
     xml += `    <priority>${route.priority}</priority>\n`;
-    // Add xhtml:link alternates for main i18n pages
-    if (route.path === '/' || route.path.startsWith('/gdb') || route.path.startsWith('/valgrind')) {
-      xml += `    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE_URL}${route.path.split('?')[0]}"/>\n`;
-      locales.forEach((lng) => {
-        const basePath = route.path.split('?')[0];
-        const urlWithLng = basePath + (basePath.includes('?') ? '&' : '?') + `lng=${lng}`;
-        xml += `    <xhtml:link rel="alternate" hreflang="${lng}" href="${BASE_URL}${urlWithLng}"/>\n`;
-      });
-    }
+    // no xhtml alternates
     xml += '  </url>\n';
   });
   
