@@ -271,6 +271,7 @@
   "howToUse": {
     "title": "How to Use This Git Playground",
     "subtitle": "Learn Git concepts through hands-on practice with our visual and interactive playground.",
+    "oneLiner": "Edit code, commit to the visual Git, explore branches, switch to Terminal, try Challenges, and learn GDB & Valgrind.",
     "switchBranch": "Switch/Select Branch",
     "switchBranchDesc": "Use the 'Branches' section in 'Git Controls' (bottom panel) to switch to an existing branch or create a new one. Your file modifications and new commits will apply to this active branch.",
     "editCode": "Edit Code",
@@ -293,7 +294,19 @@
     "remoteOperations": "Remote Repository Operations",
     "remoteOperationsDesc": "Use the 'Git Fetch', 'Git Pull', and 'Git Push' buttons to interact with remote repositories and synchronize your work.",
     "experiment": "Experiment",
-    "experimentDesc": "Try different sequences of commands to see how the Git history and file states change!"
+    "experimentDesc": "Try different sequences of commands to see how the Git history and file states change!",
+    "quickStartTitle": "What you can do",
+    "terminalMode": "Terminal mode",
+    "terminalModeDesc": "Toggle Terminal to type real Git commands.",
+    "challenges": "Challenges",
+    "challengesDesc": "Practice with guided tasks from the orange button in the corner.",
+    "tools": "GDB & Valgrind views",
+    "toolsDesc": "Learn debugging and memory analysis in the top navigation.",
+    "tipsTitle": "Tips",
+    "tip1": "You can use the terminal or the buttons — both do the same.",
+    "tip2": "Click a commit to preview its code on the right.",
+    "tip3": "Look for the HEAD label to know your current position.",
+    "tip4": "Use the Challenges button to practice guided exercises."
   },
   "visualization": {
     "title": "Git Visualization",

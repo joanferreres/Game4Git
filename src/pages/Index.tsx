@@ -16,7 +16,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Info } from "lucide-react";
+import { Info, Sparkles, Play, Plus, ArrowDownUp, Upload, DownloadCloud, GitBranch as GitBranchIcon, GitMerge as GitMergeIcon, GitCommit as GitCommitIcon, Terminal as TerminalIcon, BookOpen, HelpCircle, CheckCircle2 } from "lucide-react";
  
 import { useTranslation } from "react-i18next";
 import "../i18n"; // Importamos la configuración de i18n
@@ -112,76 +112,84 @@ const GitGame: React.FC = () => {
             <Info className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" />
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-full sm:w-[540px] p-0 flex flex-col h-full">
-          <SheetHeader className="p-4 sm:p-6 pb-3 sm:pb-4 border-b">
-            <SheetTitle className="text-lg sm:text-xl font-semibold">{t('howToUse.title')}</SheetTitle>
-            <SheetDescription>
-              {t('howToUse.subtitle')}
-            </SheetDescription>
-          </SheetHeader>
-          <div className="p-4 sm:p-6 overflow-y-auto flex-1 space-y-4"> {/* Adjust height as needed */}
-            <div className="space-y-3">
-              <h3 className="text-md sm:text-lg font-medium text-primary">{t('howToUse.basicsTitle', 'Basic Operations')}</h3>
-              <ol className="list-decimal list-inside space-y-2 sm:space-y-3 text-xs sm:text-sm">
-                <li>
-                  <strong className="font-semibold">{t('howToUse.editCode')}</strong>: {t('howToUse.editCodeDesc')}
-                </li>
-                <li>
-                  <strong className="font-semibold">{t('howToUse.stageChanges')}</strong>: {t('howToUse.stageChangesDesc')}
-                </li>
-                <li>
-                  <strong className="font-semibold">{t('howToUse.commitChanges')}</strong>: {t('howToUse.commitChangesDesc')}
-                </li>
-              </ol>
+        <SheetContent side="left" className="fixed inset-0 w-screen h-screen max-w-none sm:max-w-none md:max-w-none lg:max-w-none xl:max-w-none 2xl:max-w-none p-0 flex flex-col">
+          <div className="relative bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-5 sm:p-8">
+            {/* Sheet language selector next to close button */}
+            <div className="absolute top-4 right-16 z-10">
+              <LanguageSelector />
             </div>
+            <div className="flex items-start gap-3 sm:gap-4">
+              <div className="p-2 rounded-lg bg-white/10 ring-1 ring-white/20">
+                <Sparkles className="h-6 w-6" />
+              </div>
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold tracking-tight">{t('howToUse.title', 'How to use the playground')}</h2>
+                <p className="text-white/90 text-xs sm:text-sm mt-1">{t('howToUse.oneLiner', 'Edit code, commit to the visual Git, explore branches, switch to Terminal, try Challenges, and learn GDB & Valgrind.')}</p>
+              </div>
+            </div>
+          </div>
 
-            <div className="space-y-3">
-              <h3 className="text-md sm:text-lg font-medium text-primary">{t('howToUse.branchingTitle', 'Branching & Merging')}</h3>
-              <ol className="list-decimal list-inside space-y-2 sm:space-y-3 text-xs sm:text-sm">
-                <li>
-                  <strong className="font-semibold">{t('howToUse.createBranch')}</strong>: {t('howToUse.createBranchDesc')}
-                </li>
-                <li>
-                  <strong className="font-semibold">{t('howToUse.switchBranch')}</strong>: {t('howToUse.switchBranchDesc')}
-                </li>
-                <li>
-                  <strong className="font-semibold">{t('howToUse.mergeBranches')}</strong>:
-                  <ul className="list-disc list-inside pl-4 sm:pl-6 space-y-1 sm:space-y-1.5 mt-1 sm:mt-1.5">
-                    <li>{t('howToUse.mergeBranchesDesc1')}</li>
-                    <li>{t('howToUse.mergeBranchesDesc2')}</li>
-                  </ul>
-                </li>
-                <li>
-                  <strong className="font-semibold">{t('howToUse.resolveConflicts')}</strong>: {t('howToUse.resolveConflictsDesc')}
-                </li>
-              </ol>
-            </div>
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 space-y-6 bg-background">
+            {/* Quick summary cards */}
+            <section className="space-y-3">
+              <h3 className="text-sm sm:text-base font-semibold flex items-center gap-2"><Play className="h-4 w-4 text-green-600" />{t('howToUse.quickStartTitle', 'What you can do')}</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="rounded-lg border bg-card p-3 sm:p-4">
+                  <div className="flex items-center gap-2 font-medium text-sm"><BookOpen className="h-4 w-4 text-blue-600" />{t('howToUse.editCode', 'Edit code')}</div>
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">{t('howToUse.editCodeDesc', 'Modify code in the left editor.')}</p>
+                </div>
+                <div className="rounded-lg border bg-card p-3 sm:p-4">
+                  <div className="flex items-center gap-2 font-medium text-sm"><Plus className="h-4 w-4 text-emerald-600" />{t('howToUse.stageChanges', 'Stage changes')}</div>
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">{t('howToUse.stageChangesDesc', "Click 'Git Add' or run 'git add .' in Terminal mode.")}</p>
+                </div>
+                <div className="rounded-lg border bg-card p-3 sm:p-4">
+                  <div className="flex items-center gap-2 font-medium text-sm"><GitCommitIcon className="h-4 w-4 text-amber-600" />{t('howToUse.commitChanges', 'Commit changes')}</div>
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">{t('howToUse.commitChangesDesc', 'Write a message and press Commit to save your snapshot.')}</p>
+                </div>
+              </div>
+            </section>
 
-            <div className="space-y-3">
-              <h3 className="text-md sm:text-lg font-medium text-primary">{t('howToUse.viewingTitle', 'Viewing History & Changes')}</h3>
-              <ol className="list-decimal list-inside space-y-2 sm:space-y-3 text-xs sm:text-sm">
-                <li>
-                  <strong className="font-semibold">{t('howToUse.viewHistory')}</strong>: {t('howToUse.viewHistoryDesc')}
-                </li>
-                <li>
-                  <strong className="font-semibold">{t('howToUse.viewChanges')}</strong>: {t('howToUse.viewChangesDesc')}
-                </li>
-              </ol>
-            </div>
-            
-            <div className="space-y-3">
-              <h3 className="text-md sm:text-lg font-medium text-primary">{t('howToUse.remoteTitle', 'Remote Operations (Simulated)')}</h3>
-              <ol className="list-decimal list-inside space-y-2 sm:space-y-3 text-xs sm:text-sm">
-                <li>
-                  <strong className="font-semibold">{t('howToUse.remoteOperations')}</strong>: {t('howToUse.remoteOperationsDesc')}
-                </li>
-              </ol>
-            </div>
+            {/* Core actions */}
+            <section className="space-y-3">
+              <h3 className="text-sm sm:text-base font-semibold flex items-center gap-2"><HelpCircle className="h-4 w-4 text-indigo-600" />{t('howToUse.coreActionsTitle', 'Core actions')}</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="rounded-lg border bg-card p-3 sm:p-4">
+                  <div className="flex items-center gap-2 font-medium text-sm"><GitBranchIcon className="h-4 w-4 text-blue-600" />{t('howToUse.createBranch', 'Create a branch')}</div>
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">{t('howToUse.createBranchDesc', "Use the 'Create branch' action or git checkout -b my-branch.")}</p>
+                </div>
+                <div className="rounded-lg border bg-card p-3 sm:p-4">
+                  <div className="flex items-center gap-2 font-medium text-sm"><ArrowDownUp className="h-4 w-4 text-purple-600" />{t('howToUse.switchBranch', 'Switch branch')}</div>
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">{t('howToUse.switchBranchDesc', 'Use the dropdown to change branch without losing your work.')}</p>
+                </div>
+                <div className="rounded-lg border bg-card p-3 sm:p-4">
+                  <div className="flex items-center gap-2 font-medium text-sm"><GitMergeIcon className="h-4 w-4 text-rose-600" />{t('howToUse.mergeBranches', 'Merge branches')}</div>
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">{t('howToUse.mergeBranchesDesc1', 'Merge your feature into dev, then dev into master.')}</p>
+                </div>
+                <div className="rounded-lg border bg-card p-3 sm:p-4">
+                  <div className="flex items-center gap-2 font-medium text-sm"><DownloadCloud className="h-4 w-4 text-teal-600" />{t('git.gitFetch', 'Fetch')}</div>
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">{t('explanations.gitFetch', 'Update remote information without changing your files.')}</p>
+                </div>
+                <div className="rounded-lg border bg-card p-3 sm:p-4">
+                  <div className="flex items-center gap-2 font-medium text-sm"><ArrowDownUp className="h-4 w-4 text-sky-600" />{t('git.gitPull', 'Pull')}</div>
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">{t('explanations.gitPull', 'Fetch + merge remote changes into your current branch.')}</p>
+                </div>
+                <div className="rounded-lg border bg-card p-3 sm:p-4">
+                  <div className="flex items-center gap-2 font-medium text-sm"><Upload className="h-4 w-4 text-orange-600" />{t('git.gitPush', 'Push')}</div>
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">{t('explanations.gitPush', 'Upload your local commits to the remote repository.')}</p>
+                </div>
+              </div>
+            </section>
 
-            <div className="space-y-3">
-              <h3 className="text-md sm:text-lg font-medium text-primary">{t('howToUse.exploreTitle', 'Explore & Experiment')}</h3>
-               <p className="text-xs sm:text-sm text-muted-foreground">{t('howToUse.experimentDesc')}</p>
-            </div>
+            {/* Tips */}
+            <section className="space-y-3">
+              <h3 className="text-sm sm:text-base font-semibold flex items-center gap-2"><TerminalIcon className="h-4 w-4 text-zinc-600" />{t('howToUse.tipsTitle', 'Tips')}</h3>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs sm:text-sm text-muted-foreground">
+                <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5" />{t('howToUse.tip1', "You can use the terminal or the buttons — both do the same.")}</li>
+                <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5" />{t('howToUse.tip2', 'Click a commit to preview its code on the right.')}</li>
+                <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5" />{t('howToUse.tip3', 'Look for the HEAD label to know your current position.')}</li>
+                <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5" />{t('howToUse.tip4', 'Use the Challenges button to practice guided exercises.')}</li>
+              </ul>
+            </section>
           </div>
         </SheetContent>
       </Sheet>

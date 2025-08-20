@@ -62,8 +62,21 @@
   "howToUse": {
     "title": "Comment Utiliser Ce Terrain de Jeu Git",
     "subtitle": "Apprenez les concepts Git grâce à la pratique avec notre terrain de jeu visuel et interactif.",
+    "oneLiner": "Modifiez du code, validez dans le Git visuel, explorez les branches, passez en mode Terminal, essayez les Challenges et apprenez GDB & Valgrind.",
     "switchBranch": "Changer/Sélectionner de Branche",
-    "switchBranchDesc": "Utilisez la section 'Branches' dans 'Contrôles Git' (panneau inférieur) pour passer à une branche existante ou en créer une nouvelle. Vos modifications et nouveaux commits s'appliqueront à cette branche active."
+    "switchBranchDesc": "Utilisez la section 'Branches' dans 'Contrôles Git' (panneau inférieur) pour passer à une branche existante ou en créer une nouvelle. Vos modifications et nouveaux commits s'appliqueront à cette branche active.",
+    "quickStartTitle": "Ce que vous pouvez faire",
+    "terminalMode": "Mode Terminal",
+    "terminalModeDesc": "Activez le Terminal pour taper de vraies commandes Git.",
+    "challenges": "Challenges",
+    "challengesDesc": "Entraînez-vous avec des exercices guidés via le bouton orange dans le coin.",
+    "tools": "Vues GDB & Valgrind",
+    "toolsDesc": "Apprenez le débogage et l'analyse mémoire dans la navigation supérieure.",
+    "tipsTitle": "Astuces",
+    "tip1": "Vous pouvez utiliser le terminal ou les boutons — c'est équivalent.",
+    "tip2": "Cliquez sur un commit pour afficher son code à droite.",
+    "tip3": "Repérez le label HEAD pour connaître votre position actuelle.",
+    "tip4": "Utilisez le bouton Challenges pour vous entraîner avec des exercices guidés."
   },
   "features": {
     "visualization": {

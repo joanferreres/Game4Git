@@ -137,6 +137,7 @@
   "howToUse": {
     "title": "Com Utilitzar Aquest Playground de Git",
     "subtitle": "Aprèn conceptes de Git mitjançant la pràctica amb el nostre playground visual i interactiu.",
+    "oneLiner": "Edita codi, fes commit al Git visual, explora branques, activa el mode Terminal, prova els Challenges i aprèn GDB i Valgrind.",
     "switchBranch": "Canviar/Seleccionar Branca",
     "switchBranchDesc": "Utilitza la secció 'Branques' als 'Controls de Git' (panell inferior) per canviar a una branca existent o crear-ne una de nova. Les teves modificacions i nous commits s'aplicaran a aquesta branca activa.",
     "editCode": "Editar Codi",
@@ -159,7 +160,19 @@
     "remoteOperations": "Operacions amb Repositoris Remots",
     "remoteOperationsDesc": "Utilitza els botons 'Git Fetch', 'Git Pull' i 'Git Push' per interactuar amb repositoris remots i sincronitzar el teu treball.",
     "experiment": "Experimenta",
-    "experimentDesc": "Prova diferents seqüències de comandes per veure com canvien l'historial de Git i els estats dels arxius!"
+    "experimentDesc": "Prova diferents seqüències de comandes per veure com canvien l'historial de Git i els estats dels arxius!",
+    "quickStartTitle": "Què pots fer",
+    "terminalMode": "Mode Terminal",
+    "terminalModeDesc": "Activa el Terminal per escriure comandes Git reals.",
+    "challenges": "Challenges",
+    "challengesDesc": "Practica amb tasques guiades des del botó taronja de la cantonada.",
+    "tools": "Vistes de GDB i Valgrind",
+    "toolsDesc": "Aprèn depuració i anàlisi de memòria a la navegació superior.",
+    "tipsTitle": "Consells",
+    "tip1": "Pots usar el terminal o els botons: fan el mateix.",
+    "tip2": "Fes clic en un commit per previsualitzar-ne el codi a la dreta.",
+    "tip3": "Busca l'etiqueta HEAD per saber la teva posició actual.",
+    "tip4": "Usa el botó de Challenges per practicar amb exercicis guiats."
   },
   "visualization": {
     "title": "Visualització de Git",
