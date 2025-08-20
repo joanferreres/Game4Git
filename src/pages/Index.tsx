@@ -103,9 +103,10 @@ const GitGame: React.FC = () => {
       <Sheet>
         <SheetTrigger asChild>
           <Button 
-            variant="outline" 
+            variant="default" 
             size="icon" 
-            className="fixed bottom-16 left-4 md:top-1/2 md:left-4 md:transform md:-translate-y-1/2 z-50 rounded-full shadow-lg w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14"
+            className="fixed bottom-16 left-4 md:top-1/2 md:left-4 md:transform md:-translate-y-1/2 z-50 rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 
+              bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-xl ring-2 ring-blue-400/40 hover:scale-105 transition-transform duration-200"
             aria-label="Open usage guide"
           >
             <Info className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" />

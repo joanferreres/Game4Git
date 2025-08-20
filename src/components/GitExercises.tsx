@@ -683,8 +683,9 @@ const GitExercises: React.FC = () => {
     <Sheet>
       <SheetTrigger asChild>
         <Button
-          variant="outline"
-          className="gap-1.5 sm:gap-2 fixed bottom-4 right-4 shadow-md rounded-full px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 h-auto z-50"
+          variant="default"
+          className="gap-1.5 sm:gap-2 fixed bottom-4 right-4 rounded-full px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 h-auto z-50 
+            bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-xl ring-2 ring-amber-300/50 hover:scale-105 transition-transform duration-200"
         >
           <Trophy className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" />
           <span className="text-[10px] sm:text-xs md:text-sm">{t("exercises.challenges", "Challenges")}</span>
