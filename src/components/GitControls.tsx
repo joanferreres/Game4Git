@@ -206,8 +206,9 @@ const GitGuide: React.FC = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="outline" size="sm" className="h-7 px-2 py-1 gap-1 flex items-center">
           <Info className="h-4 w-4" />
+          <span className="text-xs">{t('guide.helper', 'Helper')}</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
