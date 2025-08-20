@@ -111,7 +111,7 @@ const GitCommitNode: React.FC<GitCommitNodeProps> = ({ data }) => {
             
             {/* HEAD indicator */}
             {isHead && (
-              <div className={`absolute top-[100%] right-0 px-1 py-0.5 rounded-sm bg-amber-500/10 text-amber-600 ${fontSize} font-semibold`}>
+              <div className={`absolute top-[100%] left-1/2 -translate-x-1/2 transform mt-1 px-1 py-0.5 rounded-sm bg-amber-500/10 text-amber-600 ${fontSize} font-semibold`}>
                 HEAD
               </div>
             )}
