@@ -10,9 +10,6 @@ import useGitStore, { useAdminStore } from "@/store/gitStore";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -80,16 +77,26 @@ const GitGame: React.FC = () => {
             <div className="flex justify-center gap-2 mt-3 md:mt-4">
               {isGdbEnabled && (
                 <Link to="/gdb">
-                  <Button variant="outline" size="sm" className="text-xs">
-                    <Bug className="h-3 w-3 mr-1" />
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="text-xs rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md ring-1 ring-blue-400/30 hover:shadow-lg hover:-translate-y-0.5 transition-transform"
+                    aria-label="Open GDB"
+                  >
+                    <Bug className="h-3 w-3 mr-1 text-white" />
                     GDB Debugger
                   </Button>
                 </Link>
               )}
               {isValgrindEnabled && (
                 <Link to="/valgrind">
-                  <Button variant="outline" size="sm" className="text-xs">
-                    <Shield className="h-3 w-3 mr-1" />
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="text-xs rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md ring-1 ring-emerald-400/30 hover:shadow-lg hover:-translate-y-0.5 transition-transform"
+                    aria-label="Open Valgrind"
+                  >
+                    <Shield className="h-3 w-3 mr-1 text-white" />
                     Valgrind Memory
                   </Button>
                 </Link>

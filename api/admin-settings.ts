@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 // Edge Config is optional; if not configured, we use in-memory fallback
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { get, set } from '@vercel/edge-config';
+import { get } from '@vercel/edge-config';
 
 const KEY = 'adminSettings';
 
@@ -32,12 +32,35 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         isValgrindEnabled: Boolean(body.isValgrindEnabled),
       };
       let persisted = false;
-      try {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        await set(KEY, nextState);
-        persisted = true;
-      } catch (_) {}
+      // Try Edge Config Management API if credentials present
+      const EDGE_CONFIG_ID = process.env.EDGE_CONFIG_ID;
+      const EDGE_CONFIG_TOKEN = process.env.EDGE_CONFIG_TOKEN;
+      if (EDGE_CONFIG_ID && EDGE_CONFIG_TOKEN) {
+        try {
+          const apiUrl = `https://api.vercel.com/v1/edge-config/${EDGE_CONFIG_ID}/items`;
+          const resp = await fetch(apiUrl, {
+            method: 'PATCH',
+            headers: {
+              'Authorization': `Bearer ${EDGE_CONFIG_TOKEN}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              items: [
+                {
+                  operation: 'upsert',
+                  key: KEY,
+                  value: nextState
+                }
+              ]
+            })
+          });
+          if (resp.ok) {
+            persisted = true;
+          }
+        } catch (_) {
+          // ignore
+        }
+      }
       if (!persisted) memoryState = nextState;
       return res.status(200).json({ ok: true, persisted });
     }
