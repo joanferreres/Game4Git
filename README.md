@@ -6,9 +6,15 @@ Visual, hands-on learning for modern version control and debugging. Explore Git 
 
 [![Git Game Logo](public/logo.png)](https://game4git.games)
 
-`EN · ES · CA · FR` · Dark Mode · SPA Routing · SEO-ready
+`EN · ES · CA · FR` · Dark Mode · SPA Routing · SEO-ready · Accessibility-first
+
+`Live:` [game4git.games](https://game4git.games) · `Author:` FerVi
 
 </div>
+
+### Elevator pitch
+
+Learn Git like you learn to ride a bike: balance first, speed later. Git Game turns abstract concepts into concrete moves — branching, committing, merging — while keeping your context visible at all times. Then it takes you further with GDB and Valgrind pages that translate debugging theory into action.
 
 ### Why this project
 
@@ -28,6 +34,19 @@ Visual, hands-on learning for modern version control and debugging. Explore Git 
 - Unified design language across pages (Git, GDB, Valgrind) with consistent headers, tabs, main area, and sticky footers.
 - Thoughtful details: elevated but non-intrusive FABs, refined buttons for GDB/Valgrind on the homepage, and accessible color choices.
 
+### Feature matrix
+
+| Area | What you get |
+| --- | --- |
+| Git Playground | Live graph, branches, merges, explicit `HEAD`, inline diffs |
+| Conflicts | Visual resolver, clear markers, safe completion flow |
+| Challenges | Guided tasks with tips, hints, and a modern help panel |
+| GDB Learning | Concepts, commands, best practices, cheat sheet |
+| Valgrind Learning | Best practices with proper formatting and cheat sheet |
+| i18n | EN / ES / CA / FR across all visible content |
+| UX & UI | Cohesive design system, dark mode, keyboard-friendly |
+| SEO | Canonicals, `hreflang`, sitemap, robots/header hardening |
+
 ### Architecture at a glance
 
 - React + TypeScript, built with Vite for speed and modern DX.
@@ -37,6 +56,23 @@ Visual, hands-on learning for modern version control and debugging. Explore Git 
 - Internationalization with `react-i18next` (EN/ES/CA/FR).
 - Client-side routing via React Router; resilient deep-linking with SPA fallback.
 - SEO: dynamic `lang`, canonical, `hreflang`, sitemap, and sensible `robots`/headers.
+
+```
+┌──────────────────────────────── Git Game (SPA) ────────────────────────────────┐
+│ React + TypeScript + Vite                                                     │
+│                                                                                │
+│  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐                           │
+│  │ Code Editor │→→│   Git Store │→→│  Git Graph   │                             │
+│  └─────────────┘   └─────────────┘   └─────────────┘                           │
+│         │                 │                        │                            │
+│         ↓                 │                        ↓                            │
+│   Diff Viewer         Conflict Resolver       History / HEAD                    │
+│                                                                                │
+│   GDB Learning  |  Valgrind Learning  |  Challenges  |  Help Panel (full-screen)│
+│                                                                                │
+│ i18n (react-i18next) · Tailwind + shadcn/ui + Radix · React Router · SEO utils │
+└────────────────────────────────────────────────────────────────────────────────┘
+```
 
 ### Pages overview
 
