@@ -58,20 +58,20 @@ Learn Git like you learn to ride a bike: balance first, speed later. Git Game tu
 - SEO: dynamic `lang`, canonical, `hreflang`, sitemap, and sensible `robots`/headers.
 
 ```
-┌──────────────────────────────── Git Game (SPA) ────────────────────────────────┐
-│ React + TypeScript + Vite                                                     │
-│                                                                                │
-│  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐                           │
+┌──────────────────────────────── Git Game (SPA) ─────────────────────────────────┐
+│ React + TypeScript + Vite                                                       │
+│                                                                                 │
+│  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐                            │
 │  │ Code Editor │→→│   Git Store │→→│  Git Graph   │                             │
-│  └─────────────┘   └─────────────┘   └─────────────┘                           │
+│  └─────────────┘   └─────────────┘   └─────────────┘                            │
 │         │                 │                        │                            │
 │         ↓                 │                        ↓                            │
 │   Diff Viewer         Conflict Resolver       History / HEAD                    │
-│                                                                                │
+│                                                                                 │
 │   GDB Learning  |  Valgrind Learning  |  Challenges  |  Help Panel (full-screen)│
-│                                                                                │
-│ i18n (react-i18next) · Tailwind + shadcn/ui + Radix · React Router · SEO utils │
-└────────────────────────────────────────────────────────────────────────────────┘
+│                                                                                 │
+│ i18n (react-i18next) · Tailwind + shadcn/ui + Radix · React Router · SEO utils  │
+└─────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Pages overview
