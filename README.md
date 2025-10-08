@@ -28,10 +28,6 @@ Visual, hands-on learning for modern version control and debugging. Explore Git 
 - Unified design language across pages (Git, GDB, Valgrind) with consistent headers, tabs, main area, and sticky footers.
 - Thoughtful details: elevated but non-intrusive FABs, refined buttons for GDB/Valgrind on the homepage, and accessible color choices.
 
-### Visuals
-
-![Open Graph](public/og-image.png)
-
 ### Architecture at a glance
 
 - React + TypeScript, built with Vite for speed and modern DX.
