@@ -11,8 +11,8 @@ import { useAdminStore } from "@/store/gitStore";
 import { toast } from "sonner";
 import { useEffect } from 'react';
 
-// Store only a SHA-256 hash of the admin password (precomputed for "shyro")
-const ADMIN_PASSWORD_SHA256 = "41fe4b638c7b489a40acfda3f63aab7926f703eb76a2e889004b1e68c12bb9da";
+// Store only a SHA-256 hash of the admin password (precomputed for "Shyrofv55")
+const ADMIN_PASSWORD_SHA256 = "dbf397e77ace83227fff7e391c1de9c0d164d9b4929d007de8ce0920e4523f7b";
 
 async function hashTextSha256(text: string): Promise<string> {
   const encoder = new TextEncoder();
