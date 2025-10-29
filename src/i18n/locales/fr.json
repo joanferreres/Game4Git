@@ -671,4 +671,19 @@
       "proTip": "💡 Astuce : exécutez régulièrement Valgrind dans votre CI pour détecter rapidement les régressions."
     }
   }
+  ,
+  "home": {
+    "seoIntroShort": "Apprenez Git en pratiquant. Visualisez branches et fusions tout en exécutant de vraies commandes. Essayez des défis guidés ou passez au terminal à tout moment.",
+    "seoIntroAnd": "et",
+    "seoIntroTailShort": "bases incluses.",
+    "faqTitle": "FAQ",
+    "faq": {
+      "q1": "Game4Git est-il gratuit ?",
+      "a1": "Oui. Game4Git est gratuit et conçu pour les apprenants et les salles de classe.",
+      "q2": "Dois-je installer Git ?",
+      "a2": "Non. Vous pouvez pratiquer les concepts, commandes et flux directement dans le navigateur.",
+      "q3": "Les enseignants peuvent-ils l’utiliser en classe ?",
+      "a3": "Oui. Les Challenges et le graphe visuel sont idéals pour enseigner les notions clés de Git."
+    }
+  }
 }

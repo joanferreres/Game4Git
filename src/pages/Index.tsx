@@ -13,6 +13,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Info, Sparkles, Play, Plus, ArrowDownUp, Upload, DownloadCloud, GitBranch as GitBranchIcon, GitMerge as GitMergeIcon, GitCommit as GitCommitIcon, Terminal as TerminalIcon, BookOpen, HelpCircle, CheckCircle2 } from "lucide-react";
  
 import { useTranslation } from "react-i18next";
@@ -105,6 +106,24 @@ const GitGame: React.FC = () => {
           )}
         </div>
       </header>
+
+      {/* SEO-friendly intro paragraph */}
+      <section className="mx-auto max-w-2xl text-center mb-3 sm:mb-4 px-2">
+        <p className="text-[13px] sm:text-sm text-muted-foreground leading-relaxed">
+          {t(
+            'home.seoIntroShort',
+            'Learn Git by doing. Visualize branches and merges while running real commands. Try guided challenges or switch to the terminal anytime.'
+          )}
+          {" "}
+          <Link to="/gdb" className="underline hover:text-primary">GDB</Link>
+          {" "}
+          {t('home.seoIntroAnd', 'and')}
+          {" "}
+          <Link to="/valgrind" className="underline hover:text-primary">Valgrind</Link>
+          {" "}
+          {t('home.seoIntroTailShort', 'basics included.')}
+        </p>
+      </section>
       
       {/* Floating Action Button for Usage Guide Sheet */}
       <Sheet>
@@ -247,6 +266,39 @@ const GitGame: React.FC = () => {
         <GitControls />
       </div>
       
+      {/* FAQ Section */}
+      <section className="mt-4 sm:mt-6 mx-auto max-w-3xl w-full px-2">
+        <h2 className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
+          {t('home.faqTitle', 'FAQs')}
+        </h2>
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="text-sm text-muted-foreground hover:text-foreground">
+              {t('home.faq.q1', 'Is Game4Git free?')}
+            </AccordionTrigger>
+            <AccordionContent className="text-sm text-muted-foreground">
+              {t('home.faq.a1', 'Yes. Game4Git is free to use and designed for learners and classrooms.')}
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger className="text-sm text-muted-foreground hover:text-foreground">
+              {t('home.faq.q2', 'Do I need to install Git?')}
+            </AccordionTrigger>
+            <AccordionContent className="text-sm text-muted-foreground">
+              {t('home.faq.a2', 'No. You can practice concepts, commands, and workflows directly in the browser.')}
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger className="text-sm text-muted-foreground hover:text-foreground">
+              {t('home.faq.q3', 'Can instructors use this in class?')}
+            </AccordionTrigger>
+            <AccordionContent className="text-sm text-muted-foreground">
+              {t('home.faq.a3', 'Yes. The Challenges and visual graph make it ideal for teaching core Git topics.')}
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </section>
+
       {/* Exercises Component */}
       <GitExercises />
       

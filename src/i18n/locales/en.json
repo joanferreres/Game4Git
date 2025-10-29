@@ -1002,4 +1002,19 @@
     "steps": "Steps to complete",
     "markAsDone": "Mark as completed"
   }
-} 
+  ,
+  "home": {
+    "seoIntroShort": "Learn Git by doing. Visualize branches and merges while running real commands. Try guided challenges or switch to the terminal anytime.",
+    "seoIntroAnd": "and",
+    "seoIntroTailShort": "basics included.",
+    "faqTitle": "FAQs",
+    "faq": {
+      "q1": "Is Game4Git free?",
+      "a1": "Yes. Game4Git is free to use and designed for learners and classrooms.",
+      "q2": "Do I need to install Git?",
+      "a2": "No. You can practice concepts, commands, and workflows directly in the browser.",
+      "q3": "Can instructors use this in class?",
+      "a3": "Yes. The Challenges and visual graph make it ideal for teaching core Git topics."
+    }
+  }
+}

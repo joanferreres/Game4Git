@@ -846,4 +846,19 @@
       }
     }
   }
-} 
+  ,
+  "home": {
+    "seoIntroShort": "Aprèn Git practicant. Visualitza branques i merges mentre executes comandes reals. Prova desafiaments guiats o canvia al terminal quan vulguis.",
+    "seoIntroAnd": "i",
+    "seoIntroTailShort": "conceptes bàsics inclosos.",
+    "faqTitle": "Preguntes freqüents",
+    "faq": {
+      "q1": "Game4Git és gratuït?",
+      "a1": "Sí. Game4Git és gratuït i pensat per a estudiants i aules.",
+      "q2": "He d'instal·lar Git?",
+      "a2": "No. Pots practicar conceptes, comandes i fluxos directament al navegador.",
+      "q3": "Els instructors el poden usar a classe?",
+      "a3": "Sí. Els Challenges i el gràfic visual són ideals per ensenyar Git."
+    }
+  }
+}
