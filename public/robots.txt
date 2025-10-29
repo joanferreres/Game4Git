@@ -1,24 +1,5 @@
-# robots.txt file for Git Game Visualizer - Educational Platform
-
-# Allow all web crawlers to index educational content
 User-agent: *
-Allow: /
-
-# Disallow specific pages from being indexed
 Disallow: /privacy-policy.html
 Disallow: /.well-known/
 
-# Educational platform - safe for all audiences
-# Contains: Git tutorials, GDB debugging guides, Valgrind memory analysis
-# Target audience: Students, developers, educators
-# Content type: Interactive learning materials
-
-# Crawl delay to prevent server overload
-Crawl-delay: 10
-
-# Sitemap location
 Sitemap: https://game4git.games/sitemap.xml
-
-# Security policy
-# Security contact: game4git@gmail.com
-# This is an educational platform with no sensitive data collection
