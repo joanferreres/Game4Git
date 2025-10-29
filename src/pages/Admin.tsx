@@ -29,6 +29,7 @@ const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [attempts, setAttempts] = useState(0);
+  const [lockUntil, setLockUntil] = useState<number | null>(null);
   
   const { 
     isGdbEnabled, 
@@ -49,24 +50,41 @@ const Admin = () => {
     if (hasSession) {
       setIsAuthenticated(true);
     }
+    const storedLock = sessionStorage.getItem('admin_lock_until');
+    if (storedLock) {
+      const ts = parseInt(storedLock, 10);
+      if (!isNaN(ts)) setLockUntil(ts);
+    }
   }
 
   const handleLogin = async () => {
     try {
+      // Cooldown: 15 minutes
+      const now = Date.now();
+      if (lockUntil && now < lockUntil) {
+        const remaining = Math.max(0, lockUntil - now);
+        const mins = Math.ceil(remaining / 60000);
+        toast.error(`Demasiados intentos. Vuelve a intentarlo en ~${mins} min.`);
+        return;
+      }
+
       const inputHash = await hashTextSha256(password);
       if (inputHash === ADMIN_PASSWORD_SHA256) {
         setIsAuthenticated(true);
         setAttempts(0);
         sessionStorage.setItem('admin_session', '1');
+        sessionStorage.removeItem('admin_lock_until');
+        setLockUntil(null);
         toast.success("¡Acceso autorizado! Bienvenido al panel de administración.");
       } else {
-        setAttempts(prev => prev + 1);
-        toast.error(`Contraseña incorrecta. Intento ${attempts + 1}/3`);
-        if (attempts >= 2) {
-          toast.error("Demasiados intentos fallidos. Recargando página...");
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
+        const next = attempts + 1;
+        setAttempts(next);
+        toast.error(`Contraseña incorrecta. Intento ${next}/3`);
+        if (next >= 3) {
+          const until = now + 15 * 60 * 1000; // 15 mins
+          sessionStorage.setItem('admin_lock_until', String(until));
+          setLockUntil(until);
+          toast.error("Demasiados intentos fallidos. Acceso bloqueado 15 minutos.");
         }
       }
     } finally {
@@ -84,6 +102,9 @@ const Admin = () => {
     }
     // No remote persistence needed when always enabled
   };
+
+  const remainingMs = lockUntil ? Math.max(0, lockUntil - Date.now()) : 0;
+  const isLocked = remainingMs > 0;
 
   if (!isAuthenticated) {
     return (
@@ -120,7 +141,7 @@ const Admin = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
                   className="bg-gray-700 border-gray-600 text-white pr-10"
-                  disabled={attempts >= 3}
+                  disabled={attempts >= 3 || isLocked}
                 />
                 <Button
                   type="button"
@@ -137,14 +158,19 @@ const Admin = () => {
             <Button 
               onClick={handleLogin} 
               className="w-full bg-blue-600 hover:bg-blue-700"
-              disabled={attempts >= 3 || !password}
+              disabled={attempts >= 3 || isLocked || !password}
             >
-              {attempts >= 3 ? "Bloqueado" : "Acceder"}
+              {isLocked ? "Bloqueado" : attempts >= 3 ? "Bloqueado" : "Acceder"}
             </Button>
             
             {attempts > 0 && attempts < 3 && (
               <p className="text-red-400 text-sm text-center">
                 Intentos restantes: {3 - attempts}
+              </p>
+            )}
+            {isLocked && (
+              <p className="text-amber-300 text-sm text-center">
+                Acceso bloqueado por seguridad. Inténtalo de nuevo en {Math.ceil(remainingMs / 60000)} min.
               </p>
             )}
           </CardContent>
