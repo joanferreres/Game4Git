@@ -19,7 +19,7 @@ interface ProgramState {
   currentLine: number;
   currentFunction: string;
   breakpoints: number[];
-  variables: { [key: string]: any };
+  variables: { [key: string]: string | number | boolean };
   registers: { [key: string]: string };
   memoryMap: { [key: string]: string };
 }
@@ -466,12 +466,14 @@ Quit anyway? (y or n) [Simulated: y]
 
   // Convert ANSI colors to Tailwind classes
   const formatTerminalOutput = (content: string) => {
+    /* eslint-disable no-control-regex */
     return content
       .replace(/\x1b\[36m(.*?)\x1b\[0m/g, '<span class="text-cyan-400">$1</span>')
       .replace(/\x1b\[33m(.*?)\x1b\[0m/g, '<span class="text-yellow-400">$1</span>')
       .replace(/\x1b\[32m(.*?)\x1b\[0m/g, '<span class="text-green-400">$1</span>')
       .replace(/\x1b\[31m(.*?)\x1b\[0m/g, '<span class="text-red-400">$1</span>')
       .replace(/\x1b\[1;31m(.*?)\x1b\[0m/g, '<span class="text-red-400 font-bold">$1</span>');
+    /* eslint-enable no-control-regex */
   };
 
   return (
