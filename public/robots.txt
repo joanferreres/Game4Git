@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /privacy-policy.html
 Disallow: /.well-known/
 
-Sitemap: https://game4git.games/sitemap.xml
+Sitemap: https://www.game4git.games/sitemap.xml
