@@ -34,8 +34,7 @@ const detectRoutes = () => {
   add('/', '1.0', 'weekly');
   add('/gdb', '0.9', 'weekly');
   add('/valgrind', '0.9', 'weekly');
-  // Exclude privacy policy and security.txt from sitemap
-  add('/404', '0.2', 'yearly');
+  // 404 should not be included in sitemap
 
   // No i18n variants in sitemap to avoid URL inflation
 
