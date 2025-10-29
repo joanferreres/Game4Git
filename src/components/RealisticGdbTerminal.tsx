@@ -19,7 +19,7 @@ interface ProgramState {
   currentLine: number;
   currentFunction: string;
   breakpoints: number[];
-  variables: { [key: string]: string | number | boolean };
+  variables: Record<string, string | number | boolean | null | undefined>;
   registers: { [key: string]: string };
   memoryMap: { [key: string]: string };
 }
