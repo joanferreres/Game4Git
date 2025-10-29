@@ -494,7 +494,7 @@ const GitExercises: React.FC = () => {
       // Actualizar el estado solo si hay cambios reales
       setExercises(newExercisesState);
     }
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n.language, getInitialExercises]); // Eliminamos exercises de las dependencias  
   
   // Efecto para actualizar la visualización cuando cambia el ejercicio seleccionado
