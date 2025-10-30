@@ -39,7 +39,7 @@
     "whatsHappening": "Que se passe-t-il ?"
   },
   "general": {
-    "title": "Game4Git : jeu pour apprendre Git en jouant",
+    "title": "Game4Git",
     "subtitle": "Apprenez Git en jouant : visualisez branches et merges, relevez des défis et pratiquez de vraies commandes dans le meilleur jeu pour apprendre Git."
   },
   "git": {
