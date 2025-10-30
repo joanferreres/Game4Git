@@ -14,7 +14,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Configuración
-const BASE_URL = process.env.SITEMAP_BASE_URL || 'https://www.game4git.games';
+const BASE_URL = process.env.SITEMAP_BASE_URL || 'https://game4git.games';
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const PAGES_DIR = path.join(__dirname, 'src', 'pages');
 const OUTPUT_FILE = path.join(PUBLIC_DIR, 'sitemap.xml');
