@@ -39,8 +39,8 @@
     "whatsHappening": "Què està passant?"
   },
   "general": {
-    "title": "Git Game",
-    "subtitle": "Aprèn conceptes de Git visualment amb aquest playground interactiu"
+    "title": "Game4Git: joc per a aprendre Git jugant",
+    "subtitle": "Aprèn Git jugant: visualitza branques i merges, resol desafiaments i practica comandes reals en el millor joc per a aprendre Git."
   },
   "git": {
     "commitGraph": "Gràfic de Commits",
@@ -848,7 +848,7 @@
   }
   ,
   "home": {
-    "seoIntroShort": "Aprèn Git practicant. Visualitza branques i merges mentre executes comandes reals. Prova desafiaments guiats o canvia al terminal quan vulguis.",
+    "seoIntroShort": "Aprèn Git jugant amb Game4Git, el joc per a aprendre Git. Visualitza branques, resol desafiaments interactius i domina git practicant.",
     "seoIntroAnd": "i",
     "seoIntroTailShort": "conceptes bàsics inclosos.",
     "faqTitle": "Preguntes freqüents",
@@ -859,6 +859,8 @@
       "a2": "No. Pots practicar conceptes, comandes i fluxos directament al navegador.",
       "q3": "Els instructors el poden usar a classe?",
       "a3": "Sí. Els Challenges i el gràfic visual són ideals per ensenyar Git."
-    }
+    },
+    "q4": "Puc aprendre Git jugant?",
+    "a4": "Sí, Game4Git és un joc interactiu dissenyat per aprendre Git jugant amb desafiaments, comandes reals i feedback instantani."
   }
 }

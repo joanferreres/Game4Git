@@ -1,8 +1,8 @@
 <div align="center">
 
-# Git Game — Interactive Git, GDB & Valgrind Learning Platform
+# Game4Git — The learning git game — El juego para aprender Git jugando
 
-Visual, hands-on learning for modern version control and debugging. Explore Git commits and branches, practice real workflows, and master GDB/Valgrind concepts — all in a beautiful, fast, and fully translated web app.
+Aprende Git jugando con Game4Git: el único juego para practicar comandos git reales, retos y visualizar ramas y merges en español, inglés, catalán (Joc per a aprendre Git) y francés (Jeu pour apprendre Git en jouant). Practice real Git commands, solve challenges, and visualize branches in a hands-on learning git game in English, Spanish, Catalan and French!
 
 [![Git Game Logo](public/logo.png)](https://game4git.games)
 

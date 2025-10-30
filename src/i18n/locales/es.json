@@ -1047,7 +1047,7 @@
   }
   ,
   "home": {
-    "seoIntroShort": "Aprende Git practicando. Visualiza ramas y merges mientras ejecutas comandos reales. Prueba desafíos guiados o cambia al terminal cuando quieras.",
+    "seoIntroShort": "Aprende Git jugando con Game4Git, el juego para aprender Git. Visualiza ramas, resuelve retos interactivos y domina git practicando.",
     "seoIntroAnd": "y",
     "seoIntroTailShort": "conceptos básicos incluidos.",
     "faqTitle": "Preguntas frecuentes",
@@ -1058,6 +1058,8 @@
       "a2": "No. Puedes practicar conceptos, comandos y flujos directamente en el navegador.",
       "q3": "¿Pueden usarlo instructores en clase?",
       "a3": "Sí. Los Challenges y el gráfico visual son ideales para enseñar Git."
-    }
+    },
+    "q4": "¿Puedo aprender Git jugando?",
+    "a4": "Sí, Game4Git es un juego interactivo hecho para aprender Git practicando retos, comandos reales y visualización en tiempo real."
   }
 }
