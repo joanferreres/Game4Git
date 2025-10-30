@@ -15,7 +15,7 @@
     "prepare:prod": "chmod +x ./prepare-for-prod.sh && ./prepare-for-prod.sh",
     "deploy": "npm run build && vercel --prod",
     "deploy:vercel": "npm run security:check && npx vercel --prod",
-    "generate:sitemap": "node generate-sitemap.js",
+    "generate:sitemap": "node generate-sitemap.cjs",
     "prebuild": "npm run generate:sitemap",
     "security:check": "chmod +x ./security-check.sh && ./security-check.sh",
     "security:fix": "npm audit fix",
