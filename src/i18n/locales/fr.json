@@ -40,7 +40,7 @@
   },
   "general": {
     "title": "Game4Git",
-    "subtitle": "Apprenez Git en jouant : visualisez branches et merges, relevez des défis et pratiquez de vraies commandes dans le meilleur jeu pour apprendre Git."
+    "subtitle": "Apprenez Git en jouant visuellement dans ce terrain de jeu interactif : explorez les branches, relevez des défis pratiques et maîtrisez Git avec Game4Git."
   },
   "git": {
     "commitGraph": "Graphe des commits",

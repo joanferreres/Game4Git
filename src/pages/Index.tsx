@@ -69,9 +69,22 @@ const GitGame: React.FC = () => {
         </div>
         <div className="text-center">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">{t('general.title')}</h1>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-1 md:mt-2">
-            {t('general.subtitle')}
-          </p>
+          <section className="mx-auto max-w-2xl text-center mt-2 mb-3 sm:mb-4 px-2">
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              {t(
+                'home.seoIntroShort',
+                'Learn Git by doing. Visualize branches and merges while running real commands. Try guided challenges or switch to the terminal anytime.'
+              )}
+              {" "}
+              <Link to="/gdb" className="underline hover:text-primary">GDB</Link>
+              {" "}
+              {t('home.seoIntroAnd', 'and')}
+              {" "}
+              <Link to="/valgrind" className="underline hover:text-primary">Valgrind</Link>
+              {" "}
+              {t('home.seoIntroTailShort', 'basics included.')}
+            </p>
+          </section>
           
           {/* Navigation to additional tools - Only show if enabled in admin */}
           {(isGdbEnabled || isValgrindEnabled) && (
@@ -107,24 +120,6 @@ const GitGame: React.FC = () => {
         </div>
       </header>
 
-      {/* SEO-friendly intro paragraph */}
-      <section className="mx-auto max-w-2xl text-center mb-3 sm:mb-4 px-2">
-        <p className="text-[13px] sm:text-sm text-muted-foreground leading-relaxed">
-          {t(
-            'home.seoIntroShort',
-            'Learn Git by doing. Visualize branches and merges while running real commands. Try guided challenges or switch to the terminal anytime.'
-          )}
-          {" "}
-          <Link to="/gdb" className="underline hover:text-primary">GDB</Link>
-          {" "}
-          {t('home.seoIntroAnd', 'and')}
-          {" "}
-          <Link to="/valgrind" className="underline hover:text-primary">Valgrind</Link>
-          {" "}
-          {t('home.seoIntroTailShort', 'basics included.')}
-        </p>
-      </section>
-      
       {/* Floating Action Button for Usage Guide Sheet */}
       <Sheet>
         <SheetTrigger asChild>
