@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://game4git.games/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.games/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.games/?lng=en"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.games/?lng=es"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.games/?lng=ca"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.games/?lng=fr"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+
