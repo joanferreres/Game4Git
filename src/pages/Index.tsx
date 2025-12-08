@@ -325,6 +325,20 @@ const GitGame: React.FC = () => {
             >
               Contact
             </a>
+            <span>|</span>
+            <Button
+              asChild
+              size="sm"
+              className="h-8 px-3 bg-amber-500 hover:bg-amber-600 text-white"
+            >
+              <a
+                href="https://ko-fi.com/joanferreres"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Support on Ko-fi
+              </a>
+            </Button>
           </div>
           <p className="text-xs">Built with React, TypeScript and TailwindCSS. Learn Git concepts visually.</p>
         </div>
