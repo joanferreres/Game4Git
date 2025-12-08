@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { AlertTriangle, Check, Code, Copy, Lightbulb, Shield, Zap, Terminal } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -6,9 +7,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import LanguageSelector from '@/components/LanguageSelector';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { Link } from 'react-router-dom';
-// Removed unused tooltip imports
-
-// Local type removed (unused)
 
 const ValgrindLearning: React.FC = () => {
   const { t } = useTranslation();
@@ -71,10 +69,14 @@ const ValgrindLearning: React.FC = () => {
     setTimeout(() => setCopiedCommand(null), 2000);
   };
 
-  // Removed unused helper
-
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
+      <Helmet>
+        <title>Learn Valgrind - Memory Leak Detection | Game4Git</title>
+        <meta name="description" content="Understand memory management and detect leaks with Valgrind. Interactive guide for Memcheck and cache profiling." />
+        <meta name="keywords" content="valgrind tutorial, memory leak detection, valgrind cheat sheet" />
+        <link rel="canonical" href="https://game4git.games/valgrind" data-dynamic-canonical="true" />
+      </Helmet>
       <header className="mb-4 sm:mb-6 relative">
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
           <ThemeToggle />
@@ -90,7 +92,7 @@ const ValgrindLearning: React.FC = () => {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
               </svg>
-              {t('gdb.backToHome', 'Back to Home')}
+              {t('common.backToHome', 'Back to Home')}
             </Link>
           </div>
         </div>
@@ -98,42 +100,42 @@ const ValgrindLearning: React.FC = () => {
 
       <main className="max-w-7xl mx-auto w-full">
         {/* Tabs */}
-        <Tabs 
-          defaultValue="introduction" 
-          className="w-full" 
+        <Tabs
+          defaultValue="introduction"
+          className="w-full"
         >
           <div className="overflow-x-auto pb-2">
             <TabsList className="w-full grid grid-cols-3 sm:grid-cols-6 gap-1 p-1 h-auto bg-muted/20 rounded-lg">
-              <TabsTrigger 
-                value="introduction" 
+              <TabsTrigger
+                value="introduction"
                 className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
               >
                 <Lightbulb className="h-4 w-4 flex-shrink-0" />
                 <span>{t('valgrind.tabs.introduction', 'Introduction')}</span>
               </TabsTrigger>
-              <TabsTrigger 
-                value="errors" 
+              <TabsTrigger
+                value="errors"
                 className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
               >
                 <AlertTriangle className="h-4 w-4 flex-shrink-0" />
                 <span>{t('valgrind.tabs.errors', 'Error Types')}</span>
               </TabsTrigger>
-              <TabsTrigger 
-                value="commands" 
+              <TabsTrigger
+                value="commands"
                 className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
               >
                 <Terminal className="h-4 w-4 flex-shrink-0" />
                 <span>{t('valgrind.tabs.commands', 'Commands')}</span>
               </TabsTrigger>
-              <TabsTrigger 
-                value="best-practices" 
+              <TabsTrigger
+                value="best-practices"
                 className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
               >
                 <Shield className="h-4 w-4 flex-shrink-0" />
                 <span className="whitespace-nowrap">{t('valgrind.tabs.practices', 'Best Practices')}</span>
               </TabsTrigger>
-              <TabsTrigger 
-                value="cheatsheet" 
+              <TabsTrigger
+                value="cheatsheet"
                 className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
               >
                 <Code className="h-4 w-4 flex-shrink-0" />
@@ -151,9 +153,9 @@ const ValgrindLearning: React.FC = () => {
                     <Terminal className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                   </div>
                   <div>
-                    <CardTitle className="text-2xl font-bold">{t('valgrind.intro.whatIs', '¿Qué es Valgrind?')}</CardTitle>
+                    <CardTitle className="text-2xl font-bold">{t('valgrind.intro.whatIs', 'What is Valgrind?')}</CardTitle>
                     <CardDescription className="text-gray-500 dark:text-gray-400">
-                      {t('valgrind.intro.subtitle', 'Herramienta de detección de errores de memoria y generación de perfiles')}
+                      {t('valgrind.intro.subtitle', 'Memory error detection and profiling toolkit')}
                     </CardDescription>
                   </div>
                 </div>
@@ -163,12 +165,12 @@ const ValgrindLearning: React.FC = () => {
                   <p>
                     {t('valgrind.intro.description')}
                   </p>
-                  
+
                   <div className="mt-6 grid md:grid-cols-2 gap-4">
                     <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-100 dark:border-purple-900/30">
                       <h3 className="font-semibold text-purple-700 dark:text-purple-300 flex items-center gap-2">
                         <Shield className="h-4 w-4" />
-                        {t('valgrind.intro.detectTitle', '¿Qué puede detectar Valgrind?')}
+                        {t('valgrind.intro.detectTitle', 'What can Valgrind detect?')}
                       </h3>
                       <ul className="mt-2 space-y-2 text-sm">
                         <li className="flex items-start gap-2">
@@ -177,28 +179,28 @@ const ValgrindLearning: React.FC = () => {
                         </li>
                         <li className="flex items-start gap-2">
                           <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span>{t('valgrind.intro.detect.invalidAccess', 'Accesos a memoria no válidos o liberada')}</span>
+                          <span>{t('valgrind.intro.detect.invalidAccess', 'Invalid or freed memory access')}</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span>{t('valgrind.intro.detect.uninit', 'Uso de memoria no inicializada')}</span>
+                          <span>{t('valgrind.intro.detect.uninit', 'Use of uninitialized memory')}</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span>{t('valgrind.intro.detect.cache', 'Problemas de rendimiento en caché')}</span>
+                          <span>{t('valgrind.intro.detect.cache', 'Cache performance issues')}</span>
                         </li>
                       </ul>
                     </div>
-                    
+
                     <div className="p-4 bg-amber-50 dark:bg-amber-900/10 rounded-lg border border-amber-100 dark:border-amber-900/20">
                       <h3 className="font-semibold text-amber-700 dark:text-amber-300 flex items-center gap-2">
                         <AlertTriangle className="h-4 w-4" />
-                        {t('valgrind.intro.whenTitle', '¿Cuándo usar Valgrind?')}
+                        {t('valgrind.intro.whenTitle', 'When to use Valgrind?')}
                       </h3>
                       <ul className="mt-2 space-y-2 text-sm">
                         <li className="flex items-start gap-2">
                           <div className="h-2 w-2 rounded-full bg-amber-500 mt-2 flex-shrink-0"></div>
-                          <span>{t('valgrind.intro.when.leaks', 'Cuando tu programa tiene fugas de memoria inesperadas')}</span>
+                          <span>{t('valgrind.intro.when.leaks', 'When your program has unexpected memory leaks')}</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <div className="h-2 w-2 rounded-full bg-amber-500 mt-2 flex-shrink-0"></div>
@@ -206,12 +208,12 @@ const ValgrindLearning: React.FC = () => {
                         </li>
                         <li className="flex items-start gap-2">
                           <div className="h-2 w-2 rounded-full bg-amber-500 mt-2 flex-shrink-0"></div>
-                          <span>{t('valgrind.intro.when.optimize', 'Para optimizar el uso de memoria de tu aplicación')}</span>
+                          <span>{t('valgrind.intro.when.optimize', 'To optimize your application\'s memory usage')}</span>
                         </li>
                       </ul>
                     </div>
                   </div>
-                  
+
                   <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
                     <h3 className="font-semibold flex items-center gap-2">
                       <Lightbulb className="h-4 w-4 text-purple-500" />
@@ -221,7 +223,7 @@ const ValgrindLearning: React.FC = () => {
                       <code className="bg-gray-200 dark:bg-gray-700 px-3 py-1.5 rounded text-sm font-mono">
                         valgrind --leak-check=full ./tu_programa
                       </code>
-                      <button 
+                      <button
                         className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-1"
                         onClick={() => handleCopy('valgrind --leak-check=full ./tu_programa', 'valgrind-init')}
                       >
@@ -233,7 +235,7 @@ const ValgrindLearning: React.FC = () => {
                       </button>
                     </div>
                     <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                      Compila tu programa con la bandera <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">-g</code> para incluir información de depuración y obtener mensajes de error más detallados.
+                      {t('valgrind.cheatsheet.tips.compileDebug', 'Compile your program with the -g flag to include debug information.')}
                     </p>
                   </div>
                 </div>
@@ -262,7 +264,7 @@ const ValgrindLearning: React.FC = () => {
                   <p className="mb-6">
                     {t('valgrind.errorTypes.description')}
                   </p>
-                  
+
                   <div className="space-y-6">
                     {Object.entries(errorTypes).map(([key, error]) => (
                       <div key={key} className="p-5 border rounded-lg bg-white dark:bg-gray-800/30 shadow-sm">
@@ -277,7 +279,7 @@ const ValgrindLearning: React.FC = () => {
                             </p>
                           </div>
                         </div>
-                        
+
                         <div className="mt-4">
                           <div className="relative">
                             <pre className="bg-gray-100 dark:bg-gray-800/50 p-4 rounded-md overflow-x-auto text-sm">
@@ -291,7 +293,7 @@ const ValgrindLearning: React.FC = () => {
                               <Copy className="h-4 w-4 text-gray-500 dark:text-gray-400" />
                             </button>
                           </div>
-                          
+
                           <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded border border-blue-100 dark:border-blue-900/30">
                             <h4 className="font-medium text-sm text-blue-800 dark:text-blue-200 flex items-center gap-1.5">
                               <Lightbulb className="h-3.5 w-3.5" />
@@ -309,7 +311,7 @@ const ValgrindLearning: React.FC = () => {
               </CardContent>
             </Card>
           </TabsContent>
-          
+
           {/* Code Example Tab */}
           <TabsContent value="code-example">
             <Card className="border-0 shadow-sm bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
@@ -346,9 +348,9 @@ return 0;`}</code>
                     <Terminal className="h-6 w-6 text-green-600 dark:text-green-400" />
                   </div>
                   <div>
-                    <CardTitle className="text-2xl font-bold">{t('valgrind.commands.header.title', 'Comandos Básicos')}</CardTitle>
+                    <CardTitle className="text-2xl font-bold">{t('valgrind.commands.header.title', 'Basic Commands')}</CardTitle>
                     <CardDescription className="text-gray-500 dark:text-gray-400">
-                      {t('valgrind.commands.header.description', 'Comandos esenciales para comenzar a usar Valgrind de manera efectiva')}
+                      {t('valgrind.commands.header.description', 'Essential commands to start using Valgrind effectively')}
                     </CardDescription>
                   </div>
                 </div>
@@ -366,16 +368,16 @@ return 0;`}</code>
                         <div>
                           <h3 className="font-semibold text-lg flex items-center gap-2">
                             <Zap className="h-5 w-5 text-blue-500" />
-                            {t('valgrind.commands.basic.title', 'Análisis Básico')}
+                            {t('valgrind.commands.basic.title', 'Basic Analysis')}
                           </h3>
                           <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            {t('valgrind.commands.basic.description', 'Ejecuta un análisis básico de memoria de tu programa')}
+                            {t('valgrind.commands.basic.description', 'Run a basic memory analysis of your program')}
                           </p>
                         </div>
                         <button
                           onClick={() => handleCopy('valgrind ./tu_programa', 'basic')}
                           className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                          title="Copiar comando"
+                          title="Copy command"
                         >
                           {copiedCommand === 'basic' ? (
                             <Check className="h-4 w-4 text-green-500" />
@@ -384,27 +386,27 @@ return 0;`}</code>
                           )}
                         </button>
                       </div>
-                      
+
                       <div className="mt-4">
                         <div className="relative">
                           <pre className="bg-gray-100 dark:bg-gray-800/50 p-4 rounded-md overflow-x-auto text-sm">
                             <code>valgrind ./tu_programa</code>
                           </pre>
                         </div>
-                        
+
                         <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded border border-blue-100 dark:border-blue-900/30">
                           <h4 className="font-medium text-sm text-blue-800 dark:text-blue-200 flex items-center gap-1.5">
                             <Lightbulb className="h-3.5 w-3.5" />
-                            {t('valgrind.commands.basic.whenTitle', '¿Cuándo usar?')}
+                            {t('valgrind.commands.basic.whenTitle', 'When to use?')}
                           </h4>
                           <ul className="mt-1.5 text-sm text-blue-700 dark:text-blue-300 space-y-1">
                             <li className="flex items-start gap-2">
                               <div className="h-1.5 w-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
-                              <span>{t('valgrind.commands.basic.when.0', 'Para un análisis rápido de problemas de memoria')}</span>
+                              <span>{t('valgrind.commands.basic.when.0', 'For a quick scan of memory issues')}</span>
                             </li>
                             <li className="flex items-start gap-2">
                               <div className="h-1.5 w-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
-                              <span>{t('valgrind.commands.basic.when.1', 'Como primer paso en la depuración de memoria')}</span>
+                              <span>{t('valgrind.commands.basic.when.1', 'As a first step in memory debugging')}</span>
                             </li>
                           </ul>
                         </div>
@@ -417,16 +419,16 @@ return 0;`}</code>
                         <div>
                           <h3 className="font-semibold text-lg flex items-center gap-2">
                             <Shield className="h-5 w-5 text-green-500" />
-                            {t('valgrind.commands.leak.title', 'Detección de Fugas de Memoria')}
+                            {t('valgrind.commands.leak.title', 'Memory Leak Detection')}
                           </h3>
                           <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            {t('valgrind.commands.leak.description', 'Identifica y analiza fugas de memoria en tu programa')}
+                            {t('valgrind.commands.leak.description', 'Identify and analyze memory leaks in your program')}
                           </p>
                         </div>
                         <button
                           onClick={() => handleCopy('valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./tu_programa', 'leak-check')}
                           className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                          title="Copiar comando"
+                          title="Copy command"
                         >
                           {copiedCommand === 'leak-check' ? (
                             <Check className="h-4 w-4 text-green-500" />
@@ -435,43 +437,43 @@ return 0;`}</code>
                           )}
                         </button>
                       </div>
-                      
+
                       <div className="mt-4">
                         <div className="relative">
                           <pre className="bg-gray-100 dark:bg-gray-800/50 p-4 rounded-md overflow-x-auto text-sm">
                             <code>valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./tu_programa</code>
                           </pre>
                         </div>
-                        
+
                         <div className="mt-3 grid md:grid-cols-2 gap-4">
                           <div className="p-3 bg-green-50 dark:bg-green-900/10 rounded border border-green-100 dark:border-green-900/20">
                             <h4 className="font-medium text-sm text-green-800 dark:text-green-200 flex items-center gap-1.5">
                               <Check className="h-3.5 w-3.5" />
-                              {t('valgrind.commands.leak.optionsTitle', 'Opciones incluidas:')}
+                              {t('valgrind.commands.leak.optionsTitle', 'Included options:')}
                             </h4>
                             <ul className="mt-1.5 text-sm text-green-700 dark:text-green-300 space-y-1">
                               <li className="flex items-start gap-2">
                                 <div className="h-1.5 w-1.5 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
-                                <span><code className="bg-green-100 dark:bg-green-900/30 px-1 py-0.5 rounded">--leak-check=full</code>: {t('valgrind.commands.leak.options.leakCheckFull', 'Búsqueda detallada de fugas')}</span>
+                                <span><code className="bg-green-100 dark:bg-green-900/30 px-1 py-0.5 rounded">--leak-check=full</code>: {t('valgrind.commands.leak.options.leakCheckFull', 'Detailed leak search')}</span>
                               </li>
                               <li className="flex items-start gap-2">
                                 <div className="h-1.5 w-1.5 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
-                                <span><code className="bg-green-100 dark:bg-green-900/30 px-1 py-0.5 rounded">--show-leak-kinds=all</code>: {t('valgrind.commands.leak.options.showLeakKinds', 'Muestra todos los tipos de fugas')}</span>
+                                <span><code className="bg-green-100 dark:bg-green-900/30 px-1 py-0.5 rounded">--show-leak-kinds=all</code>: {t('valgrind.commands.leak.options.showLeakKinds', 'Show all types of leaks')}</span>
                               </li>
                               <li className="flex items-start gap-2">
                                 <div className="h-1.5 w-1.5 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
-                                <span><code className="bg-green-100 dark:bg-green-900/30 px-1 py-0.5 rounded">--track-origins=yes</code>: {t('valgrind.commands.leak.options.trackOrigins', 'Rastrea orígenes de valores no inicializados')}</span>
+                                <span><code className="bg-green-100 dark:bg-green-900/30 px-1 py-0.5 rounded">--track-origins=yes</code>: {t('valgrind.commands.leak.options.trackOrigins', 'Track origins of uninitialized values')}</span>
                               </li>
                             </ul>
                           </div>
-                          
+
                           <div className="p-3 bg-amber-50 dark:bg-amber-900/10 rounded border border-amber-100 dark:border-amber-900/20">
                             <h4 className="font-medium text-sm text-amber-800 dark:text-amber-200 flex items-center gap-1.5">
                               <AlertTriangle className="h-3.5 w-3.5" />
-                              {t('valgrind.commands.leak.noteTitle', 'Nota importante:')}
+                              {t('valgrind.commands.leak.noteTitle', 'Important note:')}
                             </h4>
                             <p className="mt-1.5 text-sm text-amber-700 dark:text-amber-300">
-                              Para obtener la mejor experiencia de depuración, compila tu programa con la bandera <code className="bg-amber-100 dark:bg-amber-900/30 px-1 py-0.5 rounded">-g</code> para incluir información de depuración.
+                              {t('valgrind.cheatsheet.tips.compileDebug', 'Compile your program with the -g flag to include debug information.')}
                             </p>
                           </div>
                         </div>
@@ -484,16 +486,16 @@ return 0;`}</code>
                         <div>
                           <h3 className="font-semibold text-lg flex items-center gap-2">
                             <Code className="h-5 w-5 text-purple-500" />
-                            {t('valgrind.commands.perf.title', 'Análisis de Rendimiento')}
+                            {t('valgrind.commands.perf.title', 'Performance Analysis')}
                           </h3>
                           <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            {t('valgrind.commands.perf.description', 'Identifica cuellos de botella en el rendimiento de tu código')}
+                            {t('valgrind.commands.perf.description', 'Identify performance bottlenecks in your code')}
                           </p>
                         </div>
                         <button
                           onClick={() => handleCopy('valgrind --tool=callgrind ./tu_programa', 'perf-check')}
                           className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                          title="Copiar comando"
+                          title="Copy command"
                         >
                           {copiedCommand === 'perf-check' ? (
                             <Check className="h-4 w-4 text-green-500" />
@@ -502,30 +504,30 @@ return 0;`}</code>
                           )}
                         </button>
                       </div>
-                      
+
                       <div className="mt-4">
                         <div className="relative">
                           <pre className="bg-gray-100 dark:bg-gray-800/50 p-4 rounded-md overflow-x-auto text-sm">
                             <code>valgrind --tool=callgrind ./tu_programa</code>
                           </pre>
                         </div>
-                        
+
                         <div className="mt-3 p-3 bg-purple-50 dark:bg-purple-900/10 rounded border border-purple-100 dark:border-purple-900/20">
-                            <h4 className="font-medium text-sm text-purple-800 dark:text-purple-200 flex items-center gap-1.5">
-                              <Lightbulb className="h-3.5 w-3.5" />
-                              {t('valgrind.commands.perf.tipTitle', 'Consejo de uso:')}
-                            </h4>
+                          <h4 className="font-medium text-sm text-purple-800 dark:text-purple-200 flex items-center gap-1.5">
+                            <Lightbulb className="h-3.5 w-3.5" />
+                            {t('valgrind.commands.perf.tipTitle', 'Usage tip:')}
+                          </h4>
                           <p className="mt-1.5 text-sm text-purple-700 dark:text-purple-300">
-                            {t('valgrind.commands.perf.tipText', 'Usa kcachegrind para visualizar los resultados de Callgrind con una interfaz gráfica:')}
+                            {t('valgrind.commands.perf.tipText', 'Use kcachegrind to visualize Callgrind results with a graphical interface:')}
                           </p>
                           <div className="mt-2 flex items-center gap-2">
                             <code className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-xs">
                               kcachegrind callgrind.out.1234
                             </code>
-                            <button 
+                            <button
                               onClick={() => handleCopy('kcachegrind callgrind.out.1234', 'kcachegrind')}
                               className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
-                              title="Copiar comando"
+                              title="Copy command"
                             >
                               {copiedCommand === 'kcachegrind' ? (
                                 <Check className="h-3.5 w-3.5 text-green-500" />
@@ -566,7 +568,7 @@ return 0;`}</code>
                     {t('valgrind.bestPractices.practicesTitle', 'Recommended Practices')}
                   </h3>
                   <div className="mt-4 grid md:grid-cols-2 gap-4">
-                    {[1,2,3,4,5,6].map((n) => {
+                    {[1, 2, 3, 4, 5, 6].map((n) => {
                       const titleKey = `valgrind.bestPractices.practice${n}.title` as const;
                       const descKey = `valgrind.bestPractices.practice${n}.description` as const;
                       const title = t(titleKey);
@@ -625,7 +627,7 @@ return 0;`}</code>
                               <button
                                 onClick={() => handleCopy(item.command, `cmd-${index}`)}
                                 className="p-1.5 text-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
-                                title="Copiar comando"
+                                title="Copy command"
                               >
                                 {copiedCommand === `cmd-${index}` ? (
                                   <Check className="h-4 w-4" />
@@ -651,14 +653,14 @@ return 0;`}</code>
                       </h3>
                       <div className="mt-3 space-y-4">
                         <div>
-                          <h4 className="font-medium text-sm text-purple-700 dark:text-purple-300">Opciones de Memoria</h4>
+                          <h4 className="font-medium text-sm text-purple-700 dark:text-purple-300">{t('valgrind.commonOptions.memoryOptions', 'Memory Options')}</h4>
                           <ul className="mt-2 space-y-2 text-sm">
                             {[
-                              { option: '--leak-check=full', desc: 'Muestra detalles de las fugas de memoria' },
-                              { option: '--show-leak-kinds=all', desc: 'Muestra todos los tipos de fugas' },
-                              { option: '--track-origins=yes', desc: 'Rastrea el origen de valores no inicializados' },
-                              { option: '--leak-resolution=high', desc: 'Mejora la precisión del rastreo de fugas' },
-                              { option: '--num-callers=<n>', desc: 'Muestra n marcos de pila en los informes' }
+                              { option: '--leak-check=full', desc: 'Show details of memory leaks' },
+                              { option: '--show-leak-kinds=all', desc: 'Show all types of leaks' },
+                              { option: '--track-origins=yes', desc: 'Track origin of uninitialized values' },
+                              { option: '--leak-resolution=high', desc: 'Improve leak tracking precision' },
+                              { option: '--num-callers=<n>', desc: 'Show n stack frames in reports' }
                             ].map((item, i) => (
                               <li key={i} className="flex items-start gap-2 text-purple-600 dark:text-purple-400">
                                 <code className="bg-purple-100 dark:bg-purple-900/30 px-1.5 py-0.5 rounded text-xs">
@@ -679,14 +681,14 @@ return 0;`}</code>
                         </div>
 
                         <div>
-                          <h4 className="font-medium text-sm text-purple-700 dark:text-purple-300">Opciones de Salida</h4>
+                          <h4 className="font-medium text-sm text-purple-700 dark:text-purple-300">{t('valgrind.commonOptions.outputOptions', 'Output Options')}</h4>
                           <ul className="mt-2 space-y-2 text-sm">
                             {[
-                              { option: '--log-file=filename', desc: 'Guarda la salida en un archivo' },
-                              { option: '--quiet', desc: 'Solo muestra errores importantes' },
-                              { option: '--verbose', desc: 'Muestra información adicional' },
-                              { option: '--trace-children=yes', desc: 'Rastrea procesos hijos' },
-                              { option: '--track-fds=yes', desc: 'Muestra descriptores de archivo abiertos' }
+                              { option: '--log-file=filename', desc: 'Save output to a file' },
+                              { option: '--quiet', desc: 'Only show important errors' },
+                              { option: '--verbose', desc: 'Show additional information' },
+                              { option: '--trace-children=yes', desc: 'Trace child processes' },
+                              { option: '--track-fds=yes', desc: 'Show open file descriptors' }
                             ].map((item, i) => (
                               <li key={i} className="flex items-start gap-2 text-purple-600 dark:text-purple-400">
                                 <code className="bg-purple-100 dark:bg-purple-900/30 px-1.5 py-0.5 rounded text-xs">
@@ -745,9 +747,9 @@ return 0;`}</code>
           <div className="flex items-center justify-center space-x-2">
             <p>&copy; {new Date().getFullYear()} FerVi. All rights reserved.</p>
             <span>|</span>
-            <a 
-              href="mailto:game4git@gmail.com" 
-              rel="noopener noreferrer" 
+            <a
+              href="mailto:game4git@gmail.com"
+              rel="noopener noreferrer"
               className="hover:text-primary transition-colors"
               onClick={(e) => {
                 e.preventDefault();

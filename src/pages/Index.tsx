@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Helmet } from 'react-helmet-async';
 import CodeEditor from "@/components/CodeEditor";
 import GitGraph from "@/components/GitGraph";
 import DiffViewer from "@/components/DiffViewer";
@@ -15,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Info, Sparkles, Play, Plus, ArrowDownUp, Upload, DownloadCloud, GitBranch as GitBranchIcon, GitMerge as GitMergeIcon, GitCommit as GitCommitIcon, Terminal as TerminalIcon, BookOpen, HelpCircle, CheckCircle2 } from "lucide-react";
- 
+
 import { useTranslation } from "react-i18next";
 import "../i18n"; // Importamos la configuración de i18n
 import GitExercises from "@/components/GitExercises";
@@ -37,31 +38,37 @@ const GitGame: React.FC = () => {
     setValgrindEnabled(true);
   }, [setGdbEnabled, setValgrindEnabled]);
   const { t } = useTranslation();
-  
+
   // Get the selected commit if any
-  const selectedCommit = selectedCommitId 
-    ? repository.commits.find(c => c.id === selectedCommitId) 
+  const selectedCommit = selectedCommitId
+    ? repository.commits.find(c => c.id === selectedCommitId)
     : null;
-  
+
   // Get the current HEAD commit
   const headCommit = repository.commits.find(c => c.id === repository.HEAD);
-  
+
   // toggleDiff unused; removed
-  
+
   // Listen for changes to stagedChanges
   useEffect(() => {
     if (stagedChanges) {
       setShowDiff(true); // Show diff when changes are staged
     }
   }, [stagedChanges]);
-  
+
   // Check if there's a pending merge conflict
   const conflictExists = hasPendingConflict();
-  
+
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
+      <Helmet>
+        <title>Game4Git: Interactive Git Learning Game</title>
+        <meta name="description" content="Master Git commands, branching, and merging with this visual interactive playground. No installation required." />
+        <meta name="keywords" content="git game, learn git, git playground, git visualizer" />
+        <link rel="canonical" href="https://game4git.games/" data-dynamic-canonical="true" />
+      </Helmet>
       <WelcomeBanner />
-      
+
       <header className="mb-4 sm:mb-6 relative">
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
           <ThemeToggle />
@@ -85,7 +92,7 @@ const GitGame: React.FC = () => {
               {t('home.seoIntroTailShort', 'basics included.')}
             </p>
           </section>
-          
+
           {/* Navigation to additional tools - Only show if enabled in admin */}
           {(isGdbEnabled || isValgrindEnabled) && (
             <div className="flex justify-center gap-2 mt-3 md:mt-4">
@@ -123,9 +130,9 @@ const GitGame: React.FC = () => {
       {/* Floating Action Button for Usage Guide Sheet */}
       <Sheet>
         <SheetTrigger asChild>
-          <Button 
-            variant="default" 
-            size="icon" 
+          <Button
+            variant="default"
+            size="icon"
             className="fixed bottom-16 left-4 md:top-1/2 md:left-4 md:transform md:-translate-y-1/2 z-50 rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 
               bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-xl ring-2 ring-blue-400/40 hover:scale-105 transition-transform duration-200"
             aria-label="Open usage guide"
@@ -214,34 +221,34 @@ const GitGame: React.FC = () => {
           </div>
         </SheetContent>
       </Sheet>
-      
+
       {/* Floating Action Button for Git History Sheet */}
       <GitHistory />
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 flex-1 mb-4 md:mb-6">
         {/* Left Column - Code Editor */}
         <div className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px]">
           <CodeEditor />
         </div>
-        
+
         {/* Middle Column - Git Graph */}
         <div className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px]">
           <GitGraph />
         </div>
-        
+
         {/* Right Column - Diff or Selected Commit View */}
         <div className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] md:col-span-2 lg:col-span-1">
           {conflictExists ? (
             <ConflictResolver />
           ) : selectedCommit ? (
-            <CodeEditor 
-              readOnly={true} 
-              content={selectedCommit.content} 
+            <CodeEditor
+              readOnly={true}
+              content={selectedCommit.content}
             />
           ) : showDiff && headCommit ? (
-            <DiffViewer 
-              oldContent={headCommit.content} 
-              newContent={stagedChanges || workingChanges} 
+            <DiffViewer
+              oldContent={headCommit.content}
+              newContent={stagedChanges || workingChanges}
             />
           ) : (
             <Card className="w-full h-full flex items-center justify-center">
@@ -255,12 +262,12 @@ const GitGame: React.FC = () => {
           )}
         </div>
       </div>
-      
+
       {/* Bottom Control Panel */}
       <div>
         <GitControls />
       </div>
-      
+
       {/* FAQ Section */}
       <section className="mt-4 sm:mt-6 mx-auto max-w-3xl w-full px-2">
         <h2 className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
@@ -296,7 +303,7 @@ const GitGame: React.FC = () => {
 
       {/* Exercises Component */}
       <GitExercises />
-      
+
       {/* Footer */}
       <footer className="mt-6 sm:mt-8 py-3 sm:py-4 border-t border-border text-center text-xs sm:text-sm text-muted-foreground">
         <div className="flex flex-col items-center justify-center space-y-1 sm:space-y-2">
@@ -307,9 +314,9 @@ const GitGame: React.FC = () => {
           <div className="flex items-center justify-center space-x-2">
             <p>&copy; {new Date().getFullYear()} FerVi. All rights reserved.</p>
             <span>|</span>
-            <a 
-              href="mailto:game4git@gmail.com" 
-              rel="noopener noreferrer" 
+            <a
+              href="mailto:game4git@gmail.com"
+              rel="noopener noreferrer"
               className="hover:text-primary transition-colors"
               onClick={(e) => {
                 e.preventDefault();

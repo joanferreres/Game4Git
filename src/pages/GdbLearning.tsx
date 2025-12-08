@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -15,12 +16,12 @@ const GdbLearning: React.FC = () => {
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState("introduction");
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
-  
+
   // Prevent hydration mismatch
   useEffect(() => {
     setMounted(true);
   }, []);
-  
+
   // Commands organized by category
   const commandCategories = [
     {
@@ -78,7 +79,7 @@ const GdbLearning: React.FC = () => {
   ];
 
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   const handleCopy = (cmd: string) => {
     navigator.clipboard.writeText(cmd);
     setCopiedCommand(cmd);
@@ -92,6 +93,12 @@ const GdbLearning: React.FC = () => {
 
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
+      <Helmet>
+        <title>Learn GDB Debugger - Interactive Tutorial | Game4Git</title>
+        <meta name="description" content="Master GDB debugging with our interactive cheat sheet and playground. Learn breakpoints, stepping, and memory inspection." />
+        <meta name="keywords" content="gdb tutorial, learn gdb, gdb cheat sheet, gdb debugger" />
+        <link rel="canonical" href="https://game4git.games/gdb" data-dynamic-canonical="true" />
+      </Helmet>
       <header className="mb-4 sm:mb-6 relative">
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
           <ThemeToggle />
@@ -103,8 +110,8 @@ const GdbLearning: React.FC = () => {
             {t('gdb.subtitle')}
           </p>
           <div className="mt-3 md:mt-4">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline font-medium"
             >
               ← {t('common.backToHome', 'Back to Home')}
@@ -116,7 +123,7 @@ const GdbLearning: React.FC = () => {
       <main className="max-w-7xl mx-auto w-full">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="w-full grid grid-cols-2 md:grid-cols-5 gap-1 p-1 h-auto bg-muted/20 rounded-lg">
-            <TabsTrigger 
+            <TabsTrigger
               value="introduction"
               className="data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
             >
@@ -125,7 +132,7 @@ const GdbLearning: React.FC = () => {
                 {t('gdb.tabs.introduction', 'Introduction')}
               </span>
             </TabsTrigger>
-            <TabsTrigger 
+            <TabsTrigger
               value="concepts"
               className="data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
             >
@@ -134,7 +141,7 @@ const GdbLearning: React.FC = () => {
                 {t('gdb.tabs.concepts', 'Concepts')}
               </span>
             </TabsTrigger>
-            <TabsTrigger 
+            <TabsTrigger
               value="commands"
               className="data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
             >
@@ -143,7 +150,7 @@ const GdbLearning: React.FC = () => {
                 {t('gdb.tabs.commands', 'Commands')}
               </span>
             </TabsTrigger>
-            <TabsTrigger 
+            <TabsTrigger
               value="practices"
               className="data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
             >
@@ -152,7 +159,7 @@ const GdbLearning: React.FC = () => {
                 {t('gdb.tabs.practices', 'Best Practices')}
               </span>
             </TabsTrigger>
-            <TabsTrigger 
+            <TabsTrigger
               value="cheatsheet"
               className="data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
             >
@@ -183,7 +190,7 @@ const GdbLearning: React.FC = () => {
                   <p>
                     {t('gdb.ui.whatIsParagraph', 'GDB is a powerful debugger for C/C++ and other languages. It helps you find and fix issues by pausing execution, inspecting variables, and stepping through code.')}
                   </p>
-                  
+
                   <div className="mt-6 grid md:grid-cols-2 gap-4">
                     <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-100 dark:border-blue-900/30">
                       <h3 className="font-semibold text-blue-700 dark:text-blue-300 flex items-center gap-2">
@@ -209,7 +216,7 @@ const GdbLearning: React.FC = () => {
                         </li>
                       </ul>
                     </div>
-                    
+
                     <div className="p-4 bg-amber-50 dark:bg-amber-900/10 rounded-lg border border-amber-100 dark:border-amber-900/20">
                       <h3 className="font-semibold text-amber-700 dark:text-amber-300 flex items-center gap-2">
                         <AlertCircle className="h-4 w-4" />
@@ -231,7 +238,7 @@ const GdbLearning: React.FC = () => {
                       </ul>
                     </div>
                   </div>
-                  
+
                   <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
                     <h3 className="font-semibold flex items-center gap-2">
                       <Lightbulb className="h-4 w-4 text-blue-500" />
@@ -241,9 +248,9 @@ const GdbLearning: React.FC = () => {
                       <code className="bg-gray-200 dark:bg-gray-700 px-3 py-1.5 rounded text-sm font-mono">
                         {t('gdb.ui.sampleCommand', 'gdb ./your_program')}
                       </code>
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                         onClick={() => navigator.clipboard.writeText('gdb ./your_program')}
                       >
@@ -265,7 +272,7 @@ const GdbLearning: React.FC = () => {
                 <CardTitle className="text-2xl font-bold">{t('gdb.concepts.title', 'Core Concepts')}</CardTitle>
               </CardHeader>
               <CardContent className="grid gap-4 md:grid-cols-2">
-                {[ 
+                {[
                   { icon: <AlertCircle className="h-4 w-4" />, title: t('gdb.concepts.breakpoints.title', 'Breakpoints'), desc: t('gdb.concepts.breakpoints.desc', 'Pause execution at specific lines or functions to inspect program state.') },
                   { icon: <Users className="h-4 w-4" />, title: t('gdb.concepts.watchpoints.title', 'Watchpoints'), desc: t('gdb.concepts.watchpoints.desc', 'Pause when a variable or memory location changes its value.') },
                   { icon: <BookOpen className="h-4 w-4" />, title: t('gdb.concepts.stack.title', 'Call Stack & Frames'), desc: t('gdb.concepts.stack.desc', 'Navigate frames to see where you are and how you got there (backtrace, frame).') },
@@ -433,7 +440,7 @@ const GdbLearning: React.FC = () => {
               </CardContent>
             </Card>
           </TabsContent>
-          
+
           <TabsContent value="cheatsheet">
             <Card className="border-0 shadow-sm bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
               <CardHeader>
@@ -480,9 +487,9 @@ const GdbLearning: React.FC = () => {
           <div className="flex items-center justify-center space-x-2">
             <p>&copy; {new Date().getFullYear()} FerVi. All rights reserved.</p>
             <span>|</span>
-            <a 
-              href="mailto:game4git@gmail.com" 
-              rel="noopener noreferrer" 
+            <a
+              href="mailto:game4git@gmail.com"
+              rel="noopener noreferrer"
               className="hover:text-primary transition-colors"
               onClick={(e) => {
                 e.preventDefault();
