@@ -18,79 +18,34 @@ const generateId = (): string => {
 };
 
 // Detect if there's a conflict between two versions of content
-const detectConflict = (sourceContent: string, targetContent: string): boolean => {
+// A conflict only occurs when BOTH branches modified the SAME region of the file
+const detectConflict = (sourceContent: string, targetContent: string, baseContent?: string): boolean => {
   // If contents are identical, there's no conflict
   if (sourceContent === targetContent) return false;
   
   // Get differences between the two contents
   const differences = diffLib.diffLines(targetContent, sourceContent);
   
-  // Split content into lines for comparison
-  const sourceLines = sourceContent.split('\n');
-  const targetLines = targetContent.split('\n');
-  
-  // Fast check: if one file just adds lines at the end without modifying existing lines,
-  // then there's no conflict
-  let onlyAddedAtEnd = true;
-  let seenAddition = false;
-  let seenRemoval = false;
-  
-  for (const part of differences) {
-    if (part.added) {
-      seenAddition = true;
-      if (seenRemoval) {
-        onlyAddedAtEnd = false;
-        break;
-      }
-    } else if (part.removed) {
-      seenRemoval = true;
-      if (seenAddition) {
-        onlyAddedAtEnd = false;
-        break;
-      }
-    }
-  }
-  
-  // If we only add lines at the end, no conflict
-  if (onlyAddedAtEnd) return false;
-  
-  // More thorough check - we need to find if the same lines were modified differently
-  // Simple heuristic: if there are both additions and removals near each other (overlapping changes)
-  let lastAddedIndex = -1;
-  let lastRemovedIndex = -1;
-  let currentIndex = 0;
-  
-  for (const part of differences) {
-    const lineCount = part.value.split('\n').length - (part.value.endsWith('\n') ? 1 : 0);
+  // A real conflict only happens when there's an addition immediately followed by a removal
+  // or a removal immediately followed by an addition (overlapping changes to the same region)
+  for (let i = 0; i < differences.length - 1; i++) {
+    const current = differences[i];
+    const next = differences[i + 1];
     
-    if (part.added) {
-      lastAddedIndex = currentIndex + lineCount - 1;
-    } else if (part.removed) {
-      lastRemovedIndex = currentIndex + lineCount - 1;
-    }
-    
-    // If additions and removals are close to each other (overlapping changes)
-    // Consider it a conflict
-    if (lastAddedIndex >= 0 && lastRemovedIndex >= 0) {
-      const distance = Math.abs(lastAddedIndex - lastRemovedIndex);
-      if (distance <= 3) { // Within 3 lines is considered a conflict
+    // Conflict: one branch removed lines and another added different lines in the same place
+    if ((current.removed && next.added) || (current.added && next.removed)) {
+      // Only count as conflict if both changes are non-trivial (not just whitespace)
+      const currentTrimmed = current.value.trim();
+      const nextTrimmed = next.value.trim();
+      
+      if (currentTrimmed.length > 0 && nextTrimmed.length > 0) {
         return true;
       }
     }
-    
-    if (!part.added && !part.removed) {
-      currentIndex += lineCount;
-    }
   }
   
-  // Additional check: if there are non-trivial changes on both sides
-  const hasSignificantAdditions = differences.some(part => 
-    part.added && part.value.trim().length > 0 && part.value.split('\n').length > 1);
-  
-  const hasSignificantRemovals = differences.some(part => 
-    part.removed && part.value.trim().length > 0 && part.value.split('\n').length > 1);
-  
-  return hasSignificantAdditions && hasSignificantRemovals;
+  // No overlapping changes found - changes can be merged cleanly
+  return false;
 };
 
 // Generate content with conflict markers
