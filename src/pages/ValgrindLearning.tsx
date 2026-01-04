@@ -72,9 +72,9 @@ const ValgrindLearning: React.FC = () => {
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
       <Helmet>
-        <title>Learn Valgrind - Memory Leak Detection | Game4Git</title>
-        <meta name="description" content="Understand memory management and detect leaks with Valgrind. Interactive guide for Memcheck and cache profiling." />
-        <meta name="keywords" content="valgrind tutorial, memory leak detection, valgrind cheat sheet" />
+        <title>Valgrind Tutorial - Memory Leak Detection Guide | Game4Git</title>
+        <meta name="description" content="Learn Valgrind memory debugging with interactive examples. Master Memcheck, detect memory leaks, and optimize your C/C++ code. Free Valgrind tutorial with practical exercises." />
+        <meta name="keywords" content="valgrind, valgrind tutorial, valgrind github, memory leak detection, valgrind cheat sheet, valgrind memcheck, memory debugging" />
         <link rel="canonical" href="https://game4git.games/valgrind" />
       </Helmet>
       <header className="mb-4 sm:mb-6 relative min-h-[80px] sm:min-h-[100px]">

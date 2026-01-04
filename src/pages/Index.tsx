@@ -64,9 +64,9 @@ const GitGame: React.FC = () => {
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
       <Helmet>
-        <title>Game4Git: Interactive Git Learning Game</title>
-        <meta name="description" content="Master Git commands, branching, and merging with this visual interactive playground. No installation required." />
-        <meta name="keywords" content="git game, learn git, git playground, git visualizer" />
+        <title>Git Game - Learn Git Online | Interactive Git Learning Game</title>
+        <meta name="description" content="Play the best Git game online! Learn Git commands, branching, and merging with our interactive visual playground. Free Git learning game - no installation required. Perfect for beginners and advanced users." />
+        <meta name="keywords" content="git game, git game online, learn git game, git learning game, game git, git-game, git games, interactive git tutorial, git playground, git visualizer, git branch game, git challenges, git playground online" />
         <link rel="canonical" href="https://game4git.games/" />
       </Helmet>
       <WelcomeBanner />
