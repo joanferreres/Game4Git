@@ -83,7 +83,6 @@ export default defineConfig({
       output: {
         manualChunks: {
           react: ['react', 'react-dom', 'react-router-dom'],
-          monaco: ['@monaco-editor/react', '@monaco-editor/loader'],
           ui: ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-popover'],
           store: ['zustand'],
           form: ['react-hook-form', '@hookform/resolvers', 'zod'],

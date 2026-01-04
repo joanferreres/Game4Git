@@ -4,8 +4,8 @@ export function cssPreloadPlugin(): Plugin {
   return {
     name: 'css-preload',
     transformIndexHtml: {
-      enforce: 'pre',
-      transform(html) {
+      order: 'pre',
+      handler(html) {
         // Find CSS link tags and add preload hints
         return html.replace(
           /<link[^>]*rel=["']stylesheet["'][^>]*>/g,
