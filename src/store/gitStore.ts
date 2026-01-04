@@ -17,34 +17,95 @@ const generateId = (): string => {
   return Math.random().toString(36).substring(2, 15);
 };
 
-// Detect if there's a conflict between two versions of content
-// A conflict only occurs when BOTH branches modified the SAME region of the file
-const detectConflict = (sourceContent: string, targetContent: string, baseContent?: string): boolean => {
-  // If contents are identical, there's no conflict
-  if (sourceContent === targetContent) return false;
+// Find the common ancestor (merge-base) of two commits
+const findMergeBase = (commits: GitCommit[], commit1Id: string, commit2Id: string): GitCommit | null => {
+  // Build a set of all ancestors of commit1
+  const ancestors1 = new Set<string>();
+  const queue1: string[] = [commit1Id];
   
-  // Get differences between the two contents
-  const differences = diffLib.diffLines(targetContent, sourceContent);
-  
-  // A real conflict only happens when there's an addition immediately followed by a removal
-  // or a removal immediately followed by an addition (overlapping changes to the same region)
-  for (let i = 0; i < differences.length - 1; i++) {
-    const current = differences[i];
-    const next = differences[i + 1];
+  while (queue1.length > 0) {
+    const currentId = queue1.shift()!;
+    if (ancestors1.has(currentId)) continue;
+    ancestors1.add(currentId);
     
-    // Conflict: one branch removed lines and another added different lines in the same place
-    if ((current.removed && next.added) || (current.added && next.removed)) {
-      // Only count as conflict if both changes are non-trivial (not just whitespace)
-      const currentTrimmed = current.value.trim();
-      const nextTrimmed = next.value.trim();
-      
-      if (currentTrimmed.length > 0 && nextTrimmed.length > 0) {
-        return true;
-      }
+    const commit = commits.find(c => c.id === currentId);
+    if (commit) {
+      queue1.push(...commit.parentIds);
     }
   }
   
-  // No overlapping changes found - changes can be merged cleanly
+  // BFS from commit2 to find first ancestor that's also in ancestors1
+  const queue2: string[] = [commit2Id];
+  const visited2 = new Set<string>();
+  
+  while (queue2.length > 0) {
+    const currentId = queue2.shift()!;
+    if (visited2.has(currentId)) continue;
+    visited2.add(currentId);
+    
+    if (ancestors1.has(currentId)) {
+      return commits.find(c => c.id === currentId) || null;
+    }
+    
+    const commit = commits.find(c => c.id === currentId);
+    if (commit) {
+      queue2.push(...commit.parentIds);
+    }
+  }
+  
+  return null;
+};
+
+// Detect if there's a conflict using 3-way merge logic
+// A conflict only occurs when BOTH branches modified the SAME region relative to the base
+const detectConflict = (sourceContent: string, targetContent: string, baseContent: string): boolean => {
+  // If contents are identical, there's no conflict
+  if (sourceContent === targetContent) return false;
+  
+  // If target hasn't changed from base, no conflict (source changes can be applied directly)
+  if (targetContent === baseContent) return false;
+  
+  // If source hasn't changed from base, no conflict (nothing to merge)
+  if (sourceContent === baseContent) return false;
+  
+  // Both branches have changes - check if they overlap
+  const sourceChanges = diffLib.diffLines(baseContent, sourceContent);
+  const targetChanges = diffLib.diffLines(baseContent, targetContent);
+  
+  // Get line numbers that were modified in each branch
+  const getModifiedLines = (changes: diffLib.Change[]): Set<number> => {
+    const modified = new Set<number>();
+    let lineNum = 0;
+    
+    for (const change of changes) {
+      const lines = change.value.split('\n').length - (change.value.endsWith('\n') ? 1 : 0);
+      
+      if (change.removed || change.added) {
+        // Mark these lines as modified
+        for (let i = 0; i < Math.max(lines, 1); i++) {
+          modified.add(lineNum + i);
+        }
+      }
+      
+      if (!change.added) {
+        lineNum += lines;
+      }
+    }
+    
+    return modified;
+  };
+  
+  const sourceModified = getModifiedLines(sourceChanges);
+  const targetModified = getModifiedLines(targetChanges);
+  
+  // Check if any lines were modified by both branches
+  for (const line of sourceModified) {
+    if (targetModified.has(line)) {
+      return true; // Same line modified by both - conflict!
+    }
+  }
+  
+  // No overlapping changes
   return false;
 };
 
@@ -373,10 +434,37 @@ const useGitStore = create<GitStore>((set, get) => ({
       return;
     }
     
-    // Detect merge conflicts
-    // For simplicity, we'll say there's a conflict if both branches modified the same file
-    // and the content is different
-    const hasConflict = detectConflict(sourceBranchHeadCommit.content, targetBranchHeadCommit.content);
+    // Find the common ancestor (merge-base) for 3-way merge
+    const mergeBase = findMergeBase(repository.commits, sourceBranch.commitId, targetBranch.commitId);
+    const baseContent = mergeBase?.content || '';
+    
+    // Fast-forward case: if target is an ancestor of source, just move the pointer
+    if (mergeBase && mergeBase.id === targetBranch.commitId) {
+      // Target branch hasn't moved since source was created - fast forward
+      const updatedBranches = repository.branches.map(branch => {
+        if (branch.name === targetBranchName) {
+          return { ...branch, commitId: sourceBranch.commitId, isActive: true };
+        }
+        return { ...branch, isActive: false };
+      });
+
+      set(state => ({
+        repository: {
+          ...state.repository,
+          branches: updatedBranches,
+          HEAD: sourceBranch.commitId,
+        },
+        workingChanges: sourceBranchHeadCommit.content,
+        stagedChanges: null,
+        selectedCommitId: sourceBranch.commitId,
+      }));
+      
+      toast.success(`Fast-forward merge: ${targetBranchName} now at ${sourceBranchName}`);
+      return;
+    }
+    
+    // Detect merge conflicts using 3-way merge
+    const hasConflict = detectConflict(sourceBranchHeadCommit.content, targetBranchHeadCommit.content, baseContent);
 
     if (hasConflict) {
       // Create conflict content with markers
