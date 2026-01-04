@@ -89,14 +89,14 @@ const GitCommitNode: React.FC<GitCommitNodeProps> = ({ data }) => {
             {/* Branches */}
             {isBranchHead && (
               <div className="absolute -top-7 sm:-top-8 md:-top-9 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1">
-                {branchNames.map((label) => (
+                {branchNames.map((branchLabel) => (
                 <Badge 
-                  key={label} 
-                    className={`${badgeClass} font-medium shadow-sm
-                    ${label === 'master' ? 'bg-green-600' : 
-                    label.toLowerCase().includes('someone') || label.toLowerCase().includes('else') ? 'bg-orange-600' : 'bg-blue-600'}`}
+                  key={branchLabel} 
+                    className={`${badgeClass} font-medium shadow-sm text-white
+                    ${branchLabel === 'master' ? 'bg-green-700' : 
+                    branchLabel.toLowerCase().includes('someone') || branchLabel.toLowerCase().includes('else') ? 'bg-orange-700' : 'bg-blue-700'}`}
                 >
-                  {label}
+                  {branchLabel}
                 </Badge>
               ))}
             </div>

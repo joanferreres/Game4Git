@@ -577,6 +577,7 @@ const GitControls: React.FC = () => {
               size="sm"
               onClick={handleFetch}
               className="w-full text-[10px] sm:text-xs px-1 sm:px-3 h-8 sm:h-10"
+              aria-label={t('git.gitFetch', 'Git Fetch')}
             >
               <DownloadCloud className="mr-0.5 sm:mr-1 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
               <span className="hidden xs:inline">{t('git.gitFetch')}</span>
@@ -587,6 +588,7 @@ const GitControls: React.FC = () => {
               onClick={handlePull}
               disabled={!activeBranchName}
               className="w-full text-[10px] sm:text-xs px-1 sm:px-3 h-8 sm:h-10"
+              aria-label={t('git.gitPull', 'Git Pull')}
             >
               <ArrowDownUp className="mr-0.5 sm:mr-1 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
               <span className="hidden xs:inline">{t('git.gitPull')}</span>
@@ -597,6 +599,7 @@ const GitControls: React.FC = () => {
               onClick={handlePush}
               disabled={!activeBranchName}
               className="w-full text-[10px] sm:text-xs px-1 sm:px-3 h-8 sm:h-10"
+              aria-label={t('git.gitPush', 'Git Push')}
             >
               <Upload className="mr-0.5 sm:mr-1 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
               <span className="hidden xs:inline">{t('git.gitPush')}</span>
@@ -711,7 +714,7 @@ const GitControls: React.FC = () => {
               variant="outline"
               size="sm"
               onClick={() => window.location.reload()}
-              className="bg-red-50 hover:bg-red-100 text-red-600 w-full text-xs sm:text-sm h-8 sm:h-10"
+              className="bg-red-100 hover:bg-red-200 text-red-700 w-full text-xs sm:text-sm h-8 sm:h-10"
             >
               <RefreshCcw className="mr-1 h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
               <span className="truncate">{t('git.resetAll')}</span>
