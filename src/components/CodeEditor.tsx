@@ -31,22 +31,27 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ readOnly = false, content, lang
     }
   };
 
-  // Get Prism language
-  const getPrismLanguage = (): PrismLanguage => {
+  const highlightCode = (code: string) => {
+    // Get the appropriate language grammar
+    let langGrammar;
     switch (language.toLowerCase()) {
       case "c":
-        return (languages.c as PrismLanguage) || (languages.text as PrismLanguage);
+        langGrammar = languages.c;
+        break;
       case "cpp":
       case "c++":
-        return (languages.cpp as PrismLanguage) || (languages.c as PrismLanguage) || (languages.text as PrismLanguage);
+        langGrammar = languages.cpp || languages.c;
+        break;
       default:
-        return (languages.c as PrismLanguage) || (languages.text as PrismLanguage);
+        langGrammar = languages.c;
     }
-  };
-
-  const highlightCode = (code: string) => {
-    const prismLang = getPrismLanguage();
-    return highlight(code, prismLang, language);
+    
+    // Fallback to plain text if language not found
+    if (!langGrammar) {
+      langGrammar = languages.text;
+    }
+    
+    return highlight(code, langGrammar, language);
   };
 
   if (!mounted) {
