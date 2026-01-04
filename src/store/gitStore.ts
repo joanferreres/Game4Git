@@ -438,31 +438,7 @@ const useGitStore = create<GitStore>((set, get) => ({
     const mergeBase = findMergeBase(repository.commits, sourceBranch.commitId, targetBranch.commitId);
     const baseContent = mergeBase?.content || '';
     
-    // Fast-forward case: if target is an ancestor of source, just move the pointer
-    if (mergeBase && mergeBase.id === targetBranch.commitId) {
-      // Target branch hasn't moved since source was created - fast forward
-      const updatedBranches = repository.branches.map(branch => {
-        if (branch.name === targetBranchName) {
-          return { ...branch, commitId: sourceBranch.commitId, isActive: true };
-        }
-        return { ...branch, isActive: false };
-      });
-
-      set(state => ({
-        repository: {
-          ...state.repository,
-          branches: updatedBranches,
-          HEAD: sourceBranch.commitId,
-        },
-        workingChanges: sourceBranchHeadCommit.content,
-        stagedChanges: null,
-        selectedCommitId: sourceBranch.commitId,
-      }));
-      
-      toast.success(`Fast-forward merge: ${targetBranchName} now at ${sourceBranchName}`);
-      return;
-    }
-    
+    // Always create a merge commit (no fast-forward) to keep the tree visualization clear
     // Detect merge conflicts using 3-way merge
     const hasConflict = detectConflict(sourceBranchHeadCommit.content, targetBranchHeadCommit.content, baseContent);
 
