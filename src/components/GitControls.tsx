@@ -532,7 +532,7 @@ const GitControls: React.FC = () => {
             <div>
               <p className="text-[10px] sm:text-xs mb-1">{t('git.switchBranch')}</p>
               <Select onValueChange={handleSwitchBranch}>
-                <SelectTrigger className="h-8 sm:h-10 text-xs sm:text-sm">
+                <SelectTrigger className="h-8 sm:h-10 text-xs sm:text-sm" aria-label={t('git.switchBranch', 'Switch Branch')}>
                   <SelectValue placeholder={t('git.switchBranch')} />
                 </SelectTrigger>
                 <SelectContent>

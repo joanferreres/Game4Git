@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Helmet } from 'react-helmet-async';
-import CodeEditor from "@/components/CodeEditor";
-import GitGraph from "@/components/GitGraph";
 import DiffViewer from "@/components/DiffViewer";
+
+// Lazy load heavy components to improve initial LCP
+const CodeEditor = lazy(() => import("@/components/CodeEditor"));
+const GitGraph = lazy(() => import("@/components/GitGraph"));
 import GitControls from "@/components/GitControls";
 import GitHistory from "@/components/GitHistory";
 import WelcomeBanner from "@/components/WelcomeBanner";
@@ -19,7 +21,7 @@ import { Info, Sparkles, Play, Plus, ArrowDownUp, Upload, DownloadCloud, GitBran
 
 import { useTranslation } from "react-i18next";
 import "../i18n"; // Importamos la configuración de i18n
-import GitExercises from "@/components/GitExercises";
+const GitExercises = lazy(() => import("@/components/GitExercises"));
 import { ThemeToggle } from "@/components/ThemeToggle";
 import ConflictResolver from "@/components/ConflictResolver";
 import { Link } from "react-router-dom";
@@ -69,7 +71,7 @@ const GitGame: React.FC = () => {
       </Helmet>
       <WelcomeBanner />
 
-      <header className="mb-4 sm:mb-6 relative">
+      <header className="mb-4 sm:mb-6 relative min-h-[80px] sm:min-h-[100px]">
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
           <ThemeToggle />
           <LanguageSelector />
@@ -228,12 +230,16 @@ const GitGame: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 flex-1 mb-4 md:mb-6">
         {/* Left Column - Code Editor */}
         <div className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px]">
-          <CodeEditor />
+          <Suspense fallback={<Card className="w-full h-full flex items-center justify-center"><CardContent className="text-center p-4 sm:p-6"><p className="text-sm text-muted-foreground">{t('common.loading', 'Loading editor...')}</p></CardContent></Card>}>
+            <CodeEditor />
+          </Suspense>
         </div>
 
         {/* Middle Column - Git Graph */}
         <div className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px]">
-          <GitGraph />
+          <Suspense fallback={<Card className="w-full h-full flex items-center justify-center"><CardContent className="text-center p-4 sm:p-6"><p className="text-sm text-muted-foreground">{t('common.loading', 'Loading graph...')}</p></CardContent></Card>}>
+            <GitGraph />
+          </Suspense>
         </div>
 
         {/* Right Column - Diff or Selected Commit View */}
@@ -241,10 +247,12 @@ const GitGame: React.FC = () => {
           {conflictExists ? (
             <ConflictResolver />
           ) : selectedCommit ? (
-            <CodeEditor
-              readOnly={true}
-              content={selectedCommit.content}
-            />
+            <Suspense fallback={<Card className="w-full h-full flex items-center justify-center"><CardContent className="text-center p-4 sm:p-6"><p className="text-sm text-muted-foreground">{t('common.loading', 'Loading...')}</p></CardContent></Card>}>
+              <CodeEditor
+                readOnly={true}
+                content={selectedCommit.content}
+              />
+            </Suspense>
           ) : showDiff && headCommit ? (
             <DiffViewer
               oldContent={headCommit.content}
@@ -302,13 +310,23 @@ const GitGame: React.FC = () => {
       </section>
 
       {/* Exercises Component */}
-      <GitExercises />
+      <Suspense fallback={<div className="min-h-[200px] flex items-center justify-center"><p className="text-sm text-muted-foreground">{t('common.loading', 'Loading exercises...')}</p></div>}>
+        <GitExercises />
+      </Suspense>
 
       {/* Footer */}
       <footer className="mt-6 sm:mt-8 py-3 sm:py-4 border-t border-border text-center text-xs sm:text-sm text-muted-foreground">
         <div className="flex flex-col items-center justify-center space-y-1 sm:space-y-2">
           <div className="flex items-center space-x-2">
-            <img src="/logo.png" alt="Git Game Logo" className="h-5 w-5 sm:h-6 sm:w-6" />
+            <img 
+              src="/logo.png" 
+              alt="Git Game Logo" 
+              className="h-5 w-5 sm:h-6 sm:w-6" 
+              loading="lazy"
+              decoding="async"
+              width="24"
+              height="24"
+            />
             <p className="font-medium">Git Game</p>
           </div>
           <div className="flex items-center justify-center space-x-2">

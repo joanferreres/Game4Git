@@ -99,7 +99,7 @@ const GdbLearning: React.FC = () => {
         <meta name="keywords" content="gdb tutorial, learn gdb, gdb cheat sheet, gdb debugger" />
         <link rel="canonical" href="https://game4git.games/gdb" data-dynamic-canonical="true" />
       </Helmet>
-      <header className="mb-4 sm:mb-6 relative">
+      <header className="mb-4 sm:mb-6 relative min-h-[80px] sm:min-h-[100px]">
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
           <ThemeToggle />
           <LanguageSelector />
@@ -253,6 +253,7 @@ const GdbLearning: React.FC = () => {
                         size="sm"
                         className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                         onClick={() => navigator.clipboard.writeText('gdb ./your_program')}
+                        aria-label={t('common.copyCommand', 'Copy command')}
                       >
                         <Copy className="h-3.5 w-3.5" />
                       </Button>
@@ -357,7 +358,8 @@ const GdbLearning: React.FC = () => {
                                 <button
                                   onClick={() => handleCopy(item.cmd)}
                                   className="p-1.5 rounded-md text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-blue-500 transition-colors"
-                                  title="Copiar comando"
+                                  title={t('common.copyCommand', 'Copy command')}
+                                  aria-label={t('common.copyCommand', 'Copy command')}
                                 >
                                   {copiedCommand === item.cmd ? (
                                     <Check className="h-4 w-4 text-green-500" />
@@ -481,7 +483,15 @@ const GdbLearning: React.FC = () => {
       <footer className="mt-auto py-2 sm:py-3 border-t border-border text-center text-xs sm:text-sm text-muted-foreground">
         <div className="flex flex-col items-center justify-center space-y-1 sm:space-y-2">
           <div className="flex items-center space-x-2">
-            <img src="/logo.png" alt="Git Game Logo" className="h-5 w-5 sm:h-6 sm:w-6" />
+            <img 
+              src="/logo.png" 
+              alt="Git Game Logo" 
+              className="h-5 w-5 sm:h-6 sm:w-6" 
+              loading="lazy"
+              decoding="async"
+              width="24"
+              height="24"
+            />
             <p className="font-medium">Git Game</p>
           </div>
           <div className="flex items-center justify-center space-x-2">

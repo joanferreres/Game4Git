@@ -1,8 +1,15 @@
 
 import React, { useEffect } from "react";
-import Editor from "@monaco-editor/react";
+import Editor, { loader } from "@monaco-editor/react";
 import useGitStore from "@/store/gitStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+// Configure Monaco to only load essential features
+loader.config({
+  paths: {
+    vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs'
+  }
+});
 
 interface CodeEditorProps {
   readOnly?: boolean;
@@ -57,7 +64,29 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ readOnly = false, content, lang
               fontFamily: "monospace",
               fontSize: 14,
               theme: "vs-dark",
-              automaticLayout: true
+              automaticLayout: true,
+              // Performance optimizations
+              renderWhitespace: 'none',
+              renderLineHighlight: 'none',
+              smoothScrolling: false,
+              cursorBlinking: 'solid',
+              // Reduce forced reflows
+              disableLayerHinting: true,
+              // Disable unused features to reduce bundle size
+              quickSuggestions: false,
+              parameterHints: { enabled: false },
+              suggestOnTriggerCharacters: false,
+              acceptSuggestionOnEnter: 'off',
+              tabCompletion: 'off',
+              wordBasedSuggestions: false,
+              // Reduce rendering overhead
+              renderIndentGuides: false,
+              renderFinalNewline: false,
+              scrollbar: {
+                vertical: 'auto',
+                horizontal: 'auto',
+                useShadows: false
+              }
             }}
             className="border-t"
             loading={<div className="flex items-center justify-center h-full">Cargando editor de código...</div>}

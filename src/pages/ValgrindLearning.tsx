@@ -77,7 +77,7 @@ const ValgrindLearning: React.FC = () => {
         <meta name="keywords" content="valgrind tutorial, memory leak detection, valgrind cheat sheet" />
         <link rel="canonical" href="https://game4git.games/valgrind" data-dynamic-canonical="true" />
       </Helmet>
-      <header className="mb-4 sm:mb-6 relative">
+      <header className="mb-4 sm:mb-6 relative min-h-[80px] sm:min-h-[100px]">
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
           <ThemeToggle />
           <LanguageSelector />
@@ -226,6 +226,7 @@ const ValgrindLearning: React.FC = () => {
                       <button
                         className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-1"
                         onClick={() => handleCopy('valgrind --leak-check=full ./tu_programa', 'valgrind-init')}
+                        aria-label={t('common.copyCommand', 'Copy command')}
                       >
                         {copiedCommand === 'valgrind-init' ? (
                           <Check className="h-3.5 w-3.5" />
@@ -377,7 +378,8 @@ return 0;`}</code>
                         <button
                           onClick={() => handleCopy('valgrind ./tu_programa', 'basic')}
                           className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                          title="Copy command"
+                          title={t('common.copyCommand', 'Copy command')}
+                          aria-label={t('common.copyCommand', 'Copy command')}
                         >
                           {copiedCommand === 'basic' ? (
                             <Check className="h-4 w-4 text-green-500" />
@@ -428,7 +430,8 @@ return 0;`}</code>
                         <button
                           onClick={() => handleCopy('valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./tu_programa', 'leak-check')}
                           className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                          title="Copy command"
+                          title={t('common.copyCommand', 'Copy command')}
+                          aria-label={t('common.copyCommand', 'Copy command')}
                         >
                           {copiedCommand === 'leak-check' ? (
                             <Check className="h-4 w-4 text-green-500" />
@@ -495,7 +498,8 @@ return 0;`}</code>
                         <button
                           onClick={() => handleCopy('valgrind --tool=callgrind ./tu_programa', 'perf-check')}
                           className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                          title="Copy command"
+                          title={t('common.copyCommand', 'Copy command')}
+                          aria-label={t('common.copyCommand', 'Copy command')}
                         >
                           {copiedCommand === 'perf-check' ? (
                             <Check className="h-4 w-4 text-green-500" />
@@ -527,7 +531,8 @@ return 0;`}</code>
                             <button
                               onClick={() => handleCopy('kcachegrind callgrind.out.1234', 'kcachegrind')}
                               className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
-                              title="Copy command"
+                              title={t('common.copyCommand', 'Copy command')}
+                              aria-label={t('common.copyCommand', 'Copy command')}
                             >
                               {copiedCommand === 'kcachegrind' ? (
                                 <Check className="h-3.5 w-3.5 text-green-500" />
@@ -627,7 +632,8 @@ return 0;`}</code>
                               <button
                                 onClick={() => handleCopy(item.command, `cmd-${index}`)}
                                 className="p-1.5 text-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
-                                title="Copy command"
+                                title={t('common.copyCommand', 'Copy command')}
+                                aria-label={t('common.copyCommand', 'Copy command')}
                               >
                                 {copiedCommand === `cmd-${index}` ? (
                                   <Check className="h-4 w-4" />
@@ -741,7 +747,15 @@ return 0;`}</code>
       <footer className="mt-auto py-2 sm:py-3 border-t border-border text-center text-xs sm:text-sm text-muted-foreground">
         <div className="flex flex-col items-center justify-center space-y-1 sm:space-y-2">
           <div className="flex items-center space-x-2">
-            <img src="/logo.png" alt="Git Game Logo" className="h-5 w-5 sm:h-6 sm:w-6" />
+            <img 
+              src="/logo.png" 
+              alt="Git Game Logo" 
+              className="h-5 w-5 sm:h-6 sm:w-6" 
+              loading="lazy"
+              decoding="async"
+              width="24"
+              height="24"
+            />
             <p className="font-medium">Git Game</p>
           </div>
           <div className="flex items-center justify-center space-x-2">

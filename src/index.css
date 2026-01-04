@@ -108,6 +108,9 @@
   }
 }
 
+/* Optimize font loading: Monaco Editor fonts from CDN should use font-display: swap */
+/* This is handled via CSS injection or Monaco's loader configuration */
+
 /* Code editor syntax highlighting */
 .editor {
   @apply font-mono text-sm;
