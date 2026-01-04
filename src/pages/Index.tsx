@@ -351,15 +351,15 @@ const GitGame: React.FC = () => {
             <Button
               asChild
               size="sm"
-              className="h-8 px-3 bg-[#c9302c] hover:bg-[#a82824] text-white font-bold"
+              className="h-8 px-3 bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
             >
               <a
                 href="https://ko-fi.com/joanferreres"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Support on Ko-fi"
+                aria-label="Tip the creator on Ko-fi"
               >
-                ☕ Ko-fi
+                ☕ Tip
               </a>
             </Button>
           </div>
