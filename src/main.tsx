@@ -11,18 +11,13 @@ createRoot(document.getElementById("root")!).render(
   </HelmetProvider>
 );
 
-// SEO helpers: update canonical and hreflang on route/language changes
-const updateSeoLinks = () => {
+// SEO helpers: update only hreflang links on language changes
+const updateHreflangLinks = () => {
   try {
     const baseUrl = 'https://game4git.games';
     const path = window.location.pathname;
-
-    // Canonical without query params except lng for i18n pages
-    const canonical = document.querySelector('link[rel="canonical"][data-dynamic-canonical="true"]');
-    if (canonical) {
-      const canonicalUrl = path === '/' ? `${baseUrl}/` : `${baseUrl}${path}`;
-      canonical.setAttribute('href', canonicalUrl);
-    }
+    const searchParams = new URLSearchParams(window.location.search);
+    const currentLng = searchParams.get('lng');
 
     // Update alternate links
     const locales = ['en', 'es', 'ca', 'fr'];
@@ -30,10 +25,15 @@ const updateSeoLinks = () => {
     altNodes.forEach((node) => {
       const hreflang = node.getAttribute('hreflang');
       if (!hreflang) return;
+
+      // For pages with lng parameter, include it in hreflang links
+      // For pages without lng parameter, use clean URLs
       if (hreflang === 'x-default') {
         node.setAttribute('href', `${baseUrl}${path}`);
       } else if (locales.includes(hreflang)) {
-        node.setAttribute('href', `${baseUrl}${path}?lng=${hreflang}`);
+        // Only add lng param if this page has lng parameter
+        const href = currentLng ? `${baseUrl}${path}?lng=${hreflang}` : `${baseUrl}${path}`;
+        node.setAttribute('href', href);
       }
     });
   } catch (_) {
@@ -41,7 +41,7 @@ const updateSeoLinks = () => {
   }
 };
 
-window.addEventListener('popstate', updateSeoLinks);
-window.addEventListener('load', updateSeoLinks);
+window.addEventListener('popstate', updateHreflangLinks);
+window.addEventListener('load', updateHreflangLinks);
 // Many routers dispatch a navigation event; as a fallback, poll shortly after mount
-setTimeout(updateSeoLinks, 0);
+setTimeout(updateHreflangLinks, 0);

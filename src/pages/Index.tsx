@@ -67,7 +67,7 @@ const GitGame: React.FC = () => {
         <title>Game4Git: Interactive Git Learning Game</title>
         <meta name="description" content="Master Git commands, branching, and merging with this visual interactive playground. No installation required." />
         <meta name="keywords" content="git game, learn git, git playground, git visualizer" />
-        <link rel="canonical" href="https://game4git.games/" data-dynamic-canonical="true" />
+        <link rel="canonical" href="https://game4git.games/" />
       </Helmet>
       <WelcomeBanner />
 
@@ -318,15 +318,19 @@ const GitGame: React.FC = () => {
       <footer className="mt-6 sm:mt-8 py-3 sm:py-4 border-t border-border text-center text-xs sm:text-sm text-muted-foreground">
         <div className="flex flex-col items-center justify-center space-y-1 sm:space-y-2">
           <div className="flex items-center space-x-2">
-            <img 
-              src="/logo.png" 
-              alt="Git Game Logo" 
-              className="h-5 w-5 sm:h-6 sm:w-6" 
-              loading="lazy"
-              decoding="async"
-              width="24"
-              height="24"
-            />
+            <picture>
+              <source srcSet="/logo-24.webp" type="image/webp" />
+              <source srcSet="/logo-24.png" type="image/png" />
+              <img 
+                src="/logo-24.png" 
+                alt="Git Game Logo" 
+                className="h-5 w-5 sm:h-6 sm:w-6" 
+                loading="lazy"
+                decoding="async"
+                width="24"
+                height="24"
+              />
+            </picture>
             <p className="font-medium">Git Game</p>
           </div>
           <div className="flex items-center justify-center space-x-2">

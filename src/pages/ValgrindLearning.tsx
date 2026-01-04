@@ -75,7 +75,7 @@ const ValgrindLearning: React.FC = () => {
         <title>Learn Valgrind - Memory Leak Detection | Game4Git</title>
         <meta name="description" content="Understand memory management and detect leaks with Valgrind. Interactive guide for Memcheck and cache profiling." />
         <meta name="keywords" content="valgrind tutorial, memory leak detection, valgrind cheat sheet" />
-        <link rel="canonical" href="https://game4git.games/valgrind" data-dynamic-canonical="true" />
+        <link rel="canonical" href="https://game4git.games/valgrind" />
       </Helmet>
       <header className="mb-4 sm:mb-6 relative min-h-[80px] sm:min-h-[100px]">
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
@@ -747,15 +747,19 @@ return 0;`}</code>
       <footer className="mt-auto py-2 sm:py-3 border-t border-border text-center text-xs sm:text-sm text-muted-foreground">
         <div className="flex flex-col items-center justify-center space-y-1 sm:space-y-2">
           <div className="flex items-center space-x-2">
-            <img 
-              src="/logo.png" 
-              alt="Git Game Logo" 
-              className="h-5 w-5 sm:h-6 sm:w-6" 
-              loading="lazy"
-              decoding="async"
-              width="24"
-              height="24"
-            />
+            <picture>
+              <source srcSet="/logo-24.webp" type="image/webp" />
+              <source srcSet="/logo-24.png" type="image/png" />
+              <img 
+                src="/logo-24.png" 
+                alt="Git Game Logo" 
+                className="h-5 w-5 sm:h-6 sm:w-6" 
+                loading="lazy"
+                decoding="async"
+                width="24"
+                height="24"
+              />
+            </picture>
             <p className="font-medium">Git Game</p>
           </div>
           <div className="flex items-center justify-center space-x-2">

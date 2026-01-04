@@ -97,7 +97,7 @@ const GdbLearning: React.FC = () => {
         <title>Learn GDB Debugger - Interactive Tutorial | Game4Git</title>
         <meta name="description" content="Master GDB debugging with our interactive cheat sheet and playground. Learn breakpoints, stepping, and memory inspection." />
         <meta name="keywords" content="gdb tutorial, learn gdb, gdb cheat sheet, gdb debugger" />
-        <link rel="canonical" href="https://game4git.games/gdb" data-dynamic-canonical="true" />
+        <link rel="canonical" href="https://game4git.games/gdb" />
       </Helmet>
       <header className="mb-4 sm:mb-6 relative min-h-[80px] sm:min-h-[100px]">
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
@@ -483,15 +483,19 @@ const GdbLearning: React.FC = () => {
       <footer className="mt-auto py-2 sm:py-3 border-t border-border text-center text-xs sm:text-sm text-muted-foreground">
         <div className="flex flex-col items-center justify-center space-y-1 sm:space-y-2">
           <div className="flex items-center space-x-2">
-            <img 
-              src="/logo.png" 
-              alt="Git Game Logo" 
-              className="h-5 w-5 sm:h-6 sm:w-6" 
-              loading="lazy"
-              decoding="async"
-              width="24"
-              height="24"
-            />
+            <picture>
+              <source srcSet="/logo-24.webp" type="image/webp" />
+              <source srcSet="/logo-24.png" type="image/png" />
+              <img 
+                src="/logo-24.png" 
+                alt="Git Game Logo" 
+                className="h-5 w-5 sm:h-6 sm:w-6" 
+                loading="lazy"
+                decoding="async"
+                width="24"
+                height="24"
+              />
+            </picture>
             <p className="font-medium">Git Game</p>
           </div>
           <div className="flex items-center justify-center space-x-2">

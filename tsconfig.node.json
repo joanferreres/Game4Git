@@ -18,7 +18,8 @@
   "include": [
     "vite.config.ts",
     "vite.config.*.ts",
-    "vite.resolve.ts"
+    "vite.resolve.ts",
+    "vite-plugin-css-preload.ts"
   ],
   "exclude": ["node_modules"]
 }

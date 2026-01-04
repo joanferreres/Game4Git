@@ -4,10 +4,15 @@ import Editor, { loader } from "@monaco-editor/react";
 import useGitStore from "@/store/gitStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-// Configure Monaco to only load essential features
+// Configure Monaco to only load essential features and optimize loading
 loader.config({
   paths: {
     vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs'
+  },
+  'vs/nls': {
+    availableLanguages: {
+      '*': 'en' // Only load English to reduce bundle size
+    }
   }
 });
 
