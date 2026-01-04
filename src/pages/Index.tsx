@@ -368,7 +368,7 @@ const GitGame: React.FC = () => {
 };
 
 // Separate component for GitGraph that only loads when visible
-const GitGraphContainer: React.FC<{ t: (key: string, fallback?: string) => string }> = ({ t }) => {
+const GitGraphContainer: React.FC<{ t: ReturnType<typeof useTranslation>['t'] }> = ({ t }) => {
   const [ref, isInView] = useInView<HTMLDivElement>({ rootMargin: '200px', triggerOnce: true });
   
   return (
