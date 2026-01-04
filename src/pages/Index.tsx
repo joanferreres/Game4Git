@@ -6,7 +6,6 @@ import { useInView } from "@/hooks/useInView";
 
 // Lazy load heavy components to improve initial LCP
 const CodeEditor = lazy(() => import("@/components/CodeEditor"));
-const GitGraph = lazy(() => import("@/components/GitGraph"));
 import GitControls from "@/components/GitControls";
 import GitHistory from "@/components/GitHistory";
 import WelcomeBanner from "@/components/WelcomeBanner";
@@ -370,26 +369,28 @@ const GitGame: React.FC = () => {
 // Separate component for GitGraph that only loads when visible
 const GitGraphContainer: React.FC<{ t: ReturnType<typeof useTranslation>['t'] }> = ({ t }) => {
   const [ref, isInView] = useInView<HTMLDivElement>({ rootMargin: '200px', triggerOnce: true });
+  const [GitGraphComponent, setGitGraphComponent] = useState<React.ComponentType | null>(null);
+  
+  // Only import GitGraph when it becomes visible
+  useEffect(() => {
+    if (isInView && !GitGraphComponent) {
+      import("@/components/GitGraph").then((module) => {
+        setGitGraphComponent(() => module.default);
+      });
+    }
+  }, [isInView, GitGraphComponent]);
+  
+  const LoadingPlaceholder = (
+    <Card className="w-full h-full flex items-center justify-center">
+      <CardContent className="text-center p-4 sm:p-6">
+        <p className="text-sm text-muted-foreground">{t('common.loading', 'Loading graph...')}</p>
+      </CardContent>
+    </Card>
+  );
   
   return (
     <div ref={ref} className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px]">
-      {isInView ? (
-        <Suspense fallback={
-          <Card className="w-full h-full flex items-center justify-center">
-            <CardContent className="text-center p-4 sm:p-6">
-              <p className="text-sm text-muted-foreground">{t('common.loading', 'Loading graph...')}</p>
-            </CardContent>
-          </Card>
-        }>
-          <GitGraph />
-        </Suspense>
-      ) : (
-        <Card className="w-full h-full flex items-center justify-center">
-          <CardContent className="text-center p-4 sm:p-6">
-            <p className="text-sm text-muted-foreground">{t('common.loading', 'Loading graph...')}</p>
-          </CardContent>
-        </Card>
-      )}
+      {GitGraphComponent ? <GitGraphComponent /> : LoadingPlaceholder}
     </div>
   );
 };
