@@ -2,6 +2,7 @@ import React, { useState, useEffect, lazy, Suspense } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Helmet } from 'react-helmet-async';
 import DiffViewer from "@/components/DiffViewer";
+import { useInView } from "@/hooks/useInView";
 
 // Lazy load heavy components to improve initial LCP
 const CodeEditor = lazy(() => import("@/components/CodeEditor"));
@@ -235,12 +236,8 @@ const GitGame: React.FC = () => {
           </Suspense>
         </div>
 
-        {/* Middle Column - Git Graph */}
-        <div className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px]">
-          <Suspense fallback={<Card className="w-full h-full flex items-center justify-center"><CardContent className="text-center p-4 sm:p-6"><p className="text-sm text-muted-foreground">{t('common.loading', 'Loading graph...')}</p></CardContent></Card>}>
-            <GitGraph />
-          </Suspense>
-        </div>
+        {/* Middle Column - Git Graph - loads when visible */}
+        <GitGraphContainer t={t} />
 
         {/* Right Column - Diff or Selected Commit View */}
         <div className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] md:col-span-2 lg:col-span-1">
@@ -366,6 +363,33 @@ const GitGame: React.FC = () => {
           <p className="text-xs">Built with React, TypeScript and TailwindCSS. Learn Git concepts visually.</p>
         </div>
       </footer>
+    </div>
+  );
+};
+
+// Separate component for GitGraph that only loads when visible
+const GitGraphContainer: React.FC<{ t: (key: string, fallback?: string) => string }> = ({ t }) => {
+  const [ref, isInView] = useInView<HTMLDivElement>({ rootMargin: '200px', triggerOnce: true });
+  
+  return (
+    <div ref={ref} className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px]">
+      {isInView ? (
+        <Suspense fallback={
+          <Card className="w-full h-full flex items-center justify-center">
+            <CardContent className="text-center p-4 sm:p-6">
+              <p className="text-sm text-muted-foreground">{t('common.loading', 'Loading graph...')}</p>
+            </CardContent>
+          </Card>
+        }>
+          <GitGraph />
+        </Suspense>
+      ) : (
+        <Card className="w-full h-full flex items-center justify-center">
+          <CardContent className="text-center p-4 sm:p-6">
+            <p className="text-sm text-muted-foreground">{t('common.loading', 'Loading graph...')}</p>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };
