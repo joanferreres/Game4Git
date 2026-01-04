@@ -4,29 +4,24 @@ export function cssPreloadPlugin(): Plugin {
   return {
     name: 'css-preload',
     transformIndexHtml: {
-      order: 'pre',
+      order: 'post',
       handler(html) {
-        // Find CSS link tags and add preload hints
+        // Convert CSS link tags to non-blocking using media="print" trick
+        // This allows the page to render without waiting for CSS
         return html.replace(
-          /<link[^>]*rel=["']stylesheet["'][^>]*>/g,
-          (match) => {
-            // Extract href from link tag
-            const hrefMatch = match.match(/href=["']([^"']+)["']/);
-            if (!hrefMatch) return match;
-            
-            const href = hrefMatch[1];
-            // Only preload CSS from our own domain
-            if (!href.startsWith('/assets/') && !href.startsWith('./assets/')) {
+          /<link([^>]*?)rel=["']stylesheet["']([^>]*?)href=["']([^"']+\.css[^"']*)["']([^>]*)>/g,
+          (match, before, middle, href, after) => {
+            // Only apply to our assets, not external CSS
+            if (!href.includes('/assets/')) {
               return match;
             }
             
-            // Add preload link before stylesheet link
-            const preloadLink = `<link rel="preload" href="${href}" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="${href}"></noscript>`;
-            return preloadLink + '\n    ' + match;
+            // Create non-blocking CSS load with fallback
+            return `<link rel="preload" href="${href}" as="style" onload="this.onload=null;this.rel='stylesheet'"${before}${middle}${after}>
+    <noscript><link rel="stylesheet" href="${href}"></noscript>`;
           }
         );
       }
     }
   };
 }
-
