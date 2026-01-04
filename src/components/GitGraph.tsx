@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { useCallback, useMemo, useRef, useTransition } from "react";
 import {
   ReactFlow,
   Background,
@@ -59,6 +59,7 @@ const getResponsiveSpacing = () => {
 
 const GitGraph: React.FC = () => {
   const { repository, selectedCommitId, selectCommit } = useGitStore();
+  const [isPending, startTransition] = useTransition();
   const { t } = useTranslation();
   
   // Cache for branch lanes and commit positions to ensure stability
@@ -318,9 +319,13 @@ const GitGraph: React.FC = () => {
 
   const handleNodeClick = useCallback(
     (event: React.MouseEvent, node: Node) => {
-      selectCommit(node.id);
+      // Use startTransition to mark this update as non-urgent
+      // This improves INP by not blocking the main thread
+      startTransition(() => {
+        selectCommit(node.id);
+      });
     },
-    [selectCommit]
+    [selectCommit, startTransition]
   );
 
   return (
