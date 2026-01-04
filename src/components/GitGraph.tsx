@@ -347,6 +347,7 @@ const GitGraph: React.FC = () => {
             fitViewOptions={{
               padding: 0.2,
             }}
+            proOptions={{ hideAttribution: true }}
           >
             <Background color="#aaa" size={1.5} variant={BackgroundVariant.Dots} />
             <Controls

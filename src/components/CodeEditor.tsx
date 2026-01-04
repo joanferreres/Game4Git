@@ -25,6 +25,16 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ readOnly = false, content, lang
     setMounted(true);
   }, []);
 
+  // Add aria-label to the textarea for accessibility
+  useEffect(() => {
+    if (mounted) {
+      const textarea = document.querySelector('.editor-textarea') as HTMLTextAreaElement;
+      if (textarea) {
+        textarea.setAttribute('aria-label', 'Code editor for hello.c file');
+      }
+    }
+  }, [mounted]);
+
   const handleValueChange = (value: string) => {
     if (!readOnly) {
       updateWorkingChanges(value);
