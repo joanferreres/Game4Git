@@ -79,7 +79,6 @@ export default defineConfig({
     emptyOutDir: true,
     reportCompressedSize: false,
     chunkSizeWarningLimit: 1000,
-    modulePreload: { polyfill: false },
     rollupOptions: {
       output: {
         manualChunks(id) {

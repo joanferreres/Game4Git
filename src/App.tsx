@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { ThemeProvider } from "./components/theme-provider";
+import { Toaster as SonnerToaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { 
   createBrowserRouter,
@@ -7,8 +8,6 @@ import {
 } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
-
-const SonnerToaster = lazy(() => import("sonner").then(m => ({ default: m.Toaster })));
 
 // Lazy load pages to reduce initial bundle size
 const Index = lazy(() => import("./pages/Index"));
@@ -57,7 +56,7 @@ const App = () => (
   <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
     <TooltipProvider>
       <RouterProvider router={router} />
-      <Suspense fallback={null}><SonnerToaster position="bottom-right" /></Suspense>
+      <SonnerToaster position="bottom-right" />
       <Analytics />
       <SpeedInsights />
     </TooltipProvider>
