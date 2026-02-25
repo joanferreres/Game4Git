@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Editor from "react-simple-code-editor";
 import { highlight, languages } from "prismjs";
 import useGitStore from "@/store/gitStore";
@@ -19,21 +19,13 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ readOnly = false, content, lang
   const { workingChanges, updateWorkingChanges } = useGitStore();
   
   const editorContent = content ?? workingChanges;
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Add aria-label to the textarea for accessibility
-  useEffect(() => {
-    if (mounted) {
-      const textarea = document.querySelector('.editor-textarea') as HTMLTextAreaElement;
-      if (textarea) {
-        textarea.setAttribute('aria-label', 'Code editor for hello.c file');
-      }
+    const textarea = document.querySelector('.editor-textarea') as HTMLTextAreaElement;
+    if (textarea) {
+      textarea.setAttribute('aria-label', 'Code editor for hello.c file');
     }
-  }, [mounted]);
+  }, []);
 
   const handleValueChange = (value: string) => {
     if (!readOnly) {
@@ -63,25 +55,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ readOnly = false, content, lang
     
     return highlight(code, langGrammar, language);
   };
-
-  if (!mounted) {
-    return (
-      <Card className="w-full h-full overflow-hidden">
-        <CardHeader className="py-3 px-4">
-          <CardTitle className="text-sm flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-git-editor"></div>
-              hello.c
-            </div>
-            {readOnly && <span className="text-xs text-muted-foreground">(Read Only)</span>}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="p-0 h-[calc(100%-48px)] flex items-center justify-center">
-          <div className="text-sm text-muted-foreground">Cargando editor...</div>
-        </CardContent>
-      </Card>
-    );
-  }
 
   return (
     <Card className="w-full h-full overflow-hidden">

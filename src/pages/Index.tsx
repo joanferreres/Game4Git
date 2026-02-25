@@ -4,8 +4,8 @@ import { Helmet } from 'react-helmet-async';
 import DiffViewer from "@/components/DiffViewer";
 import { useInView } from "@/hooks/useInView";
 
-// Lazy load heavy components to improve initial LCP
-const CodeEditor = lazy(() => import("@/components/CodeEditor"));
+// CodeEditor is the LCP element — static import so it renders without extra network round-trip
+import CodeEditor from "@/components/CodeEditor";
 import GitControls from "@/components/GitControls";
 import GitHistory from "@/components/GitHistory";
 import WelcomeBanner from "@/components/WelcomeBanner";
@@ -362,9 +362,7 @@ const GitGame: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 flex-1 mb-4 md:mb-6">
         {/* Left Column - Code Editor */}
         <div id="editor-section" className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] scroll-mt-4">
-          <Suspense fallback={<Card className="w-full h-full flex items-center justify-center"><CardContent className="text-center p-4 sm:p-6"><p className="text-sm text-muted-foreground">{t('common.loading', 'Loading editor...')}</p></CardContent></Card>}>
-            <CodeEditor />
-          </Suspense>
+          <CodeEditor />
         </div>
 
         {/* Middle Column - Git Graph - loads when visible */}
@@ -375,12 +373,10 @@ const GitGame: React.FC = () => {
           {conflictExists ? (
             <ConflictResolver />
           ) : selectedCommit ? (
-            <Suspense fallback={<Card className="w-full h-full flex items-center justify-center"><CardContent className="text-center p-4 sm:p-6"><p className="text-sm text-muted-foreground">{t('common.loading', 'Loading...')}</p></CardContent></Card>}>
-              <CodeEditor
-                readOnly={true}
-                content={selectedCommit.content}
-              />
-            </Suspense>
+            <CodeEditor
+              readOnly={true}
+              content={selectedCommit.content}
+            />
           ) : showDiff && headCommit ? (
             <DiffViewer
               oldContent={headCommit.content}
