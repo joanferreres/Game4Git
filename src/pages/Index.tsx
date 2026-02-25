@@ -167,7 +167,7 @@ const GitGame: React.FC = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="text-xs rounded-full border-emerald-500/50 text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/30"
+                      className="text-xs rounded-full border-emerald-500/50 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30"
                       aria-label={t('home.openValgrind', 'Learn Valgrind memory tools')}
                     >
                       <Shield className="h-3 w-3 mr-1" />
