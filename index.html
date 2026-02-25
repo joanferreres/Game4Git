@@ -9,6 +9,8 @@
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
     <link rel="preconnect" href="https://cdn.gpteng.co" crossorigin />
     <link rel="dns-prefetch" href="https://cdn.gpteng.co" />
+    <link rel="preconnect" href="https://www.clarity.ms" crossorigin />
+    <link rel="dns-prefetch" href="https://www.clarity.ms" />
     
     <!-- Critical CSS: Prevent FOUC and enable first paint without external CSS -->
     <style>
@@ -88,7 +90,7 @@
     <link rel="manifest" href="/site.webmanifest" />
     
     <!-- Security Headers - Solo los que son válidos en meta tags -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com blob:; img-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net ws://localhost:* ws://127.0.0.1:* http://localhost:*; worker-src 'self' blob:; font-src 'self' https://cdn.jsdelivr.net data:;" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com https://www.clarity.ms blob:; img-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net https://www.clarity.ms https://clarity.ms ws://localhost:* ws://127.0.0.1:* http://localhost:*; worker-src 'self' blob:; font-src 'self' https://cdn.jsdelivr.net data:;" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="Referrer-Policy" content="no-referrer-when-downgrade" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
@@ -133,6 +135,14 @@
       }
     </script>
     
+    <!-- Microsoft Clarity (session recordings & heatmaps) -->
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "vmw9xs81kh");
+    </script>
   </head>
 
   <body>
