@@ -101,9 +101,7 @@ export default defineConfig({
           if (id.includes('node_modules/clsx') || id.includes('node_modules/tailwind-merge')) {
             return 'utils';
           }
-          if (id.includes('node_modules/i18next') || id.includes('node_modules/react-i18next')) {
-            return 'i18n';
-          }
+          // Do NOT chunk i18n separately: react-i18next uses React.createContext and needs React loaded first
           if (id.includes('node_modules/@xyflow') || id.includes('node_modules/d3-')) {
             return 'graph';
           }
