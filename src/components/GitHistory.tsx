@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { History } from "lucide-react";
 import useGitStore from "@/store/gitStore";
-import { format } from "date-fns";
+import format from "date-fns/format";
 import { useTranslation } from "react-i18next";
 
 const GitHistory: React.FC = () => {

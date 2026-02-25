@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,7 +24,8 @@ import {
 import useGitStore from "@/store/gitStore";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import GitTerminal from "./GitTerminal";
+
+const GitTerminal = lazy(() => import("./GitTerminal"));
 import {
   Dialog,
   DialogContent,
@@ -462,10 +463,14 @@ const GitControls: React.FC = () => {
     setUseTerminal(!useTerminal);
   };
 
-  // Contenido condicional basado en el modo de UI seleccionado
+  // Contenido condicional basado en el modo de UI seleccionado (GitTerminal lazy-loaded)
   const renderContent = () => {
     if (useTerminal) {
-      return <GitTerminal />;
+      return (
+        <Suspense fallback={<div className="p-4 text-sm text-muted-foreground animate-pulse">{t('common.loading', 'Loading terminal...')}</div>}>
+          <GitTerminal />
+        </Suspense>
+      );
     }
 
     return (
