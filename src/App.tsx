@@ -9,8 +9,8 @@ import {
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 
-// Lazy load pages to reduce initial bundle size
-const Index = lazy(() => import("./pages/Index"));
+// Home page: static import so Vite adds modulepreload, shortening the critical path
+import Index from "./pages/Index";
 const NotFound = lazy(() => import("./pages/NotFound"));
 const GdbLearning = lazy(() => import("./pages/GdbLearning"));
 const ValgrindLearning = lazy(() => import("./pages/ValgrindLearning"));
@@ -27,7 +27,7 @@ const PageLoader = () => (
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Suspense fallback={<PageLoader />}><Index /></Suspense>,
+    element: <Index />,
     errorElement: <Suspense fallback={<PageLoader />}><NotFound /></Suspense>,
     hydrateFallbackElement: <PageLoader />
   },

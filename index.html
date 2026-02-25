@@ -4,10 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Performance: Preconnect to critical third-party origins -->
+    <!-- Preconnect only to origins used in critical path (Clarity loads after window.load) -->
     <link rel="preconnect" href="https://cdn.gpteng.co" crossorigin />
-    <link rel="preconnect" href="https://www.clarity.ms" crossorigin />
-    <link rel="preconnect" href="https://scripts.clarity.ms" crossorigin />
     
     <!-- Critical CSS: Prevent FOUC and enable first paint without external CSS -->
     <style>
