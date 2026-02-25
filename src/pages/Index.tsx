@@ -529,8 +529,8 @@ const GitGame: React.FC = () => {
 
 // Separate component for GitGraph that only loads when visible
 const GitGraphContainer: React.FC<{ t: ReturnType<typeof useTranslation>['t'] }> = ({ t }) => {
-  // Mobile: defer GitGraph (60KB) until user scrolls to it. Small rootMargin = load only when near viewport.
-  const [ref, isInView] = useInView<HTMLDivElement>({ rootMargin: '50px', triggerOnce: true });
+  // Defer GitGraph (170KB) until it enters viewport - negative rootMargin delays load until 100px inside
+  const [ref, isInView] = useInView<HTMLDivElement>({ rootMargin: '-100px', triggerOnce: true });
   const [GitGraphComponent, setGitGraphComponent] = useState<React.ComponentType | null>(null);
   
   // Only import GitGraph when it becomes visible
