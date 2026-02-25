@@ -79,14 +79,35 @@ export default defineConfig({
     emptyOutDir: true,
     reportCompressedSize: false,
     chunkSizeWarningLimit: 1000,
+    modulePreload: { polyfill: false },
     rollupOptions: {
       output: {
-        manualChunks: {
-          react: ['react', 'react-dom', 'react-router-dom'],
-          ui: ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-popover'],
-          store: ['zustand'],
-          form: ['react-hook-form', '@hookform/resolvers', 'zod'],
-          utils: ['date-fns', 'clsx', 'tailwind-merge']
+        manualChunks(id) {
+          if (id.includes('node_modules/react-dom') ||
+              id.includes('node_modules/react/') ||
+              id.includes('node_modules/react-router') ||
+              id.includes('node_modules/@remix-run/router') ||
+              id.includes('node_modules/scheduler')) {
+            return 'react';
+          }
+          if (id.includes('node_modules/@radix-ui')) {
+            return 'ui';
+          }
+          if (id.includes('node_modules/lucide-react')) {
+            return 'icons';
+          }
+          if (id.includes('node_modules/zustand')) {
+            return 'store';
+          }
+          if (id.includes('node_modules/clsx') || id.includes('node_modules/tailwind-merge')) {
+            return 'utils';
+          }
+          if (id.includes('node_modules/i18next') || id.includes('node_modules/react-i18next')) {
+            return 'i18n';
+          }
+          if (id.includes('node_modules/@xyflow') || id.includes('node_modules/d3-')) {
+            return 'graph';
+          }
         },
         chunkFileNames: 'assets/[name].[hash].js',
         entryFileNames: 'assets/[name].[hash].js'

@@ -1,15 +1,14 @@
 import { lazy, Suspense } from "react";
 import { ThemeProvider } from "./components/theme-provider";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as SonnerToaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { 
   createBrowserRouter,
   RouterProvider
 } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+
+const SonnerToaster = lazy(() => import("sonner").then(m => ({ default: m.Toaster })));
 
 // Lazy load pages to reduce initial bundle size
 const Index = lazy(() => import("./pages/Index"));
@@ -24,8 +23,6 @@ const PageLoader = () => (
     <div className="animate-pulse text-muted-foreground">Loading...</div>
   </div>
 );
-
-const queryClient = new QueryClient();
 
 // Crear router with lazy-loaded pages
 const router = createBrowserRouter([
@@ -57,17 +54,14 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-      <TooltipProvider>
-        <RouterProvider router={router} />
-        <Toaster />
-        <SonnerToaster position="bottom-right" />
-        <Analytics />
-        <SpeedInsights debug={true} />
-      </TooltipProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
+  <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+    <TooltipProvider>
+      <RouterProvider router={router} />
+      <Suspense fallback={null}><SonnerToaster position="bottom-right" /></Suspense>
+      <Analytics />
+      <SpeedInsights />
+    </TooltipProvider>
+  </ThemeProvider>
 );
 
 export default App;
