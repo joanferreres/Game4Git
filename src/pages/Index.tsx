@@ -28,6 +28,7 @@ import { Link } from "react-router-dom";
 import { Bug, Shield } from "lucide-react";
 
 import LanguageSelector from "@/components/LanguageSelector";
+import { DeferUntilAfterPaint } from "@/components/DeferUntilAfterPaint";
 
 const GitGame: React.FC = () => {
   const [showDiff, setShowDiff] = useState(false);
@@ -113,8 +114,10 @@ const GitGame: React.FC = () => {
 
       <header className="mb-4 sm:mb-6 relative min-h-[80px] sm:min-h-[100px]">
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
-          <ThemeToggle />
-          <LanguageSelector />
+          <DeferUntilAfterPaint fallback={<div className="w-[88px] h-10" aria-hidden />}>
+            <ThemeToggle />
+            <LanguageSelector />
+          </DeferUntilAfterPaint>
         </div>
         <div className="text-center">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">{t('general.title')}</h1>
