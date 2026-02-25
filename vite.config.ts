@@ -3,7 +3,6 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { cssPreloadPlugin } from './vite-plugin-css-preload';
-import { preloadCriticalChunksPlugin } from './vite-plugin-preload-critical';
 
 export default defineConfig({
   server: {
@@ -65,7 +64,7 @@ export default defineConfig({
     port: 4173,
     strictPort: true,
   },
-  plugins: [react(), cssPreloadPlugin(), preloadCriticalChunksPlugin()],
+  plugins: [react(), cssPreloadPlugin()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
