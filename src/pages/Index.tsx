@@ -184,7 +184,8 @@ const GitGame: React.FC = () => {
         </div>
       </header>
 
-      {/* Floating Action Button for Usage Guide Sheet */}
+      {/* Floating Action Button for Usage Guide Sheet - deferred to reduce forced reflow */}
+      <DeferUntilAfterPaint fallback={<div className="fixed bottom-16 left-4 md:top-1/2 md:left-4 md:transform md:-translate-y-1/2 z-50 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full" aria-hidden />}>
       <Sheet>
         <SheetTrigger asChild>
           <Button
@@ -278,9 +279,12 @@ const GitGame: React.FC = () => {
           </div>
         </SheetContent>
       </Sheet>
+      </DeferUntilAfterPaint>
 
-      {/* Floating Action Button for Git History Sheet */}
-      <GitHistory />
+      {/* Floating Action Button for Git History Sheet - deferred to reduce forced reflow */}
+      <DeferUntilAfterPaint fallback={<div className="fixed top-1/2 right-4 transform -translate-y-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full" aria-hidden />}>
+        <GitHistory />
+      </DeferUntilAfterPaint>
 
       {/* Secondary banner: shown when user closed welcome without acting */}
       {!showQuickGuide && showSecondaryBanner && (
@@ -411,7 +415,13 @@ const GitGame: React.FC = () => {
         <GitControls />
       </div>
 
-      {/* FAQ Section */}
+      {/* FAQ Section - deferred (below fold) to reduce forced reflow */}
+      <DeferUntilAfterPaint fallback={
+        <section className="mt-4 sm:mt-6 mx-auto max-w-3xl w-full px-2">
+          <h2 className="text-xs uppercase tracking-wide text-muted-foreground mb-1">{t('home.faqTitle', 'FAQs')}</h2>
+          <div className="h-24 animate-pulse rounded-lg bg-muted/50" aria-hidden />
+        </section>
+      }>
       <section className="mt-4 sm:mt-6 mx-auto max-w-3xl w-full px-2">
         <h2 className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
           {t('home.faqTitle', 'FAQs')}
@@ -443,6 +453,7 @@ const GitGame: React.FC = () => {
           </AccordionItem>
         </Accordion>
       </section>
+      </DeferUntilAfterPaint>
 
       {/* Exercises Component */}
       <Suspense fallback={<div className="min-h-[200px] flex items-center justify-center"><p className="text-sm text-muted-foreground">{t('common.loading', 'Loading exercises...')}</p></div>}>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 /**
- * Defers rendering children until after the first paint.
- * Reduces forced reflows by delaying components that read layout (e.g. Radix DropdownMenu, Tooltip)
+ * Defers rendering children until after the first paint (double rAF).
+ * Reduces forced reflows by delaying components that read layout (e.g. Radix DropdownMenu, Tooltip, Sheet)
  * until the initial layout is complete.
  */
 export const DeferUntilAfterPaint: React.FC<{ children: React.ReactNode; fallback?: React.ReactNode }> = ({
@@ -12,8 +12,16 @@ export const DeferUntilAfterPaint: React.FC<{ children: React.ReactNode; fallbac
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const id = requestAnimationFrame(() => setReady(true));
-    return () => cancelAnimationFrame(id);
+    let cancelled = false;
+    const id = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (!cancelled) setReady(true);
+      });
+    });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(id);
+    };
   }, []);
 
   if (!ready) return <>{fallback}</>;
