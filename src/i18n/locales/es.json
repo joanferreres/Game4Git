@@ -45,13 +45,17 @@
   "welcome": {
     "title": "Bienvenido a Git Game",
     "intro": "Esta aplicación te ayuda a aprender y practicar con Git de forma visual e interactiva.",
+    "introShort": "Aprende Git haciendo. Edita código → Add → Commit. Prueba los retos guiados.",
+    "introShortImproved": "Edita una línea de código y haz tu primer commit en menos de 30 segundos. O prueba un reto guiado.",
+    "tryFirstChallenge": "Prueba el primer reto",
     "features": "Características principales:",
     "feature1": "Visualización gráfica del historial de Git",
     "feature2": "Creación y gestión de ramas",
     "feature3": "Simulación de conflictos y su resolución",
     "feature4": "Ejercicios prácticos para reforzar conceptos",
     "getStarted": "Para comenzar, prueba a modificar el código, confirmar cambios, crear ramas y explorar todas las funcionalidades de Git.",
-    "startNow": "Empezar ahora"
+    "startNow": "Empezar ahora",
+    "firstCommitCta": "Haz tu primer commit"
   },
   "git": {
     "commitGraph": "Gráfico de Commits",
@@ -101,6 +105,7 @@
     "placeholder": "Escribe comando git..."
   },
   "messages": {
+    "firstCommit": "🎉 ¡Tu primer commit! Bien hecho.",
     "changesStaged": "Cambios preparados para commit",
     "enterCommitMessage": "Por favor, introduce un mensaje de commit",
     "noChangesStaged": "No hay cambios preparados para commit. Usa Git Add primero.",
@@ -321,7 +326,8 @@
   },
   "visualization": {
     "title": "Visualización de Git",
-    "description": "Selecciona un commit del gráfico para ver su contenido, o usa \"Git Add\" para preparar cambios y ver las diferencias con el commit HEAD actual."
+    "description": "Selecciona un commit del gráfico para ver su contenido, o usa \"Git Add\" para preparar cambios y ver las diferencias con el commit HEAD actual.",
+    "cta": "Edita código y Add + Commit para ver el diff"
   },
   "gdb": {
     "concepts": {
@@ -990,8 +996,8 @@
         "resolveConflict": "Cambia a 'dev', intenta fusionar ambas ramas de características y resuelve el conflicto"
       },
       "conflict": {
-        "title": "¡Merge Conflict Detectado!",
-        "description": "Hay un merge conflict en tu archivo. Necesitas resolverlo manualmente editando el contenido a continuación.",
+        "title": "Conflicto de merge — resuélvelo abajo",
+        "description": "Edita el código: elimina los marcadores (<<<<<<<, =======, >>>>>>>) y combina ambas implementaciones. Luego haz clic en «Validar resolución».",
         "fileTitle": "Contenido del Archivo con Conflictos:",
         "placeholder": "Edita este código para resolver el conflicto...",
         "instruction": "Elimina los marcadores de conflicto (<<<<<<< HEAD, =======, >>>>>>>), y edita el código para crear una solución funcional.",
@@ -1001,20 +1007,19 @@
         "incomplete": "Has eliminado los marcadores de conflicto, pero tu solución debe incluir tanto la funcionalidad de registro como las mejoras de rendimiento."
       },
       "scenario": {
-        "title": "Escenario: Conflicto de Colaboración en Equipo",
-        "description": "Tu equipo está trabajando en una funcionalidad. Dos desarrolladores han modificado la misma función de diferentes maneras:",
-        "dev1": "Desarrollador 1 (rama feature-a)",
-        "dev1desc": "Implementó una versión enfocada en el rendimiento.",
-        "dev2": "Desarrollador 2 (rama feature-b)",
-        "dev2desc": "Implementó una versión con registros adicionales.",
-        "task": "Al fusionar estas ramas en dev, se produjo un conflicto. Tu tarea es resolver este conflicto creando una solución que conserve tanto las mejoras de rendimiento como la funcionalidad de registro."
+        "title": "Qué harás",
+        "description": "Tu equipo está trabajando en una funcionalidad. Dos desarrolladores han modificado la misma función de diferentes maneras.",
+        "descriptionSimple": "Dos desarrolladores cambiaron la misma función. Verás código con marcadores de conflicto (<<<<<<<, =======, >>>>>>>). Tu tarea:",
+        "step1": "Eliminar todos los marcadores de conflicto",
+        "step2": "Combinar ambas versiones: mantén el logging (console.log) Y el rendimiento (reduce / timestamp)",
+        "step3": "Haz clic en «Validar resolución» para comprobar tu respuesta"
       },
       "resolution": {
-        "title": "Cómo Resolver Este Conflicto:",
-        "step1": "Elimina los marcadores de conflicto (<<<<<<< HEAD, =======, >>>>>>>)",
-        "step2": "Combina ambas implementaciones para mantener las mejoras de rendimiento de feature-a",
-        "step3": "Conserva la funcionalidad de registro de la rama actual (HEAD)",
-        "step4": "Asegúrate de que el resultado sea JavaScript válido que se ejecute sin errores"
+        "title": "Lista — tu solución debe:",
+        "step1": "No quedar marcadores de conflicto (<<<<<<<, =======, >>>>>>>)",
+        "step2": "Incluir console.log (logging de feature-b)",
+        "step3": "Incluir reduce() o timestamp (rendimiento de feature-a)",
+        "step4": "Ser JavaScript válido"
       },
       "startExplanation": "Se te presentará un conflicto para resolver. Debes editar el código para crear una versión que combine correctamente ambas implementaciones.",
       "commands": {
@@ -1050,6 +1055,20 @@
     "seoIntroShort": "Aprende Git jugando con Game4Git, el juego para aprender Git. Visualiza ramas, resuelve retos interactivos y domina git practicando.",
     "seoIntroAnd": "y",
     "seoIntroTailShort": "conceptos básicos incluidos.",
+    "startFirstChallenge": "Empieza el primer reto",
+    "openGdb": "Aprender GDB",
+    "openValgrind": "Aprender Valgrind",
+    "gdbShort": "GDB",
+    "valgrindShort": "Valgrind",
+    "quickGuide": "Inicio rápido:",
+    "secondaryBanner": "¿Primera vez aquí?",
+    "secondaryBannerCta1": "Haz tu primer commit en 1 min",
+    "secondaryBannerCta2": "Prueba el reto Feature Branch",
+    "step1": "Edita",
+    "step2": "Add",
+    "step3": "Commit",
+    "footerGdb": "Aprender GDB",
+    "footerValgrind": "Aprender Valgrind",
     "faqTitle": "Preguntas frecuentes",
     "faq": {
       "q1": "¿Game4Git es gratis?",

@@ -314,15 +314,20 @@ const GitControls: React.FC = () => {
       toast.error("Please enter a commit message");
       return;
     }
-    
+
     if (!stagedChanges) {
       toast.error("No changes have been staged for commit. Use Git Add first.");
       return;
     }
-    
+
+    const wasFirstCommit = repository.commits.length === 1;
     createCommit(commitMessage);
     setCommitMessage("");
-    toast.success("Changes committed successfully");
+    if (wasFirstCommit) {
+      toast.success(t('messages.firstCommit', '🎉 Your first commit! Well done.'), { duration: 4000 });
+    } else {
+      toast.success("Changes committed successfully");
+    }
   };
   
   // Handle branch creation

@@ -79,7 +79,14 @@ const GitExercises: React.FC = () => {
   const [progress, setProgress] = useState(0);
   const [forceUpdate, setForceUpdate] = useState(0);
   const [conflictResolution, setConflictResolution] = useState("");
+  const [sheetOpen, setSheetOpen] = useState(false);
   const conflictTextareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const handler = () => setSheetOpen(true);
+    window.addEventListener('open-challenges', handler);
+    return () => window.removeEventListener('open-challenges', handler);
+  }, []);
   
   // Definir y actualizar los ejercicios en una función que depende de la traducción
   const getInitialExercises = useCallback((): Record<string, Exercise> => ({
@@ -580,6 +587,8 @@ const GitExercises: React.FC = () => {
   useEffect(() => {
     const exercise = exercises[selectedExercise];
     if (!exercise || !exercise.isStarted) return;
+    // merge-conflicts only completes via Validate button, not auto
+    if (selectedExercise === "merge-conflicts") return;
     
     // Calculate progress
     let completedSteps = 0;
@@ -649,15 +658,21 @@ const GitExercises: React.FC = () => {
       isCompleted: false
     }));
     
+    // For merge-conflicts: reset textarea and go back to start screen
+    if (selectedExercise === "merge-conflicts") {
+      setConflictResolution("");
+    }
+    
     setExercises(prev => {
       const updated = {...prev};
+      const keepStarted = selectedExercise !== "merge-conflicts";
       
       // Actualizar el ejercicio seleccionado con los textos traducidos actualizados
       updated[selectedExercise] = {
         ...exercise,
         steps: resetSteps,
         isCompleted: false,
-        isStarted: prev[selectedExercise]?.isStarted || false // Mantener como iniciado si ya lo estaba
+        isStarted: keepStarted ? (prev[selectedExercise]?.isStarted || false) : false
       };
       
       return updated;
@@ -679,16 +694,22 @@ const GitExercises: React.FC = () => {
     }
   };
   
+  const totalExercises = Object.keys(exercises).length;
+  const completedCount = Object.values(exercises).filter((e) => e.isCompleted).length;
+
   return (
-    <Sheet>
+    <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetTrigger asChild>
         <Button
           variant="default"
-          className="gap-1.5 sm:gap-2 fixed bottom-4 right-4 rounded-full px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 h-auto z-50 
+          className="gap-1.5 sm:gap-2 fixed bottom-4 right-4 rounded-full pl-2 sm:pl-3 md:pl-4 pr-3 sm:pr-4 md:pr-5 py-1 sm:py-1.5 md:py-2 h-auto z-50 
             bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-xl ring-2 ring-amber-300/50 hover:scale-105 transition-transform duration-200"
         >
           <Trophy className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" />
           <span className="text-[10px] sm:text-xs md:text-sm">{t("exercises.challenges", "Challenges")}</span>
+          <Badge variant="secondary" className="ml-1 h-4 min-w-4 px-1 text-[9px] bg-white/20 text-white border-0 font-semibold">
+            {completedCount}/{totalExercises}
+          </Badge>
         </Button>
       </SheetTrigger>
       <SheetContent 
@@ -767,31 +788,25 @@ const GitExercises: React.FC = () => {
                 
                 {!exercises["merge-conflicts"].isStarted ? (
                   <CardContent className="space-y-4 sm:space-y-6 p-3 sm:p-6">
-                    <div className="bg-amber-50 p-3 sm:p-4 rounded-md border border-amber-200 space-y-2 sm:space-y-3">
-                      <h3 className="font-medium text-amber-800 flex items-center gap-1 sm:gap-2 text-xs sm:text-sm">
-                        <AlertTriangle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-amber-600" />
-                        {t("exercises.mergeConflicts.scenario.title", "Scenario: Team Collaboration Conflict")}
+                    <div className="bg-amber-50 dark:bg-amber-950/30 p-3 sm:p-4 rounded-md border border-amber-200 dark:border-amber-800 space-y-2 sm:space-y-3">
+                      <h3 className="font-medium text-amber-800 dark:text-amber-200 flex items-center gap-1 sm:gap-2 text-xs sm:text-sm">
+                        <AlertTriangle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-amber-600 shrink-0" />
+                        {t("exercises.mergeConflicts.scenario.title", "What you'll do")}
                       </h3>
-                      <p className="text-xs sm:text-sm text-amber-700">
-                        {t("exercises.mergeConflicts.scenario.description", "Your team is working on a feature. Two developers have modified the same function in different ways:")}
+                      <p className="text-xs sm:text-sm text-amber-700 dark:text-amber-300">
+                        {t("exercises.mergeConflicts.scenario.descriptionSimple", "Two developers changed the same function. You will see code with conflict markers (<<<<<<<, =======, >>>>>>>). Your task:")}
                       </p>
-                      <div className="space-y-1 sm:space-y-2">
-                        <p className="text-xs sm:text-sm text-amber-700">
-                          <strong>{t("exercises.mergeConflicts.scenario.dev1", "Developer 1 (feature-a branch)")}</strong>: {t("exercises.mergeConflicts.scenario.dev1desc", "Implemented a version focused on performance.")}
-                        </p>
-                        <p className="text-xs sm:text-sm text-amber-700">
-                          <strong>{t("exercises.mergeConflicts.scenario.dev2", "Developer 2 (feature-b branch)")}</strong>: {t("exercises.mergeConflicts.scenario.dev2desc", "Implemented a version with additional logging.")}
-                        </p>
-                      </div>
-                      <p className="text-xs sm:text-sm text-amber-700">
-                        {t("exercises.mergeConflicts.scenario.task", "When merging these branches into dev, a conflict occurred. Your task is to resolve this conflict by creating a solution that preserves both the performance improvements and the logging functionality.")}
-                      </p>
+                      <ol className="list-decimal list-inside space-y-1 text-xs sm:text-sm text-amber-700 dark:text-amber-300">
+                        <li>{t("exercises.mergeConflicts.scenario.step1", "Remove all conflict markers")}</li>
+                        <li>{t("exercises.mergeConflicts.scenario.step2", "Merge both versions: keep logging (console.log) AND performance (reduce / timestamp)")}</li>
+                        <li>{t("exercises.mergeConflicts.scenario.step3", "Click «Validate Resolution» to check your answer")}</li>
+                      </ol>
                     </div>
                     
                     <div className="text-center space-y-1 sm:space-y-2">
-                      <h3 className="text-base sm:text-lg font-medium">{t("exercises.readyToStart", "¿Listo para empezar?")}</h3>
+                      <h3 className="text-base sm:text-lg font-medium">{t("exercises.readyToStart", "Ready to start?")}</h3>
                       <p className="text-xs sm:text-sm text-muted-foreground">
-                        {t("exercises.mergeConflicts.startExplanation", "You'll be presented with a conflict to resolve. You need to edit the code to create a version that combines both implementations correctly.")}
+                        {t("exercises.mergeConflicts.startExplanation", "Edit the conflicted code below, then click «Validate Resolution» to complete the exercise.")}
                       </p>
                     </div>
                     <div className="flex justify-center">
@@ -833,13 +848,13 @@ const GitExercises: React.FC = () => {
                   </CardContent>
                 ) : (
                   <CardContent className="space-y-3 sm:space-y-6 p-3 sm:p-6">
-                    <Alert className="bg-amber-50 border-amber-200">
-                      <AlertTriangle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-amber-600" />
-                      <AlertTitle className="text-amber-800 text-xs sm:text-sm">
-                        {t("exercises.mergeConflicts.conflict.title", "Merge Conflict Detected!")}
+                    <Alert className="bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800">
+                      <AlertTriangle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-amber-600 shrink-0" />
+                      <AlertTitle className="text-amber-800 dark:text-amber-200 text-xs sm:text-sm">
+                        {t("exercises.mergeConflicts.conflict.title", "Merge conflict — fix it below")}
                       </AlertTitle>
-                      <AlertDescription className="text-amber-700 mt-1 sm:mt-2 text-xs sm:text-sm">
-                        {t("exercises.mergeConflicts.conflict.description", "There is a merge conflict in your file. You need to resolve it manually by editing the content below.")}
+                      <AlertDescription className="text-amber-700 dark:text-amber-300 mt-1 sm:mt-2 text-xs sm:text-sm">
+                        {t("exercises.mergeConflicts.conflict.description", "Edit the code: remove the markers (<<<<<<<, =======, >>>>>>>) and combine both implementations. Then click «Validate Resolution».")}
                       </AlertDescription>
                     </Alert>
                     
@@ -893,13 +908,13 @@ function addFeature(data) {
                         />
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4">
-                        <div className="bg-blue-50 p-2 sm:p-4 rounded-md space-y-1.5 sm:space-y-3 border border-blue-100">
-                          <h4 className="font-medium text-blue-800 text-[10px] sm:text-xs">{t("exercises.mergeConflicts.resolution.title", "How to Resolve This Conflict:")}</h4>
-                          <ul className="space-y-1 sm:space-y-2 text-[9px] xs:text-[10px] sm:text-xs text-blue-700 list-disc pl-3 sm:pl-5">
-                            <li>{t("exercises.mergeConflicts.resolution.step1", "Remove the conflict markers (<<<<<<< HEAD, =======, >>>>>>>)")}</li>
-                            <li>{t("exercises.mergeConflicts.resolution.step2", "Combine both implementations to keep the performance improvements from feature-a")}</li>
-                            <li>{t("exercises.mergeConflicts.resolution.step3", "Preserve the logging functionality from the current branch (HEAD)")}</li>
-                            <li>{t("exercises.mergeConflicts.resolution.step4", "Make sure the result is valid JavaScript that would run without errors")}</li>
+                        <div className="bg-blue-50 dark:bg-blue-950/30 p-2 sm:p-4 rounded-md space-y-1.5 sm:space-y-3 border border-blue-100 dark:border-blue-900">
+                          <h4 className="font-medium text-blue-800 dark:text-blue-200 text-[10px] sm:text-xs">{t("exercises.mergeConflicts.resolution.title", "Checklist — your solution must:")}</h4>
+                          <ul className="space-y-1 sm:space-y-2 text-[9px] xs:text-[10px] sm:text-xs text-blue-700 dark:text-blue-300 list-disc pl-3 sm:pl-5">
+                            <li>{t("exercises.mergeConflicts.resolution.step1", "No conflict markers (<<<<<<<, =======, >>>>>>>) left")}</li>
+                            <li>{t("exercises.mergeConflicts.resolution.step2", "Include console.log (logging from feature-b)")}</li>
+                            <li>{t("exercises.mergeConflicts.resolution.step3", "Include reduce() or timestamp (performance from feature-a)")}</li>
+                            <li>{t("exercises.mergeConflicts.resolution.step4", "Be valid JavaScript")}</li>
                           </ul>
                         </div>
                         

@@ -42,6 +42,11 @@
     "title": "Game4Git",
     "subtitle": "Apprenez Git en jouant visuellement dans ce terrain de jeu interactif : explorez les branches, relevez des défis pratiques et maîtrisez Git avec Game4Git."
   },
+  "welcome": {
+    "introShortImproved": "Modifiez une ligne de code et faites votre premier commit en moins de 30 secondes. Ou essayez un défi guidé.",
+    "tryFirstChallenge": "Essayez le premier défi",
+    "firstCommitCta": "Faites votre premier commit"
+  },
   "git": {
     "commitGraph": "Graphe des commits",
     "controls": "Contrôles Git",
@@ -77,6 +82,11 @@
     "tip2": "Cliquez sur un commit pour afficher son code à droite.",
     "tip3": "Repérez le label HEAD pour connaître votre position actuelle.",
     "tip4": "Utilisez le bouton Challenges pour vous entraîner avec des exercices guidés."
+  },
+  "visualization": {
+    "title": "Visualisation Git",
+    "description": "Sélectionnez un commit du graphique pour voir son contenu, ou utilisez \"Git Add\" pour indexer les changements et voir les différences.",
+    "cta": "Modifiez le code et Add + Commit pour voir le diff"
   },
   "features": {
     "visualization": {
@@ -670,12 +680,61 @@
       },
       "proTip": "💡 Astuce : exécutez régulièrement Valgrind dans votre CI pour détecter rapidement les régressions."
     }
-  }
-  ,
+  },
+  "exercises": {
+    "mergeConflicts": {
+      "title": "Résolution de merge conflicts",
+      "tabTitle": "Merge Conflicts",
+      "description": "Apprenez à identifier et résoudre les merge conflicts qui surviennent lors de la fusion de branches avec des modifications concurrentes.",
+      "scenario": {
+        "title": "Ce que vous allez faire",
+        "descriptionSimple": "Deux développeurs ont modifié la même fonction. Vous verrez du code avec des marqueurs de conflit (<<<<<<<, =======, >>>>>>>). Votre tâche :",
+        "step1": "Supprimer tous les marqueurs de conflit",
+        "step2": "Fusionner les deux versions : gardez le logging (console.log) ET les performances (reduce / timestamp)",
+        "step3": "Cliquez sur « Valider la résolution » pour vérifier votre réponse"
+      },
+      "conflict": {
+        "title": "Merge conflict — résolvez-le ci-dessous",
+        "description": "Modifiez le code : supprimez les marqueurs (<<<<<<<, =======, >>>>>>>) et combinez les deux implémentations. Puis cliquez sur « Valider la résolution ».",
+        "fileTitle": "Contenu du fichier en conflit :",
+        "placeholder": "Modifiez ce code pour résoudre le conflit...",
+        "validate": "Valider la résolution",
+        "success": "Merge conflict résolu correctement !",
+        "error": "Il reste des conflits non résolus. Supprimez les marqueurs de conflit et fournissez une solution.",
+        "incomplete": "Vous avez supprimé les marqueurs de conflit, mais votre solution doit inclure à la fois le logging et les améliorations de performance."
+      },
+      "resolution": {
+        "title": "Liste de contrôle — votre solution doit :",
+        "step1": "Aucun marqueur de conflit (<<<<<<<, =======, >>>>>>>) restant",
+        "step2": "Inclure console.log (logging de feature-b)",
+        "step3": "Inclure reduce() ou timestamp (performance de feature-a)",
+        "step4": "Être du JavaScript valide"
+      },
+      "startExplanation": "Modifiez le code en conflit ci-dessous, puis cliquez sur « Valider la résolution » pour terminer l'exercice.",
+      "steps": {
+        "resolveConflict": "Résoudre le merge conflict"
+      },
+      "hints": {
+        "resolveConflict": "Modifiez le fichier en conflit pour supprimer les marqueurs et créer une solution fonctionnelle"
+      },
+      "commands": {
+        "afterResolve": "# Après avoir résolu le conflit dans l'éditeur",
+        "add": "git add .",
+        "commit": "git commit -m \"Fusion et résolution des conflits\""
+      },
+      "uiActions": {
+        "editFile": "Modifier le fichier pour résoudre le conflit",
+        "stageAndCommit": "Indexer et valider les changements résolus"
+      }
+    }
+  },
   "home": {
     "seoIntroShort": "Apprenez Git en jouant avec Game4Git, le jeu pour apprendre Git. Visualisez branches, relevez des défis interactifs et maîtrisez git en pratiquant.",
     "seoIntroAnd": "et",
     "seoIntroTailShort": "bases incluses.",
+    "secondaryBanner": "Première fois ici ?",
+    "secondaryBannerCta1": "Faites votre premier commit en 1 min",
+    "secondaryBannerCta2": "Essayez le défi Feature Branch",
     "faqTitle": "FAQ",
     "faq": {
       "q1": "Game4Git est-il gratuit ?",

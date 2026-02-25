@@ -33,7 +33,7 @@ const LanguageSelector: React.FC = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon" className="relative">
-          <Globe className="h-4 w-4 text-black" />
+          <Globe className="h-4 w-4 text-foreground" />
           <span className="absolute top-0 right-0 -mt-1 -mr-1 bg-primary text-primary-foreground text-[8px] font-bold rounded-full w-3 h-3 flex items-center justify-center uppercase">
             {i18n.language.substring(0, 2)}
           </span>

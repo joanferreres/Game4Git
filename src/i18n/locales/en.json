@@ -46,13 +46,17 @@
   "welcome": {
     "title": "Welcome to Git Game",
     "intro": "This application helps you learn and practice Git in a visual and interactive way.",
+    "introShort": "Learn Git by doing. Edit code → Add → Commit. Try the guided challenges.",
+    "introShortImproved": "Edit a line of code and make your first commit in under 30 seconds. Or try a guided challenge.",
+    "tryFirstChallenge": "Try first challenge",
     "features": "Main features:",
     "feature1": "Visual representation of Git history",
     "feature2": "Branch creation and management",
     "feature3": "Conflict simulation and resolution",
     "feature4": "Practical exercises to reinforce concepts",
     "getStarted": "To get started, try modifying the code, committing changes, creating branches, and exploring all Git features.",
-    "startNow": "Start now"
+    "startNow": "Start now",
+    "firstCommitCta": "Make your first commit"
   },
   "git": {
     "controls": "Git Controls",
@@ -93,6 +97,7 @@
     "placeholder": "Type git command..."
   },
   "messages": {
+    "firstCommit": "🎉 Your first commit! Well done.",
     "changesStaged": "Changes staged for commit",
     "enterCommitMessage": "Please enter a commit message",
     "noChangesStaged": "No changes have been staged for commit. Use Git Add first.",
@@ -310,7 +315,8 @@
   },
   "visualization": {
     "title": "Git Visualization",
-    "description": "Select a commit from the graph to view its contents, or use \"Git Add\" to stage changes and see the differences with the current HEAD commit."
+    "description": "Select a commit from the graph to view its contents, or use \"Git Add\" to stage changes and see the differences with the current HEAD commit.",
+    "cta": "Edit code and Add + Commit to see diff"
   },
   "gdb": {
     "ui": {
@@ -969,6 +975,31 @@
       "title": "Merge Conflicts Resolution",
       "tabTitle": "Merge Conflicts",
       "description": "Learn how to resolve merge conflicts when branches have competing changes.",
+      "scenario": {
+        "title": "What you'll do",
+        "descriptionSimple": "Two developers changed the same function. You will see code with conflict markers (<<<<<<<, =======, >>>>>>>). Your task:",
+        "step1": "Remove all conflict markers",
+        "step2": "Merge both versions: keep logging (console.log) AND performance (reduce / timestamp)",
+        "step3": "Click «Validate Resolution» to check your answer"
+      },
+      "conflict": {
+        "title": "Merge conflict — fix it below",
+        "description": "Edit the code: remove the markers (<<<<<<<, =======, >>>>>>>) and combine both implementations. Then click «Validate Resolution».",
+        "fileTitle": "Conflicted File Content:",
+        "placeholder": "Edit this code to resolve the conflict...",
+        "validate": "Validate Resolution",
+        "success": "Conflict resolved correctly!",
+        "error": "There are still unresolved conflicts. Remove the conflict markers and provide a solution.",
+        "incomplete": "You removed the conflict markers, but your solution must include both logging and performance improvements."
+      },
+      "resolution": {
+        "title": "Checklist — your solution must:",
+        "step1": "No conflict markers (<<<<<<<, =======, >>>>>>>) left",
+        "step2": "Include console.log (logging from feature-b)",
+        "step3": "Include reduce() or timestamp (performance from feature-a)",
+        "step4": "Be valid JavaScript"
+      },
+      "startExplanation": "Edit the conflicted code below, then click «Validate Resolution» to complete the exercise.",
       "objectives": {
         "1": "Create conflicting changes in different branches",
         "2": "Attempt to merge and encounter conflicts",
@@ -976,16 +1007,25 @@
         "4": "Complete the merge successfully"
       },
       "steps": {
+        "resolveConflict": "Resolve the merge conflict",
         "1": "Create two branches with conflicting changes",
         "2": "Attempt to merge them",
         "3": "Resolve the conflicts in the editor",
         "4": "Stage the resolved changes",
         "5": "Complete the merge commit"
       },
-      "uiActions": [
-        "Edit file to resolve conflict",
-        "Stage and commit resolved changes"
-      ]
+      "hints": {
+        "resolveConflict": "Edit the conflicted file to remove the conflict markers and create a working solution"
+      },
+      "commands": {
+        "afterResolve": "# After resolving the conflict in the editor",
+        "add": "git add .",
+        "commit": "git commit -m \"Merge and resolve conflicts\""
+      },
+      "uiActions": {
+        "editFile": "Edit file to resolve conflict",
+        "stageAndCommit": "Stage and commit resolved changes"
+      }
     },
     "close": "Close",
     "cancel": "Cancel",
@@ -1007,6 +1047,20 @@
     "seoIntroShort": "Learn Git by playing with Game4Git, the game for learning Git. Visualize branches, solve interactive challenges, and master git by practicing.",
     "seoIntroAnd": "and",
     "seoIntroTailShort": "basics included.",
+    "startFirstChallenge": "Start first challenge",
+    "openGdb": "Learn GDB debugger",
+    "openValgrind": "Learn Valgrind memory tools",
+    "gdbShort": "GDB",
+    "valgrindShort": "Valgrind",
+    "quickGuide": "Quick start:",
+    "secondaryBanner": "First time here?",
+    "secondaryBannerCta1": "Make your first commit in 1 min",
+    "secondaryBannerCta2": "Try Feature Branch challenge",
+    "step1": "Edit",
+    "step2": "Add",
+    "step3": "Commit",
+    "footerGdb": "Learn GDB",
+    "footerValgrind": "Learn Valgrind",
     "faqTitle": "FAQs",
     "faq": {
       "q1": "Is Game4Git free?",

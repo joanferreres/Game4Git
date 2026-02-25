@@ -42,6 +42,11 @@
     "title": "Game4Git",
     "subtitle": "Aprèn Git jugant: visualitza branques i merges, resol desafiaments i practica comandes reals en el millor joc per a aprendre Git."
   },
+  "welcome": {
+    "introShortImproved": "Edita una línia de codi i fes el teu primer commit en menys de 30 segons. O prova un repte guiat.",
+    "tryFirstChallenge": "Prova el primer repte",
+    "firstCommitCta": "Fes el teu primer commit"
+  },
   "git": {
     "commitGraph": "Gràfic de Commits",
     "controls": "Controls de Git",
@@ -89,6 +94,7 @@
     "placeholder": "Escriu comanda git..."
   },
   "messages": {
+    "firstCommit": "🎉 El teu primer commit! Molt bé.",
     "changesStaged": "Canvis preparats per commit",
     "enterCommitMessage": "Si us plau, introdueix un missatge de commit",
     "noChangesStaged": "No hi ha canvis preparats per commit. Utilitza Git Add primer.",
@@ -176,7 +182,8 @@
   },
   "visualization": {
     "title": "Visualització de Git",
-    "description": "Selecciona un commit del gràfic per veure el seu contingut, o utilitza \"Git Add\" per preparar canvis i veure les diferències amb el commit HEAD actual."
+    "description": "Selecciona un commit del gràfic per veure el seu contingut, o utilitza \"Git Add\" per preparar canvis i veure les diferències amb el commit HEAD actual.",
+    "cta": "Edita codi i Add + Commit per veure el diff"
   },
   "gitHistory": {
     "title": "Historial de Git",
@@ -314,8 +321,8 @@
         "resolveConflict": "Canvia a 'dev', intenta fusionar ambdues branques de característiques i resol el conflicte"
       },
       "conflict": {
-        "title": "Merge Conflict Detectat!",
-        "description": "Hi ha un merge conflict al teu arxiu. Necessites resoldre'l manualment editant el contingut a continuació.",
+        "title": "Conflicte de merge — resol-lo a sota",
+        "description": "Edita el codi: elimina els marcadors (<<<<<<<, =======, >>>>>>>) i combina ambdues implementacions. Després fes clic a «Validar Resolució».",
         "fileTitle": "Contingut de l'Arxiu amb Conflictes:",
         "placeholder": "Edita aquest codi per resoldre el conflicte...",
         "instruction": "Elimina els marcadors de conflicte (<<<<<<< HEAD, =======, >>>>>>>), i edita el codi per crear una solució funcional.",
@@ -325,22 +332,20 @@
         "incomplete": "Has eliminat els marcadors de conflicte, però la teva solució ha d'incloure tant la funcionalitat de registre com les millores de rendiment."
       },
       "scenario": {
-        "title": "Escenari: Conflicte de Col·laboració en Equip",
-        "description": "El teu equip està treballant en una funcionalitat. Dos desenvolupadors han modificat la mateixa funció de diferents maneres:",
-        "dev1": "Desenvolupador 1 (branca feature-a)",
-        "dev1desc": "Va implementar una versió enfocada en el rendiment.",
-        "dev2": "Desenvolupador 2 (branca feature-b)",
-        "dev2desc": "Va implementar una versió amb registres addicionals.",
-        "task": "En fusionar aquestes branques a dev, s'ha produït un conflicte. La teva tasca és resoldre aquest conflicte creant una solució que conservi tant les millores de rendiment com la funcionalitat de registre."
+        "title": "Què faràs",
+        "descriptionSimple": "Dos desenvolupadors han canviat la mateixa funció. Veuràs codi amb marcadors de conflicte (<<<<<<<, =======, >>>>>>>). La teva tasca:",
+        "step1": "Elimina tots els marcadors de conflicte",
+        "step2": "Combina ambdues versions: mantén el logging (console.log) I el rendiment (reduce / timestamp)",
+        "step3": "Fes clic a «Validar Resolució» per comprovar la teva resposta"
       },
       "resolution": {
-        "title": "Com Resoldre Aquest Conflicte:",
-        "step1": "Elimina els marcadors de conflicte (<<<<<<< HEAD, =======, >>>>>>>)",
-        "step2": "Combina ambdues implementacions per mantenir les millores de rendiment de feature-a",
-        "step3": "Conserva la funcionalitat de registre de la branca actual (HEAD)",
-        "step4": "Assegura't que el resultat sigui JavaScript vàlid que s'executi sense errors"
+        "title": "Llista — la teva solució ha de:",
+        "step1": "No quedar marcadors de conflicte (<<<<<<<, =======, >>>>>>>)",
+        "step2": "Incloure console.log (logging de feature-b)",
+        "step3": "Incloure reduce() o timestamp (rendiment de feature-a)",
+        "step4": "Ser JavaScript vàlid"
       },
-      "startExplanation": "Se't presentarà un conflicte per resoldre. Has d'editar el codi per crear una versió que combini correctament ambdues implementacions."
+      "startExplanation": "Edita el codi conflictiu a sota, després fes clic a «Validar Resolució» per completar l'exercici."
     }
   },
   "features": {
@@ -851,6 +856,9 @@
     "seoIntroShort": "Aprèn Git jugant amb Game4Git, el joc per a aprendre Git. Visualitza branques, resol desafiaments interactius i domina git practicant.",
     "seoIntroAnd": "i",
     "seoIntroTailShort": "conceptes bàsics inclosos.",
+    "secondaryBanner": "Primera vegada aquí?",
+    "secondaryBannerCta1": "Fes el teu primer commit en 1 min",
+    "secondaryBannerCta2": "Prova el repte Feature Branch",
     "faqTitle": "Preguntes freqüents",
     "faq": {
       "q1": "Game4Git és gratuït?",
