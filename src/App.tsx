@@ -7,6 +7,7 @@ import {
   RouterProvider,
   useLocation,
   useNavigate,
+  useNavigationType,
 } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -39,6 +40,7 @@ const PageLoader = () => (
 const LocaleSync = ({ children }: { children: ReactNode }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const navigationType = useNavigationType();
   const { i18n } = useTranslation();
 
   useEffect(() => {
@@ -64,6 +66,14 @@ const LocaleSync = ({ children }: { children: ReactNode }) => {
       void i18n.changeLanguage(locale);
     }
   }, [i18n, location.hash, location.pathname, location.search, navigate]);
+
+  useEffect(() => {
+    if (location.hash || navigationType === "POP") {
+      return;
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.hash, location.pathname, location.search, navigationType]);
 
   return <>{children}</>;
 };
