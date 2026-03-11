@@ -19,15 +19,15 @@ import {
   SUPPORTED_LOCALES,
 } from "@/lib/localizedRoutes";
 
-// Lazy load pages to reduce initial bundle size
-const Index = lazy(() => import("./pages/Index"));
-const NotFound = lazy(() => import("./pages/NotFound"));
-const GdbLearning = lazy(() => import("./pages/GdbLearning"));
-const ValgrindLearning = lazy(() => import("./pages/ValgrindLearning"));
-const GitPracticeGame = lazy(() => import("./pages/GitPracticeGame"));
-const GitBranchPractice = lazy(() => import("./pages/GitBranchPractice"));
-const GitMergeConflicts = lazy(() => import("./pages/GitMergeConflicts"));
-const ValgrindMemoryLeaks = lazy(() => import("./pages/ValgrindMemoryLeaks"));
+import Index from "./pages/Index";
+import NotFound from "./pages/NotFound";
+import GdbLearning from "./pages/GdbLearning";
+import ValgrindLearning from "./pages/ValgrindLearning";
+import GitPracticeGame from "./pages/GitPracticeGame";
+import GitBranchPractice from "./pages/GitBranchPractice";
+import GitMergeConflicts from "./pages/GitMergeConflicts";
+import ValgrindMemoryLeaks from "./pages/ValgrindMemoryLeaks";
+
 const Admin = lazy(() => import("./pages/Admin"));
 
 // Loading fallback component
@@ -80,9 +80,7 @@ const LocaleSync = ({ children }: { children: ReactNode }) => {
 
 const renderPage = (PageComponent: ComponentType) => (
   <LocaleSync>
-    <Suspense fallback={<PageLoader />}>
-      <PageComponent />
-    </Suspense>
+    <PageComponent />
   </LocaleSync>
 );
 

@@ -399,6 +399,10 @@ const buildLandingMarkup = (route, locale) => {
 
         <main class="mx-auto max-w-6xl space-y-8">
           <section class="relative overflow-hidden rounded-[32px] border border-border/60 bg-card/95 shadow-sm">
+            <div class="pointer-events-none absolute inset-0 opacity-80" aria-hidden="true">
+              <div class="absolute -left-16 top-0 h-40 w-40 rounded-full bg-primary/10 blur-3xl"></div>
+              <div class="absolute bottom-0 right-0 h-40 w-40 rounded-full bg-emerald-400/10 blur-3xl"></div>
+            </div>
             <div class="relative grid gap-8 px-5 py-6 sm:px-8 sm:py-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:px-10">
               <div class="flex flex-col justify-center">
                 <div class="inline-flex max-w-full items-center gap-2 self-start rounded-full border border-border/60 bg-background/80 px-4 py-1.5 text-foreground shadow-sm">
