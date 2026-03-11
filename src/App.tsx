@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, type ComponentType, type ReactNode } from "react";
+import { lazy, Suspense, useEffect, useState, type ComponentType, type ReactNode } from "react";
 import { ThemeProvider } from "./components/theme-provider";
 import { Toaster as SonnerToaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -36,6 +36,26 @@ const PageLoader = () => (
     <div className="animate-pulse text-muted-foreground">Loading...</div>
   </div>
 );
+
+const ClientEnhancements = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  return (
+    <>
+      <SonnerToaster position="bottom-right" />
+      <Analytics />
+      <SpeedInsights />
+    </>
+  );
+};
 
 const LocaleSync = ({ children }: { children: ReactNode }) => {
   const location = useLocation();
@@ -123,9 +143,7 @@ const App = () => (
   <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
     <TooltipProvider>
       <RouterProvider router={router} />
-      <SonnerToaster position="bottom-right" />
-      <Analytics />
-      <SpeedInsights />
+      <ClientEnhancements />
     </TooltipProvider>
   </ThemeProvider>
 );
