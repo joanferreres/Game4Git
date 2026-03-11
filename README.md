@@ -88,6 +88,14 @@ Learn Git like you learn to ride a bike: balance first, speed later. Git Game tu
 - Progressive learning: start simple, then explore advanced workflows.
 - Accessibility and responsiveness: keyboard-friendly, mobile-ready.
 
+### Automated PageSpeed reports
+
+- Configure URLs in `pagespeed.config.json`.
+- Run `npm run analyze:pagespeed` to fetch mobile and desktop reports from the PageSpeed Insights API.
+- Optional: set `PAGESPEED_API_KEY` for higher quota stability.
+- Results are written to `reports/pagespeed/latest.json` and `reports/pagespeed/latest.md`.
+- Timestamped snapshots are also written under `reports/pagespeed/<timestamp>/`.
+
 ### What makes it stand out
 
 - A complete journey: from Git fundamentals to real-world debugging tools.

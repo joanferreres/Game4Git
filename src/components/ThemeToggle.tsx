@@ -12,7 +12,9 @@ export function ThemeToggle() {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted) {
+    return <div className="h-10 w-10 rounded-md border border-input bg-background" aria-hidden />;
+  }
 
   return (
     <Button

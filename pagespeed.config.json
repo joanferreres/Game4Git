@@ -1,0 +1,22 @@
+{
+  "urls": [
+    "https://game4git.games/",
+    "https://game4git.games/gdb",
+    "https://game4git.games/valgrind",
+    "https://game4git.games/git-practice-game",
+    "https://game4git.games/git-branch-practice",
+    "https://game4git.games/git-merge-conflicts",
+    "https://game4git.games/valgrind-memory-leaks"
+  ],
+  "strategies": [
+    "mobile",
+    "desktop"
+  ],
+  "categories": [
+    "performance",
+    "accessibility",
+    "best-practices",
+    "seo"
+  ],
+  "locale": "en_US"
+}

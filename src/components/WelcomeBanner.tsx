@@ -15,15 +15,14 @@ interface WelcomeBannerProps {
  * Se mostrará solo una vez por sesión usando sessionStorage.
  */
 const WelcomeBanner: React.FC<WelcomeBannerProps> = ({ onStart, onOpenChallenges, onDismissWithoutCta }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const { t } = useTranslation();
-
-  useEffect(() => {
-    const bannerDismissed = sessionStorage.getItem('welcomeBannerDismissed');
-    if (!bannerDismissed) {
-      setIsVisible(true);
+  const [isVisible, setIsVisible] = useState(() => {
+    if (typeof window === "undefined") {
+      return false;
     }
-  }, []);
+
+    return !window.sessionStorage.getItem("welcomeBannerDismissed");
+  });
+  const { t } = useTranslation();
 
   const closeBanner = (withCta: boolean) => {
     setIsVisible(false);

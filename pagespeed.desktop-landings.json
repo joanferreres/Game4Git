@@ -1,0 +1,17 @@
+{
+  "urls": [
+    "https://game4git.games/git-practice-game",
+    "https://game4git.games/git-branch-practice",
+    "https://game4git.games/git-merge-conflicts"
+  ],
+  "strategies": [
+    "desktop"
+  ],
+  "categories": [
+    "performance",
+    "accessibility",
+    "best-practices",
+    "seo"
+  ],
+  "locale": "en_US"
+}
