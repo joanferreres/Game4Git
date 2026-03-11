@@ -1,0 +1,726 @@
+{
+  "generatedAt": "2026-03-11T10:54:26.306Z",
+  "configPath": "/Users/joanferreres/Desktop/commit-quest-visualizer/pagespeed.config.json",
+  "outputDir": "/Users/joanferreres/Desktop/commit-quest-visualizer/reports/pagespeed-homecheck",
+  "strategies": [
+    "desktop"
+  ],
+  "categories": [
+    "performance",
+    "accessibility",
+    "best-practices",
+    "seo"
+  ],
+  "locale": "en_US",
+  "urls": [
+    "https://game4git.games/",
+    "https://game4git.games/gdb",
+    "https://game4git.games/valgrind",
+    "https://game4git.games/git-practice-game",
+    "https://game4git.games/git-branch-practice",
+    "https://game4git.games/git-merge-conflicts",
+    "https://game4git.games/valgrind-memory-leaks"
+  ],
+  "results": [
+    {
+      "status": "ok",
+      "requestedUrl": "https://game4git.games/",
+      "finalUrl": "https://game4git.games/",
+      "strategy": "desktop",
+      "fetchedAt": "2026-03-11T10:52:53.100Z",
+      "lighthouseVersion": "13.0.1",
+      "scores": {
+        "performance": 74,
+        "accessibility": 100,
+        "bestPractices": 96,
+        "seo": 100
+      },
+      "labMetrics": {
+        "FCP": {
+          "label": "First Contentful Paint",
+          "displayValue": "0.2 s",
+          "numericValue": 216.31355008026583,
+          "score": 1
+        },
+        "LCP": {
+          "label": "Largest Contentful Paint",
+          "displayValue": "1.0 s",
+          "numericValue": 1020.9660339219495,
+          "score": 0.94
+        },
+        "Speed Index": {
+          "label": "Speed Index",
+          "displayValue": "1.4 s",
+          "numericValue": 1391.0877912170356,
+          "score": 0.87
+        },
+        "TBT": {
+          "label": "Total Blocking Time",
+          "displayValue": "10 ms",
+          "numericValue": 9,
+          "score": 1
+        },
+        "CLS": {
+          "label": "Cumulative Layout Shift",
+          "displayValue": "0.656",
+          "numericValue": 0.6561264696322997,
+          "score": 0.08
+        },
+        "INP": null
+      },
+      "fieldData": {
+        "overallCategory": null,
+        "metrics": {
+          "LCP": null,
+          "INP": null,
+          "CLS": null,
+          "FCP": null,
+          "FID": null
+        }
+      },
+      "originFieldData": {
+        "overallCategory": null,
+        "metrics": {
+          "LCP": null,
+          "INP": null,
+          "CLS": null,
+          "FCP": null,
+          "FID": null
+        }
+      },
+      "topOpportunities": [
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "displayValue": "Est savings of 13 KiB",
+          "numericValue": 30
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "displayValue": "Est savings of 86 KiB",
+          "numericValue": 30
+        },
+        {
+          "id": "server-response-time",
+          "title": "Initial server response time was short",
+          "displayValue": "Root document took 0 ms",
+          "numericValue": 2
+        },
+        {
+          "id": "unminified-css",
+          "title": "Minify CSS",
+          "displayValue": "n/a",
+          "numericValue": 0
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "displayValue": "n/a",
+          "numericValue": 0
+        }
+      ],
+      "failedSeoAudits": []
+    },
+    {
+      "status": "ok",
+      "requestedUrl": "https://game4git.games/gdb",
+      "finalUrl": "https://game4git.games/gdb",
+      "strategy": "desktop",
+      "fetchedAt": "2026-03-11T10:53:07.083Z",
+      "lighthouseVersion": "13.0.1",
+      "scores": {
+        "performance": 94,
+        "accessibility": 100,
+        "bestPractices": 96,
+        "seo": 100
+      },
+      "labMetrics": {
+        "FCP": {
+          "label": "First Contentful Paint",
+          "displayValue": "0.2 s",
+          "numericValue": 214.26586508331064,
+          "score": 1
+        },
+        "LCP": {
+          "label": "Largest Contentful Paint",
+          "displayValue": "0.9 s",
+          "numericValue": 920.3887877499321,
+          "score": 0.96
+        },
+        "Speed Index": {
+          "label": "Speed Index",
+          "displayValue": "0.9 s",
+          "numericValue": 930.4141636467214,
+          "score": 0.98
+        },
+        "TBT": {
+          "label": "Total Blocking Time",
+          "displayValue": "10 ms",
+          "numericValue": 14,
+          "score": 1
+        },
+        "CLS": {
+          "label": "Cumulative Layout Shift",
+          "displayValue": "0.129",
+          "numericValue": 0.12891770833333335,
+          "score": 0.82
+        },
+        "INP": null
+      },
+      "fieldData": {
+        "overallCategory": null,
+        "metrics": {
+          "LCP": null,
+          "INP": null,
+          "CLS": null,
+          "FCP": null,
+          "FID": null
+        }
+      },
+      "originFieldData": {
+        "overallCategory": null,
+        "metrics": {
+          "LCP": null,
+          "INP": null,
+          "CLS": null,
+          "FCP": null,
+          "FID": null
+        }
+      },
+      "topOpportunities": [
+        {
+          "id": "server-response-time",
+          "title": "Initial server response time was short",
+          "displayValue": "Root document took 0 ms",
+          "numericValue": 1
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "displayValue": "n/a",
+          "numericValue": 0
+        },
+        {
+          "id": "unminified-css",
+          "title": "Minify CSS",
+          "displayValue": "n/a",
+          "numericValue": 0
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "displayValue": "Est savings of 57 KiB",
+          "numericValue": 0
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "displayValue": "Est savings of 15 KiB",
+          "numericValue": 0
+        }
+      ],
+      "failedSeoAudits": []
+    },
+    {
+      "status": "ok",
+      "requestedUrl": "https://game4git.games/valgrind",
+      "finalUrl": "https://game4git.games/valgrind",
+      "strategy": "desktop",
+      "fetchedAt": "2026-03-11T10:53:27.392Z",
+      "lighthouseVersion": "13.0.1",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "bestPractices": 96,
+        "seo": 100
+      },
+      "labMetrics": {
+        "FCP": {
+          "label": "First Contentful Paint",
+          "displayValue": "0.3 s",
+          "numericValue": 297.43087082155097,
+          "score": 1
+        },
+        "LCP": {
+          "label": "Largest Contentful Paint",
+          "displayValue": "0.3 s",
+          "numericValue": 297.43087082155097,
+          "score": 1
+        },
+        "Speed Index": {
+          "label": "Speed Index",
+          "displayValue": "0.3 s",
+          "numericValue": 297.43087082155097,
+          "score": 1
+        },
+        "TBT": {
+          "label": "Total Blocking Time",
+          "displayValue": "0 ms",
+          "numericValue": 0,
+          "score": 1
+        },
+        "CLS": {
+          "label": "Cumulative Layout Shift",
+          "displayValue": "0",
+          "numericValue": 0,
+          "score": 1
+        },
+        "INP": null
+      },
+      "fieldData": {
+        "overallCategory": null,
+        "metrics": {
+          "LCP": null,
+          "INP": null,
+          "CLS": null,
+          "FCP": null,
+          "FID": null
+        }
+      },
+      "originFieldData": {
+        "overallCategory": null,
+        "metrics": {
+          "LCP": null,
+          "INP": null,
+          "CLS": null,
+          "FCP": null,
+          "FID": null
+        }
+      },
+      "topOpportunities": [
+        {
+          "id": "server-response-time",
+          "title": "Initial server response time was short",
+          "displayValue": "Root document took 0 ms",
+          "numericValue": 2
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "displayValue": "n/a",
+          "numericValue": 0
+        },
+        {
+          "id": "unminified-css",
+          "title": "Minify CSS",
+          "displayValue": "n/a",
+          "numericValue": 0
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "displayValue": "n/a",
+          "numericValue": 0
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "displayValue": "n/a",
+          "numericValue": 0
+        }
+      ],
+      "failedSeoAudits": []
+    },
+    {
+      "status": "ok",
+      "requestedUrl": "https://game4git.games/git-practice-game",
+      "finalUrl": "https://game4git.games/git-practice-game",
+      "strategy": "desktop",
+      "fetchedAt": "2026-03-11T10:53:46.054Z",
+      "lighthouseVersion": "13.0.1",
+      "scores": {
+        "performance": 75,
+        "accessibility": 100,
+        "bestPractices": 96,
+        "seo": 100
+      },
+      "labMetrics": {
+        "FCP": {
+          "label": "First Contentful Paint",
+          "displayValue": "0.2 s",
+          "numericValue": 234.55117006761196,
+          "score": 1
+        },
+        "LCP": {
+          "label": "Largest Contentful Paint",
+          "displayValue": "0.6 s",
+          "numericValue": 583.2046802704479,
+          "score": 1
+        },
+        "Speed Index": {
+          "label": "Speed Index",
+          "displayValue": "1.3 s",
+          "numericValue": 1276.2256432022941,
+          "score": 0.91
+        },
+        "TBT": {
+          "label": "Total Blocking Time",
+          "displayValue": "0 ms",
+          "numericValue": 0,
+          "score": 1
+        },
+        "CLS": {
+          "label": "Cumulative Layout Shift",
+          "displayValue": "0.829",
+          "numericValue": 0.8292192343839863,
+          "score": 0.04
+        },
+        "INP": null
+      },
+      "fieldData": {
+        "overallCategory": null,
+        "metrics": {
+          "LCP": null,
+          "INP": null,
+          "CLS": null,
+          "FCP": null,
+          "FID": null
+        }
+      },
+      "originFieldData": {
+        "overallCategory": null,
+        "metrics": {
+          "LCP": null,
+          "INP": null,
+          "CLS": null,
+          "FCP": null,
+          "FID": null
+        }
+      },
+      "topOpportunities": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "displayValue": "Est savings of 57 KiB",
+          "numericValue": 40
+        },
+        {
+          "id": "server-response-time",
+          "title": "Initial server response time was short",
+          "displayValue": "Root document took 0 ms",
+          "numericValue": 1
+        },
+        {
+          "id": "redirects",
+          "title": "Avoid multiple page redirects",
+          "displayValue": "n/a",
+          "numericValue": 0
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "displayValue": "n/a",
+          "numericValue": 0
+        },
+        {
+          "id": "unminified-css",
+          "title": "Minify CSS",
+          "displayValue": "n/a",
+          "numericValue": 0
+        }
+      ],
+      "failedSeoAudits": []
+    },
+    {
+      "status": "ok",
+      "requestedUrl": "https://game4git.games/git-branch-practice",
+      "finalUrl": "https://game4git.games/git-branch-practice",
+      "strategy": "desktop",
+      "fetchedAt": "2026-03-11T10:53:57.388Z",
+      "lighthouseVersion": "13.0.1",
+      "scores": {
+        "performance": 76,
+        "accessibility": 100,
+        "bestPractices": 96,
+        "seo": 100
+      },
+      "labMetrics": {
+        "FCP": {
+          "label": "First Contentful Paint",
+          "displayValue": "0.3 s",
+          "numericValue": 327.5217100522732,
+          "score": 1
+        },
+        "LCP": {
+          "label": "Largest Contentful Paint",
+          "displayValue": "0.5 s",
+          "numericValue": 532.9564684291676,
+          "score": 1
+        },
+        "Speed Index": {
+          "label": "Speed Index",
+          "displayValue": "0.7 s",
+          "numericValue": 717.3750915026367,
+          "score": 1
+        },
+        "TBT": {
+          "label": "Total Blocking Time",
+          "displayValue": "0 ms",
+          "numericValue": 0,
+          "score": 1
+        },
+        "CLS": {
+          "label": "Cumulative Layout Shift",
+          "displayValue": "0.829",
+          "numericValue": 0.8292192343839863,
+          "score": 0.04
+        },
+        "INP": null
+      },
+      "fieldData": {
+        "overallCategory": null,
+        "metrics": {
+          "LCP": null,
+          "INP": null,
+          "CLS": null,
+          "FCP": null,
+          "FID": null
+        }
+      },
+      "originFieldData": {
+        "overallCategory": null,
+        "metrics": {
+          "LCP": null,
+          "INP": null,
+          "CLS": null,
+          "FCP": null,
+          "FID": null
+        }
+      },
+      "topOpportunities": [
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "displayValue": "Est savings of 14 KiB",
+          "numericValue": 40
+        },
+        {
+          "id": "server-response-time",
+          "title": "Initial server response time was short",
+          "displayValue": "Root document took 0 ms",
+          "numericValue": 2
+        },
+        {
+          "id": "redirects",
+          "title": "Avoid multiple page redirects",
+          "displayValue": "n/a",
+          "numericValue": 0
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "displayValue": "n/a",
+          "numericValue": 0
+        },
+        {
+          "id": "unminified-css",
+          "title": "Minify CSS",
+          "displayValue": "n/a",
+          "numericValue": 0
+        }
+      ],
+      "failedSeoAudits": []
+    },
+    {
+      "status": "ok",
+      "requestedUrl": "https://game4git.games/git-merge-conflicts",
+      "finalUrl": "https://game4git.games/git-merge-conflicts",
+      "strategy": "desktop",
+      "fetchedAt": "2026-03-11T10:54:12.195Z",
+      "lighthouseVersion": "13.0.1",
+      "scores": {
+        "performance": 75,
+        "accessibility": 100,
+        "bestPractices": 96,
+        "seo": 100
+      },
+      "labMetrics": {
+        "FCP": {
+          "label": "First Contentful Paint",
+          "displayValue": "0.4 s",
+          "numericValue": 449.57995557350193,
+          "score": 1
+        },
+        "LCP": {
+          "label": "Largest Contentful Paint",
+          "displayValue": "1.0 s",
+          "numericValue": 954.5396327499479,
+          "score": 0.95
+        },
+        "Speed Index": {
+          "label": "Speed Index",
+          "displayValue": "0.8 s",
+          "numericValue": 838.1110720471131,
+          "score": 0.99
+        },
+        "TBT": {
+          "label": "Total Blocking Time",
+          "displayValue": "0 ms",
+          "numericValue": 0,
+          "score": 1
+        },
+        "CLS": {
+          "label": "Cumulative Layout Shift",
+          "displayValue": "0.83",
+          "numericValue": 0.8298549918029191,
+          "score": 0.04
+        },
+        "INP": null
+      },
+      "fieldData": {
+        "overallCategory": null,
+        "metrics": {
+          "LCP": null,
+          "INP": null,
+          "CLS": null,
+          "FCP": null,
+          "FID": null
+        }
+      },
+      "originFieldData": {
+        "overallCategory": null,
+        "metrics": {
+          "LCP": null,
+          "INP": null,
+          "CLS": null,
+          "FCP": null,
+          "FID": null
+        }
+      },
+      "topOpportunities": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "displayValue": "Est savings of 57 KiB",
+          "numericValue": 30
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "displayValue": "Est savings of 14 KiB",
+          "numericValue": 30
+        },
+        {
+          "id": "server-response-time",
+          "title": "Initial server response time was short",
+          "displayValue": "Root document took 0 ms",
+          "numericValue": 2
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "displayValue": "n/a",
+          "numericValue": 0
+        },
+        {
+          "id": "redirects",
+          "title": "Avoid multiple page redirects",
+          "displayValue": "n/a",
+          "numericValue": 0
+        }
+      ],
+      "failedSeoAudits": []
+    },
+    {
+      "status": "ok",
+      "requestedUrl": "https://game4git.games/valgrind-memory-leaks",
+      "finalUrl": "https://game4git.games/valgrind-memory-leaks",
+      "strategy": "desktop",
+      "fetchedAt": "2026-03-11T10:54:26.306Z",
+      "lighthouseVersion": "13.0.1",
+      "scores": {
+        "performance": 76,
+        "accessibility": 100,
+        "bestPractices": 96,
+        "seo": 100
+      },
+      "labMetrics": {
+        "FCP": {
+          "label": "First Contentful Paint",
+          "displayValue": "0.4 s",
+          "numericValue": 408.91048675133834,
+          "score": 1
+        },
+        "LCP": {
+          "label": "Largest Contentful Paint",
+          "displayValue": "0.6 s",
+          "numericValue": 644.8545409709249,
+          "score": 0.99
+        },
+        "Speed Index": {
+          "label": "Speed Index",
+          "displayValue": "0.7 s",
+          "numericValue": 725.1002881437109,
+          "score": 1
+        },
+        "TBT": {
+          "label": "Total Blocking Time",
+          "displayValue": "0 ms",
+          "numericValue": 3.5,
+          "score": 1
+        },
+        "CLS": {
+          "label": "Cumulative Layout Shift",
+          "displayValue": "0.83",
+          "numericValue": 0.8298549918029191,
+          "score": 0.04
+        },
+        "INP": null
+      },
+      "fieldData": {
+        "overallCategory": null,
+        "metrics": {
+          "LCP": null,
+          "INP": null,
+          "CLS": null,
+          "FCP": null,
+          "FID": null
+        }
+      },
+      "originFieldData": {
+        "overallCategory": null,
+        "metrics": {
+          "LCP": null,
+          "INP": null,
+          "CLS": null,
+          "FCP": null,
+          "FID": null
+        }
+      },
+      "topOpportunities": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "displayValue": "Est savings of 57 KiB",
+          "numericValue": 40
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "displayValue": "Est savings of 14 KiB",
+          "numericValue": 20
+        },
+        {
+          "id": "server-response-time",
+          "title": "Initial server response time was short",
+          "displayValue": "Root document took 0 ms",
+          "numericValue": 3
+        },
+        {
+          "id": "unminified-javascript",
+          "title": "Minify JavaScript",
+          "displayValue": "n/a",
+          "numericValue": 0
+        },
+        {
+          "id": "unminified-css",
+          "title": "Minify CSS",
+          "displayValue": "n/a",
+          "numericValue": 0
+        }
+      ],
+      "failedSeoAudits": []
+    }
+  ]
+}
