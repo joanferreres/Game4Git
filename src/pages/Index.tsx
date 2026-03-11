@@ -1,6 +1,5 @@
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Helmet } from 'react-helmet-async';
 import DiffViewer from "@/components/DiffViewer";
 import { useInView } from "@/hooks/useInView";
 
@@ -17,7 +16,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Info, Sparkles, Play, Plus, ArrowDownUp, Upload, DownloadCloud, GitBranch as GitBranchIcon, GitMerge as GitMergeIcon, GitCommit as GitCommitIcon, Terminal as TerminalIcon, BookOpen, HelpCircle, CheckCircle2 } from "lucide-react";
+import { Info, Sparkles, Play, Plus, ArrowDownUp, Upload, DownloadCloud, GitBranch as GitBranchIcon, GitMerge as GitMergeIcon, GitCommit as GitCommitIcon, Terminal as TerminalIcon, BookOpen, HelpCircle, CheckCircle2, ArrowRight } from "lucide-react";
 
 import { useTranslation } from "react-i18next";
 import "../i18n"; // Importamos la configuración de i18n
@@ -29,6 +28,8 @@ import { Bug, Shield } from "lucide-react";
 
 import LanguageSelector from "@/components/LanguageSelector";
 import { DeferUntilAfterPaint } from "@/components/DeferUntilAfterPaint";
+import SeoHead from "@/components/SeoHead";
+import { useLocalizedPath } from "@/lib/localizedRoutes";
 
 const GitGame: React.FC = () => {
   const [showDiff, setShowDiff] = useState(false);
@@ -58,6 +59,13 @@ const GitGame: React.FC = () => {
     setValgrindEnabled(true);
   }, [setGdbEnabled, setValgrindEnabled]);
   const { t } = useTranslation();
+  const localizePath = useLocalizedPath();
+  const gdbPath = localizePath("/gdb");
+  const valgrindPath = localizePath("/valgrind");
+  const gitPracticeGamePath = localizePath("/git-practice-game");
+  const gitBranchPracticePath = localizePath("/git-branch-practice");
+  const gitMergeConflictsPath = localizePath("/git-merge-conflicts");
+  const valgrindMemoryLeaksPath = localizePath("/valgrind-memory-leaks");
 
   // Get the selected commit if any
   const selectedCommit = selectedCommitId
@@ -78,15 +86,36 @@ const GitGame: React.FC = () => {
 
   // Check if there's a pending merge conflict
   const conflictExists = hasPendingConflict();
+  const featuredGuides = [
+    {
+      href: gitPracticeGamePath,
+      title: t("landingPages.gitPracticeGame.heroTitle"),
+      description: t("landingPages.gitPracticeGame.heroDescription"),
+      icon: Sparkles,
+    },
+    {
+      href: gitBranchPracticePath,
+      title: t("landingPages.gitBranchPractice.heroTitle"),
+      description: t("landingPages.gitBranchPractice.heroDescription"),
+      icon: GitBranchIcon,
+    },
+    {
+      href: gitMergeConflictsPath,
+      title: t("landingPages.gitMergeConflicts.heroTitle"),
+      description: t("landingPages.gitMergeConflicts.heroDescription"),
+      icon: GitMergeIcon,
+    },
+    {
+      href: valgrindMemoryLeaksPath,
+      title: t("landingPages.valgrindMemoryLeaks.heroTitle"),
+      description: t("landingPages.valgrindMemoryLeaks.heroDescription"),
+      icon: Shield,
+    },
+  ];
 
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
-      <Helmet>
-        <title>Git Game - Learn Git Online | Interactive Git Learning Game</title>
-        <meta name="description" content="Play the best Git game online! Learn Git commands, branching, and merging with our interactive visual playground. Free Git learning game - no installation required. Perfect for beginners and advanced users." />
-        <meta name="keywords" content="git game, git game online, learn git game, git learning game, game git, git-game, git games, interactive git tutorial, git playground, git visualizer, git branch game, git challenges, git playground online" />
-        <link rel="canonical" href="https://game4git.games/" />
-      </Helmet>
+      <SeoHead page="home" />
       <WelcomeBanner
         onStart={() => {
           document.getElementById('editor-section')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -128,11 +157,11 @@ const GitGame: React.FC = () => {
                 'Learn Git by doing. Visualize branches and merges while running real commands. Try guided challenges or switch to the terminal anytime.'
               )}
               {" "}
-              <Link to="/gdb" className="underline hover:text-primary">GDB</Link>
+              <Link to={gdbPath} className="underline hover:text-primary">GDB</Link>
               {" "}
               {t('home.seoIntroAnd', 'and')}
               {" "}
-              <Link to="/valgrind" className="underline hover:text-primary">Valgrind</Link>
+              <Link to={valgrindPath} className="underline hover:text-primary">Valgrind</Link>
               {" "}
               {t('home.seoIntroTailShort', 'basics included.')}
             </p>
@@ -153,7 +182,7 @@ const GitGame: React.FC = () => {
             {(isGdbEnabled || isValgrindEnabled) && (
               <div className="flex gap-2">
                 {isGdbEnabled && (
-                  <Link to="/gdb">
+                  <Link to={gdbPath}>
                     <Button
                       variant="outline"
                       size="sm"
@@ -166,7 +195,7 @@ const GitGame: React.FC = () => {
                   </Link>
                 )}
                 {isValgrindEnabled && (
-                  <Link to="/valgrind">
+                  <Link to={valgrindPath}>
                     <Button
                       variant="outline"
                       size="sm"
@@ -411,6 +440,44 @@ const GitGame: React.FC = () => {
         <GitControls />
       </div>
 
+      <section className="mt-6 mx-auto max-w-6xl w-full">
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
+            {t("home.guidesTitle", "Popular guides")}
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            {t(
+              "home.guidesDescription",
+              "Start from the exact topic you want to practice and jump straight into the right challenge or debugging guide."
+            )}
+          </p>
+        </div>
+        <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {featuredGuides.map((guide) => {
+            const Icon = guide.icon;
+
+            return (
+              <Card key={guide.href} className="border-border/60 shadow-sm">
+                <CardContent className="p-5">
+                  <div className="flex items-center gap-2 text-sm font-medium">
+                    <Icon className="h-4 w-4 text-primary" />
+                    <span>{guide.title}</span>
+                  </div>
+                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{guide.description}</p>
+                  <Link
+                    to={guide.href}
+                    className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+                  >
+                    {t("home.guidesPrimaryCta", "Explore guide")}
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </section>
+
       {/* FAQ Section - deferred (below fold) to reduce forced reflow */}
       <DeferUntilAfterPaint fallback={
         <section className="mt-4 sm:mt-6 mx-auto max-w-3xl w-full px-2">
@@ -460,12 +527,12 @@ const GitGame: React.FC = () => {
       <footer className="mt-6 sm:mt-8 py-3 sm:py-4 border-t border-border text-center text-xs sm:text-sm text-muted-foreground">
         <div className="flex flex-col items-center justify-center space-y-2 sm:space-y-3">
           <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
-            <Link to="/gdb" className="text-primary hover:underline flex items-center gap-1">
+            <Link to={gdbPath} className="text-primary hover:underline flex items-center gap-1">
               <Bug className="h-3.5 w-3.5" />
               {t('home.footerGdb', 'Learn GDB')}
             </Link>
             <span className="text-muted-foreground/50">|</span>
-            <Link to="/valgrind" className="text-primary hover:underline flex items-center gap-1">
+            <Link to={valgrindPath} className="text-primary hover:underline flex items-center gap-1">
               <Shield className="h-3.5 w-3.5" />
               {t('home.footerValgrind', 'Learn Valgrind')}
             </Link>

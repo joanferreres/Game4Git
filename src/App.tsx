@@ -1,19 +1,32 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, type ComponentType, type ReactNode } from "react";
 import { ThemeProvider } from "./components/theme-provider";
 import { Toaster as SonnerToaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { 
   createBrowserRouter,
-  RouterProvider
+  RouterProvider,
+  useLocation,
+  useNavigate,
 } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { useTranslation } from "react-i18next";
+import {
+  getLocaleFromPathname,
+  getLocalizedPath,
+  isSupportedLocale,
+  SUPPORTED_LOCALES,
+} from "@/lib/localizedRoutes";
 
 // Lazy load pages to reduce initial bundle size
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const GdbLearning = lazy(() => import("./pages/GdbLearning"));
 const ValgrindLearning = lazy(() => import("./pages/ValgrindLearning"));
+const GitPracticeGame = lazy(() => import("./pages/GitPracticeGame"));
+const GitBranchPractice = lazy(() => import("./pages/GitBranchPractice"));
+const GitMergeConflicts = lazy(() => import("./pages/GitMergeConflicts"));
+const ValgrindMemoryLeaks = lazy(() => import("./pages/ValgrindMemoryLeaks"));
 const Admin = lazy(() => import("./pages/Admin"));
 
 // Loading fallback component
@@ -23,34 +36,80 @@ const PageLoader = () => (
   </div>
 );
 
-// Crear router with lazy-loaded pages
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Suspense fallback={<PageLoader />}><Index /></Suspense>,
-    errorElement: <Suspense fallback={<PageLoader />}><NotFound /></Suspense>,
-    hydrateFallbackElement: <PageLoader />
-  },
-  {
-    path: "/gdb",
-    element: <Suspense fallback={<PageLoader />}><GdbLearning /></Suspense>,
-    errorElement: <Suspense fallback={<PageLoader />}><NotFound /></Suspense>
-  },
-  {
-    path: "/valgrind",
-    element: <Suspense fallback={<PageLoader />}><ValgrindLearning /></Suspense>,
-    errorElement: <Suspense fallback={<PageLoader />}><NotFound /></Suspense>
-  },
+const LocaleSync = ({ children }: { children: ReactNode }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const legacyLocale = searchParams.get("lng");
+
+    if (isSupportedLocale(legacyLocale)) {
+      searchParams.delete("lng");
+      const nextPathname = getLocalizedPath(location.pathname, legacyLocale);
+      const nextSearch = searchParams.toString();
+      const nextUrl = `${nextPathname}${nextSearch ? `?${nextSearch}` : ""}${location.hash}`;
+      const currentUrl = `${location.pathname}${location.search}${location.hash}`;
+
+      if (nextUrl !== currentUrl) {
+        navigate(nextUrl, { replace: true });
+        return;
+      }
+    }
+
+    const locale = getLocaleFromPathname(location.pathname);
+
+    if (i18n.resolvedLanguage !== locale) {
+      void i18n.changeLanguage(locale);
+    }
+  }, [i18n, location.hash, location.pathname, location.search, navigate]);
+
+  return <>{children}</>;
+};
+
+const renderPage = (PageComponent: ComponentType) => (
+  <LocaleSync>
+    <Suspense fallback={<PageLoader />}>
+      <PageComponent />
+    </Suspense>
+  </LocaleSync>
+);
+
+const localizedPageDefinitions = [
+  { path: "/", component: Index },
+  { path: "/gdb", component: GdbLearning },
+  { path: "/valgrind", component: ValgrindLearning },
+  { path: "/git-practice-game", component: GitPracticeGame },
+  { path: "/git-branch-practice", component: GitBranchPractice },
+  { path: "/git-merge-conflicts", component: GitMergeConflicts },
+  { path: "/valgrind-memory-leaks", component: ValgrindMemoryLeaks },
+];
+
+const publicRoutes = [
+  ...localizedPageDefinitions.flatMap(({ path, component }) =>
+    SUPPORTED_LOCALES.map((locale) => ({
+      path: getLocalizedPath(path, locale),
+      element: renderPage(component),
+      errorElement: renderPage(NotFound),
+    }))
+  ),
   {
     path: "/admin",
-    element: <Suspense fallback={<PageLoader />}><Admin /></Suspense>,
-    errorElement: <Suspense fallback={<PageLoader />}><NotFound /></Suspense>
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <Admin />
+      </Suspense>
+    ),
+    errorElement: renderPage(NotFound),
   },
   {
     path: "*",
-    element: <Suspense fallback={<PageLoader />}><NotFound /></Suspense>
-  }
-]);
+    element: renderPage(NotFound),
+  },
+];
+
+const router = createBrowserRouter(publicRoutes);
 
 const App = () => (
   <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">

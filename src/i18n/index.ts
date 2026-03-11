@@ -34,9 +34,9 @@ const i18nConfig = {
   
   // Configuración del detector de idioma
   detection: {
-    order: ['localStorage', 'navigator', 'htmlTag'],
-    caches: ['localStorage'],
-    lookupLocalStorage: 'i18nextLng',
+    order: ['path', 'htmlTag'],
+    lookupFromPathIndex: 0,
+    caches: [],
     checkWhitelist: true
   },
   

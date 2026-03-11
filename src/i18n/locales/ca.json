@@ -36,11 +36,42 @@
     "ok": "D'acord",
     "yes": "Sí",
     "no": "No",
-    "whatsHappening": "Què està passant?"
+    "whatsHappening": "Què està passant?",
+    "backToHome": "Tornar a l'inici"
   },
   "general": {
     "title": "Game4Git",
     "subtitle": "Aprèn Git jugant: visualitza branques i merges, resol desafiaments i practica comandes reals en el millor joc per a aprendre Git."
+  },
+  "seo": {
+    "home": {
+      "title": "Game4Git | Aprèn Git online amb un playground interactiu",
+      "description": "Aprèn Git online amb Game4Git. Practica commits, branques, merges i reptes guiats en un playground visual i interactiu."
+    },
+    "gdb": {
+      "title": "Aprèn GDB | Guia interactiva de depuració | Game4Git",
+      "description": "Aprèn GDB amb una guia interactiva sobre breakpoints, execució pas a pas, stack traces i inspecció de memòria per a C i C++."
+    },
+    "valgrind": {
+      "title": "Aprèn Valgrind | Guia de debugging de memòria | Game4Git",
+      "description": "Aprèn Valgrind amb exemples pràctics de Memcheck, fuites de memòria, accessos invàlids i anàlisi de rendiment en C i C++."
+    },
+    "gitPracticeGame": {
+      "title": "Joc per practicar Git online | Game4Git",
+      "description": "Practica Git online amb commits, branques i merges guiats en un joc interactiu pensat per aprendre Git des de zero."
+    },
+    "gitBranchPractice": {
+      "title": "Practicar branques a Git | Aprèn branching visualment | Game4Git",
+      "description": "Practica branques de Git de manera visual. Crea branques, canvia de context i fusiona amb exercicis interactius."
+    },
+    "gitMergeConflicts": {
+      "title": "Conflictes de merge a Git | Aprèn a resoldre'ls | Game4Git",
+      "description": "Aprèn conflictes de merge a Git amb un playground visual. Practica marcadors de conflicte, resolució i merges segurs."
+    },
+    "valgrindMemoryLeaks": {
+      "title": "Valgrind memory leak | Guia pas a pas | Game4Git",
+      "description": "Aprèn a detectar memory leaks amb Valgrind i Memcheck, interpretar els informes i corregir errors comuns de memòria en C i C++."
+    }
   },
   "welcome": {
     "introShortImproved": "Edita una línia de codi i fes el teu primer commit en menys de 30 segons. O prova un repte guiat.",
@@ -850,8 +881,185 @@
         "cacheanalysis": "Anàlisi de Cache"
       }
     }
-  }
-  ,
+  },
+  "landingPages": {
+    "gitPracticeGame": {
+      "eyebrow": "Practica Git online",
+      "heroTitle": "Joc per practicar Git amb commits, branques i merges",
+      "heroDescription": "Utilitza Game4Git per practicar Git online amb un playground visual. Fes canvis, crea commits, treballa amb branques i guanya seguretat abans d'usar Git en projectes reals.",
+      "primaryCta": "Començar pràctica de Git",
+      "secondaryCta": "Obrir playground principal",
+      "highlights": [
+        "Practica fluxos reals de Git sense instal·lar res",
+        "Veu cada commit, branca i merge en un gràfic visual",
+        "Entra en reptes guiats quan vulguis més estructura"
+      ],
+      "stepsTitle": "Què practicaràs",
+      "steps": [
+        {
+          "title": "Fes el teu primer commit",
+          "description": "Edita el codi, prepara el canvi i crea un commit net per entendre el cicle bàsic de Git."
+        },
+        {
+          "title": "Treballa amb branques sense por",
+          "description": "Crea una feature branch, canvia de context i mantén la feina aïllada de master."
+        },
+        {
+          "title": "Fusiona de manera visual",
+          "description": "Torna la teva feina a la branca principal i observa exactament com canvia l'historial."
+        }
+      ],
+      "faqTitle": "FAQ sobre practicar Git",
+      "faq": [
+        {
+          "q": "Serveix per a principiants?",
+          "a": "Sí. El playground està pensat per a qui comença amb Git i fa visible cada pas abans de passar a un repositori real."
+        },
+        {
+          "q": "He d'instal·lar Git?",
+          "a": "No. Pots practicar el flux directament al navegador i aprendre primer els conceptes."
+        },
+        {
+          "q": "Puc usar comandes en lloc de botons?",
+          "a": "Sí. El mode terminal reflecteix les mateixes accions, així que pots alternar entre interfície i comandes quan vulguis."
+        }
+      ],
+      "relatedTitle": "Guies relacionades",
+      "relatedDescription": "Continua amb un tema més específic de Git o salta a les guies de depuració."
+    },
+    "gitBranchPractice": {
+      "eyebrow": "Practicar branques a Git",
+      "heroTitle": "Aprèn branques a Git amb pràctica guiada",
+      "heroDescription": "Practica branching a Git de manera visual. Crea branques, mou-te entre elles i entén com la feina aïllada acaba en merges nets.",
+      "primaryCta": "Començar repte de branques",
+      "secondaryCta": "Obrir playground principal",
+      "highlights": [
+        "Entén per què les branques aïllen la feina",
+        "Practica canvis entre master, dev i feature branches",
+        "Veu com es mou cada punter després de cada commit"
+      ],
+      "stepsTitle": "Flux de branching",
+      "steps": [
+        {
+          "title": "Crea una branca dev",
+          "description": "Parteix de master i crea un espai segur per a la feina en curs."
+        },
+        {
+          "title": "Obre una feature branch",
+          "description": "Crea una branca centrada en un sol canvi i mantén l'historial net."
+        },
+        {
+          "title": "Fusiona amb context",
+          "description": "Torna a la branca destí i fusiona veient com s'actualitza el gràfic."
+        }
+      ],
+      "faqTitle": "FAQ sobre branques a Git",
+      "faq": [
+        {
+          "q": "Per què hauria d'usar branques?",
+          "a": "Les branques et permeten treballar en un canvi sense tocar la línia principal, cosa que fa més segurs els experiments i la feina en equip."
+        },
+        {
+          "q": "Des de quina branca convé crear-ne una de nova?",
+          "a": "En fluxos simples acostuma a sortir de master o main. En equips és habitual partir de dev."
+        },
+        {
+          "q": "Puc aprendre branching sense un repo real?",
+          "a": "Sí. El gràfic visual ajuda precisament perquè mostra què està fent Git abans de provar-ho en codi de producció."
+        }
+      ],
+      "relatedTitle": "Guies relacionades",
+      "relatedDescription": "Passa de les bases del branching a la pràctica de merges o a fluxos de depuració."
+    },
+    "gitMergeConflicts": {
+      "eyebrow": "Resoldre conflictes de merge",
+      "heroTitle": "Aprèn conflictes de merge a Git amb un flux interactiu",
+      "heroDescription": "Entén els marcadors de conflicte de Git, compara ambdues bandes del merge i practica com resoldre conflictes sense trencar l'historial.",
+      "primaryCta": "Obrir repte de conflictes",
+      "secondaryCta": "Obrir playground principal",
+      "highlights": [
+        "Veu com Git marca els canvis en conflicte",
+        "Practica editar els marcadors fins a obtenir una versió final",
+        "Completa el merge només quan el conflicte estigui net"
+      ],
+      "stepsTitle": "Flux per resoldre conflictes",
+      "steps": [
+        {
+          "title": "Provoca un conflicte",
+          "description": "Treballa amb branques divergents per inspeccionar un error de merge realista."
+        },
+        {
+          "title": "Llegeix els marcadors",
+          "description": "Entén què signifiquen HEAD, les línies separadores i la secció de la branca entrant."
+        },
+        {
+          "title": "Resol i acaba",
+          "description": "Edita el contingut final, prepara el fitxer i completa el merge amb un commit net."
+        }
+      ],
+      "faqTitle": "FAQ sobre conflictes de merge",
+      "faq": [
+        {
+          "q": "Els conflictes de merge són normals?",
+          "a": "Sí. Apareixen quan dues branques canvien la mateixa zona de manera diferent. L'important és saber llegir-los i resoldre'ls amb seguretat."
+        },
+        {
+          "q": "Sempre m'he de quedar amb un dels dos costats?",
+          "a": "No. A vegades mantens una versió, a vegades l'altra i d'altres combines totes dues en un resultat millor."
+        },
+        {
+          "q": "Què faig després d'editar el conflicte?",
+          "a": "Prepara el fitxer resolt i completa el commit de merge perquè Git registri l'estat final fusionat."
+        }
+      ],
+      "relatedTitle": "Guies relacionades",
+      "relatedDescription": "Reforça primer el branching i després passa a eines de depuració i memòria."
+    },
+    "valgrindMemoryLeaks": {
+      "eyebrow": "Detectar fuites de memòria",
+      "heroTitle": "Aprèn Valgrind per a memory leaks pas a pas",
+      "heroDescription": "Utilitza aquesta guia per entendre com Valgrind i Memcheck detecten fuites, lectures invàlides i mal ús de memòria en programes C i C++.",
+      "primaryCta": "Obrir guia de Valgrind",
+      "secondaryCta": "Obrir playground principal",
+      "highlights": [
+        "Llegeix resums de fuites sense perdre't",
+        "Rastreja assignacions fins al camí exacte del codi",
+        "Diferencia fuites, invalid reads i invalid frees"
+      ],
+      "stepsTitle": "Flux per depurar fuites",
+      "steps": [
+        {
+          "title": "Compila per depurar",
+          "description": "Compila amb símbols de depuració perquè Valgrind mostri referències útils de fitxer i línia."
+        },
+        {
+          "title": "Executa Memcheck",
+          "description": "Llança el programa amb detecció de fuites i revisa les traces de crides reportades."
+        },
+        {
+          "title": "Corregeix i verifica",
+          "description": "Elimina la fuita o l'accés invàlid i torna a executar Valgrind per confirmar que l'informe desapareix."
+        }
+      ],
+      "faqTitle": "FAQ sobre Valgrind i memory leaks",
+      "faq": [
+        {
+          "q": "Necessito símbols de depuració per a Valgrind?",
+          "a": "Pots usar Valgrind sense ells, però compilar amb -g fa que els informes siguin molt més fàcils d'entendre."
+        },
+        {
+          "q": "Quina diferència hi ha entre definitely lost i still reachable?",
+          "a": "Definitely lost significa que el programa ha perdut memòria sense conservar cap punter. Still reachable pot continuar assignada en sortir del programa i no sempre indica un bug real."
+        },
+        {
+          "q": "Valgrind també ajuda amb invalid reads?",
+          "a": "Sí. Memcheck pot reportar invalid reads, invalid writes, double free i altres usos incorrectes de memòria a més de fuites."
+        }
+      ],
+      "relatedTitle": "Guies relacionades",
+      "relatedDescription": "Mou-te entre pràctica de Git i temes de depuració segons el que vulguis aprendre després."
+    }
+  },
   "home": {
     "seoIntroShort": "Aprèn Git jugant amb Game4Git, el joc per a aprendre Git. Visualitza branques, resol desafiaments interactius i domina git practicant.",
     "seoIntroAnd": "i",
@@ -859,6 +1067,9 @@
     "secondaryBanner": "Primera vegada aquí?",
     "secondaryBannerCta1": "Fes el teu primer commit en 1 min",
     "secondaryBannerCta2": "Prova el repte Feature Branch",
+    "guidesTitle": "Guies populars",
+    "guidesDescription": "Comença pel tema exacte que vols practicar i entra directament al repte o a la guia de depuració adequada.",
+    "guidesPrimaryCta": "Veure guia",
     "faqTitle": "Preguntes freqüents",
     "faq": {
       "q1": "Game4Git és gratuït?",

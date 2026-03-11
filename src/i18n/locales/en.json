@@ -43,6 +43,36 @@
     "title": "Git Game",
     "subtitle": "Learn Git concepts visually with this interactive playground"
   },
+  "seo": {
+    "home": {
+      "title": "Game4Git | Learn Git Online with an Interactive Playground",
+      "description": "Learn Git online with Game4Git. Practice commits, branches, merges, and guided challenges in an interactive visual playground."
+    },
+    "gdb": {
+      "title": "Learn GDB Debugger | Interactive GDB Guide | Game4Git",
+      "description": "Learn GDB with an interactive guide covering breakpoints, stepping, stack traces, and memory inspection for C and C++ debugging."
+    },
+    "valgrind": {
+      "title": "Learn Valgrind | Memory Debugging Guide | Game4Git",
+      "description": "Learn Valgrind with practical examples for Memcheck, memory leaks, invalid accesses, and performance analysis in C and C++."
+    },
+    "gitPracticeGame": {
+      "title": "Git Practice Game | Practice Git Online | Game4Git",
+      "description": "Practice Git online with guided commits, branches, and merges in an interactive Git game for beginners."
+    },
+    "gitBranchPractice": {
+      "title": "Git Branch Practice | Learn Branching Visually | Game4Git",
+      "description": "Practice Git branches visually. Create branches, switch context, and merge safely with interactive exercises."
+    },
+    "gitMergeConflicts": {
+      "title": "Git Merge Conflicts | Learn to Resolve Conflicts | Game4Git",
+      "description": "Learn Git merge conflicts with a visual playground. Practice conflict markers, resolution steps, and safe merges."
+    },
+    "valgrindMemoryLeaks": {
+      "title": "Valgrind Memory Leak Guide | Detect Leaks Step by Step | Game4Git",
+      "description": "Learn how to find memory leaks with Valgrind and Memcheck, read reports, and fix common C and C++ memory bugs."
+    }
+  },
   "welcome": {
     "title": "Welcome to Git Game",
     "intro": "This application helps you learn and practice Git in a visual and interactive way.",
@@ -1041,8 +1071,185 @@
     "uiActions": "UI Actions",
     "steps": "Steps to complete",
     "markAsDone": "Mark as completed"
-  }
-  ,
+  },
+  "landingPages": {
+    "gitPracticeGame": {
+      "eyebrow": "Practice Git online",
+      "heroTitle": "Git practice game for commits, branches, and merges",
+      "heroDescription": "Use Game4Git to practice Git online with a visual playground. Make changes, create commits, branch safely, and build confidence before using Git on real projects.",
+      "primaryCta": "Start Git practice",
+      "secondaryCta": "Open main playground",
+      "highlights": [
+        "Practice real Git flows without installing anything",
+        "See each commit, branch, and merge on a visual graph",
+        "Jump into guided exercises when you want structure"
+      ],
+      "stepsTitle": "What you will practice",
+      "steps": [
+        {
+          "title": "Make a first commit",
+          "description": "Edit the code, stage the change, and create a clean commit to understand the basic Git loop."
+        },
+        {
+          "title": "Branch without fear",
+          "description": "Create a feature branch, switch context, and keep your work isolated from master."
+        },
+        {
+          "title": "Merge visually",
+          "description": "Merge your work back into the main line and see exactly how the history changes."
+        }
+      ],
+      "faqTitle": "Git practice game FAQ",
+      "faq": [
+        {
+          "q": "Is this good for beginners?",
+          "a": "Yes. The playground is built for first-time Git learners and makes each step visible before you move to a real repository."
+        },
+        {
+          "q": "Do I need to install Git?",
+          "a": "No. You can practice the workflow directly in the browser and learn the concepts first."
+        },
+        {
+          "q": "Can I use commands instead of buttons?",
+          "a": "Yes. Terminal mode mirrors the same actions, so you can switch between UI and commands at any time."
+        }
+      ],
+      "relatedTitle": "Related guides",
+      "relatedDescription": "Continue with a more specific Git topic or jump into debugging guides."
+    },
+    "gitBranchPractice": {
+      "eyebrow": "Git branch practice",
+      "heroTitle": "Learn Git branches with hands-on branch practice",
+      "heroDescription": "Practice Git branching visually. Create branches, switch between them, and understand how isolated work turns into clean merges.",
+      "primaryCta": "Start branch challenge",
+      "secondaryCta": "Open main playground",
+      "highlights": [
+        "Understand why branches keep work isolated",
+        "Practice switching between master, dev, and feature branches",
+        "See where every branch pointer moves after each commit"
+      ],
+      "stepsTitle": "Branching flow",
+      "steps": [
+        {
+          "title": "Create a dev branch",
+          "description": "Start from master and create a safe place for ongoing work."
+        },
+        {
+          "title": "Open a feature branch",
+          "description": "Create a focused branch for one change and keep the history clean."
+        },
+        {
+          "title": "Merge back with context",
+          "description": "Return to the target branch and merge while watching the graph update."
+        }
+      ],
+      "faqTitle": "Git branch FAQ",
+      "faq": [
+        {
+          "q": "Why should I use branches?",
+          "a": "Branches let you work on a change without affecting the main line, which makes experiments and teamwork safer."
+        },
+        {
+          "q": "What should I branch from?",
+          "a": "In simple workflows you usually branch from master or main. In team workflows you often branch from dev."
+        },
+        {
+          "q": "Can I learn branching without a real repo?",
+          "a": "Yes. The visual graph is useful precisely because it shows what Git is doing before you try it on production code."
+        }
+      ],
+      "relatedTitle": "Related guides",
+      "relatedDescription": "Move from branching basics to merge practice or debugging workflows."
+    },
+    "gitMergeConflicts": {
+      "eyebrow": "Resolve merge conflicts",
+      "heroTitle": "Learn Git merge conflicts with an interactive conflict workflow",
+      "heroDescription": "Understand Git conflict markers, compare both sides of a merge, and practice resolving merge conflicts without breaking your history.",
+      "primaryCta": "Open merge conflict challenge",
+      "secondaryCta": "Open main playground",
+      "highlights": [
+        "See how Git marks conflicting changes",
+        "Practice editing conflict markers into a final version",
+        "Complete the merge only after the conflict is clean"
+      ],
+      "stepsTitle": "Conflict resolution flow",
+      "steps": [
+        {
+          "title": "Trigger a conflict",
+          "description": "Work from diverging branches so you can inspect a realistic merge failure."
+        },
+        {
+          "title": "Read the markers",
+          "description": "Understand what HEAD, separator lines, and incoming branch sections really mean."
+        },
+        {
+          "title": "Resolve and finish",
+          "description": "Edit the final content, stage the file, and complete the merge with a clean commit."
+        }
+      ],
+      "faqTitle": "Merge conflict FAQ",
+      "faq": [
+        {
+          "q": "Are merge conflicts normal?",
+          "a": "Yes. They happen when two branches change the same area differently. The important part is learning how to read and resolve them safely."
+        },
+        {
+          "q": "Do I always keep one side of the conflict?",
+          "a": "No. Sometimes you keep one version, sometimes the other, and sometimes you combine both into a better final result."
+        },
+        {
+          "q": "What should I do after editing the conflict?",
+          "a": "Stage the resolved file and complete the merge commit so Git records the final merged state."
+        }
+      ],
+      "relatedTitle": "Related guides",
+      "relatedDescription": "Strengthen branching first, then move into debugging and memory tools."
+    },
+    "valgrindMemoryLeaks": {
+      "eyebrow": "Find memory leaks",
+      "heroTitle": "Learn Valgrind memory leak debugging step by step",
+      "heroDescription": "Use this guide to understand how Valgrind and Memcheck detect leaks, invalid reads, and memory misuse in C and C++ programs.",
+      "primaryCta": "Open Valgrind guide",
+      "secondaryCta": "Open main playground",
+      "highlights": [
+        "Read leak summaries without getting lost",
+        "Trace allocations back to the exact code path",
+        "Differentiate leaks, invalid reads, and invalid frees"
+      ],
+      "stepsTitle": "Leak debugging flow",
+      "steps": [
+        {
+          "title": "Compile for debugging",
+          "description": "Build with debug symbols so Valgrind can show useful file and line references."
+        },
+        {
+          "title": "Run Memcheck",
+          "description": "Execute your program with leak checking enabled and inspect the reported call stacks."
+        },
+        {
+          "title": "Fix and verify",
+          "description": "Remove the leak or invalid access, then rerun Valgrind to confirm the report is gone."
+        }
+      ],
+      "faqTitle": "Valgrind memory leak FAQ",
+      "faq": [
+        {
+          "q": "Do I need debug symbols for Valgrind?",
+          "a": "You can run Valgrind without them, but compiling with -g makes reports much easier to understand."
+        },
+        {
+          "q": "What is the difference between definitely lost and still reachable?",
+          "a": "Definitely lost means your program leaked memory with no remaining pointer to it. Still reachable memory may stay allocated until program exit and is not always a real bug."
+        },
+        {
+          "q": "Can Valgrind help with invalid reads too?",
+          "a": "Yes. Memcheck can report invalid reads, writes, double frees, and other memory misuse in addition to leaks."
+        }
+      ],
+      "relatedTitle": "Related guides",
+      "relatedDescription": "Switch between Git practice and debugging topics depending on what you want to learn next."
+    }
+  },
   "home": {
     "seoIntroShort": "Learn Git by playing with Game4Git, the game for learning Git. Visualize branches, solve interactive challenges, and master git by practicing.",
     "seoIntroAnd": "and",
@@ -1061,6 +1268,9 @@
     "step3": "Commit",
     "footerGdb": "Learn GDB",
     "footerValgrind": "Learn Valgrind",
+    "guidesTitle": "Popular guides",
+    "guidesDescription": "Start from the exact topic you want to practice and jump straight into the right challenge or debugging guide.",
+    "guidesPrimaryCta": "Explore guide",
     "faqTitle": "FAQs",
     "faq": {
       "q1": "Is Game4Git free?",

@@ -87,6 +87,23 @@ const GitExercises: React.FC = () => {
     window.addEventListener('open-challenges', handler);
     return () => window.removeEventListener('open-challenges', handler);
   }, []);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const requestedExercise = searchParams.get("exercise");
+
+    if (requestedExercise !== "feature-branch" && requestedExercise !== "merge-conflicts") {
+      return;
+    }
+
+    setSelectedExercise(requestedExercise);
+    setSheetOpen(true);
+    searchParams.delete("exercise");
+
+    const nextSearch = searchParams.toString();
+    const nextUrl = `${window.location.pathname}${nextSearch ? `?${nextSearch}` : ""}${window.location.hash}`;
+    window.history.replaceState(window.history.state, "", nextUrl);
+  }, []);
   
   // Definir y actualizar los ejercicios en una función que depende de la traducción
   const getInitialExercises = useCallback((): Record<string, Exercise> => ({

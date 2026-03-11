@@ -8,9 +8,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTranslation } from "react-i18next";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getLocaleFromPathname, getLocalizedPath, type SupportedLocale } from "@/lib/localizedRoutes";
 
 const LanguageSelector: React.FC = () => {
   const { i18n } = useTranslation();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const currentLocale = getLocaleFromPathname(location.pathname);
   
   const languages = [
     { code: "en", name: "English" },
@@ -20,10 +25,18 @@ const LanguageSelector: React.FC = () => {
   ];
   
   const handleLanguageChange = async (lang: string) => {
+    const nextLocale = lang as SupportedLocale;
+    const nextPathname = getLocalizedPath(location.pathname, nextLocale);
+    const nextUrl = `${nextPathname}${location.search}${location.hash}`;
+    const currentUrl = `${location.pathname}${location.search}${location.hash}`;
+
+    if (nextUrl === currentUrl) {
+      return;
+    }
+
     try {
-      await i18n.changeLanguage(lang);
-      // Persist for i18next-browser-languagedetector
-      localStorage.setItem('i18nextLng', lang);
+      await i18n.changeLanguage(nextLocale);
+      navigate(nextUrl);
     } catch (err) {
       console.error('Error changing language', err);
     }
@@ -35,7 +48,7 @@ const LanguageSelector: React.FC = () => {
         <Button variant="outline" size="icon" className="relative">
           <Globe className="h-4 w-4 text-foreground" />
           <span className="absolute top-0 right-0 -mt-1 -mr-1 bg-primary text-primary-foreground text-[8px] font-bold rounded-full w-3 h-3 flex items-center justify-center uppercase">
-            {i18n.language.substring(0, 2)}
+            {currentLocale}
           </span>
         </Button>
       </DropdownMenuTrigger>
@@ -44,7 +57,7 @@ const LanguageSelector: React.FC = () => {
           <DropdownMenuItem 
             key={lang.code}
             onClick={() => handleLanguageChange(lang.code)}
-            className={i18n.language.startsWith(lang.code) ? "bg-muted" : ""}
+            className={currentLocale === lang.code ? "bg-muted" : ""}
           >
             {lang.name}
           </DropdownMenuItem>

@@ -17,6 +17,7 @@
     "deploy:vercel": "npm run security:check && npx vercel --prod",
     "generate:sitemap": "node generate-sitemap.cjs",
     "prebuild": "npm run generate:sitemap",
+    "postbuild": "node prerender-routes.cjs",
     "security:check": "chmod +x ./security-check.sh && ./security-check.sh",
     "security:fix": "npm audit fix",
     "predeploy": "npm run security:check"

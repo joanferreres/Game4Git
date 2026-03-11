@@ -36,11 +36,42 @@
     "ok": "OK",
     "yes": "Oui",
     "no": "Non",
-    "whatsHappening": "Que se passe-t-il ?"
+    "whatsHappening": "Que se passe-t-il ?",
+    "backToHome": "Retour à l'accueil"
   },
   "general": {
     "title": "Game4Git",
     "subtitle": "Apprenez Git en jouant visuellement dans ce terrain de jeu interactif : explorez les branches, relevez des défis pratiques et maîtrisez Git avec Game4Git."
+  },
+  "seo": {
+    "home": {
+      "title": "Game4Git | Apprendre Git en ligne avec un playground interactif",
+      "description": "Apprenez Git en ligne avec Game4Git. Entraînez-vous aux commits, branches, fusions et défis guidés dans un playground visuel et interactif."
+    },
+    "gdb": {
+      "title": "Apprendre GDB | Guide interactif de débogage | Game4Git",
+      "description": "Apprenez GDB avec un guide interactif sur les points d'arrêt, l'exécution pas à pas, les traces de pile et l'inspection mémoire pour C et C++."
+    },
+    "valgrind": {
+      "title": "Apprendre Valgrind | Guide de débogage mémoire | Game4Git",
+      "description": "Apprenez Valgrind avec des exemples pratiques sur Memcheck, les fuites mémoire, les accès invalides et l'analyse de performance en C et C++."
+    },
+    "gitPracticeGame": {
+      "title": "Jeu pour pratiquer Git en ligne | Game4Git",
+      "description": "Pratiquez Git en ligne avec des commits, branches et fusions guidés dans un jeu interactif conçu pour apprendre Git."
+    },
+    "gitBranchPractice": {
+      "title": "Pratiquer les branches Git | Apprendre le branching visuellement | Game4Git",
+      "description": "Pratiquez les branches Git de manière visuelle. Créez des branches, changez de contexte et fusionnez avec des exercices interactifs."
+    },
+    "gitMergeConflicts": {
+      "title": "Conflits de merge Git | Apprendre à les résoudre | Game4Git",
+      "description": "Apprenez les conflits de merge Git avec un playground visuel. Pratiquez les marqueurs de conflit, la résolution et les merges sûrs."
+    },
+    "valgrindMemoryLeaks": {
+      "title": "Valgrind memory leak | Guide pas à pas | Game4Git",
+      "description": "Apprenez à détecter les fuites mémoire avec Valgrind et Memcheck, à lire les rapports et à corriger les bugs mémoire courants en C et C++."
+    }
   },
   "welcome": {
     "introShortImproved": "Modifiez une ligne de code et faites votre premier commit en moins de 30 secondes. Ou essayez un défi guidé.",
@@ -728,6 +759,184 @@
       }
     }
   },
+  "landingPages": {
+    "gitPracticeGame": {
+      "eyebrow": "Pratiquer Git en ligne",
+      "heroTitle": "Jeu pour pratiquer Git avec commits, branches et merges",
+      "heroDescription": "Utilisez Game4Git pour pratiquer Git en ligne avec un playground visuel. Faites des changements, créez des commits, travaillez avec des branches et gagnez en confiance avant d'utiliser Git sur de vrais projets.",
+      "primaryCta": "Commencer la pratique Git",
+      "secondaryCta": "Ouvrir le playground principal",
+      "highlights": [
+        "Pratiquez des workflows Git réels sans rien installer",
+        "Visualisez chaque commit, branche et merge sur un graphe",
+        "Passez aux défis guidés quand vous voulez plus de structure"
+      ],
+      "stepsTitle": "Ce que vous allez pratiquer",
+      "steps": [
+        {
+          "title": "Faire un premier commit",
+          "description": "Modifiez le code, indexez le changement et créez un commit propre pour comprendre la boucle de base de Git."
+        },
+        {
+          "title": "Travailler avec des branches sans stress",
+          "description": "Créez une feature branch, changez de contexte et gardez votre travail isolé de master."
+        },
+        {
+          "title": "Fusionner visuellement",
+          "description": "Réintégrez votre travail dans la branche principale et observez exactement comment l'historique change."
+        }
+      ],
+      "faqTitle": "FAQ sur la pratique de Git",
+      "faq": [
+        {
+          "q": "Est-ce adapté aux débutants ?",
+          "a": "Oui. Le playground est conçu pour les personnes qui commencent avec Git et rend chaque étape visible avant de passer à un vrai dépôt."
+        },
+        {
+          "q": "Dois-je installer Git ?",
+          "a": "Non. Vous pouvez pratiquer le workflow directement dans le navigateur et apprendre d'abord les concepts."
+        },
+        {
+          "q": "Puis-je utiliser des commandes au lieu des boutons ?",
+          "a": "Oui. Le mode terminal reflète les mêmes actions, vous pouvez donc alterner entre interface et commandes à tout moment."
+        }
+      ],
+      "relatedTitle": "Guides liés",
+      "relatedDescription": "Continuez avec un sujet Git plus précis ou passez aux guides de débogage."
+    },
+    "gitBranchPractice": {
+      "eyebrow": "Pratiquer les branches Git",
+      "heroTitle": "Apprendre les branches Git avec une pratique guidée",
+      "heroDescription": "Pratiquez le branching Git visuellement. Créez des branches, naviguez entre elles et comprenez comment un travail isolé devient un merge propre.",
+      "primaryCta": "Commencer le défi branches",
+      "secondaryCta": "Ouvrir le playground principal",
+      "highlights": [
+        "Comprenez pourquoi les branches isolent le travail",
+        "Pratiquez les changements entre master, dev et feature branches",
+        "Voyez comment chaque pointeur bouge après chaque commit"
+      ],
+      "stepsTitle": "Flux de branching",
+      "steps": [
+        {
+          "title": "Créer une branche dev",
+          "description": "Partez de master et créez un espace sûr pour le travail en cours."
+        },
+        {
+          "title": "Ouvrir une feature branch",
+          "description": "Créez une branche centrée sur un seul changement et gardez un historique propre."
+        },
+        {
+          "title": "Fusionner avec contexte",
+          "description": "Revenez sur la branche cible et fusionnez en voyant le graphe se mettre à jour."
+        }
+      ],
+      "faqTitle": "FAQ sur les branches Git",
+      "faq": [
+        {
+          "q": "Pourquoi utiliser des branches ?",
+          "a": "Les branches permettent de travailler sur un changement sans toucher à la ligne principale, ce qui rend les essais et le travail en équipe plus sûrs."
+        },
+        {
+          "q": "À partir de quelle branche faut-il en créer une nouvelle ?",
+          "a": "Dans les workflows simples on part souvent de master ou main. En équipe, on part souvent de dev."
+        },
+        {
+          "q": "Puis-je apprendre le branching sans vrai dépôt ?",
+          "a": "Oui. Le graphe visuel est utile précisément parce qu'il montre ce que Git fait avant de l'essayer sur du code de production."
+        }
+      ],
+      "relatedTitle": "Guides liés",
+      "relatedDescription": "Passez des bases du branching à la pratique du merge ou aux workflows de débogage."
+    },
+    "gitMergeConflicts": {
+      "eyebrow": "Résoudre les conflits de merge",
+      "heroTitle": "Apprendre les conflits de merge Git avec un flux interactif",
+      "heroDescription": "Comprenez les marqueurs de conflit Git, comparez les deux côtés du merge et pratiquez la résolution sans casser l'historique.",
+      "primaryCta": "Ouvrir le défi conflits",
+      "secondaryCta": "Ouvrir le playground principal",
+      "highlights": [
+        "Voyez comment Git marque les changements en conflit",
+        "Pratiquez l'édition des marqueurs jusqu'à la version finale",
+        "Terminez le merge uniquement quand le conflit est propre"
+      ],
+      "stepsTitle": "Flux de résolution",
+      "steps": [
+        {
+          "title": "Provoquer un conflit",
+          "description": "Travaillez avec des branches divergentes pour inspecter un échec de merge réaliste."
+        },
+        {
+          "title": "Lire les marqueurs",
+          "description": "Comprenez ce que signifient HEAD, les séparateurs et la section de la branche entrante."
+        },
+        {
+          "title": "Résoudre et terminer",
+          "description": "Éditez le contenu final, indexez le fichier et terminez le merge avec un commit propre."
+        }
+      ],
+      "faqTitle": "FAQ sur les conflits de merge",
+      "faq": [
+        {
+          "q": "Les conflits de merge sont-ils normaux ?",
+          "a": "Oui. Ils apparaissent quand deux branches modifient différemment la même zone. L'important est d'apprendre à les lire et à les résoudre proprement."
+        },
+        {
+          "q": "Dois-je toujours garder un seul côté du conflit ?",
+          "a": "Non. Parfois vous gardez une version, parfois l'autre, et parfois vous combinez les deux dans un meilleur résultat final."
+        },
+        {
+          "q": "Que faire après avoir édité le conflit ?",
+          "a": "Indexez le fichier résolu puis terminez le commit de merge pour que Git enregistre l'état final fusionné."
+        }
+      ],
+      "relatedTitle": "Guides liés",
+      "relatedDescription": "Renforcez d'abord le branching puis passez aux outils de débogage et mémoire."
+    },
+    "valgrindMemoryLeaks": {
+      "eyebrow": "Détecter les fuites mémoire",
+      "heroTitle": "Apprendre Valgrind pour les memory leaks pas à pas",
+      "heroDescription": "Utilisez ce guide pour comprendre comment Valgrind et Memcheck détectent les fuites, lectures invalides et mauvais usages de la mémoire dans des programmes C et C++.",
+      "primaryCta": "Ouvrir le guide Valgrind",
+      "secondaryCta": "Ouvrir le playground principal",
+      "highlights": [
+        "Lisez les résumés de fuite sans vous perdre",
+        "Remontez les allocations jusqu'au chemin exact du code",
+        "Distinguez fuites, invalid reads et invalid frees"
+      ],
+      "stepsTitle": "Flux de débogage des fuites",
+      "steps": [
+        {
+          "title": "Compiler pour déboguer",
+          "description": "Compilez avec des symboles de débogage pour que Valgrind affiche des références de fichier et de ligne utiles."
+        },
+        {
+          "title": "Lancer Memcheck",
+          "description": "Exécutez le programme avec la détection de fuites et examinez les piles d'appels signalées."
+        },
+        {
+          "title": "Corriger et vérifier",
+          "description": "Supprimez la fuite ou l'accès invalide puis relancez Valgrind pour confirmer la disparition du rapport."
+        }
+      ],
+      "faqTitle": "FAQ sur Valgrind et les memory leaks",
+      "faq": [
+        {
+          "q": "Ai-je besoin des symboles de débogage pour Valgrind ?",
+          "a": "Vous pouvez utiliser Valgrind sans eux, mais compiler avec -g rend les rapports beaucoup plus faciles à comprendre."
+        },
+        {
+          "q": "Quelle différence entre definitely lost et still reachable ?",
+          "a": "Definitely lost signifie que le programme a perdu de la mémoire sans conserver de pointeur. Still reachable peut rester allouée jusqu'à la fin du programme et n'indique pas toujours un vrai bug."
+        },
+        {
+          "q": "Valgrind aide-t-il aussi pour les invalid reads ?",
+          "a": "Oui. Memcheck peut signaler les invalid reads, invalid writes, double free et d'autres mauvais usages mémoire en plus des fuites."
+        }
+      ],
+      "relatedTitle": "Guides liés",
+      "relatedDescription": "Passez de la pratique Git aux sujets de débogage selon ce que vous voulez apprendre ensuite."
+    }
+  },
   "home": {
     "seoIntroShort": "Apprenez Git en jouant avec Game4Git, le jeu pour apprendre Git. Visualisez branches, relevez des défis interactifs et maîtrisez git en pratiquant.",
     "seoIntroAnd": "et",
@@ -735,6 +944,9 @@
     "secondaryBanner": "Première fois ici ?",
     "secondaryBannerCta1": "Faites votre premier commit en 1 min",
     "secondaryBannerCta2": "Essayez le défi Feature Branch",
+    "guidesTitle": "Guides populaires",
+    "guidesDescription": "Commencez par le sujet exact que vous voulez pratiquer et entrez directement dans le bon défi ou le bon guide de débogage.",
+    "guidesPrimaryCta": "Voir le guide",
     "faqTitle": "FAQ",
     "faq": {
       "q1": "Game4Git est-il gratuit ?",

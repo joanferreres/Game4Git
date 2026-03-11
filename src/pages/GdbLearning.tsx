@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,11 +7,15 @@ import { Link } from "react-router-dom";
 import { Terminal, Code, AlertCircle, Lightbulb, Copy, Check, Play, Users, BookOpen } from 'lucide-react';
 import LanguageSelector from '@/components/LanguageSelector';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import SeoHead from '@/components/SeoHead';
+import { useLocalizedPath } from '@/lib/localizedRoutes';
 
 
 
 const GdbLearning: React.FC = () => {
   const { t } = useTranslation();
+  const localizePath = useLocalizedPath();
+  const homePath = localizePath("/");
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState("introduction");
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
@@ -93,30 +96,25 @@ const GdbLearning: React.FC = () => {
 
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
-      <Helmet>
-        <title>Learn GDB Debugger - Interactive Tutorial | Game4Git</title>
-        <meta name="description" content="Master GDB debugging with our interactive cheat sheet and playground. Learn breakpoints, stepping, and memory inspection." />
-        <meta name="keywords" content="gdb tutorial, learn gdb, gdb cheat sheet, gdb debugger" />
-        <link rel="canonical" href="https://game4git.games/gdb" />
-      </Helmet>
-      <header className="mb-4 sm:mb-6 relative min-h-[80px] sm:min-h-[100px]">
-        <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
-          <ThemeToggle />
-          <LanguageSelector />
+      <SeoHead page="gdb" />
+      <header className="mb-4 sm:mb-6">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <Link
+            to={homePath}
+            className="inline-flex items-center justify-center text-blue-600 dark:text-blue-400 hover:underline font-medium sm:justify-start"
+          >
+            ← {t('common.backToHome', 'Back to Home')}
+          </Link>
+          <div className="flex items-center justify-center gap-2 sm:justify-end">
+            <ThemeToggle />
+            <LanguageSelector />
+          </div>
         </div>
-        <div className="text-center">
+        <div className="mt-6 text-center sm:mt-8">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">{t('gdb.pageTitle')}</h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-1 md:mt-2">
             {t('gdb.subtitle')}
           </p>
-          <div className="mt-3 md:mt-4">
-            <Link
-              to="/"
-              className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline font-medium"
-            >
-              ← {t('common.backToHome', 'Back to Home')}
-            </Link>
-          </div>
         </div>
       </header>
 
