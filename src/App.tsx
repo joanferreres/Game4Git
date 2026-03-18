@@ -123,7 +123,7 @@ const router = createBrowserRouter(publicRoutes);
 
 const App = () => (
   <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-    <TooltipProvider>
+    <TooltipProvider delayDuration={200} skipDelayDuration={0}>
       <RouterProvider router={router} />
       <SonnerToaster position="bottom-right" />
       <Analytics />

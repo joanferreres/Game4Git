@@ -440,7 +440,18 @@ const GitGame: React.FC = () => {
         <GitControls />
       </div>
 
-      <section className="mt-6 mx-auto max-w-6xl w-full">
+      <DeferUntilAfterPaint fallback={
+        <section className="mt-6 mx-auto max-w-6xl w-full min-h-[340px]" aria-hidden>
+          <div className="h-4 w-40 bg-muted/50 rounded mx-auto mb-2" />
+          <div className="h-3 w-full max-w-2xl bg-muted/50 rounded mx-auto mb-6" />
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-[140px] rounded-xl border border-border/60 bg-card/50 animate-pulse" />
+            ))}
+          </div>
+        </section>
+      }>
+      <section className="mt-6 mx-auto max-w-6xl w-full min-h-[340px]">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
             {t("home.guidesTitle", "Popular guides")}
@@ -460,7 +471,7 @@ const GitGame: React.FC = () => {
               <Card key={guide.href} className="border-border/60 shadow-sm">
                 <CardContent className="p-5">
                   <div className="flex items-center gap-2 text-sm font-medium">
-                    <Icon className="h-4 w-4 text-primary" />
+                    <Icon className="h-4 w-4 text-primary shrink-0" />
                     <span>{guide.title}</span>
                   </div>
                   <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{guide.description}</p>
@@ -477,6 +488,7 @@ const GitGame: React.FC = () => {
           })}
         </div>
       </section>
+      </DeferUntilAfterPaint>
 
       {/* FAQ Section - deferred (below fold) to reduce forced reflow */}
       <DeferUntilAfterPaint fallback={

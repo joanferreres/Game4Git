@@ -542,8 +542,21 @@ const buildRouteMarkup = (route, locale) => {
   }
 };
 
+const addPreloadForIndexCss = (template) => {
+  const assetsDir = path.join(DIST_DIR, 'assets');
+  if (fs.existsSync(assetsDir)) {
+    const files = fs.readdirSync(assetsDir);
+    const indexCss = files.find((f) => f.startsWith('Index-') && f.endsWith('.css'));
+    if (indexCss) {
+      const preload = `\n    <link rel="preload" href="/assets/${indexCss}" as="style">`;
+      return template.replace(/(<link rel="preconnect"[^>]+>)/, `$1${preload}`);
+    }
+  }
+  return template;
+};
+
 const injectRouteIntoTemplate = (template, route, locale) =>
-  template
+  addPreloadForIndexCss(template)
     .replace(/<html lang="[^"]*">/, `<html lang="${locale}">`)
     .replace(
       /<!-- SEO_START -->[\s\S]*?<!-- SEO_END -->/,
