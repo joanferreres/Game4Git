@@ -1,4 +1,4 @@
-import { createRoot, hydrateRoot } from 'react-dom/client'
+import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import './i18n'
@@ -11,14 +11,11 @@ if (!rootElement) {
   throw new Error("Root element not found");
 }
 
-const app = (
+// Usar createRoot (no hydrateRoot): el prerender genera HTML estático con
+// plantillas que no coincide con el árbol de React. hydrateRoot provocaría
+// errores #418/#423. createRoot reemplaza el contenido (útil para SEO).
+createRoot(rootElement).render(
   <HelmetProvider>
     <App />
   </HelmetProvider>
 );
-
-if (rootElement.innerHTML.trim().length > 0) {
-  hydrateRoot(rootElement, app);
-} else {
-  createRoot(rootElement).render(app);
-}

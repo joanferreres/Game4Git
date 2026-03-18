@@ -89,6 +89,10 @@ export default defineConfig({
               id.includes('node_modules/scheduler')) {
             return 'react';
           }
+          // ScrollArea solo se usa en GitTerminal (lazy) - chunk separado para no cargar en carga inicial
+          if (id.includes('node_modules/@radix-ui/react-scroll-area')) {
+            return 'ui-scroll';
+          }
           if (id.includes('node_modules/@radix-ui')) {
             return 'ui';
           }

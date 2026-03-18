@@ -596,25 +596,32 @@ const GitGraphContainer: React.FC<{ t: ReturnType<typeof useTranslation>['t'] }>
   const [ref, isInView] = useInView<HTMLDivElement>({ rootMargin: '50px', triggerOnce: true });
   const [GitGraphComponent, setGitGraphComponent] = useState<React.ComponentType | null>(null);
   
-  // Only import GitGraph when it becomes visible
+  // Only import GitGraph when it becomes visible; use requestIdleCallback to avoid blocking main thread
   useEffect(() => {
-    if (isInView && !GitGraphComponent) {
+    if (!isInView || GitGraphComponent) return;
+    const loadGraph = () => {
       import("@/components/GitGraph").then((module) => {
         setGitGraphComponent(() => module.default);
       });
+    };
+    if ('requestIdleCallback' in window) {
+      (window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number })
+        .requestIdleCallback(loadGraph, { timeout: 2000 });
+    } else {
+      loadGraph();
     }
   }, [isInView, GitGraphComponent]);
   
   const LoadingPlaceholder = (
-    <Card className="w-full h-full flex items-center justify-center">
-      <CardContent className="text-center p-4 sm:p-6">
+    <Card className="w-full h-full min-h-full flex items-center justify-center" aria-hidden>
+      <CardContent className="text-center p-4 sm:p-6 flex-1 flex items-center justify-center">
         <p className="text-sm text-muted-foreground">{t('common.loading', 'Loading graph...')}</p>
       </CardContent>
     </Card>
   );
   
   return (
-    <div ref={ref} className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px]">
+    <div ref={ref} className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] min-h-[350px]">
       {GitGraphComponent ? <GitGraphComponent /> : LoadingPlaceholder}
     </div>
   );
