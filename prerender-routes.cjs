@@ -209,7 +209,7 @@ const buildStructuredData = (route, locale) => {
     };
 
     const faqSchema = buildFaqSchemaBlock(
-      [1, 2, 3].map((index) => ({
+      [1, 2, 3, 4].map((index) => ({
         q: t(locale, `home.faq.q${index}`),
         a: t(locale, `home.faq.a${index}`),
       }))
@@ -302,7 +302,7 @@ const buildHomeMarkup = (locale) => {
         <section class="mx-auto max-w-3xl mt-8">
           <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'home.faqTitle'))}</h2>
           <dl class="mt-4 space-y-4">
-            ${[1, 2, 3]
+            ${[1, 2, 3, 4]
               .map(
                 (index) => `
             <div class="rounded-lg border bg-card p-4">
@@ -318,6 +318,22 @@ const buildHomeMarkup = (locale) => {
 
 const buildGdbMarkup = (locale) => {
   const homePath = getLocalizedPath('/', locale);
+  const useCaseKeys = ['useCase1', 'useCase2', 'useCase3', 'useCase4'];
+  const cheatsheetItems = ['run', 'break', 'breakLine', 'next', 'step', 'continue', 'print', 'backtrace', 'quit'];
+  const useCasesHtml = useCaseKeys
+    .map(
+      (key) =>
+        `<li><strong>${escapeHtml(t(locale, `gdb.commonUseCases.${key}.title`))}:</strong> ${escapeHtml(t(locale, `gdb.commonUseCases.${key}.description`))}</li>`
+    )
+    .join('\n            ');
+  const cheatsheetHtml = cheatsheetItems
+    .map((key) => {
+      const label = key === 'breakLine' ? 'break file:line' : key;
+      const desc = t(locale, `gdb.cheatsheet.items.${key}`);
+      return desc ? `<li><code>${escapeHtml(label)}</code> — ${escapeHtml(desc)}</li>` : '';
+    })
+    .filter(Boolean)
+    .join('\n            ');
 
   return `
       <main class="container min-h-screen px-4 sm:px-6 lg:px-8 py-8">
@@ -335,11 +351,42 @@ const buildGdbMarkup = (locale) => {
             <li><strong>${escapeHtml(t(locale, 'gdb.concepts.memory.title'))}:</strong> ${escapeHtml(t(locale, 'gdb.concepts.memory.desc'))}</li>
           </ul>
         </section>
+        <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
+          <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'gdb.commonUseCases.title'))}</h2>
+          <ul class="mt-4 space-y-3 text-sm text-muted-foreground">
+            ${useCasesHtml}
+          </ul>
+        </section>
+        <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
+          <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'gdb.cheatsheet.title'))}</h2>
+          <p class="mt-2 text-sm text-muted-foreground">${escapeHtml(t(locale, 'gdb.cheatsheet.description'))}</p>
+          <ul class="mt-4 space-y-2 text-sm text-muted-foreground">
+            ${cheatsheetHtml}
+          </ul>
+        </section>
       </main>`;
 };
 
 const buildValgrindMarkup = (locale) => {
   const homePath = getLocalizedPath('/', locale);
+  const errorTypeKeys = ['memoryLeaks', 'invalidAccess', 'uninitializedValue', 'doubleFree', 'mismatchedFree', 'overlappingMemory'];
+  const errorTypesHtml = errorTypeKeys
+    .map(
+      (key) =>
+        `<li><strong>${escapeHtml(t(locale, `valgrind.errorTypes.${key}.title`))}:</strong> ${escapeHtml(t(locale, `valgrind.errorTypes.${key}.description`))}</li>`
+    )
+    .filter((html) => html && !html.includes('undefined'))
+    .join('\n            ');
+  const commandsHtml = [
+    { key: 'basic', titleKey: 'valgrind.commands.basic.title', descKey: 'valgrind.commands.basic.description' },
+    { key: 'leak', titleKey: 'valgrind.commands.leak.title', descKey: 'valgrind.commands.leak.description' },
+    { key: 'perf', titleKey: 'valgrind.commands.perf.title', descKey: 'valgrind.commands.perf.description' },
+  ]
+    .map(
+      (c) =>
+        `<li><strong>${escapeHtml(t(locale, c.titleKey))}:</strong> ${escapeHtml(t(locale, c.descKey))}</li>`
+    )
+    .join('\n            ');
 
   return `
       <main class="container min-h-screen px-4 sm:px-6 lg:px-8 py-8">
@@ -355,6 +402,20 @@ const buildValgrindMarkup = (locale) => {
             <li><strong>${escapeHtml(t(locale, 'valgrind.tools.tool2.title'))}:</strong> ${escapeHtml(t(locale, 'valgrind.tools.tool2.description'))}</li>
             <li><strong>${escapeHtml(t(locale, 'valgrind.tools.tool3.title'))}:</strong> ${escapeHtml(t(locale, 'valgrind.tools.tool3.description'))}</li>
             <li><strong>${escapeHtml(t(locale, 'valgrind.tools.tool4.title'))}:</strong> ${escapeHtml(t(locale, 'valgrind.tools.tool4.description'))}</li>
+          </ul>
+        </section>
+        <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
+          <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'valgrind.errorTypes.title'))}</h2>
+          <p class="mt-2 text-sm text-muted-foreground">${escapeHtml(t(locale, 'valgrind.errorTypes.description'))}</p>
+          <ul class="mt-4 space-y-3 text-sm text-muted-foreground">
+            ${errorTypesHtml}
+          </ul>
+        </section>
+        <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
+          <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'valgrind.commands.header.title'))}</h2>
+          <p class="mt-2 text-sm text-muted-foreground">${escapeHtml(t(locale, 'valgrind.commands.header.description'))}</p>
+          <ul class="mt-4 space-y-3 text-sm text-muted-foreground">
+            ${commandsHtml}
           </ul>
         </section>
       </main>`;

@@ -45,8 +45,8 @@
   },
   "seo": {
     "home": {
-      "title": "Game4Git | Apprendre Git en ligne avec un playground interactif",
-      "description": "Apprenez Git en ligne avec Game4Git. Entraînez-vous aux commits, branches, fusions et défis guidés dans un playground visuel et interactif."
+      "title": "Jeu Git en ligne | Apprendre Git en jouant | Game4Git",
+      "description": "Jeu Git gratuit — pratiquez les commandes, branches et merges sans rien installer. Exercices interactifs pour débutants."
     },
     "gdb": {
       "title": "Apprendre GDB | Guide interactif de débogage | Game4Git",
@@ -58,11 +58,11 @@
     },
     "gitPracticeGame": {
       "title": "Jeu pour pratiquer Git en ligne | Game4Git",
-      "description": "Pratiquez Git en ligne avec des commits, branches et fusions guidés dans un jeu interactif conçu pour apprendre Git."
+      "description": "Jeu interactif Git pour pratiquer les commandes en ligne. Commits, branches et merges guidés — sans installation, jouez dans le navigateur."
     },
     "gitBranchPractice": {
       "title": "Pratiquer les branches Git | Apprendre le branching visuellement | Game4Git",
-      "description": "Pratiquez les branches Git de manière visuelle. Créez des branches, changez de contexte et fusionnez avec des exercices interactifs."
+      "description": "Pratiquez les branches Git en ligne sans rien installer. Exercices interactifs pour créer des branches, changer de contexte et fusionner."
     },
     "gitMergeConflicts": {
       "title": "Conflits de merge Git | Apprendre à les résoudre | Game4Git",
@@ -799,6 +799,10 @@
         {
           "q": "Puis-je utiliser des commandes au lieu des boutons ?",
           "a": "Oui. Le mode terminal reflète les mêmes actions, vous pouvez donc alterner entre interface et commandes à tout moment."
+        },
+        {
+          "q": "Est-ce un jeu Git en ligne pour débutants ?",
+          "a": "Oui. Game4Git est un jeu interactif Git gratuit pour débutants. Pratiquez commits, branches et merges avec retour instantané — sans installation."
         }
       ],
       "relatedTitle": "Guides liés",
@@ -843,6 +847,10 @@
         {
           "q": "Puis-je apprendre le branching sans vrai dépôt ?",
           "a": "Oui. Le graphe visuel est utile précisément parce qu'il montre ce que Git fait avant de l'essayer sur du code de production."
+        },
+        {
+          "q": "Puis-je pratiquer le branching Git en ligne sans installer Git ?",
+          "a": "Oui. Game4Git fonctionne entièrement dans le navigateur. Pratiquez les commandes de branches, créez et fusionnez visuellement — sans installation."
         }
       ],
       "relatedTitle": "Guides liés",
@@ -887,6 +895,10 @@
         {
           "q": "Que faire après avoir édité le conflit ?",
           "a": "Indexez le fichier résolu puis terminez le commit de merge pour que Git enregistre l'état final fusionné."
+        },
+        {
+          "q": "Existe-t-il un jeu interactif pour pratiquer les conflits de merge Git ?",
+          "a": "Oui. Game4Git inclut un défi interactif de conflits où vous éditez le code en conflit, supprimez les marqueurs et terminez le merge — idéal pour apprendre."
         }
       ],
       "relatedTitle": "Guides liés",
@@ -931,6 +943,10 @@
         {
           "q": "Valgrind aide-t-il aussi pour les invalid reads ?",
           "a": "Oui. Memcheck peut signaler les invalid reads, invalid writes, double free et d'autres mauvais usages mémoire en plus des fuites."
+        },
+        {
+          "q": "Comment trouver les fuites mémoire pas à pas avec Valgrind ?",
+          "a": "Compilez avec -g, exécutez valgrind --leak-check=full ./votre_programme puis lisez le rapport pour 'definitely lost' ou 'indirectly lost'. Remontez la pile jusqu'au point d'allocation."
         }
       ],
       "relatedTitle": "Guides liés",

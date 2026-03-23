@@ -45,8 +45,8 @@
   },
   "seo": {
     "home": {
-      "title": "Game4Git | Aprèn Git online amb un playground interactiu",
-      "description": "Aprèn Git online amb Game4Git. Practica commits, branques, merges i reptes guiats en un playground visual i interactiu."
+      "title": "Joc de Git Online | Aprèn Git Jugant | Game4Git",
+      "description": "Joc per aprendre Git gratis — practica comandes, branques i merges sense instal·lar res. Exercicis interactius per a principiants."
     },
     "gdb": {
       "title": "Aprèn GDB | Guia interactiva de depuració | Game4Git",
@@ -58,11 +58,11 @@
     },
     "gitPracticeGame": {
       "title": "Joc per practicar Git online | Game4Git",
-      "description": "Practica Git online amb commits, branques i merges guiats en un joc interactiu pensat per aprendre Git des de zero."
+      "description": "Joc interactiu de Git per practicar comandes online. Commits, branques i merges guiats — sense instal·lació, juga al navegador."
     },
     "gitBranchPractice": {
       "title": "Practicar branques a Git | Aprèn branching visualment | Game4Git",
-      "description": "Practica branques de Git de manera visual. Crea branques, canvia de context i fusiona amb exercicis interactius."
+      "description": "Practica branques de Git online sense instal·lar res. Exercicis interactius per crear branques, canviar de context i fusionar."
     },
     "gitMergeConflicts": {
       "title": "Conflictes de merge a Git | Aprèn a resoldre'ls | Game4Git",
@@ -922,6 +922,10 @@
         {
           "q": "Puc usar comandes en lloc de botons?",
           "a": "Sí. El mode terminal reflecteix les mateixes accions, així que pots alternar entre interfície i comandes quan vulguis."
+        },
+        {
+          "q": "És un joc de Git online per a principiants?",
+          "a": "Sí. Game4Git és un joc interactiu de Git gratuït per a principiants. Practica commits, branques i merges amb feedback instantani, sense instal·lar res."
         }
       ],
       "relatedTitle": "Guies relacionades",
@@ -966,6 +970,10 @@
         {
           "q": "Puc aprendre branching sense un repo real?",
           "a": "Sí. El gràfic visual ajuda precisament perquè mostra què està fent Git abans de provar-ho en codi de producció."
+        },
+        {
+          "q": "Puc practicar branques de Git online sense instal·lar Git?",
+          "a": "Sí. Game4Git funciona totalment al navegador. Practica comandes de branques, crea i fusiona branques visualment, sense instal·lar res."
         }
       ],
       "relatedTitle": "Guies relacionades",
@@ -1010,6 +1018,10 @@
         {
           "q": "Què faig després d'editar el conflicte?",
           "a": "Prepara el fitxer resolt i completa el commit de merge perquè Git registri l'estat final fusionat."
+        },
+        {
+          "q": "Hi ha un joc interactiu de conflictes de merge per practicar?",
+          "a": "Sí. Game4Git inclou un repte interactiu de conflictes on edites codi amb conflictes, elimines marcadors i completes el merge. Ideal per aprendre."
         }
       ],
       "relatedTitle": "Guies relacionades",
@@ -1054,6 +1066,10 @@
         {
           "q": "Valgrind també ajuda amb invalid reads?",
           "a": "Sí. Memcheck pot reportar invalid reads, invalid writes, double free i altres usos incorrectes de memòria a més de fuites."
+        },
+        {
+          "q": "Com trobo fuites de memòria pas a pas amb Valgrind?",
+          "a": "Compila amb -g, executa valgrind --leak-check=full ./el_teu_programa i revisa l'informe buscant 'definitely lost' o 'indirectly lost'. Segueix la traça fins al punt d'assignació."
         }
       ],
       "relatedTitle": "Guies relacionades",
@@ -1077,9 +1093,9 @@
       "q2": "He d'instal·lar Git?",
       "a2": "No. Pots practicar conceptes, comandes i fluxos directament al navegador.",
       "q3": "Els instructors el poden usar a classe?",
-      "a3": "Sí. Els Challenges i el gràfic visual són ideals per ensenyar Git."
-    },
-    "q4": "Puc aprendre Git jugant?",
-    "a4": "Sí, Game4Git és un joc interactiu dissenyat per aprendre Git jugant amb desafiaments, comandes reals i feedback instantani."
+      "a3": "Sí. Els Challenges i el gràfic visual són ideals per ensenyar Git.",
+      "q4": "Puc aprendre Git jugant?",
+      "a4": "Sí, Game4Git és un joc interactiu dissenyat per aprendre Git jugant amb desafiaments, comandes reals i feedback instantani."
+    }
   }
 }

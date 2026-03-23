@@ -56,12 +56,12 @@ const buildAlternates = (pathname) => {
 const detectRoutes = () => {
   const baseRoutes = [
     { path: '/', priority: '1.0', changefreq: 'weekly' },
-    { path: '/gdb', priority: '0.9', changefreq: 'weekly' },
-    { path: '/valgrind', priority: '0.9', changefreq: 'weekly' },
     { path: '/git-practice-game', priority: '0.9', changefreq: 'weekly' },
     { path: '/git-branch-practice', priority: '0.9', changefreq: 'weekly' },
     { path: '/git-merge-conflicts', priority: '0.9', changefreq: 'weekly' },
-    { path: '/valgrind-memory-leaks', priority: '0.9', changefreq: 'weekly' },
+    { path: '/gdb', priority: '0.8', changefreq: 'weekly' },
+    { path: '/valgrind', priority: '0.8', changefreq: 'weekly' },
+    { path: '/valgrind-memory-leaks', priority: '0.7', changefreq: 'weekly' },
   ];
 
   return baseRoutes.flatMap((route) =>

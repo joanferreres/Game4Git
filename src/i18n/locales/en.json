@@ -45,8 +45,8 @@
   },
   "seo": {
     "home": {
-      "title": "Game4Git | Learn Git Online with an Interactive Playground",
-      "description": "Learn Git online with Game4Git. Practice commits, branches, merges, and guided challenges in an interactive visual playground."
+      "title": "Git Game Online | Interactive Git Exercises & Branches | Game4Git",
+      "description": "Play the free git game online — practice git commands, branches, and merges without installing anything. Interactive exercises for beginners."
     },
     "gdb": {
       "title": "Learn GDB Debugger | Interactive GDB Guide | Game4Git",
@@ -58,11 +58,11 @@
     },
     "gitPracticeGame": {
       "title": "Git Practice Game | Practice Git Online | Game4Git",
-      "description": "Practice Git online with guided commits, branches, and merges in an interactive Git game for beginners."
+      "description": "Interactive git game to practice git commands online. Guided commits, branches, and merges — no installation, play in the browser."
     },
     "gitBranchPractice": {
       "title": "Git Branch Practice | Learn Branching Visually | Game4Git",
-      "description": "Practice Git branches visually. Create branches, switch context, and merge safely with interactive exercises."
+      "description": "Practice Git branches online without installing Git. Interactive exercises to create branches, switch context, and merge safely."
     },
     "gitMergeConflicts": {
       "title": "Git Merge Conflicts | Learn to Resolve Conflicts | Game4Git",
@@ -1112,6 +1112,10 @@
         {
           "q": "Can I use commands instead of buttons?",
           "a": "Yes. Terminal mode mirrors the same actions, so you can switch between UI and commands at any time."
+        },
+        {
+          "q": "Is this a git game online for beginners?",
+          "a": "Yes. Game4Git is a free interactive git game designed for beginners. Practice commits, branches, and merges with instant feedback — no setup required."
         }
       ],
       "relatedTitle": "Related guides",
@@ -1156,6 +1160,10 @@
         {
           "q": "Can I learn branching without a real repo?",
           "a": "Yes. The visual graph is useful precisely because it shows what Git is doing before you try it on production code."
+        },
+        {
+          "q": "Can I practice git branching online without installing Git?",
+          "a": "Yes. Game4Git runs entirely in the browser. Practice git branch commands, create and merge branches visually — no installation needed."
         }
       ],
       "relatedTitle": "Related guides",
@@ -1200,6 +1208,10 @@
         {
           "q": "What should I do after editing the conflict?",
           "a": "Stage the resolved file and complete the merge commit so Git records the final merged state."
+        },
+        {
+          "q": "Is there an interactive git merge conflict game to practice?",
+          "a": "Yes. Game4Git includes an interactive merge conflict challenge where you edit conflicted code, remove markers, and complete the merge — perfect for learning."
         }
       ],
       "relatedTitle": "Related guides",
@@ -1244,6 +1256,10 @@
         {
           "q": "Can Valgrind help with invalid reads too?",
           "a": "Yes. Memcheck can report invalid reads, writes, double frees, and other memory misuse in addition to leaks."
+        },
+        {
+          "q": "How do I find memory leaks step by step with Valgrind?",
+          "a": "Compile with -g, run valgrind --leak-check=full ./your_program, then read the report for 'definitely lost' or 'indirectly lost' lines. Trace the call stack to the allocation site."
         }
       ],
       "relatedTitle": "Related guides",
@@ -1278,9 +1294,9 @@
       "q2": "Do I need to install Git?",
       "a2": "No. You can practice concepts, commands, and workflows directly in the browser.",
       "q3": "Can instructors use this in class?",
-      "a3": "Yes. The Challenges and visual graph make it ideal for teaching core Git topics."
-    },
-    "q4": "Can I learn Git by playing?",
-    "a4": "Yes, Game4Git is an interactive game designed to help you learn Git by playing with real challenges, commands and instant feedback."
+      "a3": "Yes. The Challenges and visual graph make it ideal for teaching core Git topics.",
+      "q4": "Can I learn Git by playing?",
+      "a4": "Yes, Game4Git is an interactive game designed to help you learn Git by playing with real challenges, commands and instant feedback."
+    }
   }
 }
