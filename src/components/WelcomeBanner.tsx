@@ -54,7 +54,7 @@ const WelcomeBanner: React.FC<WelcomeBannerProps> = ({ onStart, onOpenChallenges
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange} modal={false}>
       <DialogContent className="max-w-lg border-2 border-primary p-4 sm:p-6 [&>button:last-of-type]:hidden">
         <Button
           variant="ghost"

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -16,14 +16,8 @@ const GdbLearning: React.FC = () => {
   const { t } = useTranslation();
   const localizePath = useLocalizedPath();
   const homePath = localizePath("/");
-  const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState("introduction");
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
-
-  // Prevent hydration mismatch
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   // Commands organized by category
   const commandCategories = [
@@ -88,11 +82,6 @@ const GdbLearning: React.FC = () => {
     setCopiedCommand(cmd);
     setTimeout(() => setCopiedCommand(null), 2000);
   };
-
-  // Don't render anything until mounted to prevent hydration mismatch
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">

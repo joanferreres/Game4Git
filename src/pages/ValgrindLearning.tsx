@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlertTriangle, Check, Code, Copy, Lightbulb, Shield, Zap, Terminal } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -14,7 +14,6 @@ const ValgrindLearning: React.FC = () => {
   const localizePath = useLocalizedPath();
   const homePath = localizePath("/");
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
 
   // Error types data from translations
   const errorTypes = {
@@ -55,15 +54,6 @@ const ValgrindLearning: React.FC = () => {
       explanation: t('valgrind.errorTypes.overlappingMemory.explanation')
     }
   };
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Don't render anything until mounted to prevent hydration mismatch
-  if (!mounted) {
-    return null;
-  }
 
   // Handle copy to clipboard
   const handleCopy = (text: string, id: string) => {
