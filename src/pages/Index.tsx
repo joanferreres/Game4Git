@@ -151,7 +151,13 @@ const GitGame: React.FC = () => {
         <div className="text-center">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">{t('general.title')}</h1>
           <section className="mx-auto max-w-2xl text-center mt-2 mb-3 sm:mb-4 px-2">
-            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+            <p className="text-xs text-muted-foreground leading-relaxed sm:hidden">
+              {t(
+                'home.seoIntroMobile',
+                'Learn Git by doing with visual commits and guided challenges.'
+              )}
+            </p>
+            <p className="hidden sm:block text-xs sm:text-sm text-muted-foreground leading-relaxed">
               {t(
                 'home.seoIntroShort',
                 'Learn Git by doing. Visualize branches and merges while running real commands. Try guided challenges or switch to the terminal anytime.'
@@ -180,7 +186,7 @@ const GitGame: React.FC = () => {
               {t('home.startFirstChallenge', 'Start first challenge')}
             </Button>
             {(isGdbEnabled || isValgrindEnabled) && (
-              <div className="flex gap-2">
+              <div className="hidden sm:flex gap-2">
                 {isGdbEnabled && (
                   <Link to={gdbPath}>
                     <Button
