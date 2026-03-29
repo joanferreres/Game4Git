@@ -1,10 +1,10 @@
 import React, { useState, useEffect, lazy, Suspense } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DiffViewer from "@/components/DiffViewer";
 import { useInView } from "@/hooks/useInView";
 
-// CodeEditor is the LCP element — static import so it renders without extra network round-trip
-import CodeEditor from "@/components/CodeEditor";
+// Lazy editor: smaller initial JS parse on mobile; chunk loads in parallel once the shell mounts
+const CodeEditor = lazy(() => import("@/components/CodeEditor"));
 import GitControls from "@/components/GitControls";
 import GitHistory from "@/components/GitHistory";
 import WelcomeBanner from "@/components/WelcomeBanner";
@@ -31,7 +31,29 @@ import { DeferUntilAfterPaint } from "@/components/DeferUntilAfterPaint";
 import SeoHead from "@/components/SeoHead";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 
+/** Matches CodeEditor layout to avoid CLS while the lazy chunk loads */
+const CodeEditorSkeleton: React.FC<{ label: string }> = ({ label }) => (
+  <Card className="w-full h-full overflow-hidden flex flex-col">
+    <CardHeader className="py-3 px-4 shrink-0">
+      <CardTitle className="text-sm flex items-center gap-2">
+        <span className="w-3 h-3 rounded-full bg-git-editor shrink-0" aria-hidden />
+        hello.c
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="p-0 flex-1 min-h-0">
+      <div
+        className="h-full min-h-[200px] bg-[#2d2d2d] flex items-center justify-center"
+        aria-busy="true"
+        aria-label={label}
+      >
+        <p className="text-xs text-[#f8f8f2]/50">{label}</p>
+      </div>
+    </CardContent>
+  </Card>
+);
+
 const GitGame: React.FC = () => {
+  const [deferWelcomeBanner, setDeferWelcomeBanner] = useState(false);
   const [showDiff, setShowDiff] = useState(false);
   const [showQuickGuide, setShowQuickGuide] = useState(() => {
     if (typeof sessionStorage === 'undefined') return false;
@@ -49,6 +71,11 @@ const GitGame: React.FC = () => {
     const onScroll = () => setShowStickyCta(window.scrollY > 120);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setDeferWelcomeBanner(true));
+    return () => cancelAnimationFrame(id);
   }, []);
   const { repository, workingChanges, selectedCommitId, stagedChanges, hasPendingConflict } = useGitStore();
   const { isGdbEnabled, isValgrindEnabled, setGdbEnabled, setValgrindEnabled } = useAdminStore();
@@ -116,15 +143,17 @@ const GitGame: React.FC = () => {
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
       <SeoHead page="home" />
-      <WelcomeBanner
-        onStart={() => {
-          document.getElementById('editor-section')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }}
-        onOpenChallenges={() => {
-          window.dispatchEvent(new CustomEvent('open-challenges'));
-        }}
-        onDismissWithoutCta={() => setShowSecondaryBanner(true)}
-      />
+      {deferWelcomeBanner && (
+        <WelcomeBanner
+          onStart={() => {
+            document.getElementById('editor-section')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }}
+          onOpenChallenges={() => {
+            window.dispatchEvent(new CustomEvent('open-challenges'));
+          }}
+          onDismissWithoutCta={() => setShowSecondaryBanner(true)}
+        />
+      )}
 
       {/* Sticky CTA - visible on scroll (mobile) */}
       {showStickyCta && (
@@ -397,7 +426,13 @@ const GitGame: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 flex-1 mb-4 md:mb-6">
         {/* Left Column - Code Editor */}
         <div id="editor-section" className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] scroll-mt-4">
-          <CodeEditor />
+          <Suspense
+            fallback={
+              <CodeEditorSkeleton label={t("home.loadingEditor", "Loading editor…")} />
+            }
+          >
+            <CodeEditor />
+          </Suspense>
         </div>
 
         {/* Middle Column - Git Graph - loads when visible */}
@@ -408,10 +443,13 @@ const GitGame: React.FC = () => {
           {conflictExists ? (
             <ConflictResolver />
           ) : selectedCommit ? (
-            <CodeEditor
-              readOnly={true}
-              content={selectedCommit.content}
-            />
+            <Suspense
+              fallback={
+                <CodeEditorSkeleton label={t("home.loadingEditor", "Loading editor…")} />
+              }
+            >
+              <CodeEditor readOnly={true} content={selectedCommit.content} />
+            </Suspense>
           ) : showDiff && headCommit ? (
             <DiffViewer
               oldContent={headCommit.content}

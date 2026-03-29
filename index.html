@@ -92,7 +92,28 @@
   <body>
     <div id="root"><!-- APP_HTML --></div>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module" defer></script>
+    <script type="text/javascript">
+      (function () {
+        function loadGptEngineer() {
+          var s = document.createElement("script");
+          s.src = "https://cdn.gpteng.co/gptengineer.js";
+          s.type = "module";
+          s.defer = true;
+          document.body.appendChild(s);
+        }
+        if ("requestIdleCallback" in window) {
+          window.requestIdleCallback(loadGptEngineer, { timeout: 8000 });
+        } else {
+          window.addEventListener(
+            "load",
+            function () {
+              setTimeout(loadGptEngineer, 2500);
+            },
+            { once: true }
+          );
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
