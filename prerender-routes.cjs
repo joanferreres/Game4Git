@@ -25,12 +25,12 @@ const ROUTES = [
   { key: 'valgrindMemoryLeaks', path: '/valgrind-memory-leaks' },
 ];
 
-/** Debe coincidir con `HERO_IMAGES` en `SeoLandingPage.tsx` (LCP en landings). */
+/** WebP optimizado; debe coincidir con `heroWebpSrc(HERO_IMAGES[…])` en `SeoLandingPage.tsx`. */
 const LANDING_HERO_IMAGES = {
-  gitPracticeGame: '/hero-git-practice-game.png',
-  gitBranchPractice: '/hero-git-branch-practice.png',
-  gitMergeConflicts: '/hero-git-merge-conflicts.png',
-  valgrindMemoryLeaks: '/hero-valgrind-memory-leaks.png',
+  gitPracticeGame: '/hero-git-practice-game.webp',
+  gitBranchPractice: '/hero-git-branch-practice.webp',
+  gitMergeConflicts: '/hero-git-merge-conflicts.webp',
+  valgrindMemoryLeaks: '/hero-valgrind-memory-leaks.webp',
 };
 
 const LANDING_ROUTE_CONFIG = {
@@ -615,7 +615,9 @@ const addCriticalPreloads = (template, routeKey) => {
   const parts = [];
   const heroSrc = LANDING_HERO_IMAGES[routeKey];
   if (heroSrc) {
-    parts.push(`\n    <link rel="preload" href="${heroSrc}" as="image" fetchpriority="high">`);
+    parts.push(
+      `\n    <link rel="preload" href="${heroSrc}" as="image" type="image/webp" fetchpriority="high">`
+    );
   }
   const assetsDir = path.join(DIST_DIR, 'assets');
   if (fs.existsSync(assetsDir)) {

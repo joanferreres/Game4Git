@@ -30,11 +30,13 @@ const TWITTER_HANDLE = "@gitgame";
 
 interface SeoHeadProps {
   page: SeoPageKey;
-  /** Ruta absoluta desde la raíz del sitio (p. ej. /hero-foo.png) para acelerar LCP en landings. */
+  /** Ruta absoluta desde la raíz del sitio (p. ej. /hero-foo.webp) para acelerar LCP en landings. */
   preloadHeroImage?: string;
+  /** p. ej. `image/webp` cuando el preload apunta a WebP. */
+  preloadHeroImageType?: string;
 }
 
-export const SeoHead = ({ page, preloadHeroImage }: SeoHeadProps) => {
+export const SeoHead = ({ page, preloadHeroImage, preloadHeroImageType }: SeoHeadProps) => {
   const { t } = useTranslation();
   const location = useLocation();
   const locale = getLocaleFromPathname(location.pathname);
@@ -46,7 +48,13 @@ export const SeoHead = ({ page, preloadHeroImage }: SeoHeadProps) => {
   return (
     <Helmet prioritizeSeoTags>
       {preloadHeroImage ? (
-        <link rel="preload" as="image" href={preloadHeroImage} fetchPriority="high" />
+        <link
+          rel="preload"
+          as="image"
+          href={preloadHeroImage}
+          type={preloadHeroImageType || undefined}
+          fetchPriority="high"
+        />
       ) : null}
       <title>{title}</title>
       <meta name="description" content={description} />

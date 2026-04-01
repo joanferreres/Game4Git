@@ -215,26 +215,32 @@ const HERO_IMAGES: Record<LandingPageKey, string> = {
   valgrindMemoryLeaks: "/hero-valgrind-memory-leaks.png",
 };
 
+const heroWebpSrc = (pngPath: string) => pngPath.replace(/\.png$/i, ".webp");
+
 /** Texto secundario con contraste suficiente en modo claro (WCAG) sin perder estética en oscuro. */
 const LANDING_BODY = "text-foreground/80 dark:text-muted-foreground";
 const LANDING_SUBTLE = "text-foreground/72 dark:text-muted-foreground";
 const LANDING_LABEL = "text-foreground/68 dark:text-muted-foreground";
 
 function HeroPreviewMock({ pageKey, alt }: { pageKey: LandingPageKey; alt: string }) {
-  const imgSrc = HERO_IMAGES[pageKey];
+  const pngSrc = HERO_IMAGES[pageKey];
+  const webpSrc = heroWebpSrc(pngSrc);
   return (
-    <div className="relative aspect-[4/3] overflow-hidden rounded-b-2xl bg-gradient-to-br from-muted/40 via-background to-muted/20">
-      <img
-        src={imgSrc}
-        alt={alt}
-        width={1200}
-        height={900}
-        sizes="(min-width: 1024px) min(42vw, 720px), 100vw"
-        className="h-full w-full object-cover object-top"
-        loading="eager"
-        fetchPriority="high"
-        decoding="async"
-      />
+    <div className="relative aspect-[1200/670] overflow-hidden rounded-b-2xl bg-gradient-to-br from-muted/40 via-background to-muted/20">
+      <picture>
+        <source type="image/webp" srcSet={webpSrc} />
+        <img
+          src={pngSrc}
+          alt={alt}
+          width={1200}
+          height={670}
+          sizes="(min-width: 1024px) min(42vw, 720px), 100vw"
+          className="h-full w-full object-cover object-top"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+        />
+      </picture>
       <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card/80 via-card/20 to-transparent" />
     </div>
   );
@@ -380,7 +386,11 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
 
   return (
     <div ref={rootRef} className="relative min-h-screen overflow-x-hidden bg-background">
-      <SeoHead page={config.seoKey} preloadHeroImage={HERO_IMAGES[pageKey]} />
+      <SeoHead
+        page={config.seoKey}
+        preloadHeroImage={heroWebpSrc(HERO_IMAGES[pageKey])}
+        preloadHeroImageType="image/webp"
+      />
       <div
         className={`pointer-events-none absolute inset-x-0 -top-24 h-[36rem] bg-gradient-to-b ${config.softAccent} blur-3xl`}
       />
