@@ -161,10 +161,11 @@ const GitGame: React.FC = () => {
       mm.add(
         {
           animate: "(prefers-reduced-motion: no-preference)",
+          desktop: "(min-width: 640px)",
         },
         (ctx) => {
-          const { animate } = ctx.conditions as { animate: boolean };
-          if (!animate) {
+          const { animate, desktop } = ctx.conditions as { animate: boolean; desktop: boolean };
+          if (!animate || !desktop) {
             gsap.set(
               "[data-home-header], [data-home-strip], [data-home-panel], [data-home-controls], .home-guide-card, .home-faq-item",
               { clearProps: "all" }

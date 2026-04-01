@@ -224,7 +224,8 @@ function HeroPreviewMock({ pageKey }: { pageKey: LandingPageKey }) {
         alt=""
         aria-hidden
         className="h-full w-full object-cover object-top"
-        loading="lazy"
+        loading="eager"
+        fetchPriority="high"
         decoding="async"
       />
       <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card/80 via-card/20 to-transparent" />

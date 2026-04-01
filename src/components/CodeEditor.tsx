@@ -1,13 +1,11 @@
-import React, { useEffect } from "react";
-import Editor from "react-simple-code-editor";
-import { highlight, languages } from "prismjs";
+import React, { useMemo } from "react";
+import CodeMirror from "@uiw/react-codemirror";
+import { cpp } from "@codemirror/lang-cpp";
+import { oneDark } from "@codemirror/theme-one-dark";
+import { EditorView } from "@codemirror/view";
+import { EditorState } from "@codemirror/state";
 import useGitStore from "@/store/gitStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-// Import Prism languages and theme
-import "prismjs/components/prism-c";
-import "prismjs/components/prism-cpp";
-import "prismjs/themes/prism-dark.css";
 
 interface CodeEditorProps {
   readOnly?: boolean;
@@ -17,15 +15,7 @@ interface CodeEditorProps {
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ readOnly = false, content, language = "c" }) => {
   const { workingChanges, updateWorkingChanges } = useGitStore();
-  
   const editorContent = content ?? workingChanges;
-
-  useEffect(() => {
-    const textarea = document.querySelector('.editor-textarea') as HTMLTextAreaElement;
-    if (textarea) {
-      textarea.setAttribute('aria-label', 'Code editor for hello.c file');
-    }
-  }, []);
 
   const handleValueChange = (value: string) => {
     if (!readOnly) {
@@ -33,28 +23,18 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ readOnly = false, content, lang
     }
   };
 
-  const highlightCode = (code: string) => {
-    // Get the appropriate language grammar
-    let langGrammar;
-    switch (language.toLowerCase()) {
-      case "c":
-        langGrammar = languages.c;
-        break;
-      case "cpp":
-      case "c++":
-        langGrammar = languages.cpp || languages.c;
-        break;
-      default:
-        langGrammar = languages.c;
+  const languageExtension = useMemo(() => {
+    const normalized = language.toLowerCase();
+    if (normalized === "c" || normalized === "cpp" || normalized === "c++") {
+      return cpp();
     }
-    
-    // Fallback to plain text if language not found
-    if (!langGrammar) {
-      langGrammar = languages.text;
-    }
-    
-    return highlight(code, langGrammar, language);
-  };
+    return cpp();
+  }, [language]);
+
+  const editorExtensions = useMemo(
+    () => [languageExtension, EditorState.readOnly.of(readOnly), EditorView.editable.of(!readOnly)],
+    [languageExtension, readOnly]
+  );
 
   return (
     <Card className="w-full h-full overflow-hidden">
@@ -68,47 +48,35 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ readOnly = false, content, lang
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0 h-[calc(100%-48px)]">
-        <div className="h-full bg-[#2d2d2d] text-[#f8f8f2] font-mono text-sm overflow-auto">
-          <Editor
-            value={editorContent || ""}
-            onValueChange={handleValueChange}
-            highlight={highlightCode}
-            padding={16}
-            readOnly={readOnly}
-            style={{
-              fontFamily: '"Fira Code", "Fira Mono", "Consolas", "Monaco", monospace',
-              fontSize: 14,
-              lineHeight: 1.5,
-              minHeight: "100%",
+        <div className="h-full bg-[#282c34] text-[#f8f8f2] font-mono text-sm overflow-auto">
+          <CodeMirror
+            value={editorContent ?? ""}
+            onChange={handleValueChange}
+            theme={oneDark}
+            extensions={editorExtensions}
+            basicSetup={{
+              lineNumbers: true,
+              foldGutter: true,
+              highlightActiveLine: true,
+              highlightSelectionMatches: true,
+              searchKeymap: true,
             }}
-            textareaClassName="editor-textarea"
-            preClassName="editor-pre"
-            tabSize={4}
-            insertSpaces={true}
-            ignoreTabKey={readOnly}
+            editable={!readOnly}
+            height="100%"
+            className="h-full"
+            aria-label="Code editor for hello.c file"
           />
         </div>
       </CardContent>
       <style>{`
-        .editor-textarea,
-        .editor-pre {
-          outline: none;
-          border: none;
-          background: transparent;
-          color: inherit;
-          font-family: inherit;
-          font-size: inherit;
-          line-height: inherit;
-          tab-size: 4;
+        .cm-editor {
+          height: 100%;
+          font-family: "Fira Code", "Fira Mono", "Consolas", "Monaco", monospace;
+          font-size: 14px;
+          line-height: 1.5;
         }
-        .editor-textarea {
-          resize: none;
-          overflow: hidden;
-        }
-        .editor-pre {
-          margin: 0;
-          white-space: pre-wrap;
-          word-wrap: break-word;
+        .cm-scroller {
+          min-height: 100%;
         }
       `}</style>
     </Card>
