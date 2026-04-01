@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Terminal, Zap, Bug, Eye, Cpu } from "lucide-react";
+import { Terminal, Bug, Eye, Cpu } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 
@@ -27,6 +27,11 @@ interface ProgramState {
 interface RealisticGdbTerminalProps {
   selectedExample: string;
   className?: string;
+}
+
+interface QuickCommand {
+  label: string;
+  command: string;
 }
 
 const RealisticGdbTerminal: React.FC<RealisticGdbTerminalProps> = ({
@@ -166,6 +171,40 @@ Reading symbols from ./${selectedExample}_example...
     return examples[selectedExample as keyof typeof examples] || examples['basic-debug'];
   };
 
+  const getQuickCommands = (): QuickCommand[] => {
+    const details = getExampleDetails();
+    const base: QuickCommand[] = [
+      { label: 'help', command: 'help' },
+      { label: 'run', command: 'run' },
+      { label: 'break main', command: 'break main' },
+      { label: `break ${details.crashLine}`, command: `break ${details.crashLine}` },
+      { label: 'continue', command: 'continue' },
+      { label: 'step', command: 'step' },
+      { label: 'next', command: 'next' },
+      { label: 'backtrace', command: 'backtrace' },
+      { label: 'where', command: 'where' },
+      { label: 'list', command: 'list' },
+      { label: 'info locals', command: 'info locals' },
+      { label: 'info registers', command: 'info registers' },
+      { label: 'info frame', command: 'info frame' },
+      { label: 'disassemble', command: 'disassemble' },
+      { label: 'show version', command: 'show version' },
+      { label: 'quit', command: 'quit' },
+    ];
+
+    if (selectedExample === 'segfault') {
+      base.splice(11, 0, { label: 'print ptr', command: 'print ptr' });
+      base.splice(12, 0, { label: 'print *ptr', command: 'print *ptr' });
+    } else if (selectedExample === 'basic-debug') {
+      base.splice(11, 0, { label: 'print i', command: 'print i' });
+      base.splice(12, 0, { label: 'print arr[10]', command: 'print arr[10]' });
+    } else {
+      base.splice(11, 0, { label: 'print n', command: 'print n' });
+    }
+
+    return base;
+  };
+
   const formatAddress = (addr: string) => `\x1b[36m${addr}\x1b[0m`;
   const formatFunction = (func: string) => `\x1b[33m${func}\x1b[0m`;
   const formatFile = (file: string) => `\x1b[32m${file}\x1b[0m`;
@@ -256,8 +295,8 @@ ${formatError('Backtrace stopped: frame did not save the PC')}`;
     
     // PRINT commands - show variable values with memory addresses
     else if (cmd.startsWith('print ') || cmd.startsWith('p ')) {
-      const variable = cmd.split(' ')[1];
-      if (example.variables[variable]) {
+      const variable = cmd.split(' ')[1] ?? '';
+      if (variable && example.variables[variable]) {
         output = `$1 = ${example.variables[variable]}`;
         outputColor = 'text-cyan-400';
       } else if (variable === '*ptr' && selectedExample === 'segfault') {
@@ -267,7 +306,7 @@ ${formatError('Backtrace stopped: frame did not save the PC')}`;
       } else if (variable?.includes('[')) {
         const arrayMatch = variable.match(/(\w+)\[(\d+)\]/);
         if (arrayMatch && arrayMatch[1] === 'arr') {
-          const index = parseInt(arrayMatch[2]);
+          const index = parseInt(arrayMatch[2] ?? '0', 10);
           if (index >= 10) {
             output = `${formatError('Array index out of bounds')}`;
             outputType = 'error';
@@ -307,7 +346,7 @@ ${formatError('Backtrace stopped: frame did not save the PC')}`;
     
     // BREAK commands - set breakpoints
     else if (cmd.startsWith('break ') || cmd.startsWith('b ')) {
-      const target = cmd.split(' ')[1];
+      const target = cmd.split(' ')[1] ?? '';
       if (target === 'main') {
         output = `Breakpoint 1 at ${formatAddress('0x555555555149')}: file ${formatFile(example.file)}, line 3.`;
       } else if (!isNaN(parseInt(target))) {
@@ -436,7 +475,7 @@ Quit anyway? (y or n) [Simulated: y]
     } else if (e.key === 'Tab') {
       e.preventDefault();
       const suggestions = getAutocompleteSuggestions(currentCommand.trim());
-      if (suggestions.length === 1) {
+      if (suggestions.length === 1 && suggestions[0]) {
         setCurrentCommand(suggestions[0]);
       }
     } else if (e.ctrlKey && e.key === 'c') {
@@ -464,30 +503,32 @@ Quit anyway? (y or n) [Simulated: y]
     setHistory([]);
   };
 
-  // Convert ANSI colors to Tailwind classes
-  const formatTerminalOutput = (content: string) => {
+  const runQuickCommand = (command: string) => {
+    setCurrentCommand(command);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
+  // Remove ANSI escape sequences and render plain text safely.
+  const stripAnsi = (content: string) => {
     /* eslint-disable no-control-regex */
-    return content
-      .replace(/\x1b\[36m(.*?)\x1b\[0m/g, '<span class="text-cyan-400">$1</span>')
-      .replace(/\x1b\[33m(.*?)\x1b\[0m/g, '<span class="text-yellow-400">$1</span>')
-      .replace(/\x1b\[32m(.*?)\x1b\[0m/g, '<span class="text-green-400">$1</span>')
-      .replace(/\x1b\[31m(.*?)\x1b\[0m/g, '<span class="text-red-400">$1</span>')
-      .replace(/\x1b\[1;31m(.*?)\x1b\[0m/g, '<span class="text-red-400 font-bold">$1</span>');
+    return content.replace(/\x1b\[[0-9;]*m/g, '');
     /* eslint-enable no-control-regex */
   };
 
   return (
     <Card className={`h-full bg-black border-gray-700 ${className}`}>
-      <CardHeader className="pb-3 bg-gray-900 border-b border-gray-700">
-        <CardTitle className="flex items-center gap-2 text-sm text-gray-100">
+      <CardHeader className="space-y-2 pb-2 sm:pb-3 bg-gray-900 border-b border-gray-700">
+        <CardTitle className="flex flex-wrap items-center gap-2 text-sm text-gray-100">
           <Terminal className="h-4 w-4 text-green-400" />
           <span>GDB Debugger</span>
-          <Badge variant="secondary" className="ml-auto text-xs bg-red-600 text-white">
+          <Badge variant="secondary" className="text-xs bg-red-600 text-white sm:ml-auto">
             <Bug className="h-3 w-3 mr-1" />
             Live Session
           </Badge>
         </CardTitle>
-        <div className="flex items-center gap-2 text-xs">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
           <div className="flex items-center gap-1">
             <div className="w-2 h-2 rounded-full bg-green-400"></div>
             <span className="text-gray-400">Connected</span>
@@ -503,24 +544,70 @@ Quit anyway? (y or n) [Simulated: y]
         </div>
       </CardHeader>
       
-      <CardContent className="flex flex-col h-[500px] p-0 bg-black">
+      <CardContent className="flex flex-col h-[72vh] min-h-[460px] sm:h-[500px] p-0 bg-black">
+        {/* Source code preview */}
+        <div className="border-b border-gray-800 bg-gray-950/70 px-2 sm:px-3 py-2">
+          <p className="mb-1 text-[11px] font-semibold text-gray-300">
+            Source preview ({getExampleDetails().file})
+          </p>
+          <div className="max-h-20 sm:max-h-24 overflow-y-auto rounded border border-gray-800 bg-black p-2 font-mono text-[11px]">
+            {getExampleDetails().sourceCode.map((line, index) => {
+              const lineNo = index + 1;
+              const crash = lineNo === getExampleDetails().crashLine;
+              return (
+                <div key={lineNo} className={crash ? 'bg-red-900/30 text-red-300' : 'text-gray-400'}>
+                  <span className="mr-2 inline-block w-6 text-right text-gray-600">{lineNo}</span>
+                  <span>{line}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* One-click commands */}
+        <div className="border-b border-gray-800 bg-gray-900/70 px-2 sm:px-3 py-2">
+          <p className="mb-1 text-[11px] font-semibold text-gray-300">
+            Comandos ejecutables (clic)
+          </p>
+          <div className="flex gap-1.5 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible">
+            {getQuickCommands().map(({ label, command }) => (
+              <Button
+                key={command}
+                variant="ghost"
+                size="sm"
+                className="h-6 shrink-0 rounded border border-gray-700 px-2 font-mono text-[11px] text-gray-300 hover:text-white"
+                onClick={() => runQuickCommand(command)}
+              >
+                {label}
+              </Button>
+            ))}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-6 shrink-0 rounded border border-gray-700 px-2 font-mono text-[11px] text-gray-300 hover:text-white"
+              onClick={clearTerminal}
+            >
+              clear
+            </Button>
+          </div>
+        </div>
+
         {/* Terminal Output */}
-        <ScrollArea className="flex-1 p-4" ref={scrollRef}>
-          <div className="space-y-1 font-mono text-sm">
+        <ScrollArea className="flex-1 p-2.5 sm:p-4" ref={scrollRef}>
+          <div className="space-y-1 font-mono text-xs sm:text-sm">
             {history.map((entry, index) => (
               <div 
                 key={index} 
                 className={`whitespace-pre-wrap ${entry.color || 'text-gray-300'}`}
-                dangerouslySetInnerHTML={{
-                  __html: formatTerminalOutput(entry.content)
-                }}
-              />
+              >
+                {stripAnsi(entry.content)}
+              </div>
             ))}
           </div>
         </ScrollArea>
         
         {/* Command Input */}
-        <div className="border-t border-gray-700 bg-gray-900 p-3">
+        <div className="border-t border-gray-700 bg-gray-900 p-2.5 sm:p-3">
           <div className="flex items-center gap-2 font-mono text-sm">
             <span className="text-blue-400 font-bold shrink-0">(gdb)</span>
             <Input
@@ -534,9 +621,9 @@ Quit anyway? (y or n) [Simulated: y]
               spellCheck={false}
             />
           </div>
-          <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
-            <span>💡 Try: run → backtrace → list → print variable_name</span>
-            <div className="flex gap-2">
+          <div className="mt-2 flex flex-col gap-1.5 text-xs text-gray-500 sm:flex-row sm:items-center sm:justify-between">
+            <span className="leading-tight">💡 Try: run → backtrace → list → print variable_name</span>
+            <div className="flex items-center gap-2">
               <Button 
                 variant="ghost" 
                 size="sm" 

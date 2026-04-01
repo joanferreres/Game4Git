@@ -1,4 +1,7 @@
-import React, { useState, useEffect, lazy, Suspense } from "react";
+import React, { useState, useEffect, lazy, Suspense, useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DiffViewer from "@/components/DiffViewer";
 import { useInView } from "@/hooks/useInView";
@@ -16,7 +19,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Info, Sparkles, Play, Plus, ArrowDownUp, Upload, DownloadCloud, GitBranch as GitBranchIcon, GitMerge as GitMergeIcon, GitCommit as GitCommitIcon, Terminal as TerminalIcon, BookOpen, HelpCircle, CheckCircle2, ArrowRight } from "lucide-react";
+import { Info, Sparkles, Play, Plus, ArrowDownUp, Upload, DownloadCloud, GitBranch as GitBranchIcon, GitMerge as GitMergeIcon, GitCommit as GitCommitIcon, Terminal as TerminalIcon, BookOpen, HelpCircle, CheckCircle2, ArrowUpRight } from "lucide-react";
 
 import { useTranslation } from "react-i18next";
 import "../i18n"; // Importamos la configuración de i18n
@@ -52,7 +55,10 @@ const CodeEditorSkeleton: React.FC<{ label: string }> = ({ label }) => (
   </Card>
 );
 
+gsap.registerPlugin(useGSAP, ScrollTrigger);
+
 const GitGame: React.FC = () => {
+  const rootRef = useRef<HTMLDivElement>(null);
   const [deferWelcomeBanner, setDeferWelcomeBanner] = useState(false);
   const [showDiff, setShowDiff] = useState(false);
   const [showQuickGuide, setShowQuickGuide] = useState(() => {
@@ -119,29 +125,107 @@ const GitGame: React.FC = () => {
       title: t("landingPages.gitPracticeGame.heroTitle"),
       description: t("landingPages.gitPracticeGame.heroDescription"),
       icon: Sparkles,
+      accent: "from-amber-500 via-orange-500 to-rose-500",
     },
     {
       href: gitBranchPracticePath,
       title: t("landingPages.gitBranchPractice.heroTitle"),
       description: t("landingPages.gitBranchPractice.heroDescription"),
       icon: GitBranchIcon,
+      accent: "from-sky-500 via-cyan-500 to-blue-600",
     },
     {
       href: gitMergeConflictsPath,
       title: t("landingPages.gitMergeConflicts.heroTitle"),
       description: t("landingPages.gitMergeConflicts.heroDescription"),
       icon: GitMergeIcon,
+      accent: "from-fuchsia-500 via-violet-500 to-purple-600",
     },
     {
       href: valgrindMemoryLeaksPath,
       title: t("landingPages.valgrindMemoryLeaks.heroTitle"),
       description: t("landingPages.valgrindMemoryLeaks.heroDescription"),
       icon: Shield,
+      accent: "from-emerald-500 via-teal-500 to-green-600",
     },
   ];
 
+  useGSAP(
+    () => {
+      const root = rootRef.current;
+      if (!root) {
+        return;
+      }
+
+      const mm = gsap.matchMedia();
+      mm.add(
+        {
+          animate: "(prefers-reduced-motion: no-preference)",
+        },
+        (ctx) => {
+          const { animate } = ctx.conditions as { animate: boolean };
+          if (!animate) {
+            gsap.set(
+              "[data-home-header], [data-home-strip], [data-home-panel], [data-home-controls], .home-guide-card, .home-faq-item",
+              { clearProps: "all" }
+            );
+            return;
+          }
+
+          gsap.set("[data-home-header], [data-home-strip], [data-home-panel], [data-home-controls]", {
+            autoAlpha: 0,
+            y: 16,
+          });
+          gsap.set(".home-guide-card, .home-faq-item", { autoAlpha: 0, y: 20 });
+
+          const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+          tl.to("[data-home-header]", { autoAlpha: 1, y: 0, duration: 0.3 }, 0)
+            .to("[data-home-strip]", { autoAlpha: 1, y: 0, duration: 0.28 }, "<0.05")
+            .to("[data-home-panel]", { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.07 }, "<0.1")
+            .to("[data-home-controls]", { autoAlpha: 1, y: 0, duration: 0.3 }, "<0.12");
+
+          ScrollTrigger.batch(".home-guide-card", {
+            start: "top 90%",
+            once: true,
+            interval: 0.06,
+            onEnter: (batch) => {
+              gsap.to(batch, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.45,
+                stagger: 0.05,
+                ease: "power2.out",
+              });
+            },
+          });
+
+          ScrollTrigger.batch(".home-faq-item", {
+            start: "top 92%",
+            once: true,
+            interval: 0.06,
+            onEnter: (batch) => {
+              gsap.to(batch, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.4,
+                stagger: 0.04,
+                ease: "power2.out",
+              });
+            },
+          });
+        },
+        root
+      );
+
+      return () => {
+        mm.revert();
+      };
+    },
+    { scope: rootRef, dependencies: [showQuickGuide, showSecondaryBanner], revertOnUpdate: true }
+  );
+
   return (
-    <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
+    <div ref={rootRef} className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
       <SeoHead page="home" />
       {deferWelcomeBanner && (
         <WelcomeBanner
@@ -170,7 +254,7 @@ const GitGame: React.FC = () => {
         </div>
       )}
 
-      <header className="mb-4 sm:mb-6 relative min-h-[80px] sm:min-h-[100px]">
+      <header data-home-header className="mb-4 sm:mb-6 relative min-h-[80px] sm:min-h-[100px]">
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
           <DeferUntilAfterPaint fallback={<div className="w-[88px] h-10" aria-hidden />}>
             <ThemeToggle />
@@ -352,7 +436,7 @@ const GitGame: React.FC = () => {
 
       {/* Secondary banner: shown when user closed welcome without acting */}
       {!showQuickGuide && showSecondaryBanner && (
-        <div className="mb-3 p-3 rounded-lg bg-primary/10 border border-primary/30 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm">
+        <div data-home-strip className="mb-3 p-3 rounded-lg bg-primary/10 border border-primary/30 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm">
           <span className="text-foreground font-medium">{t('home.secondaryBanner', 'First time here?')}</span>
           <Button
             variant="outline"
@@ -395,7 +479,7 @@ const GitGame: React.FC = () => {
 
       {/* First-time quick guide - Edit → Add → Commit */}
       {showQuickGuide && (
-        <div className="mb-3 p-3 rounded-lg bg-muted/50 border border-border/50 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
+        <div data-home-strip className="mb-3 p-3 rounded-lg bg-muted/50 border border-border/50 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
           <span className="font-medium text-foreground">{t('home.quickGuide', 'Quick start:')}</span>
           <span className="flex items-center gap-1">
             <BookOpen className="h-3.5 w-3.5" /> {t('home.step1', 'Edit')}
@@ -425,7 +509,7 @@ const GitGame: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 flex-1 mb-4 md:mb-6">
         {/* Left Column - Code Editor */}
-        <div id="editor-section" className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] scroll-mt-4">
+        <div data-home-panel id="editor-section" className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] scroll-mt-4">
           <Suspense
             fallback={
               <CodeEditorSkeleton label={t("home.loadingEditor", "Loading editor…")} />
@@ -436,10 +520,12 @@ const GitGame: React.FC = () => {
         </div>
 
         {/* Middle Column - Git Graph - loads when visible */}
-        <GitGraphContainer t={t} />
+        <div data-home-panel>
+          <GitGraphContainer t={t} />
+        </div>
 
         {/* Right Column - Diff or Selected Commit View */}
-        <div className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] md:col-span-2 lg:col-span-1">
+        <div data-home-panel className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] md:col-span-2 lg:col-span-1">
           {conflictExists ? (
             <ConflictResolver />
           ) : selectedCommit ? (
@@ -480,7 +566,7 @@ const GitGame: React.FC = () => {
       </div>
 
       {/* Bottom Control Panel */}
-      <div>
+      <div data-home-controls>
         <GitControls />
       </div>
 
@@ -507,27 +593,27 @@ const GitGame: React.FC = () => {
             )}
           </p>
         </div>
-        <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-4 grid gap-2 sm:grid-cols-2">
           {featuredGuides.map((guide) => {
             const Icon = guide.icon;
 
             return (
-              <Card key={guide.href} className="border-border/60 shadow-sm">
-                <CardContent className="p-5">
-                  <div className="flex items-center gap-2 text-sm font-medium">
-                    <Icon className="h-4 w-4 text-primary shrink-0" />
-                    <span>{guide.title}</span>
-                  </div>
-                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{guide.description}</p>
-                  <Link
-                    to={guide.href}
-                    className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
-                  >
-                    {t("home.guidesPrimaryCta", "Explore guide")}
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </CardContent>
-              </Card>
+              <Link
+                key={guide.href}
+                to={guide.href}
+                className="home-guide-card group flex items-center gap-3 rounded-xl border border-border/50 bg-gradient-to-br from-background/95 to-muted/20 p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+              >
+                <div
+                  className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${guide.accent} text-white shadow-md transition-transform group-hover:scale-105`}
+                >
+                  <Icon className="h-4 w-4" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-semibold leading-snug text-foreground">{guide.title}</p>
+                  <p className="truncate text-xs leading-relaxed text-muted-foreground">{guide.description}</p>
+                </div>
+                <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground/40 opacity-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100" />
+              </Link>
             );
           })}
         </div>
@@ -546,7 +632,7 @@ const GitGame: React.FC = () => {
           {t('home.faqTitle', 'FAQs')}
         </h2>
         <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="item-1">
+          <AccordionItem value="item-1" className="home-faq-item">
             <AccordionTrigger className="text-sm text-muted-foreground hover:text-foreground">
               {t('home.faq.q1', 'Is Game4Git free?')}
             </AccordionTrigger>
@@ -554,7 +640,7 @@ const GitGame: React.FC = () => {
               {t('home.faq.a1', 'Yes. Game4Git is free to use and designed for learners and classrooms.')}
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-2">
+          <AccordionItem value="item-2" className="home-faq-item">
             <AccordionTrigger className="text-sm text-muted-foreground hover:text-foreground">
               {t('home.faq.q2', 'Do I need to install Git?')}
             </AccordionTrigger>
@@ -562,7 +648,7 @@ const GitGame: React.FC = () => {
               {t('home.faq.a2', 'No. You can practice concepts, commands, and workflows directly in the browser.')}
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-3">
+          <AccordionItem value="item-3" className="home-faq-item">
             <AccordionTrigger className="text-sm text-muted-foreground hover:text-foreground">
               {t('home.faq.q3', 'Can instructors use this in class?')}
             </AccordionTrigger>

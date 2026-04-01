@@ -165,12 +165,12 @@ const gitWorkflows: WorkflowGuide[] = [
     description: "Common Git issues and solutions",
     steps: [
       { 
-        title: "Discard local changes", 
-        description: "Use 'git reset --hard' to discard all local changes and reset to the last commit." 
+        title: "Discard local changes (advanced)", 
+        description: "Use 'git reset --hard' only if you are sure. It permanently discards local changes. Safer first steps: create a backup commit or use 'git restore --staged <file>' / 'git checkout -- <file>'." 
       },
       { 
         title: "Discard all unstaged changes", 
-        description: "Use 'git checkout -- .' to discard all unstaged changes in your working directory. This is safer than reset --hard as it only affects unstaged changes." 
+        description: "Use 'git checkout -- .' to discard only unstaged changes in your working directory. Prefer this over 'reset --hard' when learning." 
       },
       { 
         title: "Discard changes for specific file", 

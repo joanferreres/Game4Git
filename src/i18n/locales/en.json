@@ -37,7 +37,8 @@
     "yes": "Yes",
     "no": "No",
     "whatsHappening": "What's happening?",
-    "backToHome": "Back to Home"
+    "backToHome": "Back to Home",
+    "copyError": "Could not copy command. Copy it manually."
   },
   "general": {
     "title": "Git Game",
@@ -186,7 +187,7 @@
       }
     },
     "branching": {
-      "title": "Branching Workflow", 
+      "title": "Branching Workflow",
       "description": "How to work with branches",
       "step1": {
         "title": "1. Create a new branch",
@@ -393,11 +394,26 @@
     "subtitle": "Powerful debugging for C/C++ programs with step-by-step execution, breakpoints and memory inspection.",
     "concepts": {
       "title": "Core Concepts",
-      "breakpoints": {"title": "Breakpoints", "desc": "Pause execution at specific lines or functions to inspect program state."},
-      "watchpoints": {"title": "Watchpoints", "desc": "Pause when a variable or memory location changes its value."},
-      "stack": {"title": "Call Stack & Frames", "desc": "Navigate frames to see where you are and how you got there (backtrace, frame)."},
-      "memory": {"title": "Inspecting Memory", "desc": "Use print/x and examine commands to inspect variables and memory regions."},
-      "stepping": {"title": "Stepping", "desc": "step (into), next (over), finish (until function returns), continue."}
+      "breakpoints": {
+        "title": "Breakpoints",
+        "desc": "Pause execution at specific lines or functions to inspect program state."
+      },
+      "watchpoints": {
+        "title": "Watchpoints",
+        "desc": "Pause when a variable or memory location changes its value."
+      },
+      "stack": {
+        "title": "Call Stack & Frames",
+        "desc": "Navigate frames to see where you are and how you got there (backtrace, frame)."
+      },
+      "memory": {
+        "title": "Inspecting Memory",
+        "desc": "Use print/x and examine commands to inspect variables and memory regions."
+      },
+      "stepping": {
+        "title": "Stepping",
+        "desc": "step (into), next (over), finish (until function returns), continue."
+      }
     },
     "cheatsheet": {
       "title": "GDB Cheat Sheet",
@@ -604,12 +620,24 @@
       "basic": {
         "title": "Basic Commands",
         "items": [
-          {"desc": "Basic Valgrind execution"},
-          {"desc": "Detailed memory leak check"},
-          {"desc": "Track origin of uninitialized values"},
-          {"desc": "Run Memcheck explicitly (default tool)"},
-          {"desc": "Cache and performance analysis"},
-          {"desc": "Generate call graphs and profiles"}
+          {
+            "desc": "Basic Valgrind execution"
+          },
+          {
+            "desc": "Detailed memory leak check"
+          },
+          {
+            "desc": "Track origin of uninitialized values"
+          },
+          {
+            "desc": "Run Memcheck explicitly (default tool)"
+          },
+          {
+            "desc": "Cache and performance analysis"
+          },
+          {
+            "desc": "Generate call graphs and profiles"
+          }
         ]
       },
       "options": {
@@ -622,7 +650,6 @@
         "suppressions": "Use --suppressions=filename to suppress known errors"
       }
     },
-    
     "codeExample": {
       "explanation": "This code demonstrates a common memory error scenario explained below."
     },
@@ -712,18 +739,48 @@
       "outputOptions": "Output Options",
       "quickTips": "Quick Tips",
       "memoryOptionsList": [
-        {"option": "--leak-check=full", "description": "Show details of memory leaks"},
-        {"option": "--show-leak-kinds=all", "description": "Show all types of leaks"},
-        {"option": "--track-origins=yes", "description": "Track origin of uninitialized values"},
-        {"option": "--leak-resolution=high", "description": "Improve leak tracking precision"},
-        {"option": "--num-callers=<n>", "description": "Show n stack frames in reports"}
+        {
+          "option": "--leak-check=full",
+          "description": "Show details of memory leaks"
+        },
+        {
+          "option": "--show-leak-kinds=all",
+          "description": "Show all types of leaks"
+        },
+        {
+          "option": "--track-origins=yes",
+          "description": "Track origin of uninitialized values"
+        },
+        {
+          "option": "--leak-resolution=high",
+          "description": "Improve leak tracking precision"
+        },
+        {
+          "option": "--num-callers=<n>",
+          "description": "Show n stack frames in reports"
+        }
       ],
       "outputOptionsList": [
-        {"option": "--log-file=filename", "description": "Save output to a file"},
-        {"option": "--quiet", "description": "Only show important errors"},
-        {"option": "--verbose", "description": "Show additional information"},
-        {"option": "--trace-children=yes", "description": "Trace child processes"},
-        {"option": "--track-fds=yes", "description": "Show open file descriptors"}
+        {
+          "option": "--log-file=filename",
+          "description": "Save output to a file"
+        },
+        {
+          "option": "--quiet",
+          "description": "Only show important errors"
+        },
+        {
+          "option": "--verbose",
+          "description": "Show additional information"
+        },
+        {
+          "option": "--trace-children=yes",
+          "description": "Trace child processes"
+        },
+        {
+          "option": "--track-fds=yes",
+          "description": "Show open file descriptors"
+        }
       ],
       "tips": [
         "Use {{flag}} when compiling to get debug information",
@@ -1073,6 +1130,21 @@
     "markAsDone": "Mark as completed"
   },
   "landingPages": {
+    "common": {
+      "trustInstant": "Start in seconds — no install",
+      "trustVisual": "Visual graph + terminal in sync",
+      "trustFree": "Sandbox practice, zero setup cost",
+      "bentoTitle": "Built for clarity and momentum",
+      "bentoSubtitle": "Real Git and debugging workflows, explained visually so concepts stick.",
+      "pathKicker": "Guided path",
+      "pathSubtitle": "Short steps, immediate feedback — learn by doing, not by reading alone.",
+      "finalCtaTitle": "Ready to practice like it matters?",
+      "finalCtaBody": "Ship skills before you ship code. Jump in, break things safely, and build confidence fast.",
+      "mockBrowserLabel": "game4git.app / practice",
+      "previewBadge": "Live preview",
+      "stepCountLabel_one": "{{count}} step",
+      "stepCountLabel_other": "{{count}} steps"
+    },
     "gitPracticeGame": {
       "eyebrow": "Practice Git online",
       "heroTitle": "Git practice game for commits, branches, and merges",

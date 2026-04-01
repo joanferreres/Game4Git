@@ -9,6 +9,7 @@ import LanguageSelector from '@/components/LanguageSelector';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import SeoHead from '@/components/SeoHead';
 import { useLocalizedPath } from '@/lib/localizedRoutes';
+import RealisticGdbTerminal from '@/components/RealisticGdbTerminal';
 
 
 
@@ -18,69 +19,76 @@ const GdbLearning: React.FC = () => {
   const homePath = localizePath("/");
   const [activeTab, setActiveTab] = useState("introduction");
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
+  const [copyError, setCopyError] = useState<string | null>(null);
+  const [selectedExample, setSelectedExample] = useState<'basic-debug' | 'segfault' | 'infinite-loop'>('segfault');
 
   // Commands organized by category
   const commandCategories = [
     {
-      name: t('gdb.categories.startup'),
+      name: t('gdb.categories.startup', 'Startup'),
       commands: [
-        { cmd: 'gdb ./your_program', desc: t('gdb.commands.startProgram') },
-        { cmd: 'gdb -tui ./your_program', desc: t('gdb.commands.startTUI') },
-        { cmd: 'set args arg1 arg2', desc: t('gdb.commands.setArgs') },
-        { cmd: 'show args', desc: t('gdb.commands.showArgs') }
+        { cmd: 'gdb ./your_program', desc: t('gdb.commands.startProgram', 'Start program') },
+        { cmd: 'gdb -tui ./your_program', desc: t('gdb.commands.startTUI', 'Start TUI mode') },
+        { cmd: 'set args arg1 arg2', desc: t('gdb.commands.setArgs', 'Set program arguments') },
+        { cmd: 'show args', desc: t('gdb.commands.showArgs', 'Show program arguments') }
       ]
     },
     {
-      name: t('gdb.categories.execution'),
+      name: t('gdb.categories.execution', 'Execution'),
       commands: [
-        { cmd: 'run', desc: t('gdb.commands.run') },
-        { cmd: 'run < input_file', desc: t('gdb.commands.runWithInput') },
-        { cmd: 'continue', desc: t('gdb.commands.continue') },
-        { cmd: 'step', desc: t('gdb.commands.step') },
-        { cmd: 'next', desc: t('gdb.commands.next') },
-        { cmd: 'finish', desc: t('gdb.commands.finish') },
-        { cmd: 'until', desc: t('gdb.commands.until') },
-        { cmd: 'kill', desc: t('gdb.commands.kill') },
-        { cmd: 'quit', desc: t('gdb.commands.quit') }
+        { cmd: 'run', desc: t('gdb.commands.run', 'Run the program') },
+        { cmd: 'run < input_file', desc: t('gdb.commands.runWithInput', 'Run with input redirection') },
+        { cmd: 'continue', desc: t('gdb.commands.continue', 'Continue execution') },
+        { cmd: 'step', desc: t('gdb.commands.step', 'Step into (line by line)') },
+        { cmd: 'next', desc: t('gdb.commands.next', 'Step over (line by line)') },
+        { cmd: 'finish', desc: t('gdb.commands.finish', 'Finish current function') },
+        { cmd: 'until', desc: t('gdb.commands.until', 'Run until a location') },
+        { cmd: 'kill', desc: t('gdb.commands.kill', 'Kill the program') },
+        { cmd: 'quit', desc: t('gdb.commands.quit', 'Quit GDB') }
       ]
     },
     {
-      name: t('gdb.categories.breakpoints'),
+      name: t('gdb.categories.breakpoints', 'Breakpoints'),
       commands: [
-        { cmd: 'break main', desc: t('gdb.commands.breakMain') },
-        { cmd: 'break file.c:42', desc: t('gdb.commands.breakLine') },
-        { cmd: 'break +5', desc: t('gdb.commands.breakRelative') },
-        { cmd: 'watch variable', desc: t('gdb.commands.watchVariable') },
-        { cmd: 'info breakpoints', desc: t('gdb.commands.infoBreakpoints') },
-        { cmd: 'delete 2', desc: t('gdb.commands.deleteBreakpoint') },
-        { cmd: 'clear', desc: t('gdb.commands.clearBreakpoint') },
-        { cmd: 'disable 1-3', desc: t('gdb.commands.disableBreakpoints') },
-        { cmd: 'enable 1-3', desc: t('gdb.commands.enableBreakpoints') }
+        { cmd: 'break main', desc: t('gdb.commands.breakMain', 'Breakpoint at main') },
+        { cmd: 'break file.c:42', desc: t('gdb.commands.breakLine', 'Breakpoint at file:line') },
+        { cmd: 'break +5', desc: t('gdb.commands.breakRelative', 'Breakpoint relative to current line') },
+        { cmd: 'watch variable', desc: t('gdb.commands.watchVariable', 'Watch a variable') },
+        { cmd: 'info breakpoints', desc: t('gdb.commands.infoBreakpoints', 'List all breakpoints') },
+        { cmd: 'delete 2', desc: t('gdb.commands.deleteBreakpoint', 'Delete breakpoint') },
+        { cmd: 'clear', desc: t('gdb.commands.clearBreakpoint', 'Clear breakpoint at current line') },
+        { cmd: 'disable 1-3', desc: t('gdb.commands.disableBreakpoints', 'Disable breakpoints') },
+        { cmd: 'enable 1-3', desc: t('gdb.commands.enableBreakpoints', 'Enable breakpoints') }
       ]
     },
     {
-      name: t('gdb.categories.examining'),
+      name: t('gdb.categories.examining', 'Examining'),
       commands: [
-        { cmd: 'print variable', desc: t('gdb.commands.printVariable') },
-        { cmd: 'print *ptr@10', desc: t('gdb.commands.printMemory') },
-        { cmd: 'print sizeof(struct)', desc: t('gdb.commands.printSizeof') },
-        { cmd: 'info locals', desc: t('gdb.commands.infoLocals') },
-        { cmd: 'info args', desc: t('gdb.commands.infoArgs') },
-        { cmd: 'info registers', desc: t('gdb.commands.infoRegisters') },
-        { cmd: 'backtrace', desc: t('gdb.commands.backtrace') },
-        { cmd: 'frame 2', desc: t('gdb.commands.frame') },
-        { cmd: 'x/10x $sp', desc: t('gdb.commands.examineMemory') },
-        { cmd: 'disassemble', desc: t('gdb.commands.disassemble') }
+        { cmd: 'print variable', desc: t('gdb.commands.printVariable', 'Print a variable') },
+        { cmd: 'print *ptr@10', desc: t('gdb.commands.printMemory', 'Print memory via pointer') },
+        { cmd: 'print sizeof(struct)', desc: t('gdb.commands.printSizeof', 'Print sizeof of a type') },
+        { cmd: 'info locals', desc: t('gdb.commands.infoLocals', 'Show local variables') },
+        { cmd: 'info args', desc: t('gdb.commands.infoArgs', 'Show function arguments') },
+        { cmd: 'info registers', desc: t('gdb.commands.infoRegisters', 'Show CPU registers') },
+        { cmd: 'backtrace', desc: t('gdb.commands.backtrace', 'Show call stack') },
+        { cmd: 'frame 2', desc: t('gdb.commands.frame', 'Change current frame') },
+        { cmd: 'x/10x $sp', desc: t('gdb.commands.examineMemory', 'Examine memory') },
+        { cmd: 'disassemble', desc: t('gdb.commands.disassemble', 'Disassemble') }
       ]
     }
   ];
 
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleCopy = (cmd: string) => {
-    navigator.clipboard.writeText(cmd);
-    setCopiedCommand(cmd);
-    setTimeout(() => setCopiedCommand(null), 2000);
+  const handleCopy = async (cmd: string) => {
+    try {
+      await navigator.clipboard.writeText(cmd);
+      setCopiedCommand(cmd);
+      setCopyError(null);
+      setTimeout(() => setCopiedCommand(null), 2000);
+    } catch {
+      setCopyError(t('common.copyError', 'Could not copy command. Copy it manually.'));
+    }
   };
 
   return (
@@ -177,6 +185,18 @@ const GdbLearning: React.FC = () => {
                   <p>
                     {t('gdb.ui.whatIsParagraph', 'GDB is a powerful debugger for C/C++ and other languages. It helps you find and fix issues by pausing execution, inspecting variables, and stepping through code.')}
                   </p>
+                  <div className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-900/40 dark:bg-emerald-900/20">
+                    <h3 className="font-semibold text-emerald-800 dark:text-emerald-200">
+                      {t('gdb.studentPath.title', 'Ruta guiada (10 min)')}
+                    </h3>
+                    <ol className="mt-2 list-decimal pl-5 text-sm text-emerald-700 dark:text-emerald-300 space-y-1">
+                      <li>{t('gdb.studentPath.step1', 'Compila con -g -O0')}</li>
+                      <li>{t('gdb.studentPath.step2', 'Pon un breakpoint en main')}</li>
+                      <li>{t('gdb.studentPath.step3', 'Ejecuta con run y analiza backtrace')}</li>
+                      <li>{t('gdb.studentPath.step4', 'Inspecciona variables con print/info locals')}</li>
+                      <li>{t('gdb.studentPath.step5', 'Corrige y vuelve a ejecutar')}</li>
+                    </ol>
+                  </div>
 
                   <div className="mt-6 grid md:grid-cols-2 gap-4">
                     <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-100 dark:border-blue-900/30">
@@ -239,7 +259,7 @@ const GdbLearning: React.FC = () => {
                         variant="ghost"
                         size="sm"
                         className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                        onClick={() => navigator.clipboard.writeText('gdb ./your_program')}
+                        onClick={() => handleCopy('gdb ./your_program')}
                         aria-label={t('common.copyCommand', 'Copy command')}
                       >
                         <Copy className="h-3.5 w-3.5" />
@@ -369,6 +389,23 @@ const GdbLearning: React.FC = () => {
                     );
                   })}
                 </div>
+                {searchTerm.trim().length > 0 &&
+                commandCategories.every((category) =>
+                  category.commands.every(
+                    (item) =>
+                      !item.cmd.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                      !item.desc.toLowerCase().includes(searchTerm.toLowerCase())
+                  )
+                ) ? (
+                  <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-700 dark:border-amber-900/40 dark:bg-amber-900/20 dark:text-amber-300">
+                    {t('gdb.ui.noResults', 'No se encontraron comandos para tu búsqueda. Prueba con run, break o print.')}
+                  </div>
+                ) : null}
+                {copyError ? (
+                  <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-900/40 dark:bg-red-900/20 dark:text-red-300">
+                    {copyError}
+                  </div>
+                ) : null}
 
                 {/* Quick Tips */}
                 <div className="mt-8 bg-blue-50 dark:bg-blue-900/10 border-l-4 border-blue-400 dark:border-blue-500 p-4 rounded-r-lg">
@@ -430,6 +467,22 @@ const GdbLearning: React.FC = () => {
             </Card>
           </TabsContent>
 
+          <TabsContent value="cheatsheet" className="space-y-4">
+            <Card className="border-0 shadow-sm bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle className="text-lg">{t('gdb.interactive.title', 'Interactive GDB Terminal')}</CardTitle>
+                <CardDescription>{t('gdb.interactive.tryCommands', 'Try: run, backtrace, list, print, help, clear')}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="mb-3 flex flex-wrap gap-2">
+                  <Button variant={selectedExample === 'segfault' ? 'default' : 'outline'} size="sm" onClick={() => setSelectedExample('segfault')}>Segfault</Button>
+                  <Button variant={selectedExample === 'basic-debug' ? 'default' : 'outline'} size="sm" onClick={() => setSelectedExample('basic-debug')}>Buffer Overflow</Button>
+                  <Button variant={selectedExample === 'infinite-loop' ? 'default' : 'outline'} size="sm" onClick={() => setSelectedExample('infinite-loop')}>Stack Overflow</Button>
+                </div>
+                <RealisticGdbTerminal selectedExample={selectedExample} />
+              </CardContent>
+            </Card>
+          </TabsContent>
           <TabsContent value="cheatsheet">
             <Card className="border-0 shadow-sm bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
               <CardHeader>

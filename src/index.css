@@ -225,3 +225,24 @@
 .dark .react-flow__controls button svg {
   @apply text-foreground fill-current !important;
 }
+
+/*
+  GSAP landing animations — pre-hide antes de que JS cargue.
+  Evita el FOUC (Flash of Unstyled Content) en prerender/SSR:
+  el HTML prerenderizado ya sale con estos elementos invisibles,
+  GSAP los muestra al animar con autoAlpha.
+  Los usuarios con prefers-reduced-motion nunca ven estos estilos.
+*/
+@media (prefers-reduced-motion: no-preference) {
+  [data-landing-header],
+  [data-landing-hero-chunk],
+  [data-landing-reveal] {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  [data-landing-header],
+  [data-landing-hero-chunk] {
+    will-change: transform, opacity;
+  }
+}

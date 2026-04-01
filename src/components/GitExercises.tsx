@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import {
   Card,
   CardContent,
@@ -11,26 +13,18 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetHeader,
   SheetTitle,
   SheetTrigger,
-  SheetFooter,
   SheetClose
 } from "@/components/ui/sheet";
 import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import {
+  ChevronLeft,
+  Lock,
   Trophy,
   GitBranch,
   Users,
   CheckCircle2,
   Clock,
-  RotateCcw,
   BookOpen,
   Terminal,
   GitMerge,
@@ -38,6 +32,7 @@ import {
   Code,
   XCircle
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -67,6 +62,8 @@ interface ExerciseStep {
   validation: () => boolean;
 }
 
+gsap.registerPlugin(useGSAP);
+
 const GitExercises: React.FC = () => {
   const { t, i18n } = useTranslation();
   const { 
@@ -80,7 +77,10 @@ const GitExercises: React.FC = () => {
   const [forceUpdate, setForceUpdate] = useState(0);
   const [conflictResolution, setConflictResolution] = useState("");
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [view, setView] = useState<"list" | "detail">("list");
+  const [everOpened, setEverOpened] = useState(false);
   const conflictTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const fabRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handler = () => setSheetOpen(true);
@@ -97,6 +97,7 @@ const GitExercises: React.FC = () => {
     }
 
     setSelectedExercise(requestedExercise);
+    setView("detail");
     setSheetOpen(true);
     searchParams.delete("exercise");
 
@@ -104,6 +105,12 @@ const GitExercises: React.FC = () => {
     const nextUrl = `${window.location.pathname}${nextSearch ? `?${nextSearch}` : ""}${window.location.hash}`;
     window.history.replaceState(window.history.state, "", nextUrl);
   }, []);
+
+  useEffect(() => {
+    if (sheetOpen && !everOpened) {
+      setEverOpened(true);
+    }
+  }, [sheetOpen, everOpened]);
   
   // Definir y actualizar los ejercicios en una función que depende de la traducción
   const getInitialExercises = useCallback((): Record<string, Exercise> => ({
@@ -477,15 +484,17 @@ const GitExercises: React.FC = () => {
     
     // Verificar si hay cambios reales antes de actualizar el estado
     const hasChanges = Object.keys(updatedExercises).some(key => {
-      if (!exercises[key]) return true;
+      const updatedExercise = updatedExercises[key];
+      const currentExercise = exercises[key];
+      if (!updatedExercise || !currentExercise) return true;
       
       // Verificar si hay diferencias en los textos traducidos
       const exerciseChanged = 
-        updatedExercises[key].title !== exercises[key].title ||
-        updatedExercises[key].description !== exercises[key].description ||
-        updatedExercises[key].steps.some((step, index) => 
-          step.description !== exercises[key].steps[index]?.description ||
-          step.hint !== exercises[key].steps[index]?.hint
+        updatedExercise.title !== currentExercise.title ||
+        updatedExercise.description !== currentExercise.description ||
+        updatedExercise.steps.some((step, index) => 
+          step.description !== currentExercise.steps[index]?.description ||
+          step.hint !== currentExercise.steps[index]?.hint
         );
       
       return exerciseChanged;
@@ -497,19 +506,21 @@ const GitExercises: React.FC = () => {
       
       // Para cada ejercicio, preservamos su estado pero actualizamos sus textos
       Object.keys(updatedExercises).forEach(key => {
-        if (exercises[key]) {
+        const updatedExercise = updatedExercises[key];
+        const currentExercise = exercises[key];
+        if (updatedExercise && currentExercise) {
           // Conservar estado (isStarted, isCompleted)
           newExercisesState[key] = {
-            ...updatedExercises[key], // Nuevos textos traducidos
-            isStarted: exercises[key].isStarted,
-            isCompleted: exercises[key].isCompleted,
+            ...updatedExercise, // Nuevos textos traducidos
+            isStarted: currentExercise.isStarted,
+            isCompleted: currentExercise.isCompleted,
           };
           
           // Conservar el estado de completado de cada paso, pero usar textos actualizados
-          if (updatedExercises[key].steps.length === exercises[key].steps.length) {
-            newExercisesState[key].steps = updatedExercises[key].steps.map((step, index) => ({
+          if (updatedExercise.steps.length === currentExercise.steps.length) {
+            newExercisesState[key].steps = updatedExercise.steps.map((step, index) => ({
               ...step, // Nuevos textos traducidos para el paso
-              isCompleted: exercises[key].steps[index]?.isCompleted || false
+              isCompleted: currentExercise.steps[index]?.isCompleted || false
             }));
           }
         }
@@ -531,20 +542,21 @@ const GitExercises: React.FC = () => {
       // Actualizar solo el ejercicio seleccionado para asegurar textos actualizados
       setExercises(prev => {
         const updated = {...prev};
+        const currentExercise = prev[selectedExercise];
         
         // Si el ejercicio ya existe en el estado, preservamos su estado pero actualizamos textos
-        if (prev[selectedExercise]) {
+        if (currentExercise) {
           updated[selectedExercise] = {
             ...selectedExerciseData, // Usar los textos actualizados
-            isStarted: prev[selectedExercise].isStarted,
-            isCompleted: prev[selectedExercise].isCompleted,
+            isStarted: currentExercise.isStarted,
+            isCompleted: currentExercise.isCompleted,
           };
           
           // Conservar estado de completado de los pasos 
-          if (selectedExerciseData.steps.length === prev[selectedExercise].steps.length) {
+          if (selectedExerciseData.steps.length === currentExercise.steps.length) {
             updated[selectedExercise].steps = selectedExerciseData.steps.map((step, index) => ({
               ...step, // Usar textos actualizados
-              isCompleted: prev[selectedExercise].steps[index]?.isCompleted || false
+              isCompleted: currentExercise.steps[index]?.isCompleted || false
             }));
           }
         }
@@ -564,11 +576,15 @@ const GitExercises: React.FC = () => {
     
     // Guardar la información actualizada con los nuevos textos traducidos
     setExercises(prev => {
+      const translatedExercise = updatedExercises[selectedExercise];
+      if (!translatedExercise) {
+        return prev;
+      }
       const updated = {...prev};
       
       // Actualizamos el ejercicio seleccionado con los textos traducidos más las propiedades de estado
       updated[selectedExercise] = {
-        ...updatedExercises[selectedExercise], // Usar los nuevos textos traducidos
+        ...translatedExercise, // Usar los nuevos textos traducidos
         isStarted: true,
         isCompleted: false
       };
@@ -582,13 +598,19 @@ const GitExercises: React.FC = () => {
   
   // Método para marcar un ejercicio como completado
   const completeExercise = () => {
-    setExercises(prev => ({
-      ...prev,
-      [selectedExercise]: {
-        ...prev[selectedExercise],
-        isCompleted: true
+    setExercises(prev => {
+      const currentExercise = prev[selectedExercise];
+      if (!currentExercise) {
+        return prev;
       }
-    }));
+      return {
+        ...prev,
+        [selectedExercise]: {
+          ...currentExercise,
+          isCompleted: true
+        }
+      };
+    });
     
     toast.success(t("exercises.exerciseCompleted", "¡Ejercicio completado manualmente!"), {
       duration: 3000
@@ -596,10 +618,6 @@ const GitExercises: React.FC = () => {
   };
   
   // Método para forzar una actualización de la validación
-  const checkProgress = () => {
-    setForceUpdate(prev => prev + 1);
-  };
-  
   // Check and update exercise completion status
   useEffect(() => {
     const exercise = exercises[selectedExercise];
@@ -621,6 +639,13 @@ const GitExercises: React.FC = () => {
           duration: 3000,
           position: 'bottom-center'
         });
+        requestAnimationFrame(() => {
+          gsap.fromTo(
+            `[data-step-check="${selectedExercise}-${step.id}"]`,
+            { scale: 0, autoAlpha: 0.2 },
+            { scale: 1, autoAlpha: 1, duration: 0.3, ease: "back.out(2)" }
+          );
+        });
       }
       
       if (isNowCompleted) completedSteps++;
@@ -636,13 +661,19 @@ const GitExercises: React.FC = () => {
     console.log('Completed steps:', updatedSteps.filter(s => s.isCompleted).map(s => s.id));
     
     // Update steps completion status
-    setExercises(prev => ({
-      ...prev,
-      [selectedExercise]: {
-        ...prev[selectedExercise],
-        steps: updatedSteps
+    setExercises(prev => {
+      const currentExercise = prev[selectedExercise];
+      if (!currentExercise) {
+        return prev;
       }
-    }));
+      return {
+        ...prev,
+        [selectedExercise]: {
+          ...currentExercise,
+          steps: updatedSteps
+        }
+      };
+    });
     
     // Check if all steps are completed (solo mostrar mensaje si es un cambio nuevo)
     if (completedSteps === exercise.steps.length && completedSteps > prevCompletedSteps && progressPercentage === 100) {
@@ -652,13 +683,19 @@ const GitExercises: React.FC = () => {
       });
       
       // Marcar como completado automáticamente
-      setExercises(prev => ({
-        ...prev,
-        [selectedExercise]: {
-          ...prev[selectedExercise],
-          isCompleted: true
+      setExercises(prev => {
+        const currentExercise = prev[selectedExercise];
+        if (!currentExercise) {
+          return prev;
         }
-      }));
+        return {
+          ...prev,
+          [selectedExercise]: {
+            ...currentExercise,
+            isCompleted: true
+          }
+        };
+      });
     }
   }, [repository, workingChanges, stagedChanges, selectedExercise, exercises, t, forceUpdate, setExercises, setProgress]);
   
@@ -713,11 +750,83 @@ const GitExercises: React.FC = () => {
   
   const totalExercises = Object.keys(exercises).length;
   const completedCount = Object.values(exercises).filter((e) => e.isCompleted).length;
+  const challengeProgress = totalExercises > 0 ? (completedCount / totalExercises) * 100 : 0;
+  const selectedExerciseData = exercises[selectedExercise];
+  const mergeExercise = exercises["merge-conflicts"];
+
+  const exerciseMeta: Record<string, { icon: typeof GitBranch; accent: string }> = {
+    "feature-branch": { icon: GitBranch, accent: "from-amber-500 via-orange-500 to-rose-500" },
+    "team-workflow": { icon: Users, accent: "from-sky-500 via-cyan-500 to-blue-600" },
+    "technical-tasks": { icon: Terminal, accent: "from-violet-500 via-fuchsia-500 to-purple-600" },
+    "merge-conflicts": { icon: GitMerge, accent: "from-rose-500 via-red-500 to-orange-600" },
+  };
+
+  const selectChallenge = (id: string) => {
+    setSelectedExercise(id);
+    setView("detail");
+  };
+
+  const openNextChallenge = () => {
+    const ids = Object.keys(exercises);
+    const currentIndex = ids.indexOf(selectedExercise);
+    const nextIndex = currentIndex >= 0 ? (currentIndex + 1) % ids.length : 0;
+    setSelectedExercise(ids[nextIndex] || "feature-branch");
+  };
+
+  useGSAP(
+    () => {
+      if (!fabRef.current || sheetOpen || everOpened) {
+        return;
+      }
+
+      const tween = gsap.to(fabRef.current, {
+        scale: 1.08,
+        duration: 0.7,
+        repeat: -1,
+        yoyo: true,
+        ease: "power1.inOut",
+      });
+
+      return () => tween.kill();
+    },
+    { dependencies: [sheetOpen, everOpened] }
+  );
+
+  useGSAP(
+    () => {
+      const activeStep = document.querySelector<HTMLElement>(
+        `[data-step-index="${selectedExercise}-${selectedExerciseData?.steps.findIndex((step) => !step.isCompleted) ?? -1}"] [data-step-bullet]`
+      );
+      if (!activeStep || !selectedExerciseData || !selectedExerciseData.isStarted || selectedExerciseData.isCompleted) {
+        return;
+      }
+
+      const tween = gsap.to(activeStep, {
+        scale: 1.015,
+        duration: 0.8,
+        repeat: -1,
+        yoyo: true,
+        ease: "power1.inOut",
+      });
+
+      return () => tween.kill();
+    },
+    {
+      dependencies: [
+        selectedExercise,
+        selectedExerciseData?.isStarted,
+        selectedExerciseData?.isCompleted,
+        selectedExerciseData?.steps,
+        view,
+      ],
+    }
+  );
 
   return (
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetTrigger asChild>
         <Button
+          ref={fabRef}
           variant="default"
           className="gap-1.5 sm:gap-2 fixed bottom-4 right-4 rounded-full pl-2 sm:pl-3 md:pl-4 pr-3 sm:pr-4 md:pr-5 py-1 sm:py-1.5 md:py-2 h-auto z-50 
             bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-xl ring-2 ring-amber-300/50 hover:scale-105 transition-transform duration-200"
@@ -729,17 +838,38 @@ const GitExercises: React.FC = () => {
           </Badge>
         </Button>
       </SheetTrigger>
-      <SheetContent 
-        side="right" 
+      <SheetContent
+        side="right"
         className={`w-full p-0 overflow-y-auto transition-all duration-300 ease-in-out ${
-          selectedExercise === "merge-conflicts" ? "sm:max-w-full" : "sm:max-w-lg"
+          view === "list" ? "sm:max-w-2xl" : selectedExercise === "merge-conflicts" ? "sm:max-w-full" : "sm:max-w-lg"
         }`}
       >
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-3 sm:p-4 md:p-6 pb-2 sm:pb-3 md:pb-4 border-b sticky top-0 bg-background z-10">
-          <SheetTitle className="text-sm sm:text-base md:text-xl font-semibold flex items-center gap-1 sm:gap-2 mb-1 sm:mb-0">
-            <Trophy className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" />
-            {t("exercises.title", "Git Exercises")}
-          </SheetTitle>
+          <div className="w-full">
+            <div className="flex items-center gap-2">
+              {view === "detail" ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-7 px-2"
+                  onClick={() => setView("list")}
+                >
+                  <ChevronLeft className="h-4 w-4 mr-1" />
+                  {t("common.back", "Back")}
+                </Button>
+              ) : null}
+              <SheetTitle className="text-sm sm:text-base md:text-xl font-semibold flex items-center gap-1 sm:gap-2 mb-1 sm:mb-0">
+                <Trophy className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" />
+                {t("exercises.title", "Git Exercises")}
+              </SheetTitle>
+            </div>
+            <div className="mt-2 flex items-center gap-3">
+              <Progress value={challengeProgress} className="h-1.5 flex-1" />
+              <span className="text-xs font-semibold text-muted-foreground">
+                {completedCount}/{totalExercises}
+              </span>
+            </div>
+          </div>
           
           <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
             <SheetDescription className="hidden sm:block text-[10px] sm:text-xs md:text-sm max-w-[200px] md:max-w-none">
@@ -758,52 +888,78 @@ const GitExercises: React.FC = () => {
         </div>
         
         <div className="p-0">
-          <Tabs defaultValue="feature-branch" value={selectedExercise} onValueChange={setSelectedExercise}>
-            <div className="px-3 sm:px-4 md:px-6 pt-2 sm:pt-3 md:pt-4 pb-1 sm:pb-2">
-              <TabsList className="grid grid-cols-4 mb-2 h-auto w-full overflow-hidden">
-                <TabsTrigger 
-                  value="feature-branch" 
-                  className="text-[8px] xs:text-[10px] sm:text-xs py-1 sm:py-1.5 px-0.5 sm:px-1 md:px-2 h-auto min-h-[2rem] overflow-hidden text-ellipsis whitespace-nowrap"
-                >
-                  {t("exercises.featureBranch.tabTitle", "Feature Branch")}
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="team-workflow" 
-                  className="text-[8px] xs:text-[10px] sm:text-xs py-1 sm:py-1.5 px-0.5 sm:px-1 md:px-2 h-auto min-h-[2rem] overflow-hidden text-ellipsis whitespace-nowrap"
-                >
-                  {t("exercises.teamWorkflow.tabTitle", "Team Workflow")}
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="technical-tasks" 
-                  className="text-[8px] xs:text-[10px] sm:text-xs py-1 sm:py-1.5 px-0.5 sm:px-1 md:px-2 h-auto min-h-[2rem] overflow-hidden text-ellipsis whitespace-nowrap"
-                >
-                  {t("exercises.technicalTasks.tabTitle", "Technical Tasks")}
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="merge-conflicts" 
-                  className="text-[8px] xs:text-[10px] sm:text-xs py-1 sm:py-1.5 px-0.5 sm:px-1 md:px-2 h-auto min-h-[2rem] overflow-hidden text-ellipsis whitespace-nowrap"
-                >
-                  {t("exercises.mergeConflicts.tabTitle", "Merge Conflicts")}
-                </TabsTrigger>
-              </TabsList>
+          {view === "list" ? (
+            <div className="p-3 sm:p-6 space-y-3">
+              <SheetDescription className="text-xs sm:text-sm text-muted-foreground">
+                {t("exercises.description", "Complete these exercises to learn Git branching and team workflows")}
+              </SheetDescription>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {Object.entries(exercises).map(([id, exercise]) => {
+                  const meta = exerciseMeta[id];
+                  const Icon = meta?.icon || Trophy;
+                  const stepDone = exercise.steps.filter((step) => step.isCompleted).length;
+                  const isInProgress = exercise.isStarted && !exercise.isCompleted;
+                  return (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => selectChallenge(id)}
+                      className="text-left group rounded-xl border border-border/50 bg-gradient-to-br from-background to-muted/20 p-3 transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div
+                          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${meta?.accent || "from-slate-500 to-slate-700"} text-white shadow-md`}
+                        >
+                          <Icon className="h-4 w-4" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between gap-2">
+                            <p className="truncate text-sm font-semibold text-foreground">{exercise.title}</p>
+                            {renderDifficultyBadge(exercise.difficulty)}
+                          </div>
+                          <p className="mt-1 truncate text-xs text-muted-foreground">{exercise.description}</p>
+                          <div className="mt-2 flex items-center gap-2 text-[11px]">
+                            {exercise.isCompleted ? (
+                              <span className="inline-flex items-center gap-1 text-green-600 font-medium">
+                                <CheckCircle2 className="h-3.5 w-3.5" />
+                                {t("exercises.completed", "Completado")}
+                              </span>
+                            ) : isInProgress ? (
+                              <>
+                                <Progress value={(stepDone / Math.max(exercise.steps.length, 1)) * 100} className="h-1.5 w-20" />
+                                <span className="text-muted-foreground">{stepDone}/{exercise.steps.length}</span>
+                              </>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 text-muted-foreground">
+                                <Lock className="h-3.5 w-3.5" />
+                                {t("exercises.start", "Start")}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            
-            <TabsContent value="merge-conflicts" className="p-3 sm:p-6 pt-0">
-              <Card className={`${selectedExercise === "merge-conflicts" && !exercises["merge-conflicts"].isCompleted ? "mx-auto max-w-5xl" : ""}`}>
+          ) : selectedExercise === "merge-conflicts" && mergeExercise ? (
+            <div className="p-3 sm:p-6 pt-0">
+              <Card className={`${selectedExercise === "merge-conflicts" && !mergeExercise.isCompleted ? "mx-auto max-w-5xl" : ""}`}>
                 <CardHeader className="p-3 sm:p-6">
                   <div className="flex justify-between items-start">
                     <CardTitle className="text-base sm:text-lg font-semibold flex items-center gap-1 sm:gap-2">
                       <GitMerge className="h-4 w-4 sm:h-5 sm:w-5 text-blue-500" />
-                      {exercises["merge-conflicts"].title}
+                      {mergeExercise.title}
                     </CardTitle>
-                    {renderDifficultyBadge(exercises["merge-conflicts"].difficulty)}
+                    {renderDifficultyBadge(mergeExercise.difficulty)}
                   </div>
                   <CardDescription className="text-xs sm:text-sm mt-1">
-                    {exercises["merge-conflicts"].description}
+                    {mergeExercise.description}
                   </CardDescription>
                 </CardHeader>
                 
-                {!exercises["merge-conflicts"].isStarted ? (
+                {!mergeExercise.isStarted ? (
                   <CardContent className="space-y-4 sm:space-y-6 p-3 sm:p-6">
                     <div className="bg-amber-50 dark:bg-amber-950/30 p-3 sm:p-4 rounded-md border border-amber-200 dark:border-amber-800 space-y-2 sm:space-y-3">
                       <h3 className="font-medium text-amber-800 dark:text-amber-200 flex items-center gap-1 sm:gap-2 text-xs sm:text-sm">
@@ -836,7 +992,7 @@ const GitExercises: React.FC = () => {
                       </Button>
                     </div>
                   </CardContent>
-                ) : exercises["merge-conflicts"].isCompleted ? (
+                ) : mergeExercise.isCompleted ? (
                   <CardContent className="flex flex-col items-center justify-center py-4 sm:py-8 space-y-3 sm:space-y-4 p-3 sm:p-6">
                     <div className="text-center space-y-1 sm:space-y-2 mb-1 sm:mb-2">
                       <h3 className="text-base sm:text-lg font-medium text-green-600">{t("exercises.exerciseFinished", "¡Ejercicio Completado!")}</h3>
@@ -854,7 +1010,7 @@ const GitExercises: React.FC = () => {
                         {t("exercises.startAgain", "Comenzar de nuevo")}
                       </Button>
                       <Button 
-                        onClick={() => setSelectedExercise(selectedExercise === "feature-branch" ? "team-workflow" : selectedExercise === "team-workflow" ? "technical-tasks" : selectedExercise === "merge-conflicts" ? "feature-branch" : "team-workflow")}
+                        onClick={openNextChallenge}
                         variant="default"
                         size="auto"
                         className="text-xs sm:text-sm h-8 sm:h-10"
@@ -956,7 +1112,11 @@ function addFeature(data) {
                                 
                                 // Update the step as completed
                                 setExercises(prev => {
-                                  const updatedSteps = prev["merge-conflicts"].steps.map(step => {
+                                  const mergeState = prev["merge-conflicts"];
+                                  if (!mergeState) {
+                                    return prev;
+                                  }
+                                  const updatedSteps = mergeState.steps.map(step => {
                                     if (step.id === "resolve-conflict") {
                                       return { ...step, isCompleted: true };
                                     }
@@ -966,7 +1126,7 @@ function addFeature(data) {
                                   return {
                                     ...prev,
                                     ["merge-conflicts"]: {
-                                      ...prev["merge-conflicts"],
+                                      ...mergeState,
                                       steps: updatedSteps,
                                       isCompleted: true
                                     }
@@ -1002,18 +1162,24 @@ function addFeature(data) {
                           size="sm"
                           onClick={() => {
                             setConflictResolution("");
-                            setExercises(prev => ({
-                              ...prev,
-                              ["merge-conflicts"]: {
-                                ...prev["merge-conflicts"],
-                                isStarted: false,
-                                isCompleted: false,
-                                steps: prev["merge-conflicts"].steps.map(step => ({
-                                  ...step,
-                                  isCompleted: false
-                                }))
+                            setExercises(prev => {
+                              const mergeState = prev["merge-conflicts"];
+                              if (!mergeState) {
+                                return prev;
                               }
-                            }));
+                              return {
+                                ...prev,
+                                ["merge-conflicts"]: {
+                                  ...mergeState,
+                                  isStarted: false,
+                                  isCompleted: false,
+                                  steps: mergeState.steps.map(step => ({
+                                    ...step,
+                                    isCompleted: false
+                                  }))
+                                }
+                              };
+                            });
                           }}
                           className="gap-1 sm:gap-2 text-xs sm:text-sm"
                         >
@@ -1035,24 +1201,23 @@ function addFeature(data) {
                   </CardContent>
                 )}
               </Card>
-            </TabsContent>
-            
-            {Object.entries(exercises).filter(([id]) => id !== "merge-conflicts").map(([id, exercise]) => (
-              <TabsContent key={id} value={id} className="p-3 sm:p-6 pt-0">
-                <Card>
-                  <CardHeader className="p-3 sm:p-6">
-                    <div className="flex justify-between items-start">
-                      <CardTitle className="text-base sm:text-lg font-semibold">
-                        {exercise.title}
-                      </CardTitle>
-                      {renderDifficultyBadge(exercise.difficulty)}
-                    </div>
-                    <CardDescription className="text-xs sm:text-sm mt-1">
-                      {exercise.description}
-                    </CardDescription>
-                  </CardHeader>
-                  
-                  {!exercise.isStarted ? (
+            </div>
+          ) : selectedExerciseData ? (
+            <div className="p-3 sm:p-6 pt-0">
+              <Card>
+                <CardHeader className="p-3 sm:p-6">
+                  <div className="flex justify-between items-start">
+                    <CardTitle className="text-base sm:text-lg font-semibold">
+                      {selectedExerciseData.title}
+                    </CardTitle>
+                    {renderDifficultyBadge(selectedExerciseData.difficulty)}
+                  </div>
+                  <CardDescription className="text-xs sm:text-sm mt-1">
+                    {selectedExerciseData.description}
+                  </CardDescription>
+                </CardHeader>
+                
+                {!selectedExerciseData.isStarted ? (
                     <CardContent className="flex flex-col items-center justify-center py-4 sm:py-8 space-y-3 sm:space-y-4 p-3 sm:p-6">
                       <div className="text-center space-y-1 sm:space-y-2 mb-1 sm:mb-2">
                         <h3 className="text-base sm:text-lg font-medium">{t("exercises.readyToStart", "¿Listo para empezar?")}</h3>
@@ -1068,7 +1233,7 @@ function addFeature(data) {
                         {t("exercises.start", "Iniciar Ejercicio")}
                       </Button>
                     </CardContent>
-                  ) : exercise.isCompleted ? (
+                  ) : selectedExerciseData.isCompleted ? (
                     <CardContent className="flex flex-col items-center justify-center py-4 sm:py-8 space-y-3 sm:space-y-4 p-3 sm:p-6">
                       <div className="text-center space-y-1 sm:space-y-2 mb-1 sm:mb-2">
                         <h3 className="text-base sm:text-lg font-medium text-green-600">{t("exercises.exerciseFinished", "¡Ejercicio Completado!")}</h3>
@@ -1086,7 +1251,7 @@ function addFeature(data) {
                           {t("exercises.startAgain", "Comenzar de nuevo")}
                         </Button>
                         <Button 
-                          onClick={() => setSelectedExercise(selectedExercise === "feature-branch" ? "team-workflow" : selectedExercise === "team-workflow" ? "technical-tasks" : selectedExercise === "merge-conflicts" ? "feature-branch" : "team-workflow")}
+                          onClick={openNextChallenge}
                           variant="default"
                           size="auto"
                           className="text-xs sm:text-sm h-8 sm:h-10"
@@ -1107,10 +1272,17 @@ function addFeature(data) {
                         </h3>
                         
                         <ol className="space-y-1 sm:space-y-1.5 md:space-y-2">
-                          {exercise.steps.map((step, index) => (
-                            <li key={step.id} className={`flex items-start gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded ${step.isCompleted ? 'bg-green-50 border border-green-100' : 'bg-muted/50'}`}>
-                              <div className={`flex-shrink-0 mt-0.5 rounded-full h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 flex items-center justify-center ${step.isCompleted ? 'bg-green-100 text-green-600' : 'bg-blue-100 text-blue-600'}`}>
-                                {step.isCompleted ? <CheckCircle2 className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" /> : (index + 1)}
+                          {selectedExerciseData.steps.map((step, index) => {
+                            const activeIndex = selectedExerciseData.steps.findIndex((s) => !s.isCompleted);
+                            const isActive = !step.isCompleted && index === activeIndex;
+                            return (
+                            <li
+                              key={step.id}
+                              data-step-index={`${selectedExercise}-${index}`}
+                              className={`flex items-start gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded ${step.isCompleted ? 'bg-green-50 border border-green-100' : isActive ? 'bg-blue-50 border border-blue-200 ring-1 ring-blue-200' : 'bg-muted/50'}`}
+                            >
+                              <div data-step-bullet className={`flex-shrink-0 mt-0.5 rounded-full h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 flex items-center justify-center ${step.isCompleted ? 'bg-green-100 text-green-600' : 'bg-blue-100 text-blue-600'}`}>
+                                {step.isCompleted ? <CheckCircle2 data-step-check={`${selectedExercise}-${step.id}`} className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" /> : (index + 1)}
                               </div>
                               <div className="flex-1 space-y-0.5 sm:space-y-1">
                                 <p className={`text-[10px] xs:text-xs sm:text-sm ${step.isCompleted ? 'text-green-700 font-medium' : 'font-medium'}`}>
@@ -1123,7 +1295,8 @@ function addFeature(data) {
                                 )}
                               </div>
                             </li>
-                          ))}
+                          );
+                          })}
                         </ol>
                       </div>
                       
@@ -1143,7 +1316,7 @@ function addFeature(data) {
                           </h4>
                           <div className="bg-zinc-950 rounded-md p-1.5 sm:p-2 md:p-3 overflow-x-auto">
                             <ul className="space-y-0.5 sm:space-y-1">
-                              {exercise.terminalCommands.map((cmd, i) => (
+                              {selectedExerciseData.terminalCommands.map((cmd, i) => (
                                 <li key={i} className="text-[8px] xs:text-[9px] sm:text-xs text-green-400 font-mono">$ {cmd}</li>
                               ))}
                             </ul>
@@ -1156,7 +1329,7 @@ function addFeature(data) {
                             {t("exercises.uiActions", "UI Actions")}
                           </h4>
                           <ul className="space-y-0.5 sm:space-y-1 text-[8px] xs:text-[9px] sm:text-xs bg-muted p-1.5 sm:p-2 md:p-3 rounded-md">
-                            {exercise.uiActions.map((action, i) => (
+                            {selectedExerciseData.uiActions.map((action, i) => (
                               <li key={i} className="flex items-center gap-1">
                                 <span className="text-primary">•</span> {action}
                               </li>
@@ -1178,7 +1351,7 @@ function addFeature(data) {
                   )}
                   
                   <CardFooter className="flex justify-between border-t pt-3 sm:pt-4 p-3 sm:p-6">
-                    {exercise.isStarted && !exercise.isCompleted ? (
+                    {selectedExerciseData.isStarted && !selectedExerciseData.isCompleted ? (
                       <>
                         <div className="flex gap-2">
                         </div>
@@ -1201,7 +1374,7 @@ function addFeature(data) {
                   </CardFooter>
                   
                   {/* Nueva sección para botones de completar/cerrar */}
-                  {exercise.isStarted && !exercise.isCompleted && (
+                  {selectedExerciseData.isStarted && !selectedExerciseData.isCompleted && (
                     <div className="px-3 sm:px-4 md:px-6 pb-3 sm:pb-4 flex justify-end gap-2 mt-1 sm:mt-2">
                       <Button 
                         size="sm"
@@ -1224,10 +1397,9 @@ function addFeature(data) {
                       </SheetClose>
                     </div>
                   )}
-                </Card>
-              </TabsContent>
-            ))}
-          </Tabs>
+              </Card>
+            </div>
+          ) : null}
         </div>
       </SheetContent>
     </Sheet>

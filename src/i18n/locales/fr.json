@@ -37,7 +37,8 @@
     "yes": "Oui",
     "no": "Non",
     "whatsHappening": "Que se passe-t-il ?",
-    "backToHome": "Retour à l'accueil"
+    "backToHome": "Retour à l'accueil",
+    "copyError": "Impossible de copier la commande. Copiez-la manuellement."
   },
   "general": {
     "title": "Game4Git",
@@ -128,11 +129,26 @@
   "gdb": {
     "concepts": {
       "title": "Concepts Clés",
-      "breakpoints": {"title": "Points d'arrêt", "desc": "Met en pause l'exécution à des lignes ou fonctions spécifiques pour inspecter l'état du programme."},
-      "watchpoints": {"title": "Watchpoints", "desc": "Met en pause lorsque qu'une variable ou une adresse mémoire change de valeur."},
-      "stack": {"title": "Pile d'appels et Frames", "desc": "Naviguez dans les frames pour voir où vous êtes et comment vous y êtes arrivé (backtrace, frame)."},
-      "memory": {"title": "Inspection de la Mémoire", "desc": "Utilisez print/x et examine pour inspecter des variables et des zones mémoire."},
-      "stepping": {"title": "Exécution Pas à Pas", "desc": "step (entrer), next (passer), finish (jusqu'au retour de la fonction), continue."}
+      "breakpoints": {
+        "title": "Points d'arrêt",
+        "desc": "Met en pause l'exécution à des lignes ou fonctions spécifiques pour inspecter l'état du programme."
+      },
+      "watchpoints": {
+        "title": "Watchpoints",
+        "desc": "Met en pause lorsque qu'une variable ou une adresse mémoire change de valeur."
+      },
+      "stack": {
+        "title": "Pile d'appels et Frames",
+        "desc": "Naviguez dans les frames pour voir où vous êtes et comment vous y êtes arrivé (backtrace, frame)."
+      },
+      "memory": {
+        "title": "Inspection de la Mémoire",
+        "desc": "Utilisez print/x et examine pour inspecter des variables et des zones mémoire."
+      },
+      "stepping": {
+        "title": "Exécution Pas à Pas",
+        "desc": "step (entrer), next (passer), finish (jusqu'au retour de la fonction), continue."
+      }
     },
     "subtitle": "Débogage puissant pour les programmes C/C++ avec exécution pas à pas, points d'arrêt et inspection de la mémoire.",
     "ui": {
@@ -316,6 +332,46 @@
         "bufferoverflow": "Débordement de tampon",
         "arrayoutofbounds": "Dépassement de tableau"
       }
+    },
+    "categories": {
+      "startup": "Startup",
+      "execution": "Execution",
+      "breakpoints": "Breakpoints",
+      "examining": "Examining"
+    },
+    "commands": {
+      "startProgram": "Start program",
+      "startTUI": "Start TUI mode",
+      "setArgs": "Set program arguments",
+      "showArgs": "Show program arguments",
+      "run": "Run the program",
+      "runWithInput": "Run with input redirection",
+      "continue": "Continue execution",
+      "step": "Step into (line by line)",
+      "next": "Step over (line by line)",
+      "finish": "Finish current function",
+      "until": "Run until a location",
+      "kill": "Kill the program",
+      "quit": "Quit GDB",
+      "breakMain": "Breakpoint at main",
+      "breakLine": "Breakpoint at file:line",
+      "breakRelative": "Breakpoint relative to current line",
+      "watchVariable": "Watch a variable",
+      "infoBreakpoints": "List all breakpoints",
+      "deleteBreakpoint": "Delete breakpoint",
+      "clearBreakpoint": "Clear breakpoint at current line",
+      "disableBreakpoints": "Disable breakpoints",
+      "enableBreakpoints": "Enable breakpoints",
+      "printVariable": "Print a variable",
+      "printMemory": "Print memory via pointer",
+      "printSizeof": "Print sizeof of a type",
+      "infoLocals": "Show local variables",
+      "infoArgs": "Show function arguments",
+      "infoRegisters": "Show CPU registers",
+      "backtrace": "Show call stack",
+      "frame": "Change current frame",
+      "examineMemory": "Examine memory",
+      "disassemble": "Disassemble"
     }
   },
   "valgrind": {
@@ -365,12 +421,24 @@
       "basic": {
         "title": "Commandes de Base",
         "items": [
-          {"desc": "Exécution basique de Valgrind"},
-          {"desc": "Vérification détaillée des fuites de mémoire"},
-          {"desc": "Tracer l'origine des valeurs non initialisées"},
-          {"desc": "Exécuter Memcheck explicitement (outil par défaut)"},
-          {"desc": "Analyse du cache et des performances"},
-          {"desc": "Générer des graphes d'appels et des profils"}
+          {
+            "desc": "Exécution basique de Valgrind"
+          },
+          {
+            "desc": "Vérification détaillée des fuites de mémoire"
+          },
+          {
+            "desc": "Tracer l'origine des valeurs non initialisées"
+          },
+          {
+            "desc": "Exécuter Memcheck explicitement (outil par défaut)"
+          },
+          {
+            "desc": "Analyse du cache et des performances"
+          },
+          {
+            "desc": "Générer des graphes d'appels et des profils"
+          }
         ]
       },
       "options": {
@@ -383,8 +451,6 @@
         "suppressions": "Utilisez --suppressions=filename pour supprimer les erreurs connues"
       }
     },
-    
-    
     "codeExample": {
       "explanation": "Ce code illustre un scénario d'erreur mémoire courant expliqué ci-dessous."
     },
@@ -427,18 +493,48 @@
       "outputOptions": "Options de Sortie",
       "quickTips": "Conseils Rapides",
       "memoryOptionsList": [
-        {"option": "--leak-check=full", "description": "Affiche les détails des fuites de mémoire"},
-        {"option": "--show-leak-kinds=all", "description": "Affiche tous les types de fuites"},
-        {"option": "--track-origins=yes", "description": "Traque l'origine des valeurs non initialisées"},
-        {"option": "--leak-resolution=high", "description": "Améliore la précision du suivi des fuites"},
-        {"option": "--num-callers=<n>", "description": "Affiche n trames de pile dans les rapports"}
+        {
+          "option": "--leak-check=full",
+          "description": "Affiche les détails des fuites de mémoire"
+        },
+        {
+          "option": "--show-leak-kinds=all",
+          "description": "Affiche tous les types de fuites"
+        },
+        {
+          "option": "--track-origins=yes",
+          "description": "Traque l'origine des valeurs non initialisées"
+        },
+        {
+          "option": "--leak-resolution=high",
+          "description": "Améliore la précision du suivi des fuites"
+        },
+        {
+          "option": "--num-callers=<n>",
+          "description": "Affiche n trames de pile dans les rapports"
+        }
       ],
       "outputOptionsList": [
-        {"option": "--log-file=filename", "description": "Enregistre la sortie dans un fichier"},
-        {"option": "--quiet", "description": "N'affiche que les erreurs importantes"},
-        {"option": "--verbose", "description": "Affiche des informations supplémentaires"},
-        {"option": "--trace-children=yes", "description": "Traque les processus enfants"},
-        {"option": "--track-fds=yes", "description": "Affiche les descripteurs de fichiers ouverts"}
+        {
+          "option": "--log-file=filename",
+          "description": "Enregistre la sortie dans un fichier"
+        },
+        {
+          "option": "--quiet",
+          "description": "N'affiche que les erreurs importantes"
+        },
+        {
+          "option": "--verbose",
+          "description": "Affiche des informations supplémentaires"
+        },
+        {
+          "option": "--trace-children=yes",
+          "description": "Traque les processus enfants"
+        },
+        {
+          "option": "--track-fds=yes",
+          "description": "Affiche les descripteurs de fichiers ouverts"
+        }
       ],
       "tips": [
         "Utilisez {{flag}} lors de la compilation pour obtenir des informations de débogage",
@@ -448,7 +544,23 @@
     },
     "intro": {
       "detection": "Valgrind peut détecter un large éventail de problèmes liés à la mémoire dans vos programmes.",
-      "subtitle": "Outil de détection des erreurs mémoire et de profilage"
+      "subtitle": "Outil de détection des erreurs mémoire et de profilage",
+      "whatIs": "What is Valgrind?",
+      "description": "Valgrind is a powerful suite of memory debugging and profiling tools.",
+      "detectTitle": "What can Valgrind detect?",
+      "detect": {
+        "memoryLeaks": "Memory leaks",
+        "invalidAccess": "Invalid or freed memory access",
+        "uninit": "Use of uninitialized memory",
+        "cache": "Cache performance issues"
+      },
+      "whenTitle": "When to use Valgrind?",
+      "when": {
+        "leaks": "When your program has unexpected memory leaks",
+        "segfault": "When experiencing segmentation faults",
+        "optimize": "To optimize your application's memory usage"
+      },
+      "proTip": "💡 Pro tip: run Valgrind regularly in your CI to catch regressions early."
     },
     "tabs": {
       "introduction": "Introduction",
@@ -710,6 +822,39 @@
         "optimize": "Pour optimiser l'utilisation de la mémoire de votre application"
       },
       "proTip": "💡 Astuce : exécutez régulièrement Valgrind dans votre CI pour détecter rapidement les régressions."
+    },
+    "commands": {
+      "intro": "Vous trouverez ci-dessous les commandes les plus utiles de Valgrind pour déboguer les problèmes de mémoire. Chaque commande comprend une description détaillée et des exemples d'utilisation.",
+      "header": {
+        "title": "Commandes de Base",
+        "description": "Commandes essentielles pour commencer à utiliser Valgrind efficacement"
+      },
+      "basic": {
+        "title": "Analyse de Base",
+        "description": "Exécute une analyse mémoire de base de votre programme",
+        "whenTitle": "Quand l'utiliser ?",
+        "when": [
+          "Pour un scan rapide des problèmes de mémoire",
+          "Comme première étape du débogage mémoire"
+        ]
+      },
+      "leak": {
+        "title": "Détection de Fuites de Mémoire",
+        "description": "Identifie et analyse les fuites de mémoire dans votre programme",
+        "noteTitle": "Note importante :",
+        "optionsTitle": "Options incluses :",
+        "options": {
+          "leakCheckFull": "Recherche détaillée des fuites",
+          "showLeakKinds": "Affiche tous les types de fuites",
+          "trackOrigins": "Trace l'origine des valeurs non initialisées"
+        }
+      },
+      "perf": {
+        "title": "Analyse de Performance",
+        "description": "Identifie les goulots d'étranglement de performance dans votre code",
+        "tipTitle": "Astuce d'utilisation :",
+        "tipText": "Utilisez kcachegrind pour visualiser les résultats de Callgrind avec une interface graphique :"
+      }
     }
   },
   "exercises": {
@@ -760,6 +905,21 @@
     }
   },
   "landingPages": {
+    "common": {
+      "trustInstant": "En quelques secondes — sans installation",
+      "trustVisual": "Graphe visuel + terminal synchronisés",
+      "trustFree": "Bac à sable gratuit, zéro friction",
+      "bentoTitle": "Pensé pour la clarté et la progression",
+      "bentoSubtitle": "Des workflows Git et debug réels, expliqués visuellement pour ancrer les concepts.",
+      "pathKicker": "Parcours guidé",
+      "pathSubtitle": "Étapes courtes, retour immédiat — apprenez en pratiquant, pas seulement en lisant.",
+      "finalCtaTitle": "Prêt à vous entraîner sérieusement ?",
+      "finalCtaBody": "Musclez vos compétences avant la prod. Entrez, cassez des choses sans risque, gagnez en confiance vite.",
+      "mockBrowserLabel": "game4git.app / pratique",
+      "previewBadge": "Aperçu live",
+      "stepCountLabel_one": "{{count}} étape",
+      "stepCountLabel_other": "{{count}} étapes"
+    },
     "gitPracticeGame": {
       "eyebrow": "Pratiquer Git en ligne",
       "heroTitle": "Jeu pour pratiquer Git avec commits, branches et merges",

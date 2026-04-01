@@ -14,6 +14,23 @@ const ValgrindLearning: React.FC = () => {
   const localizePath = useLocalizedPath();
   const homePath = localizePath("/");
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
+  const [copyError, setCopyError] = useState<string | null>(null);
+
+  const valgrindT = (key: string, fallback: string) => {
+    const next = t(key);
+    if (next && next !== key) return next;
+    if (key.startsWith('valgrind.commands.')) {
+      const legacyKey = key.replace('valgrind.commands.', 'valgrind.commandsLegacy.');
+      const legacy = t(legacyKey);
+      if (legacy && legacy !== legacyKey) return legacy;
+    }
+    if (key.startsWith('valgrind.intro.') && key !== 'valgrind.intro.subtitle') {
+      const introSectionKey = key.replace('valgrind.intro.', 'valgrind.introSection.');
+      const introSectionValue = t(introSectionKey);
+      if (introSectionValue && introSectionValue !== introSectionKey) return introSectionValue;
+    }
+    return fallback;
+  };
 
   // Error types data from translations
   const errorTypes = {
@@ -56,10 +73,15 @@ const ValgrindLearning: React.FC = () => {
   };
 
   // Handle copy to clipboard
-  const handleCopy = (text: string, id: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedCommand(id);
-    setTimeout(() => setCopiedCommand(null), 2000);
+  const handleCopy = async (text: string, id: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedCommand(id);
+      setCopyError(null);
+      setTimeout(() => setCopiedCommand(null), 2000);
+    } catch {
+      setCopyError(t('common.copyError', 'Could not copy command. Copy it manually.'));
+    }
   };
 
   return (
@@ -96,7 +118,7 @@ const ValgrindLearning: React.FC = () => {
           className="w-full"
         >
           <div className="overflow-x-auto pb-2">
-            <TabsList className="w-full grid grid-cols-3 sm:grid-cols-6 gap-1 p-1 h-auto bg-muted/20 rounded-lg">
+            <TabsList className="w-full grid grid-cols-3 sm:grid-cols-5 gap-1 p-1 h-auto bg-muted/20 rounded-lg">
               <TabsTrigger
                 value="introduction"
                 className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
@@ -146,7 +168,7 @@ const ValgrindLearning: React.FC = () => {
                   <div>
                     <CardTitle className="text-2xl font-bold">{t('valgrind.intro.whatIs', 'What is Valgrind?')}</CardTitle>
                     <CardDescription className="text-gray-500 dark:text-gray-400">
-                      {t('valgrind.intro.subtitle', 'Memory error detection and profiling toolkit')}
+                      {valgrindT('valgrind.intro.subtitle', 'Memory error detection and profiling toolkit')}
                     </CardDescription>
                   </div>
                 </div>
@@ -154,31 +176,31 @@ const ValgrindLearning: React.FC = () => {
               <CardContent className="space-y-4">
                 <div className="prose dark:prose-invert max-w-none">
                   <p>
-                    {t('valgrind.intro.description')}
+                    {valgrindT('valgrind.intro.description', 'Valgrind is a powerful suite of memory debugging and profiling tools.')}
                   </p>
 
                   <div className="mt-6 grid md:grid-cols-2 gap-4">
                     <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-100 dark:border-purple-900/30">
                       <h3 className="font-semibold text-purple-700 dark:text-purple-300 flex items-center gap-2">
                         <Shield className="h-4 w-4" />
-                        {t('valgrind.intro.detectTitle', 'What can Valgrind detect?')}
+                        {valgrindT('valgrind.intro.detectTitle', 'What can Valgrind detect?')}
                       </h3>
                       <ul className="mt-2 space-y-2 text-sm">
                         <li className="flex items-start gap-2">
                           <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span>{t('valgrind.intro.detect.memoryLeaks', 'Memory leaks')}</span>
+                          <span>{valgrindT('valgrind.intro.detect.memoryLeaks', 'Memory leaks')}</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span>{t('valgrind.intro.detect.invalidAccess', 'Invalid or freed memory access')}</span>
+                          <span>{valgrindT('valgrind.intro.detect.invalidAccess', 'Invalid or freed memory access')}</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span>{t('valgrind.intro.detect.uninit', 'Use of uninitialized memory')}</span>
+                          <span>{valgrindT('valgrind.intro.detect.uninit', 'Use of uninitialized memory')}</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span>{t('valgrind.intro.detect.cache', 'Cache performance issues')}</span>
+                          <span>{valgrindT('valgrind.intro.detect.cache', 'Cache performance issues')}</span>
                         </li>
                       </ul>
                     </div>
@@ -186,20 +208,20 @@ const ValgrindLearning: React.FC = () => {
                     <div className="p-4 bg-amber-50 dark:bg-amber-900/10 rounded-lg border border-amber-100 dark:border-amber-900/20">
                       <h3 className="font-semibold text-amber-700 dark:text-amber-300 flex items-center gap-2">
                         <AlertTriangle className="h-4 w-4" />
-                        {t('valgrind.intro.whenTitle', 'When to use Valgrind?')}
+                        {valgrindT('valgrind.intro.whenTitle', 'When to use Valgrind?')}
                       </h3>
                       <ul className="mt-2 space-y-2 text-sm">
                         <li className="flex items-start gap-2">
                           <div className="h-2 w-2 rounded-full bg-amber-500 mt-2 flex-shrink-0"></div>
-                          <span>{t('valgrind.intro.when.leaks', 'When your program has unexpected memory leaks')}</span>
+                          <span>{valgrindT('valgrind.intro.when.leaks', 'When your program has unexpected memory leaks')}</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <div className="h-2 w-2 rounded-full bg-amber-500 mt-2 flex-shrink-0"></div>
-                          <span>{t('valgrind.intro.when.segfault', 'When experiencing segmentation faults')}</span>
+                          <span>{valgrindT('valgrind.intro.when.segfault', 'When experiencing segmentation faults')}</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <div className="h-2 w-2 rounded-full bg-amber-500 mt-2 flex-shrink-0"></div>
-                          <span>{t('valgrind.intro.when.optimize', 'To optimize your application\'s memory usage')}</span>
+                          <span>{valgrindT('valgrind.intro.when.optimize', 'To optimize your application memory usage')}</span>
                         </li>
                       </ul>
                     </div>
@@ -208,7 +230,7 @@ const ValgrindLearning: React.FC = () => {
                   <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
                     <h3 className="font-semibold flex items-center gap-2">
                       <Lightbulb className="h-4 w-4 text-purple-500" />
-                      {t('valgrind.intro.proTip')}
+                      {valgrindT('valgrind.intro.proTip', 'Run Valgrind regularly in your CI to catch regressions early.')}
                     </h3>
                     <div className="mt-2 flex items-center gap-2">
                       <code className="bg-gray-200 dark:bg-gray-700 px-3 py-1.5 rounded text-sm font-mono">
@@ -229,6 +251,15 @@ const ValgrindLearning: React.FC = () => {
                     <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                       {t('valgrind.cheatsheet.tips.compileDebug', 'Compile your program with the -g flag to include debug information.')}
                     </p>
+                  </div>
+                  <div className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-900/40 dark:bg-emerald-900/20">
+                    <h3 className="font-semibold text-emerald-800 dark:text-emerald-200">{t('valgrind.learningPath.title', 'Ruta de aprendizaje por niveles')}</h3>
+                    <ul className="mt-2 space-y-1 text-sm text-emerald-700 dark:text-emerald-300">
+                      <li><strong>Nivel 1:</strong> Leak básico (`--leak-check=full`)</li>
+                      <li><strong>Nivel 2:</strong> Invalid read/write y límites de arrays</li>
+                      <li><strong>Nivel 3:</strong> Uninitialized values + `--track-origins=yes`</li>
+                      <li><strong>Nivel 4:</strong> Callgrind y lectura de cuellos de botella</li>
+                    </ul>
                   </div>
                 </div>
               </CardContent>
@@ -304,33 +335,6 @@ const ValgrindLearning: React.FC = () => {
             </Card>
           </TabsContent>
 
-          {/* Code Example Tab */}
-          <TabsContent value="code-example">
-            <Card className="border-0 shadow-sm bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <div className="prose dark:prose-invert max-w-none">
-                  <pre className="bg-gray-100 dark:bg-gray-800/50 p-4 rounded-md overflow-x-auto text-sm">
-                    <code>{`int *arr = malloc(5 * sizeof(int));
-arr[5] = 10;  // Buffer overflow - invalid write
-int val = arr[5];  // Invalid read
-free(arr);
-return 0;`}</code>
-                  </pre>
-
-                  <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded border border-blue-100 dark:border-blue-900/30">
-                    <h4 className="font-medium text-sm text-blue-800 dark:text-blue-200 flex items-center gap-1.5">
-                      <Lightbulb className="h-3.5 w-3.5" />
-                      {t('common.whatsHappening')}
-                    </h4>
-                    <p className="mt-1 text-sm text-blue-700 dark:text-blue-300">
-                      {t('valgrind.codeExample.explanation')}
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
           {/* Commands Tab */}
           <TabsContent value="commands">
             <Card className="border-0 shadow-sm bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
@@ -340,9 +344,9 @@ return 0;`}</code>
                     <Terminal className="h-6 w-6 text-green-600 dark:text-green-400" />
                   </div>
                   <div>
-                    <CardTitle className="text-2xl font-bold">{t('valgrind.commands.header.title', 'Basic Commands')}</CardTitle>
+                    <CardTitle className="text-2xl font-bold">{valgrindT('valgrind.commands.header.title', 'Basic Commands')}</CardTitle>
                     <CardDescription className="text-gray-500 dark:text-gray-400">
-                      {t('valgrind.commands.header.description', 'Essential commands to start using Valgrind effectively')}
+                      {valgrindT('valgrind.commands.header.description', 'Essential commands to start using Valgrind effectively')}
                     </CardDescription>
                   </div>
                 </div>
@@ -350,8 +354,23 @@ return 0;`}</code>
               <CardContent>
                 <div className="prose dark:prose-invert max-w-none">
                   <p className="mb-6">
-                    {t('valgrind.commands.intro')}
+                    {valgrindT('valgrind.commands.intro', 'Below are the most useful Valgrind commands to debug memory issues in your programs.')}
                   </p>
+                  <div className="mb-6 rounded-lg border border-indigo-200 bg-indigo-50 p-4 dark:border-indigo-900/40 dark:bg-indigo-900/20">
+                    <h3 className="font-semibold text-indigo-800 dark:text-indigo-200">Práctica guiada: interpreta este output</h3>
+                    <pre className="mt-2 overflow-x-auto rounded bg-black p-3 text-xs text-green-300"><code>{`==12345== HEAP SUMMARY:
+==12345==    in use at exit: 1,024 bytes in 1 blocks
+==12345==  total heap usage: 5 allocs, 4 frees, 5,136 bytes allocated
+==12345==
+==12345== 1,024 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==12345==    at 0x4C2F6B5: malloc (vg_replace_malloc.c:307)
+==12345==    by 0x401234: main (main.c:42)`}</code></pre>
+                    <ul className="mt-3 list-disc pl-5 text-sm text-indigo-700 dark:text-indigo-300">
+                      <li>¿Cuántos bytes se han perdido definitivamente?</li>
+                      <li>¿En qué línea de código ocurre la reserva que no se libera?</li>
+                      <li>¿Qué comando ejecutarías después para ver más contexto?</li>
+                    </ul>
+                  </div>
 
                   <div className="space-y-8">
                     {/* Análisis Básico */}
@@ -360,10 +379,10 @@ return 0;`}</code>
                         <div>
                           <h3 className="font-semibold text-lg flex items-center gap-2">
                             <Zap className="h-5 w-5 text-blue-500" />
-                            {t('valgrind.commands.basic.title', 'Basic Analysis')}
+                            {valgrindT('valgrind.commands.basic.title', 'Basic Analysis')}
                           </h3>
                           <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            {t('valgrind.commands.basic.description', 'Run a basic memory analysis of your program')}
+                            {valgrindT('valgrind.commands.basic.description', 'Run a basic memory analysis of your program')}
                           </p>
                         </div>
                         <button
@@ -390,16 +409,16 @@ return 0;`}</code>
                         <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded border border-blue-100 dark:border-blue-900/30">
                           <h4 className="font-medium text-sm text-blue-800 dark:text-blue-200 flex items-center gap-1.5">
                             <Lightbulb className="h-3.5 w-3.5" />
-                            {t('valgrind.commands.basic.whenTitle', 'When to use?')}
+                            {valgrindT('valgrind.commands.basic.whenTitle', 'When to use?')}
                           </h4>
                           <ul className="mt-1.5 text-sm text-blue-700 dark:text-blue-300 space-y-1">
                             <li className="flex items-start gap-2">
                               <div className="h-1.5 w-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
-                              <span>{t('valgrind.commands.basic.when.0', 'For a quick scan of memory issues')}</span>
+                              <span>{valgrindT('valgrind.commands.basic.when.0', 'For a quick scan of memory issues')}</span>
                             </li>
                             <li className="flex items-start gap-2">
                               <div className="h-1.5 w-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
-                              <span>{t('valgrind.commands.basic.when.1', 'As a first step in memory debugging')}</span>
+                              <span>{valgrindT('valgrind.commands.basic.when.1', 'As a first step in memory debugging')}</span>
                             </li>
                           </ul>
                         </div>
@@ -412,10 +431,10 @@ return 0;`}</code>
                         <div>
                           <h3 className="font-semibold text-lg flex items-center gap-2">
                             <Shield className="h-5 w-5 text-green-500" />
-                            {t('valgrind.commands.leak.title', 'Memory Leak Detection')}
+                            {valgrindT('valgrind.commands.leak.title', 'Memory Leak Detection')}
                           </h3>
                           <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            {t('valgrind.commands.leak.description', 'Identify and analyze memory leaks in your program')}
+                            {valgrindT('valgrind.commands.leak.description', 'Identify and analyze memory leaks in your program')}
                           </p>
                         </div>
                         <button
@@ -443,20 +462,20 @@ return 0;`}</code>
                           <div className="p-3 bg-green-50 dark:bg-green-900/10 rounded border border-green-100 dark:border-green-900/20">
                             <h4 className="font-medium text-sm text-green-800 dark:text-green-200 flex items-center gap-1.5">
                               <Check className="h-3.5 w-3.5" />
-                              {t('valgrind.commands.leak.optionsTitle', 'Included options:')}
+                              {valgrindT('valgrind.commands.leak.optionsTitle', 'Included options:')}
                             </h4>
                             <ul className="mt-1.5 text-sm text-green-700 dark:text-green-300 space-y-1">
                               <li className="flex items-start gap-2">
                                 <div className="h-1.5 w-1.5 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
-                                <span><code className="bg-green-100 dark:bg-green-900/30 px-1 py-0.5 rounded">--leak-check=full</code>: {t('valgrind.commands.leak.options.leakCheckFull', 'Detailed leak search')}</span>
+                                <span><code className="bg-green-100 dark:bg-green-900/30 px-1 py-0.5 rounded">--leak-check=full</code>: {valgrindT('valgrind.commands.leak.options.leakCheckFull', 'Detailed leak search')}</span>
                               </li>
                               <li className="flex items-start gap-2">
                                 <div className="h-1.5 w-1.5 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
-                                <span><code className="bg-green-100 dark:bg-green-900/30 px-1 py-0.5 rounded">--show-leak-kinds=all</code>: {t('valgrind.commands.leak.options.showLeakKinds', 'Show all types of leaks')}</span>
+                                <span><code className="bg-green-100 dark:bg-green-900/30 px-1 py-0.5 rounded">--show-leak-kinds=all</code>: {valgrindT('valgrind.commands.leak.options.showLeakKinds', 'Show all types of leaks')}</span>
                               </li>
                               <li className="flex items-start gap-2">
                                 <div className="h-1.5 w-1.5 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
-                                <span><code className="bg-green-100 dark:bg-green-900/30 px-1 py-0.5 rounded">--track-origins=yes</code>: {t('valgrind.commands.leak.options.trackOrigins', 'Track origins of uninitialized values')}</span>
+                                <span><code className="bg-green-100 dark:bg-green-900/30 px-1 py-0.5 rounded">--track-origins=yes</code>: {valgrindT('valgrind.commands.leak.options.trackOrigins', 'Track origins of uninitialized values')}</span>
                               </li>
                             </ul>
                           </div>
@@ -464,7 +483,7 @@ return 0;`}</code>
                           <div className="p-3 bg-amber-50 dark:bg-amber-900/10 rounded border border-amber-100 dark:border-amber-900/20">
                             <h4 className="font-medium text-sm text-amber-800 dark:text-amber-200 flex items-center gap-1.5">
                               <AlertTriangle className="h-3.5 w-3.5" />
-                              {t('valgrind.commands.leak.noteTitle', 'Important note:')}
+                              {valgrindT('valgrind.commands.leak.noteTitle', 'Important note:')}
                             </h4>
                             <p className="mt-1.5 text-sm text-amber-700 dark:text-amber-300">
                               {t('valgrind.cheatsheet.tips.compileDebug', 'Compile your program with the -g flag to include debug information.')}
@@ -480,10 +499,10 @@ return 0;`}</code>
                         <div>
                           <h3 className="font-semibold text-lg flex items-center gap-2">
                             <Code className="h-5 w-5 text-purple-500" />
-                            {t('valgrind.commands.perf.title', 'Performance Analysis')}
+                            {valgrindT('valgrind.commands.perf.title', 'Performance Analysis')}
                           </h3>
                           <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            {t('valgrind.commands.perf.description', 'Identify performance bottlenecks in your code')}
+                            {valgrindT('valgrind.commands.perf.description', 'Identify performance bottlenecks in your code')}
                           </p>
                         </div>
                         <button
@@ -510,10 +529,10 @@ return 0;`}</code>
                         <div className="mt-3 p-3 bg-purple-50 dark:bg-purple-900/10 rounded border border-purple-100 dark:border-purple-900/20">
                           <h4 className="font-medium text-sm text-purple-800 dark:text-purple-200 flex items-center gap-1.5">
                             <Lightbulb className="h-3.5 w-3.5" />
-                            {t('valgrind.commands.perf.tipTitle', 'Usage tip:')}
+                            {valgrindT('valgrind.commands.perf.tipTitle', 'Usage tip:')}
                           </h4>
                           <p className="mt-1.5 text-sm text-purple-700 dark:text-purple-300">
-                            {t('valgrind.commands.perf.tipText', 'Use kcachegrind to visualize Callgrind results with a graphical interface:')}
+                            {valgrindT('valgrind.commands.perf.tipText', 'Use kcachegrind to visualize Callgrind results with a graphical interface:')}
                           </p>
                           <div className="mt-2 flex items-center gap-2">
                             <code className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-xs">
@@ -537,6 +556,11 @@ return 0;`}</code>
                     </div>
                   </div>
                 </div>
+                {copyError ? (
+                  <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-900/40 dark:bg-red-900/20 dark:text-red-300">
+                    {copyError}
+                  </div>
+                ) : null}
               </CardContent>
             </Card>
           </TabsContent>

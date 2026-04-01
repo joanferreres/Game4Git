@@ -37,7 +37,8 @@
     "yes": "Sí",
     "no": "No",
     "whatsHappening": "¿Qué está pasando?",
-    "backToHome": "Volver al inicio"
+    "backToHome": "Volver al inicio",
+    "copyError": "No se pudo copiar el comando. Cópialo manualmente."
   },
   "general": {
     "title": "Git Game",
@@ -198,7 +199,7 @@
       }
     },
     "branching": {
-      "title": "Flujo de Trabajo con Ramas", 
+      "title": "Flujo de Trabajo con Ramas",
       "description": "Cómo trabajar con ramas",
       "step1": {
         "title": "1. Crear una nueva rama",
@@ -363,11 +364,26 @@
   "gdb": {
     "concepts": {
       "title": "Conceptos Clave",
-      "breakpoints": {"title": "Puntos de Interrupción", "desc": "Pausa la ejecución en líneas o funciones específicas para inspeccionar el estado del programa."},
-      "watchpoints": {"title": "Watchpoints", "desc": "Pausa cuando una variable o una ubicación de memoria cambia su valor."},
-      "stack": {"title": "Pila de Llamadas y Frames", "desc": "Navega por los frames para ver dónde estás y cómo has llegado (backtrace, frame)."},
-      "memory": {"title": "Inspección de Memoria", "desc": "Usa print/x y examine para inspeccionar variables y regiones de memoria."},
-      "stepping": {"title": "Ejecución Paso a Paso", "desc": "step (entrar), next (saltar), finish (hasta que la función retorne), continue."}
+      "breakpoints": {
+        "title": "Puntos de Interrupción",
+        "desc": "Pausa la ejecución en líneas o funciones específicas para inspeccionar el estado del programa."
+      },
+      "watchpoints": {
+        "title": "Watchpoints",
+        "desc": "Pausa cuando una variable o una ubicación de memoria cambia su valor."
+      },
+      "stack": {
+        "title": "Pila de Llamadas y Frames",
+        "desc": "Navega por los frames para ver dónde estás y cómo has llegado (backtrace, frame)."
+      },
+      "memory": {
+        "title": "Inspección de Memoria",
+        "desc": "Usa print/x y examine para inspeccionar variables y regiones de memoria."
+      },
+      "stepping": {
+        "title": "Ejecución Paso a Paso",
+        "desc": "step (entrar), next (saltar), finish (hasta que la función retorne), continue."
+      }
     },
     "subtitle": "Depuración potente para programas C/C++ con ejecución paso a paso, puntos de interrupción e inspección de memoria.",
     "ui": {
@@ -552,6 +568,46 @@
         "bufferoverflow": "Buffer Overflow",
         "arrayoutofbounds": "Array Out of Bounds"
       }
+    },
+    "categories": {
+      "startup": "Startup",
+      "execution": "Execution",
+      "breakpoints": "Breakpoints",
+      "examining": "Examining"
+    },
+    "commands": {
+      "startProgram": "Start program",
+      "startTUI": "Start TUI mode",
+      "setArgs": "Set program arguments",
+      "showArgs": "Show program arguments",
+      "run": "Run the program",
+      "runWithInput": "Run with input redirection",
+      "continue": "Continue execution",
+      "step": "Step into (line by line)",
+      "next": "Step over (line by line)",
+      "finish": "Finish current function",
+      "until": "Run until a location",
+      "kill": "Kill the program",
+      "quit": "Quit GDB",
+      "breakMain": "Breakpoint at main",
+      "breakLine": "Breakpoint at file:line",
+      "breakRelative": "Breakpoint relative to current line",
+      "watchVariable": "Watch a variable",
+      "infoBreakpoints": "List all breakpoints",
+      "deleteBreakpoint": "Delete breakpoint",
+      "clearBreakpoint": "Clear breakpoint at current line",
+      "disableBreakpoints": "Disable breakpoints",
+      "enableBreakpoints": "Enable breakpoints",
+      "printVariable": "Print a variable",
+      "printMemory": "Print memory via pointer",
+      "printSizeof": "Print sizeof of a type",
+      "infoLocals": "Show local variables",
+      "infoArgs": "Show function arguments",
+      "infoRegisters": "Show CPU registers",
+      "backtrace": "Show call stack",
+      "frame": "Change current frame",
+      "examineMemory": "Examine memory",
+      "disassemble": "Disassemble"
     }
   },
   "valgrind": {
@@ -561,12 +617,24 @@
       "basic": {
         "title": "Comandos Básicos",
         "items": [
-          {"desc": "Ejecución básica de Valgrind"},
-          {"desc": "Verificación detallada de fugas de memoria"},
-          {"desc": "Rastrea el origen de variables no inicializadas"},
-          {"desc": "Ejecuta la herramienta Memcheck (por defecto)"},
-          {"desc": "Análisis de caché y rendimiento"},
-          {"desc": "Genera gráficos de llamadas y perfiles"}
+          {
+            "desc": "Ejecución básica de Valgrind"
+          },
+          {
+            "desc": "Verificación detallada de fugas de memoria"
+          },
+          {
+            "desc": "Rastrea el origen de variables no inicializadas"
+          },
+          {
+            "desc": "Ejecuta la herramienta Memcheck (por defecto)"
+          },
+          {
+            "desc": "Análisis de caché y rendimiento"
+          },
+          {
+            "desc": "Genera gráficos de llamadas y perfiles"
+          }
         ]
       },
       "options": {
@@ -579,11 +647,9 @@
         "suppressions": "Usa --suppressions=filename para suprimir errores conocidos"
       }
     },
-    
     "codeExample": {
       "explanation": "Este código demuestra un caso común de error de memoria explicado a continuación."
     },
-    
     "errorTypes": {
       "title": "Tipos de Errores Comunes",
       "description": "Identifica y corrige los errores más frecuentes detectados por Valgrind",
@@ -630,18 +696,48 @@
       "outputOptions": "Opciones de Salida",
       "quickTips": "Consejos Rápidos",
       "memoryOptionsList": [
-        {"option": "--leak-check=full", "description": "Muestra detalles de las fugas de memoria"},
-        {"option": "--show-leak-kinds=all", "description": "Muestra todos los tipos de fugas"},
-        {"option": "--track-origins=yes", "description": "Rastrea el origen de valores no inicializados"},
-        {"option": "--leak-resolution=high", "description": "Mejora la precisión del rastreo de fugas"},
-        {"option": "--num-callers=<n>", "description": "Muestra n marcos de pila en los informes"}
+        {
+          "option": "--leak-check=full",
+          "description": "Muestra detalles de las fugas de memoria"
+        },
+        {
+          "option": "--show-leak-kinds=all",
+          "description": "Muestra todos los tipos de fugas"
+        },
+        {
+          "option": "--track-origins=yes",
+          "description": "Rastrea el origen de valores no inicializados"
+        },
+        {
+          "option": "--leak-resolution=high",
+          "description": "Mejora la precisión del rastreo de fugas"
+        },
+        {
+          "option": "--num-callers=<n>",
+          "description": "Muestra n marcos de pila en los informes"
+        }
       ],
       "outputOptionsList": [
-        {"option": "--log-file=filename", "description": "Guarda la salida en un archivo"},
-        {"option": "--quiet", "description": "Solo muestra errores importantes"},
-        {"option": "--verbose", "description": "Muestra información adicional"},
-        {"option": "--trace-children=yes", "description": "Rastrea procesos hijos"},
-        {"option": "--track-fds=yes", "description": "Muestra descriptores de archivo abiertos"}
+        {
+          "option": "--log-file=filename",
+          "description": "Guarda la salida en un archivo"
+        },
+        {
+          "option": "--quiet",
+          "description": "Solo muestra errores importantes"
+        },
+        {
+          "option": "--verbose",
+          "description": "Muestra información adicional"
+        },
+        {
+          "option": "--trace-children=yes",
+          "description": "Rastrea procesos hijos"
+        },
+        {
+          "option": "--track-fds=yes",
+          "description": "Muestra descriptores de archivo abiertos"
+        }
       ],
       "tips": [
         "Usa {{flag}} al compilar para obtener información de depuración",
@@ -1082,6 +1178,21 @@
     }
   },
   "landingPages": {
+    "common": {
+      "trustInstant": "En segundos — sin instalación",
+      "trustVisual": "Gráfico visual + terminal a la vez",
+      "trustFree": "Sandbox de práctica, sin coste de arranque",
+      "bentoTitle": "Diseñado para claridad y ritmo",
+      "bentoSubtitle": "Flujos reales de Git y depuración, explicados en visual para que encaje el concepto.",
+      "pathKicker": "Ruta guiada",
+      "pathSubtitle": "Pasos cortos, feedback al instante — aprende haciendo, no solo leyendo.",
+      "finalCtaTitle": "¿Listo para practicar en serio?",
+      "finalCtaBody": "Entrena habilidades antes que código en producción. Entra, equivócate sin miedo y gana confianza rápido.",
+      "mockBrowserLabel": "game4git.app / práctica",
+      "previewBadge": "Vista previa",
+      "stepCountLabel_one": "{{count}} paso",
+      "stepCountLabel_other": "{{count}} pasos"
+    },
     "gitPracticeGame": {
       "eyebrow": "Practica Git online",
       "heroTitle": "Juego para practicar Git con commits, ramas y merges",

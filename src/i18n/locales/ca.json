@@ -37,7 +37,8 @@
     "yes": "Sí",
     "no": "No",
     "whatsHappening": "Què està passant?",
-    "backToHome": "Tornar a l'inici"
+    "backToHome": "Tornar a l'inici",
+    "copyError": "No s'ha pogut copiar la comanda. Copia-la manualment."
   },
   "general": {
     "title": "Game4Git",
@@ -159,7 +160,7 @@
       "description": "Passos bàsics per al treball diari amb Git"
     },
     "branching": {
-      "title": "Flux de Treball amb Branques", 
+      "title": "Flux de Treball amb Branques",
       "description": "Com treballar amb branques"
     },
     "merging": {
@@ -399,11 +400,26 @@
   "gdb": {
     "concepts": {
       "title": "Conceptes Clau",
-      "breakpoints": {"title": "Breakpoints", "desc": "Pausa l'execució en línies o funcions específiques per inspeccionar l'estat del programa."},
-      "watchpoints": {"title": "Watchpoints", "desc": "Pausa quan una variable o ubicació de memòria canvia el seu valor."},
-      "stack": {"title": "Pila de Trucades i Frames", "desc": "Navega pels frames per veure on ets i com hi has arribat (backtrace, frame)."},
-      "memory": {"title": "Inspecció de Memòria", "desc": "Utilitza print/x i examine per inspeccionar variables i regions de memòria."},
-      "stepping": {"title": "Execució Pas a Pas", "desc": "step (entrar), next (saltar), finish (fins que la funció retorni), continue."}
+      "breakpoints": {
+        "title": "Breakpoints",
+        "desc": "Pausa l'execució en línies o funcions específiques per inspeccionar l'estat del programa."
+      },
+      "watchpoints": {
+        "title": "Watchpoints",
+        "desc": "Pausa quan una variable o ubicació de memòria canvia el seu valor."
+      },
+      "stack": {
+        "title": "Pila de Trucades i Frames",
+        "desc": "Navega pels frames per veure on ets i com hi has arribat (backtrace, frame)."
+      },
+      "memory": {
+        "title": "Inspecció de Memòria",
+        "desc": "Utilitza print/x i examine per inspeccionar variables i regions de memòria."
+      },
+      "stepping": {
+        "title": "Execució Pas a Pas",
+        "desc": "step (entrar), next (saltar), finish (fins que la funció retorni), continue."
+      }
     },
     "subtitle": "Depuració potent per a programes C/C++ amb execució pas a pas, punts d'aturada i inspecció de memòria.",
     "ui": {
@@ -588,6 +604,46 @@
         "bufferoverflow": "Buffer Overflow",
         "arrayoutofbounds": "Array Out of Bounds"
       }
+    },
+    "categories": {
+      "startup": "Startup",
+      "execution": "Execution",
+      "breakpoints": "Breakpoints",
+      "examining": "Examining"
+    },
+    "commands": {
+      "startProgram": "Start program",
+      "startTUI": "Start TUI mode",
+      "setArgs": "Set program arguments",
+      "showArgs": "Show program arguments",
+      "run": "Run the program",
+      "runWithInput": "Run with input redirection",
+      "continue": "Continue execution",
+      "step": "Step into (line by line)",
+      "next": "Step over (line by line)",
+      "finish": "Finish current function",
+      "until": "Run until a location",
+      "kill": "Kill the program",
+      "quit": "Quit GDB",
+      "breakMain": "Breakpoint at main",
+      "breakLine": "Breakpoint at file:line",
+      "breakRelative": "Breakpoint relative to current line",
+      "watchVariable": "Watch a variable",
+      "infoBreakpoints": "List all breakpoints",
+      "deleteBreakpoint": "Delete breakpoint",
+      "clearBreakpoint": "Clear breakpoint at current line",
+      "disableBreakpoints": "Disable breakpoints",
+      "enableBreakpoints": "Enable breakpoints",
+      "printVariable": "Print a variable",
+      "printMemory": "Print memory via pointer",
+      "printSizeof": "Print sizeof of a type",
+      "infoLocals": "Show local variables",
+      "infoArgs": "Show function arguments",
+      "infoRegisters": "Show CPU registers",
+      "backtrace": "Show call stack",
+      "frame": "Change current frame",
+      "examineMemory": "Examine memory",
+      "disassemble": "Disassemble"
     }
   },
   "valgrind": {
@@ -637,12 +693,24 @@
       "basic": {
         "title": "Comandes Bàsiques",
         "items": [
-          {"desc": "Execució bàsica de Valgrind"},
-          {"desc": "Verificació detallada de fuites de memòria"},
-          {"desc": "Rastreja l'origen de valors no inicialitzats"},
-          {"desc": "Executa l'eina Memcheck (per defecte)"},
-          {"desc": "Anàlisi de memòria cau i rendiment"},
-          {"desc": "Genera gràfics de crides i perfils"}
+          {
+            "desc": "Execució bàsica de Valgrind"
+          },
+          {
+            "desc": "Verificació detallada de fuites de memòria"
+          },
+          {
+            "desc": "Rastreja l'origen de valors no inicialitzats"
+          },
+          {
+            "desc": "Executa l'eina Memcheck (per defecte)"
+          },
+          {
+            "desc": "Anàlisi de memòria cau i rendiment"
+          },
+          {
+            "desc": "Genera gràfics de crides i perfils"
+          }
         ]
       },
       "options": {
@@ -655,8 +723,6 @@
         "suppressions": "Utilitza --suppressions=filename per suprimir errors coneguts"
       }
     },
-    
-    
     "introSection": {
       "detection": "Valgrind pot detectar una àmplia gamma de problemes relacionats amb la memòria en els teus programes.",
       "subtitle": "Eina de detecció d'errors de memòria i perfilatge"
@@ -703,18 +769,48 @@
       "outputOptions": "Opcions de Sortida",
       "quickTips": "Consells Ràpids",
       "memoryOptionsList": [
-        {"option": "--leak-check=full", "description": "Mostra detalls de les fuites de memòria"},
-        {"option": "--show-leak-kinds=all", "description": "Mostra tots els tipus de fuites"},
-        {"option": "--track-origins=yes", "description": "Rastreja l'origen de valors no inicialitzats"},
-        {"option": "--leak-resolution=high", "description": "Millora la precisió del seguiment de fuites"},
-        {"option": "--num-callers=<n>", "description": "Mostra n marcs de pila als informes"}
+        {
+          "option": "--leak-check=full",
+          "description": "Mostra detalls de les fuites de memòria"
+        },
+        {
+          "option": "--show-leak-kinds=all",
+          "description": "Mostra tots els tipus de fuites"
+        },
+        {
+          "option": "--track-origins=yes",
+          "description": "Rastreja l'origen de valors no inicialitzats"
+        },
+        {
+          "option": "--leak-resolution=high",
+          "description": "Millora la precisió del seguiment de fuites"
+        },
+        {
+          "option": "--num-callers=<n>",
+          "description": "Mostra n marcs de pila als informes"
+        }
       ],
       "outputOptionsList": [
-        {"option": "--log-file=filename", "description": "Desa la sortida en un fitxer"},
-        {"option": "--quiet", "description": "Només mostra errors importants"},
-        {"option": "--verbose", "description": "Mostra informació addicional"},
-        {"option": "--trace-children=yes", "description": "Rastreja processos fills"},
-        {"option": "--track-fds=yes", "description": "Mostra els descriptors de fitxer oberts"}
+        {
+          "option": "--log-file=filename",
+          "description": "Desa la sortida en un fitxer"
+        },
+        {
+          "option": "--quiet",
+          "description": "Només mostra errors importants"
+        },
+        {
+          "option": "--verbose",
+          "description": "Mostra informació addicional"
+        },
+        {
+          "option": "--trace-children=yes",
+          "description": "Rastreja processos fills"
+        },
+        {
+          "option": "--track-fds=yes",
+          "description": "Mostra els descriptors de fitxer oberts"
+        }
       ],
       "tips": [
         "Utilitza {{flag}} en compilar per obtenir informació de depuració",
@@ -745,7 +841,9 @@
         "segfault": "En experimentar errors de segmentació (segmentation fault)",
         "optimize": "Per optimitzar l'ús de memòria de la teva aplicació"
       },
-      "proTip": "💡 Consell: executa Valgrind regularment a la teva CI per detectar regressions d'hora."
+      "proTip": "💡 Consell: executa Valgrind regularment a la teva CI per detectar regressions d'hora.",
+      "detection": "Valgrind can detect a wide range of memory-related issues in your programs.",
+      "subtitle": "Memory error detection and profiling toolkit"
     },
     "pageTitle": "Aprenentatge de Valgrind",
     "backToHome": "Tornar a l'inici",
@@ -880,9 +978,57 @@
         "doublefree": "Double Free",
         "cacheanalysis": "Anàlisi de Cache"
       }
+    },
+    "commands": {
+      "intro": "A continuació es presenten les comandes més útils de Valgrind per depurar problemes de memòria. Cada comanda inclou una descripció detallada i exemples d'ús.",
+      "header": {
+        "title": "Comandes Bàsiques",
+        "description": "Comandes essencials per començar a utilitzar Valgrind de manera efectiva"
+      },
+      "basic": {
+        "title": "Anàlisi Bàsica",
+        "description": "Executa una anàlisi bàsica de memòria del teu programa",
+        "whenTitle": "Quan usar?",
+        "when": [
+          "Per a una anàlisi ràpida de problemes de memòria",
+          "Com a primer pas en la depuració de memòria"
+        ]
+      },
+      "leak": {
+        "title": "Detecció de Fuites de Memòria",
+        "description": "Identifica i analitza fuites de memòria en el teu programa",
+        "noteTitle": "Nota important:",
+        "optionsTitle": "Opcions incloses:",
+        "options": {
+          "leakCheckFull": "Cerca detallada de fuites",
+          "showLeakKinds": "Mostra tots els tipus de fuites",
+          "trackOrigins": "Rastreja orígens de valors no inicialitzats"
+        }
+      },
+      "perf": {
+        "title": "Anàlisi de Rendiment",
+        "description": "Identifica colls d'ampolla en el rendiment del teu codi",
+        "tipTitle": "Consell d'ús:",
+        "tipText": "Utilitza kcachegrind per visualitzar els resultats de Callgrind amb una interfície gràfica:"
+      }
     }
   },
   "landingPages": {
+    "common": {
+      "trustInstant": "En segons — sense instal·lació",
+      "trustVisual": "Gràfic visual + terminal alhora",
+      "trustFree": "Sandbox de pràctica, sense cost d’arrencada",
+      "bentoTitle": "Pensat per claredat i ritme",
+      "bentoSubtitle": "Fluxos reals de Git i depuració, explicats en visual perquè el concepte encaixi.",
+      "pathKicker": "Ruta guiada",
+      "pathSubtitle": "Passos curts, feedback a l’instant — aprèn fent, no només llegint.",
+      "finalCtaTitle": "A punt per practicar de debò?",
+      "finalCtaBody": "Entrena habilitats abans que codi en producció. Entra, equivoca’t sense por i guanya confiança ràpid.",
+      "mockBrowserLabel": "game4git.app / pràctica",
+      "previewBadge": "Vista prèvia",
+      "stepCountLabel_one": "{{count}} pas",
+      "stepCountLabel_other": "{{count}} passos"
+    },
     "gitPracticeGame": {
       "eyebrow": "Practica Git online",
       "heroTitle": "Joc per practicar Git amb commits, branques i merges",
