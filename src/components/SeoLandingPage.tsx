@@ -1,7 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -237,7 +237,6 @@ function HeroPreviewMock({ pageKey, alt }: { pageKey: LandingPageKey; alt: strin
           sizes="(min-width: 1024px) min(42vw, 720px), 100vw"
           className="h-full w-full object-cover object-top"
           loading="eager"
-          fetchPriority="high"
           decoding="async"
         />
       </picture>
@@ -292,90 +291,56 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
 
       const mm = gsap.matchMedia();
 
+      const landingTargets = "[data-landing-header], [data-landing-hero-chunk], [data-landing-reveal]";
+
       /*
-        Patrón conditions: un solo mm.add gestiona ambos casos.
-        matchMedia revierte automáticamente todas las animaciones al cambiar la query.
+        Dos queries mutuamente excluyentes (ancho + movimiento) para que el revert de GSAP
+        no deje autoAlpha/opacity colgados al pasar de desktop a móvil.
       */
-      mm.add(
-        {
-          animate: "(prefers-reduced-motion: no-preference)",
-          reduce: "(prefers-reduced-motion: reduce)",
-          desktop: "(min-width: 640px)",
-        },
-        (ctx) => {
-          const { animate, desktop } = ctx.conditions as { animate: boolean; reduce: boolean; desktop: boolean };
+      mm.add("(max-width: 639px), (prefers-reduced-motion: reduce)", () => {
+        gsap.set(landingTargets, { clearProps: "all" });
+      }, root);
 
-          if (!animate) {
-            // Usuarios con reduce: limpiar cualquier estilo inline previo (matchMedia revert + CSS override).
-            gsap.set("[data-landing-header], [data-landing-hero-chunk], [data-landing-reveal]", {
-              clearProps: "all",
+      mm.add("(min-width: 640px) and (prefers-reduced-motion: no-preference)", () => {
+        /*
+          Solo animación en Y + opacidad 1 fija: nunca ocultar el hero (evita pantalla “vacía”
+          si el timeline o matchMedia fallan o revert dejan estilos a medias).
+        */
+        gsap.set("[data-landing-header]", { opacity: 1, visibility: "visible", y: 10 });
+        gsap.set("[data-landing-hero-chunk]", { opacity: 1, visibility: "visible", y: 20 });
+        gsap.set("[data-landing-reveal]", { opacity: 1, visibility: "visible", y: 28 });
+
+        const tl = gsap.timeline({
+          defaults: { ease: "power2.out" },
+        });
+
+        tl.to("[data-landing-header]", { y: 0, duration: 0.3 }, 0);
+        tl.to(
+          "[data-landing-hero-left] [data-landing-hero-chunk]",
+          { y: 0, duration: 0.45, stagger: 0.05 },
+          "<0.05"
+        );
+        tl.to(
+          "[data-landing-hero-right] [data-landing-hero-chunk]",
+          { y: 0, duration: 0.42, stagger: 0.05 },
+          "<0.08"
+        );
+
+        ScrollTrigger.batch("[data-landing-reveal]", {
+          start: "top 92%",
+          once: true,
+          interval: 0.06,
+          onEnter: (batch) => {
+            gsap.to(batch, {
+              y: 0,
+              duration: 0.5,
+              stagger: { each: 0.04, ease: "power1.out" },
+              ease: "power2.out",
+              overwrite: "auto",
             });
-            return;
-          }
-
-          // Móvil: sin ocultar above-the-fold (mejora LCP y evita esperar a la animación).
-          if (!desktop) {
-            gsap.set("[data-landing-header], [data-landing-hero-chunk], [data-landing-reveal]", {
-              clearProps: "all",
-            });
-            return;
-          }
-
-          /*
-            1. gsap.set() refuerza el estado inicial pre-oculto (CSS ya lo hace, pero
-               es defensivo para los casos en que matchMedia revierte y re-ejecuta).
-            2. Timeline única para la entrada above-fold (header + hero izq + hero der):
-               - Coordina tiempos con el position parameter en lugar de `delay` separados.
-               - Defaults compartidos: menos repetición, menos tweens independientes.
-            3. ScrollTrigger.batch SOLO para elementos below-fold (data-landing-reveal).
-               El header ya no usa data-landing-reveal; tiene data-landing-header propio.
-          */
-
-          gsap.set("[data-landing-header]", { autoAlpha: 0, y: 10 });
-          gsap.set("[data-landing-hero-chunk]", { autoAlpha: 0, y: 20 });
-          gsap.set("[data-landing-reveal]", { autoAlpha: 0, y: 28 });
-
-          // — Timeline coordinada para la entrada inicial (above-fold) —
-          const tl = gsap.timeline({
-            defaults: { ease: "power2.out" },
-          });
-
-          // Header: aparece primero, ligero
-          tl.to("[data-landing-header]", { autoAlpha: 1, y: 0, duration: 0.3 }, 0);
-
-          // Hero izquierda: empieza justo después del header
-          tl.to(
-            "[data-landing-hero-left] [data-landing-hero-chunk]",
-            { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.05 },
-            "<0.05"
-          );
-
-          // Hero derecha: solapada con la izquierda (position "<0.08" = 0.08s tras el inicio de la izquierda)
-          tl.to(
-            "[data-landing-hero-right] [data-landing-hero-chunk]",
-            { autoAlpha: 1, y: 0, duration: 0.42, stagger: 0.05 },
-            "<0.08"
-          );
-
-          // — ScrollTrigger.batch para contenido below-fold (data-landing-reveal) —
-          ScrollTrigger.batch("[data-landing-reveal]", {
-            start: "top 92%",
-            once: true,
-            interval: 0.06,
-            onEnter: (batch) => {
-              gsap.to(batch, {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.5,
-                stagger: { each: 0.04, ease: "power1.out" },
-                ease: "power2.out",
-                overwrite: "auto",
-              });
-            },
-          });
-        },
-        root
-      );
+          },
+        });
+      }, root);
 
       return () => {
         mm.revert();
@@ -383,6 +348,30 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
     },
     { scope: rootRef, dependencies: [pageKey], revertOnUpdate: true }
   );
+
+  // Red de seguridad: al cruzar a viewport estrecho, limpiar estilos inline de GSAP (evita contenido invisible tras encoger desde desktop).
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const clearLandingCaptureStyles = () => {
+      const nodes = root.querySelectorAll(
+        "[data-landing-header], [data-landing-hero-chunk], [data-landing-reveal]"
+      );
+      if (nodes.length === 0) return;
+      gsap.set(nodes, { clearProps: "all" });
+      ScrollTrigger.refresh();
+    };
+
+    const mq = window.matchMedia("(max-width: 639px)");
+    const onBreakpoint = () => {
+      if (mq.matches) clearLandingCaptureStyles();
+    };
+
+    onBreakpoint();
+    mq.addEventListener("change", onBreakpoint);
+    return () => mq.removeEventListener("change", onBreakpoint);
+  }, [pageKey]);
 
   return (
     <div ref={rootRef} className="relative min-h-screen overflow-x-hidden bg-background">
@@ -428,8 +417,8 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
           {/* Hero */}
           <section className="relative">
             <div className="pointer-events-none absolute -inset-x-6 -top-8 bottom-0 -z-10 rounded-[2.5rem] bg-gradient-to-b from-muted/30 to-transparent opacity-80 blur-2xl" />
-            <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-12">
-              <div className="order-2 flex flex-col lg:order-1" data-landing-hero-left>
+            <div className="grid min-w-0 items-center gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-12">
+              <div className="order-2 flex min-w-0 flex-col lg:order-1" data-landing-hero-left>
                 <div data-landing-hero-chunk className="flex flex-wrap items-center gap-2">
                   <Badge
                     variant="secondary"
@@ -518,7 +507,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                 </div>
               </div>
 
-              <div className="relative order-1 lg:order-2 lg:pl-2" data-landing-hero-right>
+              <div className="relative order-1 min-w-0 lg:order-2 lg:pl-2" data-landing-hero-right>
                 <div
                   data-landing-hero-chunk
                   className="absolute -right-6 -top-6 hidden h-24 w-24 rounded-3xl bg-gradient-to-br from-primary/10 to-transparent blur-2xl md:block"

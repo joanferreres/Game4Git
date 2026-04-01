@@ -233,7 +233,7 @@
   GSAP los muestra al animar con autoAlpha.
   Los usuarios con prefers-reduced-motion nunca ven estos estilos.
 */
-@media (prefers-reduced-motion: no-preference) {
+@media (min-width: 640px) and (prefers-reduced-motion: no-preference) {
   [data-landing-header],
   [data-landing-hero-chunk],
   [data-landing-reveal] {
