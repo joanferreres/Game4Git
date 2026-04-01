@@ -1189,6 +1189,7 @@
       "finalCtaTitle": "¿Listo para practicar en serio?",
       "finalCtaBody": "Entrena habilidades antes que código en producción. Entra, equivócate sin miedo y gana confianza rápido.",
       "mockBrowserLabel": "game4git.app / práctica",
+      "heroPreviewAlt": "Vista previa del espacio interactivo para aprender Git en el navegador.",
       "previewBadge": "Vista previa",
       "stepCountLabel_one": "{{count}} paso",
       "stepCountLabel_other": "{{count}} pasos"

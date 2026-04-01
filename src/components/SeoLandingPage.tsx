@@ -215,14 +215,21 @@ const HERO_IMAGES: Record<LandingPageKey, string> = {
   valgrindMemoryLeaks: "/hero-valgrind-memory-leaks.png",
 };
 
-function HeroPreviewMock({ pageKey }: { pageKey: LandingPageKey }) {
+/** Texto secundario con contraste suficiente en modo claro (WCAG) sin perder estética en oscuro. */
+const LANDING_BODY = "text-foreground/80 dark:text-muted-foreground";
+const LANDING_SUBTLE = "text-foreground/72 dark:text-muted-foreground";
+const LANDING_LABEL = "text-foreground/68 dark:text-muted-foreground";
+
+function HeroPreviewMock({ pageKey, alt }: { pageKey: LandingPageKey; alt: string }) {
   const imgSrc = HERO_IMAGES[pageKey];
   return (
     <div className="relative aspect-[4/3] overflow-hidden rounded-b-2xl bg-gradient-to-br from-muted/40 via-background to-muted/20">
       <img
         src={imgSrc}
-        alt=""
-        aria-hidden
+        alt={alt}
+        width={1200}
+        height={900}
+        sizes="(min-width: 1024px) min(42vw, 720px), 100vw"
         className="h-full w-full object-cover object-top"
         loading="eager"
         fetchPriority="high"
@@ -287,12 +294,21 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
         {
           animate: "(prefers-reduced-motion: no-preference)",
           reduce: "(prefers-reduced-motion: reduce)",
+          desktop: "(min-width: 640px)",
         },
         (ctx) => {
-          const { animate } = ctx.conditions as { animate: boolean; reduce: boolean };
+          const { animate, desktop } = ctx.conditions as { animate: boolean; reduce: boolean; desktop: boolean };
 
           if (!animate) {
             // Usuarios con reduce: limpiar cualquier estilo inline previo (matchMedia revert + CSS override).
+            gsap.set("[data-landing-header], [data-landing-hero-chunk], [data-landing-reveal]", {
+              clearProps: "all",
+            });
+            return;
+          }
+
+          // Móvil: sin ocultar above-the-fold (mejora LCP y evita esperar a la animación).
+          if (!desktop) {
             gsap.set("[data-landing-header], [data-landing-hero-chunk], [data-landing-reveal]", {
               clearProps: "all",
             });
@@ -364,7 +380,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
 
   return (
     <div ref={rootRef} className="relative min-h-screen overflow-x-hidden bg-background">
-      <SeoHead page={config.seoKey} />
+      <SeoHead page={config.seoKey} preloadHeroImage={HERO_IMAGES[pageKey]} />
       <div
         className={`pointer-events-none absolute inset-x-0 -top-24 h-[36rem] bg-gradient-to-b ${config.softAccent} blur-3xl`}
       />
@@ -403,7 +419,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
           <section className="relative">
             <div className="pointer-events-none absolute -inset-x-6 -top-8 bottom-0 -z-10 rounded-[2.5rem] bg-gradient-to-b from-muted/30 to-transparent opacity-80 blur-2xl" />
             <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-12">
-              <div className="flex flex-col" data-landing-hero-left>
+              <div className="order-2 flex flex-col lg:order-1" data-landing-hero-left>
                 <div data-landing-hero-chunk className="flex flex-wrap items-center gap-2">
                   <Badge
                     variant="secondary"
@@ -414,7 +430,12 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                   >
                     {t(`landingPages.${pageKey}.eyebrow`)}
                   </Badge>
-                  <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+                  <span
+                    className={cn(
+                      "text-[11px] font-medium uppercase tracking-[0.18em]",
+                      LANDING_LABEL
+                    )}
+                  >
                     {t("landingPages.common.previewBadge")}
                   </span>
                 </div>
@@ -428,7 +449,10 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
 
                 <p
                   data-landing-hero-chunk
-                  className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
+                  className={cn(
+                    "mt-6 max-w-xl text-pretty text-base leading-relaxed sm:text-lg",
+                    LANDING_BODY
+                  )}
                 >
                   {t(`landingPages.${pageKey}.heroDescription`)}
                 </p>
@@ -454,7 +478,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                     asChild
                     variant="outline"
                     size="lg"
-                    className="h-12 rounded-full border-border/80 bg-background/90 px-7 text-base font-medium backdrop-blur-sm"
+                    className="h-12 rounded-full border-border/80 bg-background/90 px-7 text-base font-medium text-foreground backdrop-blur-sm hover:text-foreground"
                   >
                     <Link to={secondaryHref}>{t(`landingPages.${pageKey}.secondaryCta`)}</Link>
                   </Button>
@@ -467,16 +491,24 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                   {trustItems.map(({ icon: TrustIcon, id: trustId, label }) => (
                     <div
                       key={trustId}
-                      className="inline-flex max-w-full items-center gap-2 rounded-full border border-border/60 bg-card/90 px-3.5 py-2 text-xs text-muted-foreground shadow-sm backdrop-blur sm:text-sm"
+                      className={cn(
+                        "inline-flex max-w-full items-center gap-2 rounded-full border border-border/60 bg-card/90 px-3.5 py-2 text-xs shadow-sm backdrop-blur sm:text-sm",
+                        LANDING_BODY
+                      )}
                     >
-                      <TrustIcon className={cn("h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4", config.accentSolid)} />
-                      <span className="leading-snug">{label}</span>
+                      <TrustIcon
+                        className={cn(
+                          "h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4",
+                          config.accentSolid
+                        )}
+                      />
+                      <span className="leading-snug text-foreground dark:text-foreground/90">{label}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="relative lg:pl-2" data-landing-hero-right>
+              <div className="relative order-1 lg:order-2 lg:pl-2" data-landing-hero-right>
                 <div
                   data-landing-hero-chunk
                   className="absolute -right-6 -top-6 hidden h-24 w-24 rounded-3xl bg-gradient-to-br from-primary/10 to-transparent blur-2xl md:block"
@@ -491,7 +523,12 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                       <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]/90" />
                       <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/90" />
                     </div>
-                    <div className="ml-2 flex min-w-0 flex-1 items-center rounded-lg bg-background/90 px-3 py-1.5 font-mono text-[10px] leading-snug text-muted-foreground shadow-inner sm:text-[11px]">
+                    <div
+                      className={cn(
+                        "ml-2 flex min-w-0 flex-1 items-center rounded-lg bg-background/90 px-3 py-1.5 font-mono text-[10px] leading-snug shadow-inner sm:text-[11px]",
+                        LANDING_SUBTLE
+                      )}
+                    >
                       <span className="break-words text-left">{t("landingPages.common.mockBrowserLabel")}</span>
                     </div>
                     <div
@@ -504,15 +541,25 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                     </div>
                   </div>
 
-                  <HeroPreviewMock pageKey={pageKey} />
+                  <HeroPreviewMock pageKey={pageKey} alt={t("landingPages.common.heroPreviewAlt")} />
 
                   {featuredSteps.length > 0 ? (
                     <div className="space-y-2.5 border-t border-border/50 bg-muted/20 p-4 sm:p-5">
                       <div className="flex items-center justify-between gap-2">
-                        <p className="min-w-0 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                        <p
+                          className={cn(
+                            "min-w-0 text-[10px] font-semibold uppercase tracking-[0.2em]",
+                            LANDING_LABEL
+                          )}
+                        >
                           {t(`landingPages.${pageKey}.stepsTitle`)}
                         </p>
-                        <span className={cn("shrink-0 text-right text-[10px] font-semibold", config.accentSolid)}>
+                        <span
+                          className={cn(
+                            "shrink-0 text-right text-[10px] font-semibold",
+                            config.accentSolid
+                          )}
+                        >
                           {stepCountDisplay}
                         </span>
                       </div>
@@ -535,7 +582,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                           </div>
                           <div className="min-w-0 flex-1">
                             <p className="font-semibold leading-snug text-foreground">{step.title}</p>
-                            <p className="mt-1 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+                            <p className={cn("mt-1 text-xs leading-relaxed sm:text-sm", LANDING_BODY)}>
                               {step.description}
                             </p>
                           </div>
@@ -611,7 +658,12 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                             {highlight}
                           </CardTitle>
                           {large ? (
-                            <CardDescription className="max-w-lg text-pretty text-base leading-relaxed">
+                            <CardDescription
+                              className={cn(
+                                "max-w-lg text-pretty text-base leading-relaxed",
+                                LANDING_BODY
+                              )}
+                            >
                               {t("landingPages.common.pathSubtitle")}
                             </CardDescription>
                           ) : null}
@@ -658,11 +710,13 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
           <section className="relative rounded-[2rem] border border-border/50 bg-gradient-to-b from-muted/40 via-muted/20 to-background p-6 shadow-inner sm:p-8 md:p-10 lg:p-12">
             <div className="mb-10 max-w-2xl space-y-3 md:mb-14" data-landing-reveal>
               <div className={`h-1 w-14 rounded-full bg-gradient-to-r ${config.accent}`} />
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">
+              <p className={cn("text-xs font-bold uppercase tracking-[0.22em]", LANDING_LABEL)}>
                 {t("landingPages.common.pathKicker")}
               </p>
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{t(`landingPages.${pageKey}.stepsTitle`)}</h2>
-              <p className="text-base text-muted-foreground sm:text-lg">{t("landingPages.common.pathSubtitle")}</p>
+              <p className={cn("text-base sm:text-lg", LANDING_BODY)}>
+                {t("landingPages.common.pathSubtitle")}
+              </p>
             </div>
 
             <div className="relative">
@@ -688,13 +742,18 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                       >
                         {index + 1}
                       </div>
-                      <span className="font-mono text-[11px] font-medium uppercase tracking-widest text-muted-foreground md:mt-3 md:text-center">
+                      <span
+                        className={cn(
+                          "font-mono text-[11px] font-medium uppercase tracking-widest md:mt-3 md:text-center",
+                          LANDING_LABEL
+                        )}
+                      >
                         {String(index + 1).padStart(2, "0")}
                       </span>
                     </div>
                     <div className="min-w-0 flex-1 rounded-2xl border border-border/60 bg-card/95 p-5 shadow-sm ring-1 ring-border/30 transition-shadow hover:shadow-md md:p-7">
                       <h3 className="text-xl font-bold leading-snug text-foreground">{step.title}</h3>
-                      <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
+                      <p className={cn("mt-3 text-pretty text-sm leading-relaxed sm:text-base", LANDING_BODY)}>
                         {step.description}
                       </p>
                     </div>
@@ -728,7 +787,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                       <AccordionTrigger className="py-4 text-left text-[15px] font-semibold hover:no-underline">
                         {faq.q}
                       </AccordionTrigger>
-                      <AccordionContent className="pb-4 text-sm leading-relaxed text-muted-foreground">
+                      <AccordionContent className={cn("pb-4 text-sm leading-relaxed", LANDING_BODY)}>
                         {faq.a}
                       </AccordionContent>
                     </AccordionItem>
@@ -769,7 +828,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                           <p className="truncate text-sm font-semibold leading-snug text-foreground">
                             {getRelatedTitle(target, t)}
                           </p>
-                          <p className="truncate text-xs leading-relaxed text-muted-foreground">
+                          <p className={cn("truncate text-xs leading-relaxed", LANDING_SUBTLE)}>
                             {getRelatedDescription(target, t)}
                           </p>
                         </div>
@@ -795,7 +854,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                 <h2 className="text-balance text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
                   {t("landingPages.common.finalCtaTitle")}
                 </h2>
-                <p className="text-pretty text-base leading-relaxed text-white/90 sm:text-lg">
+                <p className="text-pretty text-base leading-relaxed text-white sm:text-lg">
                   {t("landingPages.common.finalCtaBody")}
                 </p>
                 <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">

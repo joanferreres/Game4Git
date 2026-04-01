@@ -25,6 +25,14 @@ const ROUTES = [
   { key: 'valgrindMemoryLeaks', path: '/valgrind-memory-leaks' },
 ];
 
+/** Debe coincidir con `HERO_IMAGES` en `SeoLandingPage.tsx` (LCP en landings). */
+const LANDING_HERO_IMAGES = {
+  gitPracticeGame: '/hero-git-practice-game.png',
+  gitBranchPractice: '/hero-git-branch-practice.png',
+  gitMergeConflicts: '/hero-git-merge-conflicts.png',
+  valgrindMemoryLeaks: '/hero-valgrind-memory-leaks.png',
+};
+
 const LANDING_ROUTE_CONFIG = {
   gitPracticeGame: {
     primaryHref: (locale) => `${getLocalizedPath('/', locale)}?exercise=feature-branch`,
@@ -603,21 +611,28 @@ const buildRouteMarkup = (route, locale) => {
   }
 };
 
-const addPreloadForIndexCss = (template) => {
+const addCriticalPreloads = (template, routeKey) => {
+  const parts = [];
+  const heroSrc = LANDING_HERO_IMAGES[routeKey];
+  if (heroSrc) {
+    parts.push(`\n    <link rel="preload" href="${heroSrc}" as="image" fetchpriority="high">`);
+  }
   const assetsDir = path.join(DIST_DIR, 'assets');
   if (fs.existsSync(assetsDir)) {
     const files = fs.readdirSync(assetsDir);
     const indexCss = files.find((f) => f.startsWith('Index-') && f.endsWith('.css'));
     if (indexCss) {
-      const preload = `\n    <link rel="preload" href="/assets/${indexCss}" as="style">`;
-      return template.replace(/(<link rel="preconnect"[^>]+>)/, `$1${preload}`);
+      parts.push(`\n    <link rel="preload" href="/assets/${indexCss}" as="style">`);
     }
   }
-  return template;
+  if (parts.length === 0) {
+    return template;
+  }
+  return template.replace(/(<link rel="preconnect"[^>]+>)/, `$1${parts.join('')}`);
 };
 
 const injectRouteIntoTemplate = (template, route, locale) =>
-  addPreloadForIndexCss(template)
+  addCriticalPreloads(template, route.key)
     .replace(/<html lang="[^"]*">/, `<html lang="${locale}">`)
     .replace(
       /<!-- SEO_START -->[\s\S]*?<!-- SEO_END -->/,

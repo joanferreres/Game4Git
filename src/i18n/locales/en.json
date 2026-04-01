@@ -1141,6 +1141,7 @@
       "finalCtaTitle": "Ready to practice like it matters?",
       "finalCtaBody": "Ship skills before you ship code. Jump in, break things safely, and build confidence fast.",
       "mockBrowserLabel": "game4git.app / practice",
+      "heroPreviewAlt": "Preview of the interactive Git learning workspace in the browser.",
       "previewBadge": "Live preview",
       "stepCountLabel_one": "{{count}} step",
       "stepCountLabel_other": "{{count}} steps"

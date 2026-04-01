@@ -1025,6 +1025,7 @@
       "finalCtaTitle": "A punt per practicar de debò?",
       "finalCtaBody": "Entrena habilitats abans que codi en producció. Entra, equivoca’t sense por i guanya confiança ràpid.",
       "mockBrowserLabel": "game4git.app / pràctica",
+      "heroPreviewAlt": "Vista prèvia de l’espai interactiu per aprendre Git al navegador.",
       "previewBadge": "Vista prèvia",
       "stepCountLabel_one": "{{count}} pas",
       "stepCountLabel_other": "{{count}} passos"
