@@ -9,8 +9,7 @@ import {
   useNavigate,
   useNavigationType,
 } from "react-router-dom";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/react";
+import { DeferredVercelMetrics } from "@/components/DeferredVercelMetrics";
 import { useTranslation } from "react-i18next";
 import {
   getLocaleFromPathname,
@@ -126,8 +125,7 @@ const App = () => (
     <TooltipProvider delayDuration={200} skipDelayDuration={0}>
       <RouterProvider router={router} />
       <SonnerToaster position="bottom-right" />
-      <Analytics />
-      <SpeedInsights />
+      <DeferredVercelMetrics />
     </TooltipProvider>
   </ThemeProvider>
 );

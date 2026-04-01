@@ -3,13 +3,13 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import DiffViewer from "@/components/DiffViewer";
 import { useInView } from "@/hooks/useInView";
 
 // Lazy editor: smaller initial JS parse on mobile; chunk loads in parallel once the shell mounts
 const CodeEditor = lazy(() => import("@/components/CodeEditor"));
-import GitControls from "@/components/GitControls";
-import GitHistory from "@/components/GitHistory";
+const DiffViewer = lazy(() => import("@/components/DiffViewer"));
+const GitControls = lazy(() => import("@/components/GitControls"));
+const GitHistory = lazy(() => import("@/components/GitHistory"));
 import WelcomeBanner from "@/components/WelcomeBanner";
 import useGitStore, { useAdminStore } from "@/store/gitStore";
 import {
@@ -25,7 +25,7 @@ import { useTranslation } from "react-i18next";
 import "../i18n"; // Importamos la configuración de i18n
 const GitExercises = lazy(() => import("@/components/GitExercises"));
 import { ThemeToggle } from "@/components/ThemeToggle";
-import ConflictResolver from "@/components/ConflictResolver";
+const ConflictResolver = lazy(() => import("@/components/ConflictResolver"));
 import { Link } from "react-router-dom";
 import { Bug, Shield } from "lucide-react";
 
@@ -35,6 +35,10 @@ import SeoHead from "@/components/SeoHead";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 
 /** Matches CodeEditor layout to avoid CLS while the lazy chunk loads */
+const LazyPanelFallback = () => (
+  <div className="min-h-[72px] animate-pulse rounded-lg bg-muted/30" aria-hidden />
+);
+
 const CodeEditorSkeleton: React.FC<{ label: string }> = ({ label }) => (
   <Card className="w-full h-full overflow-hidden flex flex-col">
     <CardHeader className="py-3 px-4 shrink-0">
@@ -432,7 +436,9 @@ const GitGame: React.FC = () => {
 
       {/* Floating Action Button for Git History Sheet - deferred to reduce forced reflow */}
       <DeferUntilAfterPaint fallback={<div className="fixed top-1/2 right-4 transform -translate-y-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full" aria-hidden />}>
-        <GitHistory />
+        <Suspense fallback={<LazyPanelFallback />}>
+          <GitHistory />
+        </Suspense>
       </DeferUntilAfterPaint>
 
       {/* Secondary banner: shown when user closed welcome without acting */}
@@ -528,7 +534,9 @@ const GitGame: React.FC = () => {
         {/* Right Column - Diff or Selected Commit View */}
         <div data-home-panel className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] md:col-span-2 lg:col-span-1">
           {conflictExists ? (
-            <ConflictResolver />
+            <Suspense fallback={<LazyPanelFallback />}>
+              <ConflictResolver />
+            </Suspense>
           ) : selectedCommit ? (
             <Suspense
               fallback={
@@ -538,10 +546,12 @@ const GitGame: React.FC = () => {
               <CodeEditor readOnly={true} content={selectedCommit.content} />
             </Suspense>
           ) : showDiff && headCommit ? (
-            <DiffViewer
-              oldContent={headCommit.content}
-              newContent={stagedChanges || workingChanges}
-            />
+            <Suspense fallback={<CodeEditorSkeleton label={t("home.loadingEditor", "Loading editor…")} />}>
+              <DiffViewer
+                oldContent={headCommit.content}
+                newContent={stagedChanges || workingChanges}
+              />
+            </Suspense>
           ) : (
             <Card className="w-full h-full flex items-center justify-center">
               <CardContent className="text-center p-4 sm:p-6 flex flex-col items-center justify-center gap-3">
@@ -568,7 +578,9 @@ const GitGame: React.FC = () => {
 
       {/* Bottom Control Panel */}
       <div data-home-controls>
-        <GitControls />
+        <Suspense fallback={<LazyPanelFallback />}>
+          <GitControls />
+        </Suspense>
       </div>
 
       <DeferUntilAfterPaint fallback={

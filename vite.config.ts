@@ -70,8 +70,14 @@ export default defineConfig({
     },
   },
   build: {
-    target: "esnext",
-    minify: 'esbuild' as const,
+    target: "es2020",
+    minify: "terser" as const,
+    terserOptions: {
+      compress: {
+        passes: 2,
+        pure_funcs: ["console.log", "console.info", "console.debug"],
+      },
+    },
     sourcemap: true,
     outDir: 'dist',
     assetsDir: 'assets',
@@ -81,6 +87,18 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
+          if (id.includes("node_modules/gsap") || id.includes("node_modules/@gsap")) {
+            return "gsap";
+          }
+          if (
+            id.includes("node_modules/@codemirror") ||
+            id.includes("node_modules/@lezer") ||
+            id.includes("node_modules/@marijn") ||
+            id.includes("node_modules/@uiw/react-codemirror") ||
+            id.includes("node_modules/codemirror/")
+          ) {
+            return "codemirror";
+          }
           if (id.includes('node_modules/react-dom') ||
               id.includes('node_modules/react/') ||
               id.includes('node_modules/react-router') ||

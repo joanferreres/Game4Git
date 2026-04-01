@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -9,7 +9,7 @@ import LanguageSelector from '@/components/LanguageSelector';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import SeoHead from '@/components/SeoHead';
 import { useLocalizedPath } from '@/lib/localizedRoutes';
-import RealisticGdbTerminal from '@/components/RealisticGdbTerminal';
+const LazyRealisticGdbTerminal = lazy(() => import('@/components/RealisticGdbTerminal'));
 
 
 
@@ -479,18 +479,28 @@ const GdbLearning: React.FC = () => {
                   <Button variant={selectedExample === 'basic-debug' ? 'default' : 'outline'} size="sm" onClick={() => setSelectedExample('basic-debug')}>Buffer Overflow</Button>
                   <Button variant={selectedExample === 'infinite-loop' ? 'default' : 'outline'} size="sm" onClick={() => setSelectedExample('infinite-loop')}>Stack Overflow</Button>
                 </div>
-                <RealisticGdbTerminal selectedExample={selectedExample} />
+                <Suspense
+                  fallback={
+                    <div
+                      className="flex min-h-[320px] items-center justify-center rounded-lg border border-dashed border-muted-foreground/30 bg-muted/20 text-sm text-muted-foreground"
+                      aria-busy="true"
+                    >
+                      {t('common.loading', 'Loading...')}
+                    </div>
+                  }
+                >
+                  <LazyRealisticGdbTerminal selectedExample={selectedExample} />
+                </Suspense>
               </CardContent>
             </Card>
-          </TabsContent>
-          <TabsContent value="cheatsheet">
+
             <Card className="border-0 shadow-sm bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold">{t('gdb.cheatsheet.title', 'GDB Cheat Sheet')}</CardTitle>
                 <CardDescription className="text-muted-foreground">{t('gdb.cheatsheet.description', 'Essential GDB commands')}</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   {[
                     { cmd: 'run', desc: t('gdb.cheatsheet.items.run', 'Run the program') },
                     { cmd: 'break N', desc: t('gdb.cheatsheet.items.break', 'Set breakpoint at line N') },
@@ -504,7 +514,7 @@ const GdbLearning: React.FC = () => {
                   ].map((item, i) => (
                     <div key={i} className="group relative">
                       <div className="flex items-start gap-2">
-                        <code className="flex-1 bg-indigo-100 dark:bg-indigo-900/30 px-3 py-2 rounded-md text-sm font-mono text-indigo-800 dark:text-indigo-200 overflow-x-auto">
+                        <code className="flex-1 overflow-x-auto rounded-md bg-indigo-100 px-3 py-2 font-mono text-sm text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-200">
                           {item.cmd}
                         </code>
                       </div>
