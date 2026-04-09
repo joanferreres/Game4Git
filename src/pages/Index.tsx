@@ -266,7 +266,7 @@ const GitGame: React.FC = () => {
           <Button
             variant="default"
             size="sm"
-            className="rounded-lg bg-orange-brand hover:bg-[#d9441f] text-white shadow-sm text-xs"
+            className="rounded-lg bg-orange-brand hover:bg-orange-brand-hover text-white shadow-sm text-xs"
             onClick={() => window.dispatchEvent(new CustomEvent('open-challenges'))}
           >
             <Play className="h-3.5 w-3.5 mr-1.5" />
@@ -316,7 +316,7 @@ const GitGame: React.FC = () => {
               <Button
                 variant="default"
                 size="sm"
-                className="text-xs sm:text-sm rounded-lg bg-orange-brand hover:bg-[#d9441f] text-white shadow-sm"
+                className="text-xs sm:text-sm rounded-lg bg-orange-brand hover:bg-orange-brand-hover text-white shadow-sm"
                 onClick={() => window.dispatchEvent(new CustomEvent('open-challenges'))}
                 aria-label={t('home.startFirstChallenge', 'Start first challenge')}
               >
@@ -392,14 +392,14 @@ const GitGame: React.FC = () => {
           <Button
             variant="default"
             size="icon"
-            className="fixed bottom-16 left-4 md:top-1/2 md:left-4 md:transform md:-translate-y-1/2 z-50 rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-orange-brand hover:bg-[#d9441f] text-white shadow-xl hover:scale-105 transition-transform duration-200"
+            className="fixed bottom-16 left-4 md:top-1/2 md:left-4 md:transform md:-translate-y-1/2 z-50 rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-orange-brand hover:bg-orange-brand-hover text-white shadow-xl hover:scale-105 transition-transform duration-200"
             aria-label="Open usage guide"
           >
             <Info className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" />
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="fixed inset-0 w-screen h-screen max-w-none sm:max-w-none md:max-w-none lg:max-w-none xl:max-w-none 2xl:max-w-none p-0 flex flex-col">
-          <div className="relative bg-[#0f172a] text-white p-5 sm:p-8">
+          <div className="relative bg-sheet-dark text-white p-5 sm:p-8">
             {/* Sheet language selector next to close button */}
             <div className="absolute top-4 right-16 z-10">
               <LanguageSelector />
@@ -506,7 +506,7 @@ const GitGame: React.FC = () => {
           <Button
             variant="default"
             size="sm"
-            className="rounded-lg h-7 text-xs bg-orange-brand hover:bg-[#d9441f]"
+            className="rounded-lg h-7 text-xs bg-orange-brand hover:bg-orange-brand-hover"
             onClick={() => {
               sessionStorage.setItem('secondaryBannerDismissed', 'true');
               setShowSecondaryBanner(false);
