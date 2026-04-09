@@ -275,80 +275,112 @@ const GitGame: React.FC = () => {
         </div>
       )}
 
-      <header data-home-header className="mb-4 sm:mb-6 relative min-h-[80px] sm:min-h-[100px]">
-        <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
+      <header data-home-header className="mb-4 sm:mb-6 relative">
+        <div className="absolute right-2 top-2 flex items-center gap-2 z-10">
           <DeferUntilAfterPaint fallback={<div className="w-[88px] h-10" aria-hidden />}>
             <ThemeToggle />
             <LanguageSelector />
           </DeferUntilAfterPaint>
         </div>
-        <div className="text-center">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">{t('general.title')}</h1>
-          <section className="mx-auto max-w-2xl text-center mt-2 mb-3 sm:mb-4 px-2">
-            <p className="text-xs text-muted-foreground leading-relaxed sm:hidden">
-              {t(
-                'home.seoIntroMobile',
-                'Learn Git by doing with visual commits and guided challenges.'
-              )}
-            </p>
-            <p className="hidden sm:block text-xs sm:text-sm text-muted-foreground leading-relaxed">
-              {t(
-                'home.seoIntroShort',
-                'Learn Git by doing. Visualize branches and merges while running real commands. Try guided challenges or switch to the terminal anytime.'
-              )}
-              {" "}
-              <Link to={gdbPath} className="underline hover:text-primary">GDB</Link>
-              {" "}
-              {t('home.seoIntroAnd', 'and')}
-              {" "}
-              <Link to={valgrindPath} className="underline hover:text-primary">Valgrind</Link>
-              {" "}
-              {t('home.seoIntroTailShort', 'basics included.')}
-            </p>
-          </section>
 
-          {/* Primary CTA: Start first challenge */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mt-3 md:mt-4">
-            <Button
-              variant="default"
-              size="sm"
-              className="text-xs sm:text-sm rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg ring-2 ring-amber-300/50 hover:shadow-xl hover:scale-105 transition-all"
-              onClick={() => window.dispatchEvent(new CustomEvent('open-challenges'))}
-              aria-label={t('home.startFirstChallenge', 'Start first challenge')}
-            >
-              <Play className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5" />
-              {t('home.startFirstChallenge', 'Start first challenge')}
-            </Button>
-            {(isGdbEnabled || isValgrindEnabled) && (
-              <div className="hidden sm:flex gap-2">
-                {isGdbEnabled && (
-                  <Link to={gdbPath}>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="text-xs rounded-full border-blue-500/50 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/30"
-                      aria-label={t('home.openGdb', 'Learn GDB debugger')}
-                    >
-                      <Bug className="h-3 w-3 mr-1" />
-                      {t('home.gdbShort', 'GDB')}
-                    </Button>
-                  </Link>
-                )}
-                {isValgrindEnabled && (
-                  <Link to={valgrindPath}>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="text-xs rounded-full border-emerald-500/50 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30"
-                      aria-label={t('home.openValgrind', 'Learn Valgrind memory tools')}
-                    >
-                      <Shield className="h-3 w-3 mr-1" />
-                      {t('home.valgrindShort', 'Valgrind')}
-                    </Button>
-                  </Link>
-                )}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-center pt-2 md:pt-4">
+          {/* Left: text */}
+          <div>
+            {/* Eyebrow — decorative, aria-hidden */}
+            <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-widest text-orange-brand mb-3" aria-hidden>
+              <span className="w-1.5 h-1.5 rounded-full bg-orange-brand" />
+              {t('home.eyebrow', 'Aprende Git de verdad')}
+            </div>
+
+            {/* h1 — original key preserved for SEO */}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight mb-3">
+              {t('general.title')}
+            </h1>
+
+            {/* SEO paragraphs — content unchanged */}
+            <section className="max-w-lg mb-4" aria-label={t('home.seoIntroLabel', 'App description')}>
+              <p className="text-xs text-muted-foreground leading-relaxed sm:hidden">
+                {t('home.seoIntroMobile', 'Learn Git by doing with visual commits and guided challenges.')}
+              </p>
+              <p className="hidden sm:block text-sm text-muted-foreground leading-relaxed">
+                {t('home.seoIntroShort', 'Learn Git by doing. Visualize branches and merges while running real commands. Try guided challenges or switch to the terminal anytime.')}{' '}
+                <Link to={gdbPath} className="underline hover:text-primary">GDB</Link>
+                {' '}{t('home.seoIntroAnd', 'and')}{' '}
+                <Link to={valgrindPath} className="underline hover:text-primary">Valgrind</Link>
+                {' '}{t('home.seoIntroTailShort', 'basics included.')}
+              </p>
+            </section>
+
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+              <Button
+                variant="default"
+                size="sm"
+                className="text-xs sm:text-sm rounded-lg bg-orange-brand hover:bg-[#d9441f] text-white shadow-sm"
+                onClick={() => window.dispatchEvent(new CustomEvent('open-challenges'))}
+                aria-label={t('home.startFirstChallenge', 'Start first challenge')}
+              >
+                <Play className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5" />
+                {t('home.startFirstChallenge', 'Start first challenge')}
+              </Button>
+              {(isGdbEnabled || isValgrindEnabled) && (
+                <div className="hidden sm:flex gap-2">
+                  {isGdbEnabled && (
+                    <Link to={gdbPath}>
+                      <Button variant="outline" size="sm" className="text-xs rounded-lg" aria-label={t('home.openGdb', 'Learn GDB debugger')}>
+                        <Bug className="h-3 w-3 mr-1" />
+                        {t('home.gdbShort', 'GDB')}
+                      </Button>
+                    </Link>
+                  )}
+                  {isValgrindEnabled && (
+                    <Link to={valgrindPath}>
+                      <Button variant="outline" size="sm" className="text-xs rounded-lg" aria-label={t('home.openValgrind', 'Learn Valgrind memory tools')}>
+                        <Shield className="h-3 w-3 mr-1" />
+                        {t('home.valgrindShort', 'Valgrind')}
+                      </Button>
+                    </Link>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Stats row — desktop only */}
+            <div className="hidden sm:flex gap-6 mt-5 pt-4 border-t border-border/60">
+              <div>
+                <p className="text-lg font-bold tracking-tight text-foreground">6</p>
+                <p className="text-[11px] text-muted-foreground">{t('home.statGuides', 'Guías interactivas')}</p>
               </div>
-            )}
+              <div>
+                <p className="text-lg font-bold tracking-tight text-foreground">ES · EN</p>
+                <p className="text-[11px] text-muted-foreground">{t('home.statLanguages', 'Idiomas')}</p>
+              </div>
+              <div>
+                <p className="text-lg font-bold tracking-tight text-foreground">0</p>
+                <p className="text-[11px] text-muted-foreground">{t('home.statInstalls', 'Instalaciones necesarias')}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: terminal snippet — hidden on mobile */}
+          <div className="hidden md:block" aria-hidden>
+            <div className="bg-[#0f172a] rounded-xl border border-[#1e293b] p-4 font-mono text-[12px] leading-[2]">
+              <div className="flex items-center gap-1.5 mb-3">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
+                <span className="w-2.5 h-2.5 rounded-full bg-green-500" />
+                <span className="text-[10px] text-slate-500 ml-2">commitquest — playground</span>
+              </div>
+              <div><span className="text-slate-500">$</span> <span className="text-slate-200">git init my-project</span></div>
+              <div><span className="text-green-400">✓</span> <span className="text-slate-500">Initialized empty Git repository</span></div>
+              <div><span className="text-slate-500">$</span> <span className="text-slate-200">git commit -m </span><span className="text-amber-400">"feat: primer commit"</span></div>
+              <div><span className="text-green-400">✓</span> <span className="text-slate-500">1 file changed — HEAD → main</span></div>
+              <div className="border-t border-[#1e293b] mt-2 pt-2 flex gap-2 flex-wrap">
+                <span className="bg-[#fff4f1] text-[#c2410c] text-[10px] px-2 py-0.5 rounded">main</span>
+                <span className="bg-green-950 text-green-400 text-[10px] px-2 py-0.5 rounded">feature/login</span>
+                <span className="bg-blue-950 text-blue-400 text-[10px] px-2 py-0.5 rounded">HEAD</span>
+              </div>
+            </div>
           </div>
         </div>
       </header>
