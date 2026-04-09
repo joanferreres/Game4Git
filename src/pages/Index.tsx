@@ -237,31 +237,12 @@ const GitGame: React.FC = () => {
     { scope: rootRef, dependencies: [showQuickGuide, showSecondaryBanner], revertOnUpdate: true }
   );
 
+  const GUIDE_BADGE = "font-mono text-[10px] text-slate-400 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded";
   const guideColorMap = {
-    orange: {
-      icon: "bg-[#fff4f1]",
-      tag: "bg-[#fff4f1] text-[#c2410c]",
-      arrow: "text-[#f05133]",
-      badge: "font-mono text-[10px] text-slate-400 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded",
-    },
-    sky: {
-      icon: "bg-sky-50",
-      tag: "bg-sky-50 text-blue-700",
-      arrow: "text-blue-600",
-      badge: "font-mono text-[10px] text-slate-400 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded",
-    },
-    amber: {
-      icon: "bg-amber-50",
-      tag: "bg-amber-50 text-amber-700",
-      arrow: "text-amber-600",
-      badge: "font-mono text-[10px] text-slate-400 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded",
-    },
-    green: {
-      icon: "bg-green-50",
-      tag: "bg-green-50 text-green-700",
-      arrow: "text-green-600",
-      badge: "font-mono text-[10px] text-slate-400 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded",
-    },
+    orange: { icon: "bg-[#fff4f1]", tag: "bg-[#fff4f1] text-[#c2410c]", arrow: "text-orange-brand", badge: GUIDE_BADGE },
+    sky:    { icon: "bg-sky-50",    tag: "bg-sky-50 text-blue-700",      arrow: "text-blue-600",    badge: GUIDE_BADGE },
+    amber:  { icon: "bg-amber-50",  tag: "bg-amber-50 text-amber-700",   arrow: "text-amber-600",   badge: GUIDE_BADGE },
+    green:  { icon: "bg-green-50",  tag: "bg-green-50 text-green-700",   arrow: "text-green-600",   badge: GUIDE_BADGE },
   } as const;
 
   return (
@@ -649,7 +630,7 @@ const GitGame: React.FC = () => {
               <Link
                 key={guide.href}
                 to={guide.href}
-                className="home-guide-card group bg-white border border-border rounded-lg p-4 flex flex-col gap-3 hover:shadow-md transition-all duration-150 hover:-translate-y-0.5"
+                className="home-guide-card group bg-white border border-border rounded-lg p-4 flex flex-col gap-3 hover:shadow-md focus-visible:ring-2 focus-visible:ring-orange-brand focus-visible:ring-offset-2 transition-all duration-150 hover:-translate-y-0.5"
                 aria-label={guide.title}
               >
                 <div className="flex items-start justify-between gap-2">
