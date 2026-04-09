@@ -129,28 +129,36 @@ const GitGame: React.FC = () => {
       title: t("landingPages.gitPracticeGame.heroTitle"),
       description: t("landingPages.gitPracticeGame.heroDescription"),
       icon: Sparkles,
-      accent: "from-amber-500 via-orange-500 to-rose-500",
+      color: "orange" as const,
+      command: "git practice",
+      difficulty: t("home.levelBasic", "Básico"),
     },
     {
       href: gitBranchPracticePath,
       title: t("landingPages.gitBranchPractice.heroTitle"),
       description: t("landingPages.gitBranchPractice.heroDescription"),
       icon: GitBranchIcon,
-      accent: "from-sky-500 via-cyan-500 to-blue-600",
+      color: "sky" as const,
+      command: "git branch",
+      difficulty: t("home.levelIntermediate", "Intermedio"),
     },
     {
       href: gitMergeConflictsPath,
       title: t("landingPages.gitMergeConflicts.heroTitle"),
       description: t("landingPages.gitMergeConflicts.heroDescription"),
       icon: GitMergeIcon,
-      accent: "from-fuchsia-500 via-violet-500 to-purple-600",
+      color: "amber" as const,
+      command: "git merge",
+      difficulty: t("home.levelIntermediate", "Intermedio"),
     },
     {
       href: valgrindMemoryLeaksPath,
       title: t("landingPages.valgrindMemoryLeaks.heroTitle"),
       description: t("landingPages.valgrindMemoryLeaks.heroDescription"),
       icon: Shield,
-      accent: "from-emerald-500 via-teal-500 to-green-600",
+      color: "green" as const,
+      command: "valgrind",
+      difficulty: t("home.levelAdvanced", "Avanzado"),
     },
   ];
 
@@ -228,6 +236,33 @@ const GitGame: React.FC = () => {
     },
     { scope: rootRef, dependencies: [showQuickGuide, showSecondaryBanner], revertOnUpdate: true }
   );
+
+  const guideColorMap = {
+    orange: {
+      icon: "bg-[#fff4f1]",
+      tag: "bg-[#fff4f1] text-[#c2410c]",
+      arrow: "text-[#f05133]",
+      badge: "font-mono text-[10px] text-slate-400 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded",
+    },
+    sky: {
+      icon: "bg-sky-50",
+      tag: "bg-sky-50 text-blue-700",
+      arrow: "text-blue-600",
+      badge: "font-mono text-[10px] text-slate-400 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded",
+    },
+    amber: {
+      icon: "bg-amber-50",
+      tag: "bg-amber-50 text-amber-700",
+      arrow: "text-amber-600",
+      badge: "font-mono text-[10px] text-slate-400 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded",
+    },
+    green: {
+      icon: "bg-green-50",
+      tag: "bg-green-50 text-green-700",
+      arrow: "text-green-600",
+      badge: "font-mono text-[10px] text-slate-400 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded",
+    },
+  } as const;
 
   return (
     <div ref={rootRef} className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
@@ -606,26 +641,31 @@ const GitGame: React.FC = () => {
             )}
           </p>
         </div>
-        <div className="mt-4 grid gap-2 sm:grid-cols-2">
+        <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-4 mt-6 md:mt-8">
           {featuredGuides.map((guide) => {
             const Icon = guide.icon;
-
+            const colors = guideColorMap[guide.color];
             return (
               <Link
                 key={guide.href}
                 to={guide.href}
-                className="home-guide-card group flex items-center gap-3 rounded-xl border border-border/50 bg-gradient-to-br from-background/95 to-muted/20 p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                className="home-guide-card group bg-white border border-border rounded-lg p-4 flex flex-col gap-3 hover:shadow-md transition-all duration-150 hover:-translate-y-0.5"
+                aria-label={guide.title}
               >
-                <div
-                  className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${guide.accent} text-white shadow-md transition-transform group-hover:scale-105`}
-                >
-                  <Icon className="h-4 w-4" />
+                <div className="flex items-start justify-between gap-2">
+                  <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${colors.icon}`}>
+                    <Icon className="w-4 h-4 text-foreground/70" aria-hidden />
+                  </div>
+                  <span className={colors.badge}>{guide.command}</span>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-semibold leading-snug text-foreground">{guide.title}</p>
-                  <p className="truncate text-xs leading-relaxed text-muted-foreground">{guide.description}</p>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-foreground leading-snug mb-1">{guide.title}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{guide.description}</p>
                 </div>
-                <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground/40 opacity-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100" />
+                <div className="flex items-center justify-between">
+                  <span className={`text-[11px] font-medium px-2 py-0.5 rounded ${colors.tag}`}>{guide.difficulty}</span>
+                  <span className={`text-sm ${colors.arrow} group-hover:translate-x-0.5 transition-transform`} aria-hidden>→</span>
+                </div>
               </Link>
             );
           })}
