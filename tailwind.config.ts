@@ -77,7 +77,8 @@ export default {
 					master: '#e91e63',
 					merge: '#9c27b0',
 					editor: '#1e293b'
-				}
+				},
+				'orange-brand': '#f05133'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
