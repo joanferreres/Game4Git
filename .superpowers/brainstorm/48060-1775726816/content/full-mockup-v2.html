@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CommitQuest — Mockup v2 (naranja git)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: #ffffff;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+}
+
+:root {
+  --orange: #f05133;
+  --orange-hover: #d9441f;
+  --orange-light: #fff4f1;
+  --orange-mid: #ffe4de;
+  --slate: #0f172a;
+  --slate-2: #1e293b;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --bg-warm: #faf9f7;
+  --bg-dark: #0f172a;
+  --mono: 'JetBrains Mono', monospace;
+  --r: 10px;
+  --px: clamp(16px, 4vw, 40px);
+}
+
+/* ── ANNOTATION ── */
+.annotation {
+  background: var(--orange);
+  color: white;
+  text-align: center;
+  font-size: 12px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.annotation strong { font-weight: 700; }
+.annotation span { opacity: .85; }
+
+/* ── NAV ── */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--px);
+  height: 58px;
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  gap: 16px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--slate);
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+.nav-links { display: flex; align-items: center; gap: 20px; }
+.nav-link { font-size: 13px; color: var(--muted); text-decoration: none; font-weight: 500; white-space: nowrap; }
+.nav-badge {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #94a3b8;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+.nav-cta {
+  background: var(--orange);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 7px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+@media (max-width: 640px) {
+  .nav-link, .nav-badge { display: none; }
+  .nav-cta { font-size: 12px; padding: 6px 12px; }
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--bg-warm);
+  padding: clamp(40px, 7vw, 80px) var(--px) clamp(40px, 6vw, 64px);
+}
+.hero-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 32px; }
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--orange);
+  margin-bottom: 18px;
+}
+.hero-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+.hero h1 {
+  font-size: clamp(32px, 5vw, 54px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  color: var(--slate);
+  margin-bottom: 18px;
+}
+.hero h1 span { color: var(--orange); }
+.hero-sub {
+  font-size: clamp(14px, 1.5vw, 16px);
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 28px;
+}
+.hero-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--orange);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--slate);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+}
+.hero-stats {
+  display: flex;
+  gap: 28px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+.hero-stat-val { font-size: 20px; font-weight: 800; color: var(--slate); letter-spacing: -0.02em; }
+.hero-stat-lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* Terminal block */
+.hero-terminal {
+  background: var(--bg-dark);
+  border-radius: 12px;
+  padding: 20px 22px;
+  border: 1px solid #1e293b;
+}
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.t-dot { width: 10px; height: 10px; border-radius: 50%; }
+.t-label { font-family: var(--mono); font-size: 11px; color: #475569; margin-left: 8px; }
+.t-line { font-family: var(--mono); font-size: 12px; line-height: 2.1; }
+.t-p { color: #475569; }
+.t-c { color: #e2e8f0; }
+.t-s { color: #fbbf24; }
+.t-ok { color: #4ade80; }
+.t-dim { color: #475569; }
+.t-cursor { color: #94a3b8; }
+.terminal-divider { border: none; border-top: 1px solid #1e293b; margin: 10px 0; }
+.branch-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+.branch-pill {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* ── SECTION ── */
+.section {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 72px) var(--px);
+}
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--orange);
+  margin-bottom: 6px;
+}
+.section-title {
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 700;
+  color: var(--slate);
+  letter-spacing: -0.025em;
+  margin-bottom: 6px;
+}
+.section-sub {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 480px;
+  margin-bottom: 36px;
+}
+
+/* ── CARDS GRID ── */
+.guides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 14px;
+}
+@media (max-width: 480px) {
+  .guides-grid { grid-template-columns: 1fr; }
+}
+.guide-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px;
+  cursor: pointer;
+  transition: box-shadow .15s, transform .15s;
+}
+.guide-card:hover {
+  box-shadow: 0 4px 18px rgba(0,0,0,.07);
+  transform: translateY(-2px);
+}
+.guide-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.guide-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+}
+.guide-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #94a3b8;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+.guide-title { font-size: 13px; font-weight: 600; color: var(--slate); margin-bottom: 5px; }
+.guide-desc { font-size: 12px; color: var(--muted); line-height: 1.55; margin-bottom: 12px; }
+.guide-footer { display: flex; align-items: center; justify-content: space-between; }
+.guide-tag { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 4px; }
+
+.c-orange .guide-icon { background: var(--orange-light); }
+.c-orange .guide-tag { background: var(--orange-light); color: #c2410c; }
+.c-orange .guide-arrow { color: var(--orange); font-size: 14px; }
+
+.c-sky .guide-icon { background: #eff6ff; }
+.c-sky .guide-tag { background: #eff6ff; color: #1d4ed8; }
+.c-sky .guide-arrow { color: #2563eb; font-size: 14px; }
+
+.c-amber .guide-icon { background: #fffbeb; }
+.c-amber .guide-tag { background: #fffbeb; color: #b45309; }
+.c-amber .guide-arrow { color: #d97706; font-size: 14px; }
+
+.c-green .guide-icon { background: #f0fdf4; }
+.c-green .guide-tag { background: #f0fdf4; color: #15803d; }
+.c-green .guide-arrow { color: #16a34a; font-size: 14px; }
+
+/* ── DARK STRIP ── */
+.strip-wrap { padding: 0 var(--px); max-width: calc(1120px + 2 * var(--px)); margin: 0 auto 0; }
+.strip {
+  background: var(--bg-dark);
+  border-radius: 14px;
+  padding: clamp(24px, 4vw, 36px) clamp(20px, 4vw, 40px);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: center;
+}
+@media (max-width: 640px) {
+  .strip { grid-template-columns: 1fr; }
+  .strip-terminal { display: none; }
+}
+.strip-eyebrow { font-family: var(--mono); font-size: 11px; color: #4ade80; margin-bottom: 8px; }
+.strip-title { font-size: clamp(16px, 2.5vw, 20px); font-weight: 700; color: #f1f5f9; letter-spacing: -0.02em; margin-bottom: 6px; }
+.strip-sub { font-size: 13px; color: #64748b; line-height: 1.55; }
+.btn-light {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  color: var(--slate);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 7px;
+  text-decoration: none;
+  margin-top: 18px;
+  font-family: 'DM Sans', sans-serif;
+}
+.strip-terminal {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 14px 16px;
+  line-height: 2;
+  min-width: 240px;
+}
+
+/* ── FAQ ── */
+.faq-list {
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  max-width: 640px;
+}
+.faq-item {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.faq-item:last-child { border-bottom: none; }
+.faq-q {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.faq-a { font-size: 12px; color: var(--muted); line-height: 1.65; margin-top: 7px; }
+.faq-plus { color: var(--muted); font-size: 16px; flex-shrink: 0; }
+
+/* ── FOOTER ── */
+.footer-wrap {
+  border-top: 1px solid var(--border);
+  padding: 28px var(--px);
+  max-width: calc(1120px + 2 * var(--px));
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-copy { font-size: 12px; color: var(--muted); }
+.footer-links { display: flex; gap: 16px; }
+.footer-link { font-size: 12px; color: var(--muted); text-decoration: none; }
+
+/* ── DIVIDER ── */
+hr.section-hr { border: none; border-top: 1px solid var(--border); max-width: 1120px; margin: 0 auto; }
+</style>
+</head>
+<body>
+
+<div class="annotation">
+  <strong>CommitQuest — Rediseño v2</strong>
+  <span>· Naranja Git #f05133 · DM Sans + JetBrains Mono · Responsive · Sin gradients ·</span>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <span class="logo-dot"></span>
+    commitquest
+  </a>
+  <div class="nav-links">
+    <span class="nav-badge">git v2.44</span>
+    <a href="#" class="nav-link">Guías</a>
+    <a href="#" class="nav-link">Playground</a>
+    <a href="#" class="nav-link">GDB</a>
+    <a href="#" class="nav-link">Valgrind</a>
+  </div>
+  <a href="#" class="nav-cta">Empezar →</a>
+</nav>
+
+<!-- HERO -->
+<section style="background: var(--bg-warm);">
+  <div class="hero">
+    <div class="hero-inner">
+      <!-- Left: texto -->
+      <div>
+        <div class="hero-eyebrow">
+          <span class="hero-eyebrow-dot"></span>
+          Aprende Git de verdad
+        </div>
+        <h1>De cero a<br><span>git workflow</span><br>en horas.</h1>
+        <p class="hero-sub">
+          Visualiza commits, ramas y merges en tiempo real.
+          Practica en un entorno seguro con desafíos guiados
+          y herramientas reales como GDB y Valgrind.
+        </p>
+        <div class="hero-actions">
+          <a href="#" class="btn-primary">▶ &nbsp;Primer desafío</a>
+          <a href="#" class="btn-outline">Ver playground →</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-val">6</div>
+            <div class="hero-stat-lbl">Guías interactivas</div>
+          </div>
+          <div>
+            <div class="hero-stat-val">ES / EN</div>
+            <div class="hero-stat-lbl">Idiomas</div>
+          </div>
+          <div>
+            <div class="hero-stat-val">0</div>
+            <div class="hero-stat-lbl">Instalaciones necesarias</div>
+          </div>
+        </div>
+      </div>
+      <!-- Right: terminal -->
+      <div>
+        <div class="hero-terminal">
+          <div class="terminal-bar">
+            <div class="t-dot" style="background:#ef4444"></div>
+            <div class="t-dot" style="background:#f59e0b"></div>
+            <div class="t-dot" style="background:#22c55e"></div>
+            <span class="t-label">commitquest — playground</span>
+          </div>
+          <div class="t-line"><span class="t-p">$</span> <span class="t-c">git init my-project</span></div>
+          <div class="t-line"><span class="t-ok">✓</span> <span class="t-dim">Initialized empty Git repository</span></div>
+          <div class="t-line"><span class="t-p">$</span> <span class="t-c">git commit -m </span><span class="t-s">"feat: primer commit"</span></div>
+          <div class="t-line"><span class="t-ok">✓</span> <span class="t-dim">1 file changed — HEAD → main</span></div>
+          <hr class="terminal-divider">
+          <div class="branch-row">
+            <span class="branch-pill" style="background:#fff4f1; color:#c2410c;">main</span>
+            <span class="branch-pill" style="background:#f0fdf4; color:#166534;">feature/login</span>
+            <span class="branch-pill" style="background:#eff6ff; color:#1d4ed8;">HEAD</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-hr">
+
+<!-- GUÍAS -->
+<div class="section">
+  <div class="section-label">Guías interactivas</div>
+  <div class="section-title">Aprende haciendo, no leyendo</div>
+  <p class="section-sub">Cada guía incluye visualizador de commits, editor y desafíos con feedback inmediato.</p>
+
+  <div class="guides-grid">
+    <div class="guide-card c-orange">
+      <div class="guide-card-top">
+        <div class="guide-icon">✦</div>
+        <span class="guide-badge">git practice</span>
+      </div>
+      <div class="guide-title">Git Practice Game</div>
+      <div class="guide-desc">Comandos esenciales de Git con ejercicios progresivos y feedback visual en cada paso.</div>
+      <div class="guide-footer">
+        <span class="guide-tag">Básico</span>
+        <span class="guide-arrow">→</span>
+      </div>
+    </div>
+
+    <div class="guide-card c-sky">
+      <div class="guide-card-top">
+        <div class="guide-icon">⎇</div>
+        <span class="guide-badge">git branch</span>
+      </div>
+      <div class="guide-title">Git Branch Practice</div>
+      <div class="guide-desc">Crea, fusiona y elimina ramas. Visualiza el grafo mientras trabajas en paralelo.</div>
+      <div class="guide-footer">
+        <span class="guide-tag">Intermedio</span>
+        <span class="guide-arrow">→</span>
+      </div>
+    </div>
+
+    <div class="guide-card c-amber">
+      <div class="guide-card-top">
+        <div class="guide-icon">⌥</div>
+        <span class="guide-badge">git merge</span>
+      </div>
+      <div class="guide-title">Merge Conflicts</div>
+      <div class="guide-desc">Entiende por qué ocurren y aprende a resolverlos con confianza y sin pánico.</div>
+      <div class="guide-footer">
+        <span class="guide-tag">Intermedio</span>
+        <span class="guide-arrow">→</span>
+      </div>
+    </div>
+
+    <div class="guide-card c-green">
+      <div class="guide-card-top">
+        <div class="guide-icon">◈</div>
+        <span class="guide-badge">valgrind</span>
+      </div>
+      <div class="guide-title">Valgrind Memory Leaks</div>
+      <div class="guide-desc">Detecta y corrige fugas de memoria en C/C++ con visualizador del heap.</div>
+      <div class="guide-footer">
+        <span class="guide-tag">Avanzado</span>
+        <span class="guide-arrow">→</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STRIP OSCURO -->
+<div class="strip-wrap" style="padding-bottom: clamp(40px, 6vw, 72px);">
+  <div class="strip">
+    <div>
+      <div class="strip-eyebrow">$ git playground --open</div>
+      <div class="strip-title">El playground siempre está listo</div>
+      <div class="strip-sub">Editor + visualizador de commits + terminal integrada.<br>Sin configuración, sin instalaciones.</div>
+      <a href="#" class="btn-light">Abrir playground →</a>
+    </div>
+    <div class="strip-terminal">
+      <div class="t-line"><span class="t-p">$</span> <span class="t-c">git checkout -b feature/login</span></div>
+      <div class="t-line"><span class="t-ok">✓</span> <span class="t-dim">Switched to 'feature/login'</span></div>
+      <div class="t-line"><span class="t-p">$</span> <span class="t-c">git merge main</span></div>
+      <div class="t-line"><span class="t-ok">✓</span> <span class="t-dim">Fast-forward merge done</span></div>
+      <div class="t-line"><span class="t-p">$</span> <span class="t-cursor">_</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-hr">
+
+<!-- FAQ -->
+<div class="section" style="padding-bottom: clamp(40px,6vw,72px);">
+  <div class="section-label">FAQ</div>
+  <div class="section-title">Preguntas frecuentes</div>
+  <p class="section-sub" style="margin-bottom: 24px;">Todo lo que necesitas saber antes de empezar.</p>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">¿Necesito instalar Git? <span class="faq-plus">+</span></div>
+      <div class="faq-a">No. Todo funciona en el navegador. El playground simula un repositorio real con comandos idénticos a Git.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Para qué nivel está pensado? <span class="faq-plus">+</span></div>
+      <div class="faq-a">Desde cero hasta nivel intermedio. GDB y Valgrind son módulos más avanzados orientados a C/C++.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Funciona en móvil? <span class="faq-plus">+</span></div>
+      <div class="faq-a">Sí, aunque el editor completo es mejor en escritorio.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Está en inglés y español? <span class="faq-plus">+</span></div>
+      <div class="faq-a">Sí. Selector de idioma disponible en la barra de navegación superior.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="border-top: 1px solid var(--border);">
+  <div class="footer-wrap">
+    <span class="footer-copy">© 2025 CommitQuest — Aprende Git, GDB y Valgrind</span>
+    <div class="footer-links">
+      <a href="#" class="footer-link">GitHub</a>
+      <a href="#" class="footer-link">Privacidad</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

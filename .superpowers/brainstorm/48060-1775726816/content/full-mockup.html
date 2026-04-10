@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CommitQuest — Mockup Rediseño</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: #ffffff;
+    color: #0f172a;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── TOKENS ── */
+  :root {
+    --violet: #7c3aed;
+    --violet-light: #f5f3ff;
+    --violet-mid: #ede9fe;
+    --slate: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --bg-warm: #faf9f7;
+    --bg-dark: #0f172a;
+    --mono: 'JetBrains Mono', monospace;
+    --radius: 10px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 60px;
+    border-bottom: 1px solid var(--border);
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--slate);
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+  .logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--violet); }
+  .nav-links { display: flex; align-items: center; gap: 24px; }
+  .nav-link { font-size: 13px; color: var(--muted); text-decoration: none; font-weight: 500; }
+  .nav-link:hover { color: var(--slate); }
+  .nav-cta {
+    background: var(--violet);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 16px;
+    border-radius: 7px;
+    text-decoration: none;
+    transition: opacity .15s;
+  }
+  .nav-cta:hover { opacity: .88; }
+  .nav-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #94a3b8;
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    padding: 3px 8px;
+    border-radius: 5px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--bg-warm);
+    padding: 72px 40px 64px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--violet);
+    margin-bottom: 20px;
+  }
+  .hero-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--violet); }
+  .hero h1 {
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+    color: var(--slate);
+    max-width: 620px;
+    margin-bottom: 20px;
+  }
+  .hero h1 span { color: var(--violet); }
+  .hero-sub {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.65;
+    max-width: 480px;
+    margin-bottom: 32px;
+  }
+  .hero-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--violet);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 11px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: opacity .15s;
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+  .btn-primary:hover { opacity: .88; }
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    color: var(--slate);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: background .15s;
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+  .btn-outline:hover { background: #f8fafc; }
+
+  /* ── TERMINAL SNIPPET (hero accent) ── */
+  .hero-terminal-wrap {
+    margin-top: 48px;
+    background: var(--bg-dark);
+    border-radius: 12px;
+    padding: 20px 24px;
+    max-width: 480px;
+    border: 1px solid #1e293b;
+  }
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .terminal-bar-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .terminal-bar-label { font-family: var(--mono); font-size: 11px; color: #475569; margin-left: 8px; }
+  .terminal-line { font-family: var(--mono); font-size: 12.5px; line-height: 2; }
+  .t-prompt { color: #475569; }
+  .t-cmd { color: #e2e8f0; }
+  .t-str { color: #fbbf24; }
+  .t-ok { color: #4ade80; }
+  .t-muted { color: #475569; }
+
+  /* ── SECTION ── */
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 64px 40px;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--violet);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 700;
+    color: var(--slate);
+    letter-spacing: -0.025em;
+    margin-bottom: 8px;
+  }
+  .section-sub {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 500px;
+    margin-bottom: 40px;
+  }
+
+  /* ── GUIDE CARDS ── */
+  .guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .guide-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow .15s, transform .15s;
+    cursor: pointer;
+  }
+  .guide-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,.07);
+    transform: translateY(-2px);
+  }
+  .guide-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .guide-icon {
+    width: 38px; height: 38px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .guide-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: #94a3b8;
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    padding: 3px 7px;
+    border-radius: 5px;
+    white-space: nowrap;
+  }
+  .guide-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--slate);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .guide-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 14px;
+  }
+  .guide-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .guide-tag {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 5px;
+  }
+  .guide-arrow { font-size: 14px; }
+
+  /* card color themes */
+  .card-violet .guide-icon { background: var(--violet-light); }
+  .card-violet .guide-arrow { color: var(--violet); }
+  .card-violet .guide-tag { background: var(--violet-light); color: #5b21b6; }
+
+  .card-sky .guide-icon { background: #eff6ff; }
+  .card-sky .guide-arrow { color: #2563eb; }
+  .card-sky .guide-tag { background: #eff6ff; color: #1d4ed8; }
+
+  .card-green .guide-icon { background: #f0fdf4; }
+  .card-green .guide-arrow { color: #16a34a; }
+  .card-green .guide-tag { background: #f0fdf4; color: #15803d; }
+
+  .card-amber .guide-icon { background: #fffbeb; }
+  .card-amber .guide-arrow { color: #d97706; }
+  .card-amber .guide-tag { background: #fffbeb; color: #b45309; }
+
+  /* ── PLAYGROUND STRIP ── */
+  .strip {
+    background: var(--bg-dark);
+    border-radius: 14px;
+    padding: 32px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto 64px;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .strip-left {}
+  .strip-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #4ade80;
+    margin-bottom: 8px;
+  }
+  .strip-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #f1f5f9;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .strip-sub {
+    font-size: 13px;
+    color: #64748b;
+  }
+  .strip-terminal {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 14px 18px;
+    line-height: 1.9;
+    min-width: 260px;
+  }
+  .btn-light {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    color: var(--slate);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 18px;
+    border-radius: 7px;
+    text-decoration: none;
+    margin-top: 20px;
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+
+  /* ── FAQ ── */
+  .faq-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; max-width: 680px; }
+  .faq-item { padding: 18px 20px; border-bottom: 1px solid var(--border); }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q { font-size: 14px; font-weight: 600; color: var(--slate); display: flex; align-items: center; justify-content: space-between; }
+  .faq-a { font-size: 13px; color: var(--muted); line-height: 1.65; margin-top: 8px; }
+  .faq-plus { color: var(--muted); font-size: 18px; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .footer-copy { font-size: 12px; color: var(--muted); }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-link { font-size: 12px; color: var(--muted); text-decoration: none; }
+
+  /* ── ANNOTATION LAYER ── */
+  .annotation {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: #7c3aed;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    font-family: 'DM Sans', system-ui;
+    padding: 8px 16px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  .annotation strong { font-weight: 700; }
+  .annotation span { opacity: .8; }
+  body { padding-top: 36px; }
+</style>
+</head>
+<body>
+
+<!-- Annotation bar -->
+<div class="annotation">
+  <strong>Mockup rediseño CommitQuest</strong>
+  <span>· DM Sans + JetBrains Mono · Sin gradients · C + toques A ·</span>
+  <span>Scroll para ver todo</span>
+</div>
+
+<!-- Nav -->
+<nav>
+  <a href="#" class="logo">
+    <span class="logo-dot"></span>
+    commitquest
+  </a>
+  <div class="nav-links">
+    <span class="nav-badge">git init</span>
+    <a href="#" class="nav-link">Guías</a>
+    <a href="#" class="nav-link">Playground</a>
+    <a href="#" class="nav-link">GDB</a>
+    <a href="#" class="nav-cta">Empezar →</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-eyebrow">
+    <span class="hero-eyebrow-dot"></span>
+    Aprende Git jugando
+  </div>
+  <h1>
+    De cero a<br>
+    <span>git workflow</span><br>
+    en horas.
+  </h1>
+  <p class="hero-sub">
+    Visualiza commits, ramas y merges en tiempo real.
+    Practica en un entorno seguro con desafíos guiados
+    y herramientas reales como GDB y Valgrind.
+  </p>
+  <div class="hero-actions">
+    <a href="#" class="btn-primary">▶ Primer desafío</a>
+    <a href="#" class="btn-outline">Ver el playground →</a>
+  </div>
+
+  <!-- Terminal accent (toque A) -->
+  <div class="hero-terminal-wrap">
+    <div class="terminal-bar">
+      <div class="terminal-bar-dot" style="background:#ef4444"></div>
+      <div class="terminal-bar-dot" style="background:#f59e0b"></div>
+      <div class="terminal-bar-dot" style="background:#22c55e"></div>
+      <span class="terminal-bar-label">commitquest — terminal</span>
+    </div>
+    <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">git init</span></div>
+    <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">git commit -m </span><span class="t-str">"feat: mi primer commit"</span></div>
+    <div class="terminal-line"><span class="t-ok">✓</span> <span class="t-muted">1 file changed, +14 lines — HEAD → main</span></div>
+    <div class="terminal-line"><span class="t-prompt">$</span> <span style="color:#94a3b8; font-family:var(--mono);">_</span></div>
+  </div>
+</div>
+
+<!-- Guías destacadas -->
+<div class="section">
+  <div class="section-label">Guías interactivas</div>
+  <div class="section-title">Aprende haciendo, no leyendo</div>
+  <p class="section-sub">Cada guía es un entorno completo: visualizador de commits, editor de código y desafíos con feedback inmediato.</p>
+
+  <div class="guides-grid">
+
+    <!-- Git Practice -->
+    <div class="guide-card card-violet">
+      <div class="guide-card-top">
+        <div class="guide-icon">✦</div>
+        <span class="guide-badge">git practice</span>
+      </div>
+      <div class="guide-title">Git Practice Game</div>
+      <div class="guide-desc">Practica los comandos esenciales de Git con ejercicios progresivos y feedback visual en cada paso.</div>
+      <div class="guide-footer">
+        <span class="guide-tag">Básico</span>
+        <span class="guide-arrow">→</span>
+      </div>
+    </div>
+
+    <!-- Branching -->
+    <div class="guide-card card-sky">
+      <div class="guide-card-top">
+        <div class="guide-icon">⎇</div>
+        <span class="guide-badge">git branch</span>
+      </div>
+      <div class="guide-title">Git Branch Practice</div>
+      <div class="guide-desc">Crea, fusiona y elimina ramas. Visualiza el grafo de commits mientras trabajas con múltiples líneas de desarrollo.</div>
+      <div class="guide-footer">
+        <span class="guide-tag">Intermedio</span>
+        <span class="guide-arrow">→</span>
+      </div>
+    </div>
+
+    <!-- Merge conflicts -->
+    <div class="guide-card card-amber">
+      <div class="guide-card-top">
+        <div class="guide-icon">⌥</div>
+        <span class="guide-badge">git merge</span>
+      </div>
+      <div class="guide-title">Merge Conflicts</div>
+      <div class="guide-desc">Entiende por qué ocurren los conflictos de merge y aprende a resolverlos con confianza y sin pánico.</div>
+      <div class="guide-footer">
+        <span class="guide-tag">Intermedio</span>
+        <span class="guide-arrow">→</span>
+      </div>
+    </div>
+
+    <!-- Valgrind -->
+    <div class="guide-card card-green">
+      <div class="guide-card-top">
+        <div class="guide-icon">◈</div>
+        <span class="guide-badge">valgrind</span>
+      </div>
+      <div class="guide-title">Valgrind Memory Leaks</div>
+      <div class="guide-desc">Detecta y corrige fugas de memoria en C/C++ usando Valgrind con un visualizador interactivo del heap.</div>
+      <div class="guide-footer">
+        <span class="guide-tag">Avanzado</span>
+        <span class="guide-arrow">→</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Playground strip (toque A — dark) -->
+<div style="padding: 0 40px;">
+  <div class="strip">
+    <div class="strip-left">
+      <div class="strip-eyebrow">$ git playground</div>
+      <div class="strip-title">El playground siempre está listo</div>
+      <div class="strip-sub">Editor + visualizador de commits + terminal integrada.<br>Sin configuración, sin instalaciones.</div>
+      <a href="#" class="btn-light">Abrir playground →</a>
+    </div>
+    <div class="strip-terminal">
+      <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">git branch feature/login</span></div>
+      <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">git checkout feature/login</span></div>
+      <div class="terminal-line"><span class="t-ok">✓</span> <span class="t-muted">Switched to branch 'feature/login'</span></div>
+      <div class="terminal-line"><span class="t-prompt">$</span> <span style="color:#94a3b8; font-family:var(--mono);">_</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="section" style="padding-top: 0;">
+  <div class="section-label">Preguntas frecuentes</div>
+  <div class="section-title">¿Tienes dudas?</div>
+  <p class="section-sub" style="margin-bottom: 28px;">Lo que nos preguntan más sobre la plataforma.</p>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">¿Necesito instalar Git para usar esto? <span class="faq-plus">+</span></div>
+      <div class="faq-a">No. Todo funciona en el navegador. El playground simula un repositorio real con comandos idénticos a los de Git.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Para qué nivel está pensado? <span class="faq-plus">+</span></div>
+      <div class="faq-a">Desde cero absoluto hasta intermedio. Los módulos de GDB y Valgrind son más avanzados (C/C++).</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Funciona en móvil? <span class="faq-plus">+</span></div>
+      <div class="faq-a">Sí, aunque la experiencia completa del editor es mejor en escritorio.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Está en inglés y español? <span class="faq-plus">+</span></div>
+      <div class="faq-a">Sí. El selector de idioma está en la barra de navegación superior.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-copy">© 2025 CommitQuest — Aprende Git, GDB y Valgrind</div>
+  <div class="footer-links">
+    <a href="#" class="footer-link">GitHub</a>
+    <a href="#" class="footer-link">Privacidad</a>
+  </div>
+</footer>
+
+</body>
+</html>
