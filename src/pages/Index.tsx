@@ -19,18 +19,17 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Info, Sparkles, Play, Plus, ArrowDownUp, Upload, DownloadCloud, GitBranch as GitBranchIcon, GitMerge as GitMergeIcon, GitCommit as GitCommitIcon, Terminal as TerminalIcon, BookOpen, HelpCircle, CheckCircle2, ArrowUpRight } from "lucide-react";
+import { Info, Play, Plus, ArrowDownUp, Upload, DownloadCloud, GitBranch as GitBranchIcon, GitMerge as GitMergeIcon, GitCommit as GitCommitIcon, Terminal as TerminalIcon, BookOpen, HelpCircle, CheckCircle2 } from "lucide-react";
 
 import { useTranslation } from "react-i18next";
 import "../i18n"; // Importamos la configuración de i18n
 const GitExercises = lazy(() => import("@/components/GitExercises"));
-import { ThemeToggle } from "@/components/ThemeToggle";
 const ConflictResolver = lazy(() => import("@/components/ConflictResolver"));
 import { Link } from "react-router-dom";
 import { Bug, Shield } from "lucide-react";
 
-import LanguageSelector from "@/components/LanguageSelector";
 import { DeferUntilAfterPaint } from "@/components/DeferUntilAfterPaint";
+import AppNav from "@/components/AppNav";
 import SeoHead from "@/components/SeoHead";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 
@@ -88,7 +87,7 @@ const GitGame: React.FC = () => {
     return () => cancelAnimationFrame(id);
   }, []);
   const { repository, workingChanges, selectedCommitId, stagedChanges, hasPendingConflict } = useGitStore();
-  const { isGdbEnabled, isValgrindEnabled, setGdbEnabled, setValgrindEnabled } = useAdminStore();
+  const { setGdbEnabled, setValgrindEnabled } = useAdminStore();
 
   // Always enabled; no remote fetch needed
   useEffect(() => {
@@ -99,10 +98,6 @@ const GitGame: React.FC = () => {
   const localizePath = useLocalizedPath();
   const gdbPath = localizePath("/gdb");
   const valgrindPath = localizePath("/valgrind");
-  const gitPracticeGamePath = localizePath("/git-practice-game");
-  const gitBranchPracticePath = localizePath("/git-branch-practice");
-  const gitMergeConflictsPath = localizePath("/git-merge-conflicts");
-  const valgrindMemoryLeaksPath = localizePath("/valgrind-memory-leaks");
 
   // Get the selected commit if any
   const selectedCommit = selectedCommitId
@@ -123,44 +118,6 @@ const GitGame: React.FC = () => {
 
   // Check if there's a pending merge conflict
   const conflictExists = hasPendingConflict();
-  const featuredGuides = [
-    {
-      href: gitPracticeGamePath,
-      title: t("landingPages.gitPracticeGame.heroTitle"),
-      description: t("landingPages.gitPracticeGame.heroDescription"),
-      icon: Sparkles,
-      color: "orange" as const,
-      command: "git practice",
-      difficulty: t("home.levelBasic", "Básico"),
-    },
-    {
-      href: gitBranchPracticePath,
-      title: t("landingPages.gitBranchPractice.heroTitle"),
-      description: t("landingPages.gitBranchPractice.heroDescription"),
-      icon: GitBranchIcon,
-      color: "sky" as const,
-      command: "git branch",
-      difficulty: t("home.levelIntermediate", "Intermedio"),
-    },
-    {
-      href: gitMergeConflictsPath,
-      title: t("landingPages.gitMergeConflicts.heroTitle"),
-      description: t("landingPages.gitMergeConflicts.heroDescription"),
-      icon: GitMergeIcon,
-      color: "amber" as const,
-      command: "git merge",
-      difficulty: t("home.levelIntermediate", "Intermedio"),
-    },
-    {
-      href: valgrindMemoryLeaksPath,
-      title: t("landingPages.valgrindMemoryLeaks.heroTitle"),
-      description: t("landingPages.valgrindMemoryLeaks.heroDescription"),
-      icon: Shield,
-      color: "green" as const,
-      command: "valgrind",
-      difficulty: t("home.levelAdvanced", "Avanzado"),
-    },
-  ];
 
   useGSAP(
     () => {
@@ -179,53 +136,21 @@ const GitGame: React.FC = () => {
           const { animate, desktop } = ctx.conditions as { animate: boolean; desktop: boolean };
           if (!animate || !desktop) {
             gsap.set(
-              "[data-home-header], [data-home-strip], [data-home-panel], [data-home-controls], .home-guide-card, .home-faq-item",
+              "[data-home-strip], [data-home-panel], [data-home-controls]",
               { clearProps: "all" }
             );
             return;
           }
 
-          gsap.set("[data-home-header], [data-home-strip], [data-home-panel], [data-home-controls]", {
+          gsap.set("[data-home-strip], [data-home-panel], [data-home-controls]", {
             autoAlpha: 0,
             y: 16,
           });
-          gsap.set(".home-guide-card, .home-faq-item", { autoAlpha: 0, y: 20 });
 
           const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-          tl.to("[data-home-header]", { autoAlpha: 1, y: 0, duration: 0.3 }, 0)
-            .to("[data-home-strip]", { autoAlpha: 1, y: 0, duration: 0.28 }, "<0.05")
+          tl.to("[data-home-strip]", { autoAlpha: 1, y: 0, duration: 0.28 }, 0)
             .to("[data-home-panel]", { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.07 }, "<0.1")
             .to("[data-home-controls]", { autoAlpha: 1, y: 0, duration: 0.3 }, "<0.12");
-
-          ScrollTrigger.batch(".home-guide-card", {
-            start: "top 90%",
-            once: true,
-            interval: 0.06,
-            onEnter: (batch) => {
-              gsap.to(batch, {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.45,
-                stagger: 0.05,
-                ease: "power2.out",
-              });
-            },
-          });
-
-          ScrollTrigger.batch(".home-faq-item", {
-            start: "top 92%",
-            once: true,
-            interval: 0.06,
-            onEnter: (batch) => {
-              gsap.to(batch, {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.4,
-                stagger: 0.04,
-                ease: "power2.out",
-              });
-            },
-          });
         },
         root
       );
@@ -237,16 +162,9 @@ const GitGame: React.FC = () => {
     { scope: rootRef, dependencies: [showQuickGuide, showSecondaryBanner], revertOnUpdate: true }
   );
 
-  const GUIDE_BADGE = "font-mono text-[10px] text-slate-400 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded";
-  const guideColorMap = {
-    orange: { icon: "bg-[#fff4f1]", tag: "bg-[#fff4f1] text-[#c2410c]", arrow: "text-orange-brand", badge: GUIDE_BADGE },
-    sky:    { icon: "bg-sky-50",    tag: "bg-sky-50 text-blue-700",      arrow: "text-blue-600",    badge: GUIDE_BADGE },
-    amber:  { icon: "bg-amber-50",  tag: "bg-amber-50 text-amber-700",   arrow: "text-amber-600",   badge: GUIDE_BADGE },
-    green:  { icon: "bg-green-50",  tag: "bg-green-50 text-green-700",   arrow: "text-green-600",   badge: GUIDE_BADGE },
-  } as const;
-
   return (
     <div ref={rootRef} className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
+      <AppNav variant="inner" badge="git playground" />
       <SeoHead page="home" />
       {deferWelcomeBanner && (
         <WelcomeBanner
@@ -274,116 +192,6 @@ const GitGame: React.FC = () => {
           </Button>
         </div>
       )}
-
-      <header data-home-header className="mb-4 sm:mb-6 relative">
-        <div className="absolute right-2 top-2 flex items-center gap-2 z-10">
-          <DeferUntilAfterPaint fallback={<div className="w-[88px] h-10" aria-hidden />}>
-            <ThemeToggle />
-            <LanguageSelector />
-          </DeferUntilAfterPaint>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-center pt-2 md:pt-4">
-          {/* Left: text */}
-          <div>
-            {/* Eyebrow — decorative, aria-hidden */}
-            <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-widest text-orange-brand mb-3" aria-hidden>
-              <span className="w-1.5 h-1.5 rounded-full bg-orange-brand" />
-              {t('home.eyebrow', 'Aprende Git de verdad')}
-            </div>
-
-            {/* h1 — original key preserved for SEO */}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight mb-3">
-              {t('general.title')}
-            </h1>
-
-            {/* SEO paragraphs — content unchanged */}
-            <section className="max-w-lg mb-4" aria-label={t('home.seoIntroLabel', 'App description')}>
-              <p className="text-xs text-muted-foreground leading-relaxed sm:hidden">
-                {t('home.seoIntroMobile', 'Learn Git by doing with visual commits and guided challenges.')}
-              </p>
-              <p className="hidden sm:block text-sm text-muted-foreground leading-relaxed">
-                {t('home.seoIntroShort', 'Learn Git by doing. Visualize branches and merges while running real commands. Try guided challenges or switch to the terminal anytime.')}{' '}
-                <Link to={gdbPath} className="underline hover:text-primary">GDB</Link>
-                {' '}{t('home.seoIntroAnd', 'and')}{' '}
-                <Link to={valgrindPath} className="underline hover:text-primary">Valgrind</Link>
-                {' '}{t('home.seoIntroTailShort', 'basics included.')}
-              </p>
-            </section>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-              <Button
-                variant="default"
-                size="sm"
-                className="text-xs sm:text-sm rounded-lg bg-orange-brand hover:bg-orange-brand-hover text-white shadow-sm"
-                onClick={() => window.dispatchEvent(new CustomEvent('open-challenges'))}
-                aria-label={t('home.startFirstChallenge', 'Start first challenge')}
-              >
-                <Play className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5" />
-                {t('home.startFirstChallenge', 'Start first challenge')}
-              </Button>
-              {(isGdbEnabled || isValgrindEnabled) && (
-                <div className="hidden sm:flex gap-2">
-                  {isGdbEnabled && (
-                    <Link to={gdbPath}>
-                      <Button variant="outline" size="sm" className="text-xs rounded-lg" aria-label={t('home.openGdb', 'Learn GDB debugger')}>
-                        <Bug className="h-3 w-3 mr-1" />
-                        {t('home.gdbShort', 'GDB')}
-                      </Button>
-                    </Link>
-                  )}
-                  {isValgrindEnabled && (
-                    <Link to={valgrindPath}>
-                      <Button variant="outline" size="sm" className="text-xs rounded-lg" aria-label={t('home.openValgrind', 'Learn Valgrind memory tools')}>
-                        <Shield className="h-3 w-3 mr-1" />
-                        {t('home.valgrindShort', 'Valgrind')}
-                      </Button>
-                    </Link>
-                  )}
-                </div>
-              )}
-            </div>
-
-            {/* Stats row — desktop only */}
-            <div className="hidden sm:flex gap-6 mt-5 pt-4 border-t border-border/60">
-              <div>
-                <p className="text-lg font-bold tracking-tight text-foreground">6</p>
-                <p className="text-[11px] text-muted-foreground">{t('home.statGuides', 'Guías interactivas')}</p>
-              </div>
-              <div>
-                <p className="text-lg font-bold tracking-tight text-foreground">ES · EN</p>
-                <p className="text-[11px] text-muted-foreground">{t('home.statLanguages', 'Idiomas')}</p>
-              </div>
-              <div>
-                <p className="text-lg font-bold tracking-tight text-foreground">0</p>
-                <p className="text-[11px] text-muted-foreground">{t('home.statInstalls', 'Instalaciones necesarias')}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Right: terminal snippet — hidden on mobile */}
-          <div className="hidden md:block" aria-hidden>
-            <div className="bg-[#0f172a] rounded-xl border border-[#1e293b] p-4 font-mono text-[12px] leading-[2]">
-              <div className="flex items-center gap-1.5 mb-3">
-                <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
-                <span className="w-2.5 h-2.5 rounded-full bg-green-500" />
-                <span className="text-[10px] text-slate-500 ml-2">commitquest — playground</span>
-              </div>
-              <div><span className="text-slate-500">$</span> <span className="text-slate-200">git init my-project</span></div>
-              <div><span className="text-green-400">✓</span> <span className="text-slate-500">Initialized empty Git repository</span></div>
-              <div><span className="text-slate-500">$</span> <span className="text-slate-200">git commit -m </span><span className="text-amber-400">"feat: primer commit"</span></div>
-              <div><span className="text-green-400">✓</span> <span className="text-slate-500">1 file changed — HEAD → main</span></div>
-              <div className="border-t border-[#1e293b] mt-2 pt-2 flex gap-2 flex-wrap">
-                <span className="bg-[#fff4f1] text-[#c2410c] text-[10px] px-2 py-0.5 rounded">main</span>
-                <span className="bg-green-950 text-green-400 text-[10px] px-2 py-0.5 rounded">feature/login</span>
-                <span className="bg-blue-950 text-blue-400 text-[10px] px-2 py-0.5 rounded">HEAD</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
 
       {/* Floating Action Button for Usage Guide Sheet - deferred to reduce forced reflow */}
       <DeferUntilAfterPaint fallback={<div className="fixed bottom-16 left-4 md:top-1/2 md:left-4 md:transform md:-translate-y-1/2 z-50 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full" aria-hidden />}>
@@ -629,61 +437,6 @@ const GitGame: React.FC = () => {
           <GitControls />
         </Suspense>
       </div>
-
-      <DeferUntilAfterPaint fallback={
-        <section className="mt-6 mx-auto max-w-6xl w-full min-h-[340px]" aria-hidden>
-          <div className="h-4 w-40 bg-muted/50 rounded mx-auto mb-2" />
-          <div className="h-3 w-full max-w-2xl bg-muted/50 rounded mx-auto mb-6" />
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-[140px] rounded-xl border border-border/60 bg-card/50 animate-pulse" />
-            ))}
-          </div>
-        </section>
-      }>
-      <section className="mt-6 mx-auto max-w-6xl w-full min-h-[340px]">
-        <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
-            {t("home.guidesTitle", "Popular guides")}
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            {t(
-              "home.guidesDescription",
-              "Start from the exact topic you want to practice and jump straight into the right challenge or debugging guide."
-            )}
-          </p>
-        </div>
-        <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-4 mt-6 md:mt-8">
-          {featuredGuides.map((guide) => {
-            const Icon = guide.icon;
-            const colors = guideColorMap[guide.color];
-            return (
-              <Link
-                key={guide.href}
-                to={guide.href}
-                className="home-guide-card group bg-white border border-border rounded-lg p-4 flex flex-col gap-3 hover:shadow-md focus-visible:ring-2 focus-visible:ring-orange-brand focus-visible:ring-offset-2 transition-all duration-150 hover:-translate-y-0.5"
-                aria-label={guide.title}
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${colors.icon}`}>
-                    <Icon className="w-4 h-4 text-foreground/70" aria-hidden />
-                  </div>
-                  <span className={colors.badge}>{guide.command}</span>
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-foreground leading-snug mb-1">{guide.title}</p>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{guide.description}</p>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className={`text-[11px] font-medium px-2 py-0.5 rounded ${colors.tag}`}>{guide.difficulty}</span>
-                  <span className={`text-sm ${colors.arrow} group-hover:translate-x-0.5 transition-transform`} aria-hidden>→</span>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-      </DeferUntilAfterPaint>
 
       {/* FAQ Section - deferred (below fold) to reduce forced reflow */}
       <DeferUntilAfterPaint fallback={
