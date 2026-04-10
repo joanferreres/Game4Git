@@ -156,8 +156,8 @@ const getPrimaryHref = (
     return localizePath(config.primaryAction.path);
   }
 
-  const homePath = localizePath("/");
-  return `${homePath}?exercise=${config.primaryAction.exercise}`;
+  const playgroundPath = localizePath("/playground");
+  return `${playgroundPath}?exercise=${config.primaryAction.exercise}`;
 };
 
 function asStringArray(value: unknown): string[] {

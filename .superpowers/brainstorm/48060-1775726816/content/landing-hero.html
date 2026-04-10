@@ -1,0 +1,85 @@
+<h2>¿Cómo debería sentirse la landing page?</h2>
+<p class="subtitle">La sección hero define el tono de todo. Elige la que mejor comunica "aprende Git de verdad".</p>
+
+<div class="cards">
+
+  <!-- Option A: Light hero con terminal accent -->
+  <div class="card" data-choice="light-terminal" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#ffffff; padding:0; min-height:220px; overflow:hidden;">
+      <!-- Nav -->
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 20px; border-bottom:1px solid #f1f5f9;">
+        <div style="font-family:system-ui; font-size:13px; font-weight:700; color:#0f172a; letter-spacing:-0.02em;">commit<span style="color:#7c3aed;">quest</span></div>
+        <div style="background:#7c3aed; color:white; font-size:11px; font-family:system-ui; padding:5px 12px; border-radius:6px; font-weight:500;">Empezar gratis</div>
+      </div>
+      <!-- Hero: Light + terminal snippet -->
+      <div style="padding:20px; display:flex; gap:16px; align-items:center;">
+        <div style="flex:1;">
+          <div style="font-size:11px; color:#7c3aed; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px; font-family:system-ui;">Aprende Git jugando</div>
+          <div style="font-family:system-ui; font-size:18px; font-weight:700; color:#0f172a; line-height:1.2; margin-bottom:8px; letter-spacing:-0.02em;">De cero a<br>git workflow</div>
+          <div style="font-size:11px; color:#64748b; font-family:system-ui;">Visualiza cada commit. Practica en entorno real.</div>
+        </div>
+        <div style="flex:1; background:#0f172a; border-radius:8px; padding:12px; font-family:'Fira Code',monospace; font-size:11px; line-height:1.8;">
+          <div style="color:#6b7280; margin-bottom:4px; font-size:10px;">~ git init</div>
+          <div style="color:#a3e635;">$ git add .</div>
+          <div style="color:#e2e8f0;">$ git commit -m <span style="color:#fbbf24;">"init"</span></div>
+          <div style="color:#6b7280; margin-top:4px;">✓ 1 commit creado</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Hero claro + snippet de terminal</h3>
+      <p>Fondo blanco, tipografía limpia, con un bloque de código oscuro como elemento hero. Contraste inmediato, sensación de "esto es técnico pero accesible".</p>
+    </div>
+  </div>
+
+  <!-- Option B: Split dark/light -->
+  <div class="card" data-choice="split-dark" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a; padding:0; min-height:220px; overflow:hidden;">
+      <!-- Dark hero full -->
+      <div style="padding:20px;">
+        <div style="font-family:system-ui; font-size:13px; font-weight:700; color:#f8fafc; letter-spacing:-0.02em; margin-bottom:16px;">commit<span style="color:#a78bfa;">quest</span></div>
+        <div style="font-family:'Fira Code',monospace; background:#1e293b; border:1px solid #334155; border-radius:8px; padding:12px; font-size:11px; line-height:1.8; margin-bottom:12px;">
+          <div style="color:#6b7280; font-size:10px; margin-bottom:6px;">● ● ●</div>
+          <div><span style="color:#818cf8;">const</span> <span style="color:#e2e8f0;">commit</span> <span style="color:#6b7280;">=</span> <span style="color:#fbbf24;">"tu historia"</span></div>
+          <div><span style="color:#818cf8;">git</span> <span style="color:#a3e635;">push</span> <span style="color:#e2e8f0;">origin main</span></div>
+        </div>
+        <div style="font-family:system-ui; font-size:16px; font-weight:700; color:#f8fafc; letter-spacing:-0.02em; line-height:1.3;">Domina Git.<br><span style="color:#a78bfa;">Una rama a la vez.</span></div>
+      </div>
+      <div style="background:#f8fafc; padding:10px 20px; display:flex; gap:8px;">
+        <div style="background:white; border:1px solid #e2e8f0; border-radius:6px; padding:6px 12px; font-size:11px; color:#0f172a; font-family:system-ui; font-weight:500;">📚 Guías interactivas</div>
+        <div style="background:white; border:1px solid #e2e8f0; border-radius:6px; padding:6px 12px; font-size:11px; color:#0f172a; font-family:system-ui; font-weight:500;">🎮 Práctica real</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Hero oscuro completo</h3>
+      <p>El hero es oscuro (estética terminal), luego el resto de la página es claro. Como Vercel o GitHub. Primero impacta con el lado técnico, luego muestra el contenido educativo en limpio.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Minimal editorial -->
+  <div class="card" data-choice="minimal-editorial" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#faf9f7; padding:0; min-height:220px; overflow:hidden;">
+      <div style="padding:20px;">
+        <div style="display:flex; align-items:center; gap:6px; margin-bottom:20px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#7c3aed;"></div>
+          <div style="font-family:system-ui; font-size:12px; font-weight:700; color:#0f172a;">commitquest</div>
+        </div>
+        <div style="font-family:system-ui; font-size:22px; font-weight:800; color:#0f172a; line-height:1.15; letter-spacing:-0.03em; margin-bottom:10px;">
+          Aprende Git<br>como lo hacen<br><span style="color:#7c3aed;">los pros.</span>
+        </div>
+        <div style="font-size:12px; color:#78716c; font-family:system-ui; line-height:1.6; margin-bottom:14px;">Visualiza ramas, commits y merges. Practica en un entorno seguro.</div>
+        <div style="display:flex; gap:8px;">
+          <div style="background:#7c3aed; color:white; font-size:11px; font-family:system-ui; padding:7px 16px; border-radius:6px; font-weight:600;">Empezar</div>
+          <div style="background:transparent; color:#0f172a; font-size:11px; font-family:system-ui; padding:7px 12px; border-radius:6px; font-weight:500; border:1px solid #d1d5db;">Ver demo →</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Minimalista, tipografía fuerte</h3>
+      <p>Fondo warm-white, tipografía grande y bold, sin imagen hero. El código aparece más abajo. Como Linear o Raycast. Muy limpio, muy profesional, menos "demo escolar".</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px; font-size:13px;">Recuerda: buscamos C con toques de A. ¿Cómo debe llegar el usuario a la app?</p>

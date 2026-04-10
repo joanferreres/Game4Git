@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nav en páginas internas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', system-ui, sans-serif; background: #f8f8f6; color: #0f172a; -webkit-font-smoothing: antialiased; padding: 16px; }
+.question { font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px; letter-spacing: -0.01em; }
+.sub { font-size: 13px; color: #64748b; margin-bottom: 24px; }
+
+.options { display: flex; flex-direction: column; gap: 24px; }
+.opt { background: white; border: 2px solid #e2e8f0; border-radius: 12px; overflow: hidden; cursor: pointer; transition: border-color .15s, box-shadow .15s; }
+.opt:hover { border-color: #f05133; box-shadow: 0 4px 16px rgba(240,81,51,.1); }
+.opt.selected { border-color: #f05133; box-shadow: 0 4px 20px rgba(240,81,51,.15); }
+.opt-label { padding: 12px 16px; border-top: 1px solid #f1f5f9; background: #faf9f7; }
+.opt-label h3 { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+.opt-label p { font-size: 12px; color: #64748b; line-height: 1.5; }
+
+/* shared */
+nav { display: flex; align-items: center; justify-content: space-between; padding: 0 20px; height: 52px; border-bottom: 1px solid #e2e8f0; background: white; }
+.logo { font-size: 14px; font-weight: 700; color: #0f172a; letter-spacing: -0.02em; display: flex; align-items: center; gap: 6px; }
+.logo-dot { width: 7px; height: 7px; border-radius: 50%; background: #f05133; }
+.nav-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #94a3b8; background: #f8fafc; border: 1px solid #e2e8f0; padding: 2px 7px; border-radius: 4px; }
+.nav-link { font-size: 12px; color: #64748b; text-decoration: none; font-weight: 500; }
+.nav-cta { background: #f05133; color: white; font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 6px; text-decoration: none; }
+.nav-back { font-size: 12px; color: #64748b; display: flex; align-items: center; gap: 4px; }
+
+.page-preview { padding: 16px 20px; background: #faf9f7; min-height: 120px; }
+.page-title { font-size: 18px; font-weight: 800; color: #0f172a; letter-spacing: -0.02em; margin-bottom: 4px; }
+.page-sub { font-size: 12px; color: #64748b; }
+.badge-row { display: flex; gap: 6px; margin-top: 10px; }
+.badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 2px 8px; border-radius: 4px; border: 1px solid #e2e8f0; color: #94a3b8; background: white; }
+.tab-row { display: flex; gap: 0; margin-top: 12px; border-bottom: 1px solid #e2e8f0; }
+.tab { font-size: 11px; font-weight: 500; padding: 6px 12px; color: #94a3b8; border-bottom: 2px solid transparent; }
+.tab.active { color: #f05133; border-bottom-color: #f05133; }
+</style>
+</head>
+<body>
+
+<div class="question">¿Qué nav deben tener las páginas internas?</div>
+<div class="sub">GDB, Valgrind, GitPracticeGame, etc. Elige el estilo que mejor comunica "estás dentro de la app".</div>
+
+<div class="options">
+
+  <!-- A: Full nav igual que la landing -->
+  <div class="opt" data-choice="A" onclick="toggleOpt(this)">
+    <nav>
+      <div class="logo"><span class="logo-dot"></span>commitquest</div>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <span class="nav-badge">git branch</span>
+        <a class="nav-link">Guías</a>
+        <a class="nav-link">Playground</a>
+        <a class="nav-cta">Landing →</a>
+      </div>
+    </nav>
+    <div class="page-preview">
+      <div class="page-title">Git Branch Practice</div>
+      <div class="page-sub">Aprende a crear, fusionar y eliminar ramas de Git de forma visual.</div>
+      <div class="badge-row">
+        <span class="badge">git branch</span>
+        <span class="badge">git checkout</span>
+        <span class="badge">git merge</span>
+      </div>
+      <div class="tab-row">
+        <div class="tab active">Introducción</div>
+        <div class="tab">Ejercicios</div>
+        <div class="tab">Referencia</div>
+      </div>
+    </div>
+    <div class="opt-label">
+      <h3>A — Nav completa (igual que landing)</h3>
+      <p>Logo + links a Guías/Playground + CTA a home. Consistente con la landing. El usuario siempre sabe dónde está y puede navegar a cualquier parte.</p>
+    </div>
+  </div>
+
+  <!-- B: Nav minimalista — solo logo + back -->
+  <div class="opt" data-choice="B" onclick="toggleOpt(this)">
+    <nav>
+      <div class="logo"><span class="logo-dot"></span>commitquest</div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="nav-back">← Volver a guías</span>
+        <div style="width:1px;height:16px;background:#e2e8f0;"></div>
+        <span style="font-size:11px;color:#94a3b8;font-family:'JetBrains Mono',monospace;">git branch</span>
+      </div>
+    </nav>
+    <div class="page-preview">
+      <div class="page-title">Git Branch Practice</div>
+      <div class="page-sub">Aprende a crear, fusionar y eliminar ramas de Git de forma visual.</div>
+      <div class="badge-row">
+        <span class="badge">git branch</span>
+        <span class="badge">git checkout</span>
+        <span class="badge">git merge</span>
+      </div>
+      <div class="tab-row">
+        <div class="tab active">Introducción</div>
+        <div class="tab">Ejercicios</div>
+        <div class="tab">Referencia</div>
+      </div>
+    </div>
+    <div class="opt-label">
+      <h3>B — Minimalista (logo + volver)</h3>
+      <p>Solo logo y "volver a guías". Menos distracción, más foco en el contenido educativo. Como GitHub Docs o MDN cuando estás leyendo.</p>
+    </div>
+  </div>
+
+  <!-- C: Nav con breadcrumb -->
+  <div class="opt" data-choice="C" onclick="toggleOpt(this)">
+    <nav>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="logo"><span class="logo-dot"></span>commitquest</div>
+        <span style="color:#d1d5db;font-size:14px;">/</span>
+        <span style="font-size:12px;font-weight:600;color:#f05133;">Git Branch Practice</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <a class="nav-link">Playground</a>
+        <a class="nav-cta">Inicio</a>
+      </div>
+    </nav>
+    <div class="page-preview">
+      <div class="page-title">Git Branch Practice</div>
+      <div class="page-sub">Aprende a crear, fusionar y eliminar ramas de Git de forma visual.</div>
+      <div class="badge-row">
+        <span class="badge">git branch</span>
+        <span class="badge">git checkout</span>
+        <span class="badge">git merge</span>
+      </div>
+      <div class="tab-row">
+        <div class="tab active">Introducción</div>
+        <div class="tab">Ejercicios</div>
+        <div class="tab">Referencia</div>
+      </div>
+    </div>
+    <div class="opt-label">
+      <h3>C — Breadcrumb (logo / página actual)</h3>
+      <p>El nombre de la página actual aparece en la nav como breadcrumb. Siempre sabes dónde estás. Usado por Linear, Vercel dashboard, etc.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleOpt(el) {
+  document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  if (window.__companion) window.__companion.select(el.dataset.choice, el.querySelector('h3').textContent);
+}
+</script>
+</body>
+</html>
