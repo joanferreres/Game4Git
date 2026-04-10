@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import LanguageSelector from "@/components/LanguageSelector";
@@ -9,6 +10,7 @@ interface AppNavProps {
 }
 
 const AppNav = ({ variant, badge }: AppNavProps) => {
+  const { t } = useTranslation();
   const localizePath = useLocalizedPath();
 
   return (
@@ -25,20 +27,20 @@ const AppNav = ({ variant, badge }: AppNavProps) => {
 
         {variant === "landing" ? (
           <div className="flex items-center gap-2 sm:gap-4">
-            <span className="hidden xs:inline font-mono text-[10px] text-slate-400 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded">
-              git init
+            <span className="hidden xs:inline font-mono text-[10px] text-muted-foreground bg-muted border border-border px-1.5 py-0.5 rounded">
+              {t("nav.gitInitBadge", "git init")}
             </span>
             <a
               href="#guides"
               className="hidden md:inline text-sm text-muted-foreground font-medium hover:text-foreground transition-colors"
             >
-              Guías
+              {t("nav.guides", "Guías")}
             </a>
             <Link
               to={localizePath("/playground")}
               className="hidden md:inline text-sm text-muted-foreground font-medium hover:text-foreground transition-colors"
             >
-              Playground
+              {t("nav.playground", "Playground")}
             </Link>
             <ThemeToggle />
             <LanguageSelector />
@@ -46,7 +48,7 @@ const AppNav = ({ variant, badge }: AppNavProps) => {
               href="#guides"
               className="bg-orange-brand hover:bg-orange-brand-hover text-white text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors"
             >
-              Empezar →
+              {t("nav.start", "Empezar →")}
             </a>
           </div>
         ) : (
@@ -55,12 +57,12 @@ const AppNav = ({ variant, badge }: AppNavProps) => {
               to={localizePath("/")}
               className="text-sm text-muted-foreground font-medium hover:text-foreground transition-colors flex items-center gap-1"
             >
-              ← Volver a guías
+                {t("nav.backToGuides", "← Volver a guías")}
             </Link>
             {badge && (
               <>
                 <span className="w-px h-4 bg-border" aria-hidden />
-                <span className="font-mono text-[10px] text-slate-400 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded hidden xs:inline">
+                <span className="font-mono text-[10px] text-muted-foreground bg-muted border border-border px-1.5 py-0.5 rounded hidden xs:inline">
                   {badge}
                 </span>
               </>

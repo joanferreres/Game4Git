@@ -1419,5 +1419,12 @@
       "q4": "¿Puedo aprender Git jugando?",
       "a4": "Sí, Game4Git es un juego interactivo hecho para aprender Git practicando retos, comandos reales y visualización en tiempo real."
     }
+  },
+  "nav": {
+    "guides": "Guías",
+    "playground": "Playground",
+    "start": "Empezar →",
+    "backToGuides": "← Volver a guías",
+    "gitInitBadge": "git init"
   }
 }
