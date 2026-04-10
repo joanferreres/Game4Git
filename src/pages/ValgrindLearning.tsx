@@ -3,16 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { AlertTriangle, Check, Code, Copy, Lightbulb, Shield, Zap, Terminal } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import LanguageSelector from '@/components/LanguageSelector';
-import { ThemeToggle } from '@/components/ThemeToggle';
-import { Link } from 'react-router-dom';
+import AppNav from '@/components/AppNav';
 import SeoHead from '@/components/SeoHead';
-import { useLocalizedPath } from '@/lib/localizedRoutes';
 
 const ValgrindLearning: React.FC = () => {
   const { t } = useTranslation();
-  const localizePath = useLocalizedPath();
-  const homePath = localizePath("/");
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
   const [copyError, setCopyError] = useState<string | null>(null);
 
@@ -87,29 +82,7 @@ const ValgrindLearning: React.FC = () => {
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
       <SeoHead page="valgrind" />
-      <header className="mb-4 sm:mb-6">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <Link
-            to={homePath}
-            className="inline-flex items-center justify-center text-sm text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 transition-colors sm:justify-start"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-            </svg>
-            {t('common.backToHome', 'Back to Home')}
-          </Link>
-          <div className="flex items-center justify-center gap-2 sm:justify-end">
-            <ThemeToggle />
-            <LanguageSelector />
-          </div>
-        </div>
-        <div className="mt-6 text-center sm:mt-8">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">{t('valgrind.pageTitle')}</h1>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-1 md:mt-2">
-            {t('valgrind.intro.subtitle', 'Memory error detection and profiling toolkit')}
-          </p>
-        </div>
-      </header>
+      <AppNav variant="inner" badge="valgrind" />
 
       <main className="max-w-7xl mx-auto w-full">
         {/* Tabs */}
