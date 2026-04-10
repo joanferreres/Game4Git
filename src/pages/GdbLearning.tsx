@@ -3,20 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import { Terminal, Code, AlertCircle, Lightbulb, Copy, Check, Play, Users, BookOpen } from 'lucide-react';
-import LanguageSelector from '@/components/LanguageSelector';
-import { ThemeToggle } from '@/components/ThemeToggle';
 import SeoHead from '@/components/SeoHead';
-import { useLocalizedPath } from '@/lib/localizedRoutes';
+import AppNav from "@/components/AppNav";
 const LazyRealisticGdbTerminal = lazy(() => import('@/components/RealisticGdbTerminal'));
 
 
 
 const GdbLearning: React.FC = () => {
   const { t } = useTranslation();
-  const localizePath = useLocalizedPath();
-  const homePath = localizePath("/");
   const [activeTab, setActiveTab] = useState("introduction");
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
   const [copyError, setCopyError] = useState<string | null>(null);
@@ -94,26 +89,7 @@ const GdbLearning: React.FC = () => {
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
       <SeoHead page="gdb" />
-      <header className="mb-4 sm:mb-6">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <Link
-            to={homePath}
-            className="inline-flex items-center justify-center text-blue-600 dark:text-blue-400 hover:underline font-medium sm:justify-start"
-          >
-            ← {t('common.backToHome', 'Back to Home')}
-          </Link>
-          <div className="flex items-center justify-center gap-2 sm:justify-end">
-            <ThemeToggle />
-            <LanguageSelector />
-          </div>
-        </div>
-        <div className="mt-6 text-center sm:mt-8">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">{t('gdb.pageTitle')}</h1>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-1 md:mt-2">
-            {t('gdb.subtitle')}
-          </p>
-        </div>
-      </header>
+      <AppNav variant="inner" badge="gdb" />
 
       <main className="max-w-7xl mx-auto w-full">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
