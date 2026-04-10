@@ -522,12 +522,6 @@ const Landing: React.FC = () => {
             >
               GitHub
             </a>
-            <Link
-              to={localizePath("/")}
-              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Privacidad
-            </Link>
           </div>
         </div>
       </footer>
