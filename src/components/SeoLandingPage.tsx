@@ -1,7 +1,4 @@
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useLayoutEffect, useRef } from "react";
+import { useMemo, useRef } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -27,9 +24,8 @@ import {
   Zap,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export type LandingPageKey =
   | "gitPracticeGame"
@@ -281,97 +277,45 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
     { span: "md:col-span-4", i: 1 },
     { span: "md:col-span-4", i: 2 },
   ] as const;
-
-  useGSAP(
-    () => {
-      const root = rootRef.current;
-      if (!root) {
-        return;
-      }
-
-      const mm = gsap.matchMedia();
-
-      const landingTargets = "[data-landing-header], [data-landing-hero-chunk], [data-landing-reveal]";
-
-      /*
-        Dos queries mutuamente excluyentes (ancho + movimiento) para que el revert de GSAP
-        no deje autoAlpha/opacity colgados al pasar de desktop a móvil.
-      */
-      mm.add("(max-width: 639px), (prefers-reduced-motion: reduce)", () => {
-        gsap.set(landingTargets, { clearProps: "all" });
-      }, root);
-
-      mm.add("(min-width: 640px) and (prefers-reduced-motion: no-preference)", () => {
-        /*
-          Solo animación en Y + opacidad 1 fija: nunca ocultar el hero (evita pantalla “vacía”
-          si el timeline o matchMedia fallan o revert dejan estilos a medias).
-        */
-        gsap.set("[data-landing-header]", { opacity: 1, visibility: "visible", y: 10 });
-        gsap.set("[data-landing-hero-chunk]", { opacity: 1, visibility: "visible", y: 20 });
-        gsap.set("[data-landing-reveal]", { opacity: 1, visibility: "visible", y: 28 });
-
-        const tl = gsap.timeline({
-          defaults: { ease: "power2.out" },
-        });
-
-        tl.to("[data-landing-header]", { y: 0, duration: 0.3 }, 0);
-        tl.to(
-          "[data-landing-hero-left] [data-landing-hero-chunk]",
-          { y: 0, duration: 0.45, stagger: 0.05 },
-          "<0.05"
-        );
-        tl.to(
-          "[data-landing-hero-right] [data-landing-hero-chunk]",
-          { y: 0, duration: 0.42, stagger: 0.05 },
-          "<0.08"
-        );
-
-        ScrollTrigger.batch("[data-landing-reveal]", {
-          start: "top 92%",
-          once: true,
-          interval: 0.06,
-          onEnter: (batch) => {
-            gsap.to(batch, {
-              y: 0,
-              duration: 0.5,
-              stagger: { each: 0.04, ease: "power1.out" },
-              ease: "power2.out",
-              overwrite: "auto",
-            });
-          },
-        });
-      }, root);
-
-      return () => {
-        mm.revert();
-      };
-    },
-    { scope: rootRef, dependencies: [pageKey], revertOnUpdate: true }
-  );
-
-  // Red de seguridad: al cruzar a viewport estrecho, limpiar estilos inline de GSAP (evita contenido invisible tras encoger desde desktop).
-  useLayoutEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-
-    const clearLandingCaptureStyles = () => {
-      const nodes = root.querySelectorAll(
-        "[data-landing-header], [data-landing-hero-chunk], [data-landing-reveal]"
-      );
-      if (nodes.length === 0) return;
-      gsap.set(nodes, { clearProps: "all" });
-      ScrollTrigger.refresh();
+  const schemaData = useMemo(() => {
+    const pageUrl = `https://game4git.games${config.path}`;
+    const breadcrumb = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Game4Git",
+          item: "https://game4git.games/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: t(`landingPages.${pageKey}.heroTitle`),
+          item: pageUrl,
+        },
+      ],
     };
 
-    const mq = window.matchMedia("(max-width: 639px)");
-    const onBreakpoint = () => {
-      if (mq.matches) clearLandingCaptureStyles();
-    };
+    const faqSchema =
+      faqs.length > 0
+        ? {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((faq) => ({
+              "@type": "Question",
+              name: faq.q,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: faq.a,
+              },
+            })),
+          }
+        : null;
 
-    onBreakpoint();
-    mq.addEventListener("change", onBreakpoint);
-    return () => mq.removeEventListener("change", onBreakpoint);
-  }, [pageKey]);
+    return { breadcrumb, faqSchema };
+  }, [config.path, faqs, pageKey, t]);
 
   return (
     <div ref={rootRef} className="relative min-h-screen overflow-x-hidden bg-background">
@@ -380,6 +324,12 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
         preloadHeroImage={heroWebpSrc(HERO_IMAGES[pageKey])}
         preloadHeroImageType="image/webp"
       />
+      <Helmet prioritizeSeoTags>
+        <script type="application/ld+json">{JSON.stringify(schemaData.breadcrumb)}</script>
+        {schemaData.faqSchema ? (
+          <script type="application/ld+json">{JSON.stringify(schemaData.faqSchema)}</script>
+        ) : null}
+      </Helmet>
       <div
         className={`pointer-events-none absolute inset-x-0 -top-24 h-[36rem] bg-gradient-to-b ${config.softAccent} blur-3xl`}
       />
