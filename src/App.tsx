@@ -28,6 +28,7 @@ const GitBranchPractice = lazy(() => import("./pages/GitBranchPractice"));
 const GitMergeConflicts = lazy(() => import("./pages/GitMergeConflicts"));
 const ValgrindMemoryLeaks = lazy(() => import("./pages/ValgrindMemoryLeaks"));
 const Admin = lazy(() => import("./pages/Admin"));
+const Landing = lazy(() => import("./pages/Landing"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -86,7 +87,8 @@ const renderPage = (PageComponent: ComponentType) => (
 );
 
 const localizedPageDefinitions = [
-  { path: "/", component: Index },
+  { path: "/", component: Landing },
+  { path: "/playground", component: Index },
   { path: "/gdb", component: GdbLearning },
   { path: "/valgrind", component: ValgrindLearning },
   { path: "/git-practice-game", component: GitPracticeGame },
