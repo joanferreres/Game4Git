@@ -1143,7 +1143,10 @@
       "a3": "Oui. Les Challenges et le graphe visuel sont idéals pour enseigner les notions clés de Git.",
       "q4": "Puis-je apprendre Git en jouant?",
       "a4": "Oui, Game4Git est un jeu interactif conçu pour apprendre Git en relevant des défis réels, des commandes concrètes et des explications instantanées."
-    }
+    },
+    "playgroundStripTitle": "Pratiquez avec le playground",
+    "playgroundStripDesc": "Éditeur de code, arbre de commits et contrôles Git sur un seul écran. Sans rien configurer.",
+    "playgroundStripCta": "Ouvrir le playground"
   },
   "nav": {
     "guides": "Guides",

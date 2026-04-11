@@ -99,6 +99,57 @@ const GitGame: React.FC = () => {
   const localizePath = useLocalizedPath();
   const gdbPath = localizePath("/gdb");
   const valgrindPath = localizePath("/valgrind");
+  const gitPracticeGamePath = localizePath("/git-practice-game");
+  const gitBranchPracticePath = localizePath("/git-branch-practice");
+  const gitMergeConflictsPath = localizePath("/git-merge-conflicts");
+  const valgrindMemoryLeaksPath = localizePath("/valgrind-memory-leaks");
+
+  const GUIDE_BADGE = "font-mono text-[10px] text-muted-foreground bg-muted border border-border px-1.5 py-0.5 rounded";
+  const guideColorMap = {
+    orange: { icon: "bg-[#fff4f1] dark:bg-orange-950/50", tag: "bg-[#fff4f1] text-[#c2410c] dark:bg-orange-950/50 dark:text-orange-400", arrow: "text-orange-brand", badge: GUIDE_BADGE },
+    sky:    { icon: "bg-sky-50 dark:bg-sky-950/50",       tag: "bg-sky-50 text-blue-700 dark:bg-sky-950/50 dark:text-sky-400",           arrow: "text-blue-600 dark:text-sky-400",   badge: GUIDE_BADGE },
+    amber:  { icon: "bg-amber-50 dark:bg-amber-950/50",   tag: "bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-400",     arrow: "text-amber-600 dark:text-amber-400", badge: GUIDE_BADGE },
+    green:  { icon: "bg-green-50 dark:bg-green-950/50",   tag: "bg-green-50 text-green-700 dark:bg-green-950/50 dark:text-green-400",     arrow: "text-green-600 dark:text-green-400", badge: GUIDE_BADGE },
+  } as const;
+
+  const featuredGuides = [
+    {
+      href: gitPracticeGamePath,
+      title: t("landingPages.gitPracticeGame.heroTitle"),
+      description: t("landingPages.gitPracticeGame.heroDescription"),
+      icon: Sparkles,
+      color: "orange" as const,
+      command: "git practice",
+      difficulty: t("home.levelBasic", "Básico"),
+    },
+    {
+      href: gitBranchPracticePath,
+      title: t("landingPages.gitBranchPractice.heroTitle"),
+      description: t("landingPages.gitBranchPractice.heroDescription"),
+      icon: GitBranchIcon,
+      color: "sky" as const,
+      command: "git branch",
+      difficulty: t("home.levelIntermediate", "Intermedio"),
+    },
+    {
+      href: gitMergeConflictsPath,
+      title: t("landingPages.gitMergeConflicts.heroTitle"),
+      description: t("landingPages.gitMergeConflicts.heroDescription"),
+      icon: GitMergeIcon,
+      color: "amber" as const,
+      command: "git merge",
+      difficulty: t("home.levelIntermediate", "Intermedio"),
+    },
+    {
+      href: valgrindMemoryLeaksPath,
+      title: t("landingPages.valgrindMemoryLeaks.heroTitle"),
+      description: t("landingPages.valgrindMemoryLeaks.heroDescription"),
+      icon: Shield,
+      color: "green" as const,
+      command: "valgrind",
+      difficulty: t("home.levelAdvanced", "Avanzado"),
+    },
+  ];
 
   // Get the selected commit if any
   const selectedCommit = selectedCommitId
@@ -137,7 +188,7 @@ const GitGame: React.FC = () => {
           const { animate, desktop } = ctx.conditions as { animate: boolean; desktop: boolean };
           if (!animate || !desktop) {
             gsap.set(
-              "[data-home-strip], [data-home-panel], [data-home-controls]",
+              "[data-home-strip], [data-home-panel], [data-home-controls], .home-guide-card, .home-faq-item",
               { clearProps: "all" }
             );
             return;
@@ -147,11 +198,30 @@ const GitGame: React.FC = () => {
             autoAlpha: 0,
             y: 16,
           });
+          gsap.set(".home-guide-card, .home-faq-item", { autoAlpha: 0, y: 20 });
 
           const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
           tl.to("[data-home-strip]", { autoAlpha: 1, y: 0, duration: 0.28 }, 0)
             .to("[data-home-panel]", { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.07 }, "<0.1")
             .to("[data-home-controls]", { autoAlpha: 1, y: 0, duration: 0.3 }, "<0.12");
+
+          ScrollTrigger.batch(".home-guide-card", {
+            start: "top 90%",
+            once: true,
+            interval: 0.06,
+            onEnter: (batch) => {
+              gsap.to(batch, { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.05, ease: "power2.out" });
+            },
+          });
+
+          ScrollTrigger.batch(".home-faq-item", {
+            start: "top 92%",
+            once: true,
+            interval: 0.06,
+            onEnter: (batch) => {
+              gsap.to(batch, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.04, ease: "power2.out" });
+            },
+          });
         },
         root
       );
@@ -439,6 +509,57 @@ const GitGame: React.FC = () => {
           <GitControls />
         </Suspense>
       </div>
+
+      {/* Guide cards */}
+      <DeferUntilAfterPaint fallback={
+        <section className="mt-6 mx-auto max-w-6xl w-full min-h-[200px]" aria-hidden>
+          <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-4 mt-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-[140px] rounded-xl border border-border/60 bg-card/50 animate-pulse" />
+            ))}
+          </div>
+        </section>
+      }>
+      <section className="mt-6 mx-auto max-w-6xl w-full">
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
+            {t("home.guidesTitle", "Popular guides")}
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            {t("home.guidesDescription", "Start from the exact topic you want to practice and jump straight into the right challenge or debugging guide.")}
+          </p>
+        </div>
+        <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-4 mt-6">
+          {featuredGuides.map((guide) => {
+            const Icon = guide.icon;
+            const colors = guideColorMap[guide.color];
+            return (
+              <Link
+                key={guide.href}
+                to={guide.href}
+                className="home-guide-card group bg-card border border-border rounded-lg p-4 flex flex-col gap-3 hover:shadow-md focus-visible:ring-2 focus-visible:ring-orange-brand focus-visible:ring-offset-2 transition-all duration-150 hover:-translate-y-0.5"
+                aria-label={guide.title}
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${colors.icon}`}>
+                    <Icon className="w-4 h-4 text-foreground/70" aria-hidden />
+                  </div>
+                  <span className={colors.badge}>{guide.command}</span>
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-foreground leading-snug mb-1">{guide.title}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{guide.description}</p>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className={`text-[11px] font-medium px-2 py-0.5 rounded ${colors.tag}`}>{guide.difficulty}</span>
+                  <span className={`text-sm ${colors.arrow} group-hover:translate-x-0.5 transition-transform`} aria-hidden>→</span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+      </DeferUntilAfterPaint>
 
       {/* FAQ Section - deferred (below fold) to reduce forced reflow */}
       <DeferUntilAfterPaint fallback={

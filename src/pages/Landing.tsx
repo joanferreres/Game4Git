@@ -20,43 +20,43 @@ import { useLocalizedPath } from "@/lib/localizedRoutes";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const GUIDE_BADGE =
-  "font-mono text-[10px] text-slate-400 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded";
+  "font-mono text-[10px] text-muted-foreground bg-muted border border-border px-1.5 py-0.5 rounded";
 
 const guideColorMap = {
   orange: {
-    icon: "bg-[#fff4f1]",
-    tag: "bg-[#fff4f1] text-[#c2410c]",
+    icon: "bg-[#fff4f1] dark:bg-orange-950/50",
+    tag: "bg-[#fff4f1] text-[#c2410c] dark:bg-orange-950/50 dark:text-orange-400",
     arrow: "text-orange-brand",
     badge: GUIDE_BADGE,
   },
   sky: {
-    icon: "bg-sky-50",
-    tag: "bg-sky-50 text-blue-700",
-    arrow: "text-blue-600",
+    icon: "bg-sky-50 dark:bg-sky-950/50",
+    tag: "bg-sky-50 text-blue-700 dark:bg-sky-950/50 dark:text-sky-400",
+    arrow: "text-blue-600 dark:text-sky-400",
     badge: GUIDE_BADGE,
   },
   amber: {
-    icon: "bg-amber-50",
-    tag: "bg-amber-50 text-amber-700",
-    arrow: "text-amber-600",
+    icon: "bg-amber-50 dark:bg-amber-950/50",
+    tag: "bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-400",
+    arrow: "text-amber-600 dark:text-amber-400",
     badge: GUIDE_BADGE,
   },
   green: {
-    icon: "bg-green-50",
-    tag: "bg-green-50 text-green-700",
-    arrow: "text-green-600",
+    icon: "bg-green-50 dark:bg-green-950/50",
+    tag: "bg-green-50 text-green-700 dark:bg-green-950/50 dark:text-green-400",
+    arrow: "text-green-600 dark:text-green-400",
     badge: GUIDE_BADGE,
   },
   slate: {
-    icon: "bg-slate-50",
-    tag: "bg-slate-50 text-slate-700",
-    arrow: "text-slate-600",
+    icon: "bg-slate-100 dark:bg-slate-800/50",
+    tag: "bg-slate-100 text-slate-700 dark:bg-slate-800/50 dark:text-slate-400",
+    arrow: "text-slate-600 dark:text-slate-400",
     badge: GUIDE_BADGE,
   },
   teal: {
-    icon: "bg-teal-50",
-    tag: "bg-teal-50 text-teal-700",
-    arrow: "text-teal-600",
+    icon: "bg-teal-50 dark:bg-teal-950/50",
+    tag: "bg-teal-50 text-teal-700 dark:bg-teal-950/50 dark:text-teal-400",
+    arrow: "text-teal-600 dark:text-teal-400",
     badge: GUIDE_BADGE,
   },
 } as const;
@@ -124,22 +124,10 @@ const Landing: React.FC = () => {
   ];
 
   const faqs = [
-    {
-      q: "¿Necesito instalar Git?",
-      a: "No. Todo funciona en el navegador. Git, GDB y Valgrind están simulados para que puedas practicar sin configurar nada.",
-    },
-    {
-      q: "¿Qué nivel necesito para empezar?",
-      a: "Ninguno. Las guías de Git empiezan desde cero. Las de GDB y Valgrind requieren conocimientos básicos de C.",
-    },
-    {
-      q: "¿Está disponible en inglés?",
-      a: "Sí. Puedes cambiar el idioma con el selector de la barra de navegación. Actualmente disponible en español, inglés, catalán y francés.",
-    },
-    {
-      q: "¿Es gratis?",
-      a: "Sí, completamente gratis y sin registro. Abre una guía y empieza a practicar ahora mismo.",
-    },
+    { q: t("home.faq.q2"), a: t("home.faq.a2") },
+    { q: t("home.faq.q1"), a: t("home.faq.a1") },
+    { q: t("home.faq.q3"), a: t("home.faq.a3") },
+    { q: t("home.faq.q4"), a: t("home.faq.a4") },
   ];
 
   useGSAP(
@@ -221,7 +209,7 @@ const Landing: React.FC = () => {
       {/* Hero */}
       <section
         data-home-header
-        className="bg-[#faf9f7] border-b border-border/60"
+        className="bg-[#faf9f7] dark:bg-muted/20 border-b border-border/60"
       >
         <div className="container max-w-full px-4 sm:px-6 lg:px-8 py-12 md:py-20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center max-w-6xl mx-auto">
@@ -269,19 +257,19 @@ const Landing: React.FC = () => {
                 </p>
               </section>
               <div className="flex flex-col xs:flex-row items-start xs:items-center gap-2">
-                <a
-                  href="#guides"
-                  className="inline-flex items-center gap-1.5 bg-orange-brand hover:bg-orange-brand-hover text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
-                >
-                  Empezar gratis
-                  <ArrowRight className="w-4 h-4" aria-hidden />
-                </a>
                 <Link
                   to={localizePath("/playground")}
+                  className="inline-flex items-center gap-1.5 bg-orange-brand hover:bg-orange-brand-hover text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
+                >
+                  {t("nav.playground", "Playground")}
+                  <ArrowRight className="w-4 h-4" aria-hidden />
+                </Link>
+                <a
+                  href="#guides"
                   className="inline-flex items-center gap-1.5 border border-border text-foreground text-sm font-medium px-4 py-2.5 rounded-lg hover:bg-muted/60 transition-colors"
                 >
-                  Ver playground
-                </Link>
+                  {t("nav.guides", "Guías")}
+                </a>
               </div>
               {/* Stats row */}
               <div className="hidden sm:flex gap-6 mt-6 pt-5 border-t border-border/60">
@@ -293,7 +281,7 @@ const Landing: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-lg font-bold tracking-tight text-foreground">
-                    ES · EN
+                    4
                   </p>
                   <p className="text-[11px] text-muted-foreground">
                     {t("home.statLanguages", "Idiomas")}
@@ -315,7 +303,7 @@ const Landing: React.FC = () => {
                   <span className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
                   <span className="w-2.5 h-2.5 rounded-full bg-green-500" />
                   <span className="text-[10px] text-slate-500 ml-2">
-                    commitquest — terminal
+                    Game4Git — terminal
                   </span>
                 </div>
                 <div>
@@ -364,7 +352,7 @@ const Landing: React.FC = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-10 md:mb-12">
             <p className="text-[11px] font-semibold uppercase tracking-widest text-orange-brand mb-2">
-              Guías interactivas
+              {t("home.statGuides", "Guías interactivas")}
             </p>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground mb-3">
               {t("home.guidesTitle", "Elige tu guía")}
@@ -384,7 +372,7 @@ const Landing: React.FC = () => {
                 <Link
                   key={guide.href}
                   to={guide.href}
-                  className="home-guide-card group bg-white border border-border rounded-lg p-4 flex flex-col gap-3 hover:shadow-md focus-visible:ring-2 focus-visible:ring-orange-brand focus-visible:ring-offset-2 transition-all duration-150 hover:-translate-y-0.5"
+                  className="home-guide-card group bg-card border border-border rounded-lg p-4 flex flex-col gap-3 hover:shadow-md focus-visible:ring-2 focus-visible:ring-orange-brand focus-visible:ring-offset-2 transition-all duration-150 hover:-translate-y-0.5"
                   aria-label={guide.title}
                 >
                   <div className="flex items-start justify-between gap-2">
@@ -435,17 +423,16 @@ const Landing: React.FC = () => {
                 $ git playground --open
               </p>
               <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-3">
-                Practica con el playground
+                {t("home.playgroundStripTitle", "Practica con el playground")}
               </h2>
               <p className="text-sm text-slate-400 mb-6 leading-relaxed">
-                Editor de código, árbol de commits y controles de Git en una
-                sola pantalla. Sin configurar nada.
+                {t("home.playgroundStripDesc", "Editor de código, árbol de commits y controles de Git en una sola pantalla. Sin configurar nada.")}
               </p>
               <Link
                 to={localizePath("/playground")}
                 className="inline-flex items-center gap-2 bg-orange-brand hover:bg-orange-brand-hover text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
               >
-                Abrir playground
+                {t("home.playgroundStripCta", "Abrir playground")}
                 <ArrowRight className="w-4 h-4" aria-hidden />
               </Link>
             </div>
@@ -486,11 +473,11 @@ const Landing: React.FC = () => {
       <section className="container max-w-full px-4 sm:px-6 lg:px-8 pb-16 md:pb-20">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl font-extrabold tracking-tight text-foreground text-center mb-8">
-            Preguntas frecuentes
+            {t("home.faqTitle", "Preguntas frecuentes")}
           </h2>
           <div className="divide-y divide-border border border-border rounded-xl overflow-hidden">
             {faqs.map((faq, i) => (
-              <div key={i} className="home-faq-item p-5 bg-white">
+              <div key={i} className="home-faq-item p-5 bg-card">
                 <p className="text-sm font-semibold text-foreground mb-1.5">
                   {faq.q}
                 </p>
@@ -508,10 +495,10 @@ const Landing: React.FC = () => {
         <div className="container max-w-full px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-1.5 font-bold text-[15px] tracking-tight text-foreground">
             <span className="w-2 h-2 rounded-full bg-orange-brand" aria-hidden />
-            commitquest
+            Game4Git
           </div>
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} commitquest
+            © {new Date().getFullYear()} Game4Git
           </p>
           <div className="flex items-center gap-4">
             <a

@@ -22,7 +22,7 @@ const AppNav = ({ variant, badge }: AppNavProps) => {
           className="flex items-center gap-1.5 font-bold text-[15px] tracking-tight text-foreground shrink-0"
         >
           <span className="w-2 h-2 rounded-full bg-orange-brand" aria-hidden />
-          commitquest
+          Game4Git
         </Link>
 
         {variant === "landing" ? (
@@ -44,12 +44,12 @@ const AppNav = ({ variant, badge }: AppNavProps) => {
             </Link>
             <ThemeToggle />
             <LanguageSelector />
-            <a
-              href="#guides"
+            <Link
+              to={localizePath("/playground")}
               className="bg-orange-brand hover:bg-orange-brand-hover text-white text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors"
             >
-              {t("nav.start", "Empezar →")}
-            </a>
+              {t("nav.playground", "Playground")}
+            </Link>
           </div>
         ) : (
           <div className="flex items-center gap-3">

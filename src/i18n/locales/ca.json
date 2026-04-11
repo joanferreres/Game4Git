@@ -1252,7 +1252,10 @@
       "a3": "Sí. Els Challenges i el gràfic visual són ideals per ensenyar Git.",
       "q4": "Puc aprendre Git jugant?",
       "a4": "Sí, Game4Git és un joc interactiu dissenyat per aprendre Git jugant amb desafiaments, comandes reals i feedback instantani."
-    }
+    },
+    "playgroundStripTitle": "Practica amb el playground",
+    "playgroundStripDesc": "Editor de codi, arbre de commits i controls de Git en una sola pantalla. Sense configurar res.",
+    "playgroundStripCta": "Obrir playground"
   },
   "nav": {
     "guides": "Guies",
