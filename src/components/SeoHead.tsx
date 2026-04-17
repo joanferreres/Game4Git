@@ -25,8 +25,30 @@ const OG_LOCALE_MAP: Record<SupportedLocale, string> = {
 };
 
 const SITE_NAME = "Game4Git";
-const OG_IMAGE_URL = "https://game4git.games/og-image.png";
+const SITE_URL = "https://game4git.games";
+const OG_IMAGE_URL = `${SITE_URL}/og-image.png`;
 const TWITTER_HANDLE = "@gitgame";
+
+const ORGANIZATION_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo-96.png`,
+  sameAs: [],
+};
+
+const WEBSITE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${SITE_URL}/playground?q={search_term_string}`,
+    "query-input": "required name=search_term_string",
+  },
+};
 
 interface SeoHeadProps {
   page: SeoPageKey;
@@ -44,6 +66,16 @@ export const SeoHead = ({ page, preloadHeroImage, preloadHeroImageType }: SeoHea
   const alternateLinks = getAlternateLinks(location.pathname);
   const title = t(`seo.${page}.title`);
   const description = t(`seo.${page}.description`);
+
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: title,
+    description,
+    url: canonicalUrl,
+    inLanguage: locale,
+    isPartOf: { "@id": SITE_URL },
+  };
 
   return (
     <Helmet prioritizeSeoTags>
@@ -81,6 +113,13 @@ export const SeoHead = ({ page, preloadHeroImage, preloadHeroImageType }: SeoHea
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={OG_IMAGE_URL} />
       <meta name="twitter:site" content={TWITTER_HANDLE} />
+      {page === "home" && (
+        <>
+          <script type="application/ld+json">{JSON.stringify(ORGANIZATION_SCHEMA)}</script>
+          <script type="application/ld+json">{JSON.stringify(WEBSITE_SCHEMA)}</script>
+        </>
+      )}
+      <script type="application/ld+json">{JSON.stringify(webPageSchema)}</script>
     </Helmet>
   );
 };

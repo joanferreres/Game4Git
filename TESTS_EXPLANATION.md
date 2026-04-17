@@ -18,7 +18,7 @@ El script `test-build.js` realiza las siguientes validaciones:
 
 5. **Valida el contenido HTML**: Lee el contenido de `index.html` y verifica la presencia de elementos críticos:
    - **Título**: Verifica que existe una etiqueta `<title>`
-   - **Div raíz**: Verifica que existe el div con id "root" (`<div id="root"></div>`)
+   - **Div raíz**: Verifica que existe el div con id `root`, aunque contenga HTML prerenderizado dentro
    - **Link CSS**: Verifica que hay una referencia a hojas de estilo
    - **Script JS**: Verifica que hay referencias a scripts JavaScript
    - **Content Security Policy**: Verifica que el HTML incluye políticas de seguridad de contenido

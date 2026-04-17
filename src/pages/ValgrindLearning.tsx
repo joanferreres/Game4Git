@@ -82,7 +82,7 @@ const ValgrindLearning: React.FC = () => {
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
       <SeoHead page="valgrind" />
-      <AppNav variant="inner" badge="valgrind" />
+      <AppNav variant="inner" badge="valgrind" showPlaygroundCta />
 
       <main className="max-w-7xl mx-auto w-full">
         {/* Tabs */}

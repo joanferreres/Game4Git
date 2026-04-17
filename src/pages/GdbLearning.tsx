@@ -89,7 +89,7 @@ const GdbLearning: React.FC = () => {
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
       <SeoHead page="gdb" />
-      <AppNav variant="inner" badge="gdb" />
+      <AppNav variant="inner" badge="gdb" showPlaygroundCta />
 
       <main className="max-w-7xl mx-auto w-full">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">

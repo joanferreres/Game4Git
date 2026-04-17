@@ -368,7 +368,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
         preloadHeroImage={heroWebpSrc(HERO_IMAGES[pageKey])}
         preloadHeroImageType="image/webp"
       />
-      <AppNav variant="inner" badge={config.badge} />
+      <AppNav variant="inner" badge={config.badge} showPlaygroundCta />
       <div className="container relative max-w-full px-4 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-5 md:px-8">
         <main className="mx-auto max-w-6xl space-y-16 sm:space-y-20 md:space-y-24">
           {/* Hero */}

@@ -207,6 +207,7 @@ const Landing: React.FC = () => {
       <AppNav variant="landing" />
 
       {/* Hero */}
+      <main id="main-content">
       <section
         data-home-header
         className="bg-[#faf9f7] dark:bg-muted/20 border-b border-border/60"
@@ -512,6 +513,7 @@ const Landing: React.FC = () => {
           </div>
         </div>
       </footer>
+      </main>
     </div>
   );
 };
