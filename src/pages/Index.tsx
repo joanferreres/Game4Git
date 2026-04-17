@@ -19,18 +19,18 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Info, Sparkles, Play, Plus, ArrowDownUp, Upload, DownloadCloud, GitBranch as GitBranchIcon, GitMerge as GitMergeIcon, GitCommit as GitCommitIcon, Terminal as TerminalIcon, BookOpen, HelpCircle, CheckCircle2, ArrowUpRight } from "lucide-react";
+import { Info, Play, Plus, ArrowDownUp, Upload, DownloadCloud, GitBranch as GitBranchIcon, GitMerge as GitMergeIcon, GitCommit as GitCommitIcon, Terminal as TerminalIcon, BookOpen, HelpCircle, CheckCircle2, Sparkles } from "lucide-react";
+import LanguageSelector from "@/components/LanguageSelector";
 
 import { useTranslation } from "react-i18next";
 import "../i18n"; // Importamos la configuración de i18n
 const GitExercises = lazy(() => import("@/components/GitExercises"));
-import { ThemeToggle } from "@/components/ThemeToggle";
 const ConflictResolver = lazy(() => import("@/components/ConflictResolver"));
 import { Link } from "react-router-dom";
 import { Bug, Shield } from "lucide-react";
 
-import LanguageSelector from "@/components/LanguageSelector";
 import { DeferUntilAfterPaint } from "@/components/DeferUntilAfterPaint";
+import AppNav from "@/components/AppNav";
 import SeoHead from "@/components/SeoHead";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 
@@ -88,7 +88,7 @@ const GitGame: React.FC = () => {
     return () => cancelAnimationFrame(id);
   }, []);
   const { repository, workingChanges, selectedCommitId, stagedChanges, hasPendingConflict } = useGitStore();
-  const { isGdbEnabled, isValgrindEnabled, setGdbEnabled, setValgrindEnabled } = useAdminStore();
+  const { setGdbEnabled, setValgrindEnabled } = useAdminStore();
 
   // Always enabled; no remote fetch needed
   useEffect(() => {
@@ -103,6 +103,53 @@ const GitGame: React.FC = () => {
   const gitBranchPracticePath = localizePath("/git-branch-practice");
   const gitMergeConflictsPath = localizePath("/git-merge-conflicts");
   const valgrindMemoryLeaksPath = localizePath("/valgrind-memory-leaks");
+
+  const GUIDE_BADGE = "font-mono text-[10px] text-muted-foreground bg-muted border border-border px-1.5 py-0.5 rounded";
+  const guideColorMap = {
+    orange: { icon: "bg-[#fff4f1] dark:bg-orange-950/50", tag: "bg-[#fff4f1] text-[#c2410c] dark:bg-orange-950/50 dark:text-orange-400", arrow: "text-orange-brand", badge: GUIDE_BADGE },
+    sky:    { icon: "bg-sky-50 dark:bg-sky-950/50",       tag: "bg-sky-50 text-blue-700 dark:bg-sky-950/50 dark:text-sky-400",           arrow: "text-blue-600 dark:text-sky-400",   badge: GUIDE_BADGE },
+    amber:  { icon: "bg-amber-50 dark:bg-amber-950/50",   tag: "bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-400",     arrow: "text-amber-600 dark:text-amber-400", badge: GUIDE_BADGE },
+    green:  { icon: "bg-green-50 dark:bg-green-950/50",   tag: "bg-green-50 text-green-700 dark:bg-green-950/50 dark:text-green-400",     arrow: "text-green-600 dark:text-green-400", badge: GUIDE_BADGE },
+  } as const;
+
+  const featuredGuides = [
+    {
+      href: gitPracticeGamePath,
+      title: t("landingPages.gitPracticeGame.heroTitle"),
+      description: t("landingPages.gitPracticeGame.heroDescription"),
+      icon: Sparkles,
+      color: "orange" as const,
+      command: "git practice",
+      difficulty: t("home.levelBasic", "Básico"),
+    },
+    {
+      href: gitBranchPracticePath,
+      title: t("landingPages.gitBranchPractice.heroTitle"),
+      description: t("landingPages.gitBranchPractice.heroDescription"),
+      icon: GitBranchIcon,
+      color: "sky" as const,
+      command: "git branch",
+      difficulty: t("home.levelIntermediate", "Intermedio"),
+    },
+    {
+      href: gitMergeConflictsPath,
+      title: t("landingPages.gitMergeConflicts.heroTitle"),
+      description: t("landingPages.gitMergeConflicts.heroDescription"),
+      icon: GitMergeIcon,
+      color: "amber" as const,
+      command: "git merge",
+      difficulty: t("home.levelIntermediate", "Intermedio"),
+    },
+    {
+      href: valgrindMemoryLeaksPath,
+      title: t("landingPages.valgrindMemoryLeaks.heroTitle"),
+      description: t("landingPages.valgrindMemoryLeaks.heroDescription"),
+      icon: Shield,
+      color: "green" as const,
+      command: "valgrind",
+      difficulty: t("home.levelAdvanced", "Avanzado"),
+    },
+  ];
 
   // Get the selected commit if any
   const selectedCommit = selectedCommitId
@@ -123,36 +170,6 @@ const GitGame: React.FC = () => {
 
   // Check if there's a pending merge conflict
   const conflictExists = hasPendingConflict();
-  const featuredGuides = [
-    {
-      href: gitPracticeGamePath,
-      title: t("landingPages.gitPracticeGame.heroTitle"),
-      description: t("landingPages.gitPracticeGame.heroDescription"),
-      icon: Sparkles,
-      accent: "from-amber-500 via-orange-500 to-rose-500",
-    },
-    {
-      href: gitBranchPracticePath,
-      title: t("landingPages.gitBranchPractice.heroTitle"),
-      description: t("landingPages.gitBranchPractice.heroDescription"),
-      icon: GitBranchIcon,
-      accent: "from-sky-500 via-cyan-500 to-blue-600",
-    },
-    {
-      href: gitMergeConflictsPath,
-      title: t("landingPages.gitMergeConflicts.heroTitle"),
-      description: t("landingPages.gitMergeConflicts.heroDescription"),
-      icon: GitMergeIcon,
-      accent: "from-fuchsia-500 via-violet-500 to-purple-600",
-    },
-    {
-      href: valgrindMemoryLeaksPath,
-      title: t("landingPages.valgrindMemoryLeaks.heroTitle"),
-      description: t("landingPages.valgrindMemoryLeaks.heroDescription"),
-      icon: Shield,
-      accent: "from-emerald-500 via-teal-500 to-green-600",
-    },
-  ];
 
   useGSAP(
     () => {
@@ -171,21 +188,20 @@ const GitGame: React.FC = () => {
           const { animate, desktop } = ctx.conditions as { animate: boolean; desktop: boolean };
           if (!animate || !desktop) {
             gsap.set(
-              "[data-home-header], [data-home-strip], [data-home-panel], [data-home-controls], .home-guide-card, .home-faq-item",
+              "[data-home-strip], [data-home-panel], [data-home-controls], .home-guide-card, .home-faq-item",
               { clearProps: "all" }
             );
             return;
           }
 
-          gsap.set("[data-home-header], [data-home-strip], [data-home-panel], [data-home-controls]", {
+          gsap.set("[data-home-strip], [data-home-panel], [data-home-controls]", {
             autoAlpha: 0,
             y: 16,
           });
           gsap.set(".home-guide-card, .home-faq-item", { autoAlpha: 0, y: 20 });
 
           const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-          tl.to("[data-home-header]", { autoAlpha: 1, y: 0, duration: 0.3 }, 0)
-            .to("[data-home-strip]", { autoAlpha: 1, y: 0, duration: 0.28 }, "<0.05")
+          tl.to("[data-home-strip]", { autoAlpha: 1, y: 0, duration: 0.28 }, 0)
             .to("[data-home-panel]", { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.07 }, "<0.1")
             .to("[data-home-controls]", { autoAlpha: 1, y: 0, duration: 0.3 }, "<0.12");
 
@@ -194,13 +210,7 @@ const GitGame: React.FC = () => {
             once: true,
             interval: 0.06,
             onEnter: (batch) => {
-              gsap.to(batch, {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.45,
-                stagger: 0.05,
-                ease: "power2.out",
-              });
+              gsap.to(batch, { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.05, ease: "power2.out" });
             },
           });
 
@@ -209,13 +219,7 @@ const GitGame: React.FC = () => {
             once: true,
             interval: 0.06,
             onEnter: (batch) => {
-              gsap.to(batch, {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.4,
-                stagger: 0.04,
-                ease: "power2.out",
-              });
+              gsap.to(batch, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.04, ease: "power2.out" });
             },
           });
         },
@@ -230,7 +234,9 @@ const GitGame: React.FC = () => {
   );
 
   return (
-    <div ref={rootRef} className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
+    <div ref={rootRef} className="min-h-screen flex flex-col">
+      <AppNav variant="inner" badge="git playground" centerBrand />
+      <main id="main-content" className="container max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col flex-1">
       <SeoHead page="home" />
       {deferWelcomeBanner && (
         <WelcomeBanner
@@ -250,7 +256,7 @@ const GitGame: React.FC = () => {
           <Button
             variant="default"
             size="sm"
-            className="rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg text-xs"
+            className="rounded-lg bg-orange-brand hover:bg-orange-brand-hover text-white shadow-sm text-xs"
             onClick={() => window.dispatchEvent(new CustomEvent('open-challenges'))}
           >
             <Play className="h-3.5 w-3.5 mr-1.5" />
@@ -259,84 +265,6 @@ const GitGame: React.FC = () => {
         </div>
       )}
 
-      <header data-home-header className="mb-4 sm:mb-6 relative min-h-[80px] sm:min-h-[100px]">
-        <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
-          <DeferUntilAfterPaint fallback={<div className="w-[88px] h-10" aria-hidden />}>
-            <ThemeToggle />
-            <LanguageSelector />
-          </DeferUntilAfterPaint>
-        </div>
-        <div className="text-center">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">{t('general.title')}</h1>
-          <section className="mx-auto max-w-2xl text-center mt-2 mb-3 sm:mb-4 px-2">
-            <p className="text-xs text-muted-foreground leading-relaxed sm:hidden">
-              {t(
-                'home.seoIntroMobile',
-                'Learn Git by doing with visual commits and guided challenges.'
-              )}
-            </p>
-            <p className="hidden sm:block text-xs sm:text-sm text-muted-foreground leading-relaxed">
-              {t(
-                'home.seoIntroShort',
-                'Learn Git by doing. Visualize branches and merges while running real commands. Try guided challenges or switch to the terminal anytime.'
-              )}
-              {" "}
-              <Link to={gdbPath} className="underline hover:text-primary">GDB</Link>
-              {" "}
-              {t('home.seoIntroAnd', 'and')}
-              {" "}
-              <Link to={valgrindPath} className="underline hover:text-primary">Valgrind</Link>
-              {" "}
-              {t('home.seoIntroTailShort', 'basics included.')}
-            </p>
-          </section>
-
-          {/* Primary CTA: Start first challenge */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mt-3 md:mt-4">
-            <Button
-              variant="default"
-              size="sm"
-              className="text-xs sm:text-sm rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg ring-2 ring-amber-300/50 hover:shadow-xl hover:scale-105 transition-all"
-              onClick={() => window.dispatchEvent(new CustomEvent('open-challenges'))}
-              aria-label={t('home.startFirstChallenge', 'Start first challenge')}
-            >
-              <Play className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5" />
-              {t('home.startFirstChallenge', 'Start first challenge')}
-            </Button>
-            {(isGdbEnabled || isValgrindEnabled) && (
-              <div className="hidden sm:flex gap-2">
-                {isGdbEnabled && (
-                  <Link to={gdbPath}>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="text-xs rounded-full border-blue-500/50 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/30"
-                      aria-label={t('home.openGdb', 'Learn GDB debugger')}
-                    >
-                      <Bug className="h-3 w-3 mr-1" />
-                      {t('home.gdbShort', 'GDB')}
-                    </Button>
-                  </Link>
-                )}
-                {isValgrindEnabled && (
-                  <Link to={valgrindPath}>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="text-xs rounded-full border-emerald-500/50 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30"
-                      aria-label={t('home.openValgrind', 'Learn Valgrind memory tools')}
-                    >
-                      <Shield className="h-3 w-3 mr-1" />
-                      {t('home.valgrindShort', 'Valgrind')}
-                    </Button>
-                  </Link>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      </header>
-
       {/* Floating Action Button for Usage Guide Sheet - deferred to reduce forced reflow */}
       <DeferUntilAfterPaint fallback={<div className="fixed bottom-16 left-4 md:top-1/2 md:left-4 md:transform md:-translate-y-1/2 z-50 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full" aria-hidden />}>
       <Sheet>
@@ -344,15 +272,14 @@ const GitGame: React.FC = () => {
           <Button
             variant="default"
             size="icon"
-            className="fixed bottom-16 left-4 md:top-1/2 md:left-4 md:transform md:-translate-y-1/2 z-50 rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 
-              bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-xl ring-2 ring-blue-400/40 hover:scale-105 transition-transform duration-200"
+            className="fixed bottom-16 left-4 md:top-1/2 md:left-4 md:transform md:-translate-y-1/2 z-50 rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-orange-brand hover:bg-orange-brand-hover text-white shadow-xl hover:scale-105 transition-transform duration-200"
             aria-label="Open usage guide"
           >
             <Info className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" />
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="fixed inset-0 w-screen h-screen max-w-none sm:max-w-none md:max-w-none lg:max-w-none xl:max-w-none 2xl:max-w-none p-0 flex flex-col">
-          <div className="relative bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-5 sm:p-8">
+          <div className="relative bg-sheet-dark text-white p-5 sm:p-8">
             {/* Sheet language selector next to close button */}
             <div className="absolute top-4 right-16 z-10">
               <LanguageSelector />
@@ -459,7 +386,7 @@ const GitGame: React.FC = () => {
           <Button
             variant="default"
             size="sm"
-            className="rounded-full h-7 text-xs bg-amber-500 hover:bg-amber-600"
+            className="rounded-lg h-7 text-xs bg-orange-brand hover:bg-orange-brand-hover"
             onClick={() => {
               sessionStorage.setItem('secondaryBannerDismissed', 'true');
               setShowSecondaryBanner(false);
@@ -583,49 +510,50 @@ const GitGame: React.FC = () => {
         </Suspense>
       </div>
 
+      {/* Guide cards */}
       <DeferUntilAfterPaint fallback={
-        <section className="mt-6 mx-auto max-w-6xl w-full min-h-[340px]" aria-hidden>
-          <div className="h-4 w-40 bg-muted/50 rounded mx-auto mb-2" />
-          <div className="h-3 w-full max-w-2xl bg-muted/50 rounded mx-auto mb-6" />
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <section className="mt-6 mx-auto max-w-6xl w-full min-h-[200px]" aria-hidden>
+          <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-4 mt-4">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="h-[140px] rounded-xl border border-border/60 bg-card/50 animate-pulse" />
             ))}
           </div>
         </section>
       }>
-      <section className="mt-6 mx-auto max-w-6xl w-full min-h-[340px]">
+      <section className="mt-6 mx-auto max-w-6xl w-full">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
             {t("home.guidesTitle", "Popular guides")}
           </h2>
           <p className="text-sm text-muted-foreground">
-            {t(
-              "home.guidesDescription",
-              "Start from the exact topic you want to practice and jump straight into the right challenge or debugging guide."
-            )}
+            {t("home.guidesDescription", "Start from the exact topic you want to practice and jump straight into the right challenge or debugging guide.")}
           </p>
         </div>
-        <div className="mt-4 grid gap-2 sm:grid-cols-2">
+        <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-4 mt-6">
           {featuredGuides.map((guide) => {
             const Icon = guide.icon;
-
+            const colors = guideColorMap[guide.color];
             return (
               <Link
                 key={guide.href}
                 to={guide.href}
-                className="home-guide-card group flex items-center gap-3 rounded-xl border border-border/50 bg-gradient-to-br from-background/95 to-muted/20 p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                className="home-guide-card group bg-card border border-border rounded-lg p-4 flex flex-col gap-3 hover:shadow-md focus-visible:ring-2 focus-visible:ring-orange-brand focus-visible:ring-offset-2 transition-all duration-150 hover:-translate-y-0.5"
+                aria-label={guide.title}
               >
-                <div
-                  className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${guide.accent} text-white shadow-md transition-transform group-hover:scale-105`}
-                >
-                  <Icon className="h-4 w-4" />
+                <div className="flex items-start justify-between gap-2">
+                  <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${colors.icon}`}>
+                    <Icon className="w-4 h-4 text-foreground/70" aria-hidden />
+                  </div>
+                  <span className={colors.badge}>{guide.command}</span>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-semibold leading-snug text-foreground">{guide.title}</p>
-                  <p className="truncate text-xs leading-relaxed text-muted-foreground">{guide.description}</p>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-foreground leading-snug mb-1">{guide.title}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{guide.description}</p>
                 </div>
-                <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground/40 opacity-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100" />
+                <div className="flex items-center justify-between">
+                  <span className={`text-[11px] font-medium px-2 py-0.5 rounded ${colors.tag}`}>{guide.difficulty}</span>
+                  <span className={`text-sm ${colors.arrow} group-hover:translate-x-0.5 transition-transform`} aria-hidden>→</span>
+                </div>
               </Link>
             );
           })}
@@ -741,6 +669,7 @@ const GitGame: React.FC = () => {
           <p className="text-xs">Built with React, TypeScript and TailwindCSS. Learn Git concepts visually.</p>
         </div>
       </footer>
+      </main>
     </div>
   );
 };

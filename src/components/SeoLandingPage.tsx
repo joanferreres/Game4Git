@@ -1,17 +1,18 @@
-import { useMemo, useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLayoutEffect, useRef } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import LanguageSelector from "@/components/LanguageSelector";
+import AppNav from "@/components/AppNav";
 import SeoHead from "@/components/SeoHead";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 import { cn } from "@/lib/utils";
 import {
   ArrowRight,
   ArrowUpRight,
-  BookOpen,
   CheckCircle2,
   Cpu,
   GitBranch,
@@ -24,8 +25,9 @@ import {
   Zap,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export type LandingPageKey =
   | "gitPracticeGame"
@@ -47,10 +49,8 @@ type ExerciseId = "feature-branch" | "merge-conflicts";
 interface LandingPageConfig {
   path: string;
   seoKey: LandingPageKey;
-  accent: string;
-  accentSolid: string;
-  softAccent: string;
-  surfaceAccent: string;
+  badge: string;
+  color: "orange" | "sky" | "amber" | "green";
   icon: typeof Sparkles;
   primaryAction: { type: "exercise"; exercise: ExerciseId } | { type: "path"; path: string };
   secondaryPath: string;
@@ -61,10 +61,8 @@ const PAGE_CONFIG: Record<LandingPageKey, LandingPageConfig> = {
   gitPracticeGame: {
     path: "/git-practice-game",
     seoKey: "gitPracticeGame",
-    accent: "from-amber-500 via-orange-500 to-rose-500",
-    accentSolid: "text-amber-600 dark:text-amber-400",
-    softAccent: "from-amber-500/25 via-orange-500/10 to-rose-500/25",
-    surfaceAccent: "from-amber-500/12 via-transparent to-rose-500/12",
+    badge: "git practice",
+    color: "orange",
     icon: Sparkles,
     primaryAction: { type: "exercise", exercise: "feature-branch" },
     secondaryPath: "/",
@@ -73,10 +71,8 @@ const PAGE_CONFIG: Record<LandingPageKey, LandingPageConfig> = {
   gitBranchPractice: {
     path: "/git-branch-practice",
     seoKey: "gitBranchPractice",
-    accent: "from-sky-500 via-cyan-500 to-blue-600",
-    accentSolid: "text-sky-600 dark:text-sky-400",
-    softAccent: "from-sky-500/25 via-cyan-500/10 to-blue-600/25",
-    surfaceAccent: "from-sky-500/12 via-transparent to-blue-600/12",
+    badge: "git branch",
+    color: "sky",
     icon: GitBranch,
     primaryAction: { type: "exercise", exercise: "feature-branch" },
     secondaryPath: "/",
@@ -85,10 +81,8 @@ const PAGE_CONFIG: Record<LandingPageKey, LandingPageConfig> = {
   gitMergeConflicts: {
     path: "/git-merge-conflicts",
     seoKey: "gitMergeConflicts",
-    accent: "from-fuchsia-500 via-violet-500 to-purple-600",
-    accentSolid: "text-fuchsia-600 dark:text-fuchsia-400",
-    softAccent: "from-fuchsia-500/25 via-violet-500/10 to-purple-600/25",
-    surfaceAccent: "from-fuchsia-500/12 via-transparent to-purple-600/12",
+    badge: "git merge",
+    color: "amber",
     icon: Swords,
     primaryAction: { type: "exercise", exercise: "merge-conflicts" },
     secondaryPath: "/",
@@ -97,10 +91,8 @@ const PAGE_CONFIG: Record<LandingPageKey, LandingPageConfig> = {
   valgrindMemoryLeaks: {
     path: "/valgrind-memory-leaks",
     seoKey: "valgrindMemoryLeaks",
-    accent: "from-emerald-500 via-teal-500 to-green-600",
-    accentSolid: "text-emerald-600 dark:text-emerald-400",
-    softAccent: "from-emerald-500/25 via-teal-500/10 to-green-600/25",
-    surfaceAccent: "from-emerald-500/12 via-transparent to-green-600/12",
+    badge: "valgrind",
+    color: "green",
     icon: ShieldAlert,
     primaryAction: { type: "path", path: "/valgrind" },
     secondaryPath: "/",
@@ -121,13 +113,13 @@ const PAGE_PATHS: Record<RelatedPageTarget, string> = {
 type RelatedMeta = { icon: typeof Sparkles; accent: string };
 
 const RELATED_META: Record<RelatedPageTarget, RelatedMeta> = {
-  home:                { icon: Home,        accent: "from-slate-500 to-slate-700" },
-  gdb:                 { icon: Terminal,    accent: "from-slate-500 via-zinc-600 to-stone-600" },
-  valgrind:            { icon: Cpu,         accent: "from-cyan-500 via-teal-500 to-sky-600" },
-  gitPracticeGame:     { icon: Sparkles,    accent: "from-amber-500 via-orange-500 to-rose-500" },
-  gitBranchPractice:   { icon: GitBranch,   accent: "from-sky-500 via-cyan-500 to-blue-600" },
-  gitMergeConflicts:   { icon: Swords,      accent: "from-fuchsia-500 via-violet-500 to-purple-600" },
-  valgrindMemoryLeaks: { icon: ShieldAlert, accent: "from-emerald-500 via-teal-500 to-green-600" },
+  home:                { icon: Home,        accent: "bg-slate-100 text-slate-700" },
+  gdb:                 { icon: Terminal,    accent: "bg-slate-100 text-slate-700" },
+  valgrind:            { icon: Cpu,         accent: "bg-teal-50 text-teal-700" },
+  gitPracticeGame:     { icon: Sparkles,    accent: "bg-[#fff4f1] text-[#c2410c]" },
+  gitBranchPractice:   { icon: GitBranch,   accent: "bg-sky-50 text-blue-700" },
+  gitMergeConflicts:   { icon: Swords,      accent: "bg-amber-50 text-amber-700" },
+  valgrindMemoryLeaks: { icon: ShieldAlert, accent: "bg-green-50 text-green-700" },
 };
 
 const getRelatedTitle = (target: RelatedPageTarget, t: ReturnType<typeof useTranslation>["t"]) => {
@@ -164,8 +156,8 @@ const getPrimaryHref = (
     return localizePath(config.primaryAction.path);
   }
 
-  const homePath = localizePath("/");
-  return `${homePath}?exercise=${config.primaryAction.exercise}`;
+  const playgroundPath = localizePath("/playground");
+  return `${playgroundPath}?exercise=${config.primaryAction.exercise}`;
 };
 
 function asStringArray(value: unknown): string[] {
@@ -277,45 +269,97 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
     { span: "md:col-span-4", i: 1 },
     { span: "md:col-span-4", i: 2 },
   ] as const;
-  const schemaData = useMemo(() => {
-    const pageUrl = `https://game4git.games${config.path}`;
-    const breadcrumb = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Game4Git",
-          item: "https://game4git.games/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: t(`landingPages.${pageKey}.heroTitle`),
-          item: pageUrl,
-        },
-      ],
+
+  useGSAP(
+    () => {
+      const root = rootRef.current;
+      if (!root) {
+        return;
+      }
+
+      const mm = gsap.matchMedia();
+
+      const landingTargets = "[data-landing-header], [data-landing-hero-chunk], [data-landing-reveal]";
+
+      /*
+        Dos queries mutuamente excluyentes (ancho + movimiento) para que el revert de GSAP
+        no deje autoAlpha/opacity colgados al pasar de desktop a móvil.
+      */
+      mm.add("(max-width: 639px), (prefers-reduced-motion: reduce)", () => {
+        gsap.set(landingTargets, { clearProps: "all" });
+      }, root);
+
+      mm.add("(min-width: 640px) and (prefers-reduced-motion: no-preference)", () => {
+        /*
+          Solo animación en Y + opacidad 1 fija: nunca ocultar el hero (evita pantalla “vacía”
+          si el timeline o matchMedia fallan o revert dejan estilos a medias).
+        */
+        gsap.set("[data-landing-header]", { opacity: 1, visibility: "visible", y: 10 });
+        gsap.set("[data-landing-hero-chunk]", { opacity: 1, visibility: "visible", y: 20 });
+        gsap.set("[data-landing-reveal]", { opacity: 1, visibility: "visible", y: 28 });
+
+        const tl = gsap.timeline({
+          defaults: { ease: "power2.out" },
+        });
+
+        tl.to("[data-landing-header]", { y: 0, duration: 0.3 }, 0);
+        tl.to(
+          "[data-landing-hero-left] [data-landing-hero-chunk]",
+          { y: 0, duration: 0.45, stagger: 0.05 },
+          "<0.05"
+        );
+        tl.to(
+          "[data-landing-hero-right] [data-landing-hero-chunk]",
+          { y: 0, duration: 0.42, stagger: 0.05 },
+          "<0.08"
+        );
+
+        ScrollTrigger.batch("[data-landing-reveal]", {
+          start: "top 92%",
+          once: true,
+          interval: 0.06,
+          onEnter: (batch) => {
+            gsap.to(batch, {
+              y: 0,
+              duration: 0.5,
+              stagger: { each: 0.04, ease: "power1.out" },
+              ease: "power2.out",
+              overwrite: "auto",
+            });
+          },
+        });
+      }, root);
+
+      return () => {
+        mm.revert();
+      };
+    },
+    { scope: rootRef, dependencies: [pageKey], revertOnUpdate: true }
+  );
+
+  // Red de seguridad: al cruzar a viewport estrecho, limpiar estilos inline de GSAP (evita contenido invisible tras encoger desde desktop).
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const clearLandingCaptureStyles = () => {
+      const nodes = root.querySelectorAll(
+        "[data-landing-header], [data-landing-hero-chunk], [data-landing-reveal]"
+      );
+      if (nodes.length === 0) return;
+      gsap.set(nodes, { clearProps: "all" });
+      ScrollTrigger.refresh();
     };
 
-    const faqSchema =
-      faqs.length > 0
-        ? {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: faqs.map((faq) => ({
-              "@type": "Question",
-              name: faq.q,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: faq.a,
-              },
-            })),
-          }
-        : null;
+    const mq = window.matchMedia("(max-width: 639px)");
+    const onBreakpoint = () => {
+      if (mq.matches) clearLandingCaptureStyles();
+    };
 
-    return { breadcrumb, faqSchema };
-  }, [config.path, faqs, pageKey, t]);
+    onBreakpoint();
+    mq.addEventListener("change", onBreakpoint);
+    return () => mq.removeEventListener("change", onBreakpoint);
+  }, [pageKey]);
 
   return (
     <div ref={rootRef} className="relative min-h-screen overflow-x-hidden bg-background">
@@ -324,45 +368,8 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
         preloadHeroImage={heroWebpSrc(HERO_IMAGES[pageKey])}
         preloadHeroImageType="image/webp"
       />
-      <Helmet prioritizeSeoTags>
-        <script type="application/ld+json">{JSON.stringify(schemaData.breadcrumb)}</script>
-        {schemaData.faqSchema ? (
-          <script type="application/ld+json">{JSON.stringify(schemaData.faqSchema)}</script>
-        ) : null}
-      </Helmet>
-      <div
-        className={`pointer-events-none absolute inset-x-0 -top-24 h-[36rem] bg-gradient-to-b ${config.softAccent} blur-3xl`}
-      />
-      <div
-        className={`pointer-events-none absolute -right-24 top-24 h-72 w-72 rounded-full bg-gradient-to-br ${config.accent} opacity-[0.18] blur-3xl`}
-      />
-      <div
-        className={`pointer-events-none absolute -left-20 top-[28rem] h-64 w-64 rounded-full bg-gradient-to-br ${config.accent} opacity-[0.12] blur-3xl`}
-      />
-
+      <AppNav variant="inner" badge={config.badge} showPlaygroundCta />
       <div className="container relative max-w-full px-4 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-5 md:px-8">
-        <header
-          className="sticky top-3 z-30 mx-auto mb-10 max-w-6xl sm:top-4"
-          data-landing-header
-        >
-          <div className="flex items-center justify-between gap-2 rounded-2xl border border-border/50 bg-background/90 px-2.5 py-2.5 shadow-lg shadow-black/[0.03] backdrop-blur-sm supports-[backdrop-filter]:bg-background/80 sm:gap-3 sm:px-5 sm:py-3">
-            <Link
-              to={localizePath("/")}
-              className="group inline-flex min-w-0 flex-1 items-center justify-start gap-2 rounded-xl px-1.5 py-1.5 text-sm font-medium text-foreground/90 transition-colors hover:bg-muted/70 hover:text-foreground sm:flex-none sm:px-2 sm:py-2"
-            >
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-muted to-muted/50 ring-1 ring-border/60 transition-transform group-hover:scale-105">
-                <BookOpen className="h-4 w-4 text-muted-foreground" />
-              </span>
-              <span className="hidden sm:inline">{t("common.backToHome", "Back to Home")}</span>
-              <span className="max-w-[10.5rem] truncate sm:hidden">{t("general.title", "Game4Git")}</span>
-            </Link>
-            <div className="flex shrink-0 items-center justify-end gap-1.5 sm:gap-2">
-              <ThemeToggle />
-              <LanguageSelector />
-            </div>
-          </div>
-        </header>
-
         <main className="mx-auto max-w-6xl space-y-16 sm:space-y-20 md:space-y-24">
           {/* Hero */}
           <section className="relative">
@@ -372,10 +379,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                 <div data-landing-hero-chunk className="flex flex-wrap items-center gap-2">
                   <Badge
                     variant="secondary"
-                    className={cn(
-                      "rounded-full border-0 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em]",
-                      `bg-gradient-to-r ${config.accent} text-white shadow-md`
-                    )}
+                    className="rounded-full border border-border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] bg-orange-brand/10 text-orange-brand"
                   >
                     {t(`landingPages.${pageKey}.eyebrow`)}
                   </Badge>
@@ -413,10 +417,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                   <Button
                     asChild
                     size="lg"
-                    className={cn(
-                      "h-12 rounded-full px-8 text-base font-semibold shadow-lg shadow-black/10",
-                      `bg-gradient-to-r ${config.accent} text-white hover:opacity-95`
-                    )}
+                    className="h-12 rounded-full px-8 text-base font-semibold shadow-lg shadow-black/10 bg-orange-brand text-white hover:bg-orange-brand-hover"
                   >
                     <Link to={primaryHref}>
                       {t(`landingPages.${pageKey}.primaryCta`)}
@@ -446,10 +447,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                       )}
                     >
                       <TrustIcon
-                        className={cn(
-                          "h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4",
-                          config.accentSolid
-                        )}
+                        className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4 text-orange-brand"
                       />
                       <span className="leading-snug text-foreground dark:text-foreground/90">{label}</span>
                     </div>
@@ -481,10 +479,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                       <span className="break-words text-left">{t("landingPages.common.mockBrowserLabel")}</span>
                     </div>
                     <div
-                      className={cn(
-                        "hidden h-8 w-8 shrink-0 items-center justify-center rounded-xl sm:flex",
-                        `bg-gradient-to-br ${config.accent} text-white shadow-md`
-                      )}
+                      className="hidden h-8 w-8 shrink-0 items-center justify-center rounded-xl sm:flex bg-orange-brand/10 text-orange-brand shadow-md"
                     >
                       <Icon className="h-4 w-4" />
                     </div>
@@ -504,10 +499,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                           {t(`landingPages.${pageKey}.stepsTitle`)}
                         </p>
                         <span
-                          className={cn(
-                            "shrink-0 text-right text-[10px] font-semibold",
-                            config.accentSolid
-                          )}
+                          className="shrink-0 text-right text-[10px] font-semibold text-orange-brand"
                         >
                           {stepCountDisplay}
                         </span>
@@ -516,16 +508,10 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                         <div
                           key={`${pageKey}-feat-${index}-${step.title.slice(0, 32)}`}
                           data-landing-hero-chunk
-                          className={cn(
-                            "flex gap-3 rounded-2xl border border-border/60 bg-background/80 p-3.5 transition-colors hover:border-primary/25 sm:p-4",
-                            `bg-gradient-to-br ${config.surfaceAccent}`
-                          )}
+                          className="flex gap-3 rounded-2xl border border-border/60 bg-background/80 p-3.5 transition-colors hover:border-primary/25 sm:p-4"
                         >
                           <div
-                            className={cn(
-                              "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-xs font-bold text-white shadow-sm",
-                              `bg-gradient-to-br ${config.accent}`
-                            )}
+                            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-xs font-bold text-white shadow-sm bg-orange-brand"
                           >
                             {index + 1}
                           </div>
@@ -548,7 +534,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
           {highlights.length > 0 ? (
           <section>
             <div className="mb-8 max-w-2xl space-y-3 md:mb-10" data-landing-reveal>
-              <p className={cn("text-sm font-semibold", config.accentSolid)}>
+              <p className="text-sm font-semibold text-orange-brand">
                 {t("landingPages.common.bentoTitle")}
               </p>
               <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
@@ -572,7 +558,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                         span
                       )}
                     >
-                      <div className={cn("absolute inset-x-0 top-0 h-1 bg-gradient-to-r opacity-90", config.accent)} />
+                      <div className="absolute inset-x-0 top-0 h-1 bg-orange-brand opacity-90" />
                       <div
                         className={cn(
                           "pointer-events-none absolute -right-6 -top-4 select-none font-black leading-none text-muted-foreground/15 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1 sm:-right-4 sm:-top-2",
@@ -590,9 +576,8 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                       >
                         <div
                           className={cn(
-                            "inline-flex shrink-0 items-center justify-center rounded-2xl text-white shadow-lg",
-                            large ? "h-14 w-14 md:h-16 md:w-16" : "h-11 w-11",
-                            `bg-gradient-to-br ${config.accent}`
+                            "inline-flex shrink-0 items-center justify-center rounded-2xl bg-orange-brand/10 text-orange-brand shadow-lg",
+                            large ? "h-14 w-14 md:h-16 md:w-16" : "h-11 w-11"
                           )}
                         >
                           <Icon className={cn("opacity-95", large ? "h-7 w-7 md:h-8 md:w-8" : "h-5 w-5")} />
@@ -630,16 +615,13 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                     data-landing-reveal
                     className="group relative flex h-full min-h-0 flex-col overflow-hidden border-border/50 bg-card/90 shadow-md ring-1 ring-border/40 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:ring-primary/20"
                   >
-                    <div className={cn("absolute inset-x-0 top-0 h-1 bg-gradient-to-r opacity-90", config.accent)} />
+                    <div className="absolute inset-x-0 top-0 h-1 bg-orange-brand opacity-90" />
                     <div className="pointer-events-none absolute -right-6 -top-8 text-6xl font-black leading-none text-muted-foreground/[0.06] transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1">
                       {String(i + 1).padStart(2, "0")}
                     </div>
                     <CardHeader className="relative z-[1] flex min-h-0 flex-1 flex-col items-start justify-start gap-4 overflow-visible pb-6 pt-8">
                       <div
-                        className={cn(
-                          "inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-white shadow-lg",
-                          `bg-gradient-to-br ${config.accent}`
-                        )}
+                        className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-orange-brand/10 text-orange-brand shadow-lg"
                       >
                         <Icon className="h-5 w-5 opacity-95" />
                       </div>
@@ -658,7 +640,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
           {steps.length > 0 ? (
           <section className="relative rounded-[2rem] border border-border/50 bg-gradient-to-b from-muted/40 via-muted/20 to-background p-6 shadow-inner sm:p-8 md:p-10 lg:p-12">
             <div className="mb-10 max-w-2xl space-y-3 md:mb-14" data-landing-reveal>
-              <div className={`h-1 w-14 rounded-full bg-gradient-to-r ${config.accent}`} />
+              <div className="h-1 w-14 rounded-full bg-orange-brand" />
               <p className={cn("text-xs font-bold uppercase tracking-[0.22em]", LANDING_LABEL)}>
                 {t("landingPages.common.pathKicker")}
               </p>
@@ -684,10 +666,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                   >
                     <div className="flex items-start gap-4 md:w-48 md:shrink-0 md:flex-col md:items-center md:gap-0 md:pt-1">
                       <div
-                        className={cn(
-                          "relative z-[1] flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl text-sm font-bold text-white shadow-lg md:h-16 md:w-16 md:rounded-2xl md:text-lg",
-                          `bg-gradient-to-br ${config.accent}`
-                        )}
+                        className="relative z-[1] flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl text-sm font-bold text-white shadow-lg md:h-16 md:w-16 md:rounded-2xl md:text-lg bg-orange-brand"
                       >
                         {index + 1}
                       </div>
@@ -725,7 +704,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
               data-landing-reveal
               className="min-w-0 overflow-hidden border-border/50 bg-card/95 shadow-lg ring-1 ring-border/40"
             >
-              <div className={`h-1.5 w-full bg-gradient-to-r ${config.accent}`} />
+              <div className="h-1.5 w-full bg-orange-brand" />
               <CardHeader className="space-y-1 pb-2">
                 <CardTitle className="text-xl font-bold sm:text-2xl">{t(`landingPages.${pageKey}.faqTitle`)}</CardTitle>
               </CardHeader>
@@ -751,7 +730,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                 data-landing-reveal
                 className="flex flex-1 flex-col overflow-hidden border-border/50 bg-card/95 shadow-lg ring-1 ring-border/40"
               >
-                <div className={`h-1.5 w-full bg-gradient-to-r ${config.accent}`} />
+                <div className="h-1.5 w-full bg-orange-brand" />
                 <CardHeader className="pb-3">
                   <CardTitle className="text-lg font-bold sm:text-xl">{t(`landingPages.${pageKey}.relatedTitle`)}</CardTitle>
                 </CardHeader>
@@ -767,8 +746,8 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                       >
                         <div
                           className={cn(
-                            "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white shadow-md transition-transform group-hover:scale-105",
-                            `bg-gradient-to-br ${meta.accent}`
+                            "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg shadow-md transition-transform group-hover:scale-105 border border-border",
+                            meta.accent
                           )}
                         >
                           <RelIcon className="h-4 w-4" />
@@ -793,10 +772,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
           {/* Final CTA */}
           <section data-landing-reveal className="pb-4">
             <div
-              className={cn(
-                "relative overflow-hidden rounded-[2rem] px-6 py-12 text-center shadow-2xl sm:px-10 sm:py-14 md:px-14 md:py-16",
-                `bg-gradient-to-br ${config.accent}`
-              )}
+              className="relative overflow-hidden rounded-[2rem] px-6 py-12 text-center shadow-2xl sm:px-10 sm:py-14 md:px-14 md:py-16 bg-orange-brand"
             >
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(255,255,255,0.35),transparent)]" />
               <div className="relative mx-auto max-w-2xl space-y-6">

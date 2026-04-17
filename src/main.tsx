@@ -4,6 +4,18 @@ import './index.css'
 import './i18n'
 
 import { HelmetProvider } from 'react-helmet-async';
+import { ErrorBoundary } from './components/ErrorBoundary.tsx';
+import * as Sentry from '@sentry/react';
+
+const sentryDsn = import.meta.env.VITE_SENTRY_DSN as string | undefined;
+if (sentryDsn) {
+  Sentry.init({
+    dsn: sentryDsn,
+    environment: import.meta.env.MODE,
+    tracesSampleRate: 0.1,
+    replaysOnErrorSampleRate: 1.0,
+  });
+}
 
 const rootElement = document.getElementById("root");
 
@@ -15,7 +27,9 @@ if (!rootElement) {
 // plantillas que no coincide con el árbol de React. hydrateRoot provocaría
 // errores #418/#423. createRoot reemplaza el contenido (útil para SEO).
 createRoot(rootElement).render(
-  <HelmetProvider>
-    <App />
-  </HelmetProvider>
+  <ErrorBoundary>
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
+  </ErrorBoundary>
 );

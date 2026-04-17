@@ -1121,6 +1121,15 @@
     "secondaryBanner": "Première fois ici ?",
     "secondaryBannerCta1": "Faites votre premier commit en 1 min",
     "secondaryBannerCta2": "Essayez le défi Feature Branch",
+    "levelBasic": "Basique",
+    "levelIntermediate": "Intermédiaire",
+    "levelAdvanced": "Avancé",
+    "eyebrow": "Apprends Git vraiment",
+    "statGuides": "Guides interactifs",
+    "statLanguages": "Langues",
+    "statInstalls": "Installations requises",
+    "seoIntroMobile": "Apprenez Git en pratiquant avec des commits visuels et des défis guidés.",
+    "seoIntroLabel": "Description de l'application",
     "guidesTitle": "Guides populaires",
     "guidesDescription": "Commencez par le sujet exact que vous voulez pratiquer et entrez directement dans le bon défi ou le bon guide de débogage.",
     "guidesPrimaryCta": "Voir le guide",
@@ -1134,6 +1143,16 @@
       "a3": "Oui. Les Challenges et le graphe visuel sont idéals pour enseigner les notions clés de Git.",
       "q4": "Puis-je apprendre Git en jouant?",
       "a4": "Oui, Game4Git est un jeu interactif conçu pour apprendre Git en relevant des défis réels, des commandes concrètes et des explications instantanées."
-    }
+    },
+    "playgroundStripTitle": "Pratiquez avec le playground",
+    "playgroundStripDesc": "Éditeur de code, arbre de commits et contrôles Git sur un seul écran. Sans rien configurer.",
+    "playgroundStripCta": "Ouvrir le playground"
+  },
+  "nav": {
+    "guides": "Guides",
+    "playground": "Playground",
+    "start": "Commencer →",
+    "backToGuides": "← Retour aux guides",
+    "gitInitBadge": "git init"
   }
 }

@@ -40,8 +40,8 @@ const htmlContent = fs.readFileSync(indexPath, 'utf-8');
 
 // Check for critical elements
 const checks = {
-  'Title present': /<title>.*<\/title>/.test(htmlContent),
-  'Root div': /<div id="root"><\/div>/.test(htmlContent),
+  'Title present': /<title[^>]*>[\s\S]*<\/title>/.test(htmlContent),
+  'Root div': /<div id="root"[\s>]/.test(htmlContent),
   'CSS link': /link rel="stylesheet"/.test(htmlContent),
   'JS script': /script.*(type="module"|src)/.test(htmlContent),
   'Content Security Policy': /Content-Security-Policy/.test(htmlContent)

@@ -1405,6 +1405,15 @@
     "step3": "Commit",
     "footerGdb": "Aprender GDB",
     "footerValgrind": "Aprender Valgrind",
+    "levelBasic": "Básico",
+    "levelIntermediate": "Intermedio",
+    "levelAdvanced": "Avanzado",
+    "eyebrow": "Aprende Git de verdad",
+    "statGuides": "Guías interactivas",
+    "statLanguages": "Idiomas",
+    "statInstalls": "Instalaciones necesarias",
+    "seoIntroMobile": "Aprende Git practicando con commits visuales y desafíos guiados.",
+    "seoIntroLabel": "Descripción de la app",
     "guidesTitle": "Guías populares",
     "guidesDescription": "Empieza por el tema exacto que quieres practicar y entra directo en el reto o la guía de depuración adecuada.",
     "guidesPrimaryCta": "Ver guía",
@@ -1418,6 +1427,16 @@
       "a3": "Sí. Los Challenges y el gráfico visual son ideales para enseñar Git.",
       "q4": "¿Puedo aprender Git jugando?",
       "a4": "Sí, Game4Git es un juego interactivo hecho para aprender Git practicando retos, comandos reales y visualización en tiempo real."
-    }
+    },
+    "playgroundStripTitle": "Practica con el playground",
+    "playgroundStripDesc": "Editor de código, árbol de commits y controles de Git en una sola pantalla. Sin configurar nada.",
+    "playgroundStripCta": "Abrir playground"
+  },
+  "nav": {
+    "guides": "Guías",
+    "playground": "Playground",
+    "start": "Empezar →",
+    "backToGuides": "← Volver a guías",
+    "gitInitBadge": "git init"
   }
 }

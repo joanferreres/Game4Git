@@ -1,0 +1,114 @@
+<h2>¿Cómo deben verse las tarjetas de guías?</h2>
+<p class="subtitle">Actualmente usan gradients intensos (amber→rose, sky→cyan…). Estas son las alternativas.</p>
+
+<div class="cards">
+
+  <!-- Option A: Bordered minimal con icono y color de acento sutil -->
+  <div class="card" data-choice="bordered-minimal" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#faf9f7; padding:16px; min-height:180px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+
+        <div style="background:white; border:1px solid #e2e8f0; border-radius:10px; padding:14px; position:relative; overflow:hidden;">
+          <div style="position:absolute; top:0; left:0; right:0; height:3px; background:#7c3aed;"></div>
+          <div style="font-size:20px; margin-bottom:8px;">⎇</div>
+          <div style="font-size:12px; font-weight:600; color:#0f172a; font-family:system-ui; margin-bottom:4px;">Git Branching</div>
+          <div style="font-size:11px; color:#64748b; font-family:system-ui; line-height:1.4;">Crea y gestiona ramas de trabajo</div>
+          <div style="margin-top:8px; display:flex; align-items:center; gap:4px;">
+            <div style="width:50px; height:3px; background:#e9d5ff; border-radius:2px;">
+              <div style="width:30%; height:100%; background:#7c3aed; border-radius:2px;"></div>
+            </div>
+            <span style="font-size:10px; color:#7c3aed; font-family:system-ui;">30%</span>
+          </div>
+        </div>
+
+        <div style="background:white; border:1px solid #e2e8f0; border-radius:10px; padding:14px; position:relative; overflow:hidden;">
+          <div style="position:absolute; top:0; left:0; right:0; height:3px; background:#059669;"></div>
+          <div style="font-size:20px; margin-bottom:8px;">⌥</div>
+          <div style="font-size:12px; font-weight:600; color:#0f172a; font-family:system-ui; margin-bottom:4px;">Merge Conflicts</div>
+          <div style="font-size:11px; color:#64748b; font-family:system-ui; line-height:1.4;">Resuelve conflictos con confianza</div>
+          <div style="margin-top:8px;">
+            <span style="background:#d1fae5; color:#065f46; font-size:10px; font-family:system-ui; padding:2px 6px; border-radius:4px; font-weight:500;">Intermedio</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Bordered minimal</h3>
+      <p>Tarjetas blancas con borde sutil y una línea de color en el top. Sin gradients. El color identifica la categoría, no decora. Limpio, escaneable, profesional.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Dark cards con acento terminal -->
+  <div class="card" data-choice="dark-cards" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a; padding:16px; min-height:180px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+
+        <div style="background:#1e293b; border:1px solid #334155; border-radius:10px; padding:14px;">
+          <div style="font-family:'Fira Code',monospace; font-size:11px; color:#a78bfa; margin-bottom:6px;">git branch</div>
+          <div style="font-size:12px; font-weight:600; color:#f1f5f9; font-family:system-ui; margin-bottom:4px;">Git Branching</div>
+          <div style="font-size:11px; color:#64748b; font-family:system-ui; line-height:1.4;">Crea y gestiona ramas</div>
+          <div style="margin-top:8px; display:inline-block; background:#312e81; color:#a5b4fc; font-size:10px; font-family:system-ui; padding:2px 6px; border-radius:4px;">8 lecciones</div>
+        </div>
+
+        <div style="background:#1e293b; border:1px solid #334155; border-radius:10px; padding:14px;">
+          <div style="font-family:'Fira Code',monospace; font-size:11px; color:#34d399; margin-bottom:6px;">git merge</div>
+          <div style="font-size:12px; font-weight:600; color:#f1f5f9; font-family:system-ui; margin-bottom:4px;">Merge Conflicts</div>
+          <div style="font-size:11px; color:#64748b; font-family:system-ui; line-height:1.4;">Resuelve conflictos</div>
+          <div style="margin-top:8px; display:inline-block; background:#064e3b; color:#34d399; font-size:10px; font-family:system-ui; padding:2px 6px; border-radius:4px;">Intermedio</div>
+        </div>
+
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Dark cards (toque A)</h3>
+      <p>Tarjetas oscuras con el comando git en monospace como "título técnico". Fuertes toques de terminal. Funciona bien si el fondo de la sección también es oscuro.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Mix — fondo claro, icono oscuro, git command sutil -->
+  <div class="card" data-choice="mix-best" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#faf9f7; padding:16px; min-height:180px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+
+        <div style="background:white; border:1px solid #e2e8f0; border-radius:10px; padding:14px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+            <div style="background:#f5f3ff; border-radius:6px; padding:6px; display:inline-flex;">
+              <span style="font-size:14px;">⎇</span>
+            </div>
+            <div style="font-family:'Fira Code',monospace; font-size:9px; color:#94a3b8; background:#f8fafc; padding:2px 6px; border-radius:4px; border:1px solid #e2e8f0;">git branch</div>
+          </div>
+          <div style="font-size:12px; font-weight:600; color:#0f172a; font-family:system-ui; margin-bottom:3px;">Git Branching</div>
+          <div style="font-size:11px; color:#64748b; font-family:system-ui; line-height:1.4;">Crea y gestiona ramas</div>
+          <div style="margin-top:8px; display:flex; align-items:center; justify-content:space-between;">
+            <span style="background:#f5f3ff; color:#6d28d9; font-size:10px; font-family:system-ui; padding:2px 6px; border-radius:4px; font-weight:500;">8 lecciones</span>
+            <span style="color:#7c3aed; font-size:12px;">→</span>
+          </div>
+        </div>
+
+        <div style="background:white; border:1px solid #e2e8f0; border-radius:10px; padding:14px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+            <div style="background:#f0fdf4; border-radius:6px; padding:6px; display:inline-flex;">
+              <span style="font-size:14px;">⌥</span>
+            </div>
+            <div style="font-family:'Fira Code',monospace; font-size:9px; color:#94a3b8; background:#f8fafc; padding:2px 6px; border-radius:4px; border:1px solid #e2e8f0;">git merge</div>
+          </div>
+          <div style="font-size:12px; font-weight:600; color:#0f172a; font-family:system-ui; margin-bottom:3px;">Merge Conflicts</div>
+          <div style="font-size:11px; color:#64748b; font-family:system-ui; line-height:1.4;">Resuelve conflictos</div>
+          <div style="margin-top:8px; display:flex; align-items:center; justify-content:space-between;">
+            <span style="background:#f0fdf4; color:#166534; font-size:10px; font-family:system-ui; padding:2px 6px; border-radius:4px; font-weight:500;">Intermedio</span>
+            <span style="color:#16a34a; font-size:12px;">→</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Mezcla (recomendado)</h3>
+      <p>Fondo claro (C), tarjetas blancas con sombra sutil, icono coloreado por categoría, y el comando git en monospace como badge discreto (toque A). Sin gradients, con personalidad técnica.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px; font-size:13px;">Los gradients actuales (amber→rose, sky→cyan…) desaparecen en todas las opciones.</p>

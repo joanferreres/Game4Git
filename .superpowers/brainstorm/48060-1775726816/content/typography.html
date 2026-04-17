@@ -1,0 +1,60 @@
+<h2>¿Qué tipografía define el tono?</h2>
+<p class="subtitle">La fuente cambia completamente la percepción. Para cuerpo y títulos.</p>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Geist:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap');
+</style>
+
+<div class="cards">
+
+  <!-- Option A: Inter (safe, neutral, developer) -->
+  <div class="card" data-choice="inter" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#faf9f7; padding:20px; min-height:180px;">
+      <div style="font-family:'Inter',system-ui; color:#0f172a;">
+        <div style="font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#7c3aed; margin-bottom:6px;">Módulo 1</div>
+        <div style="font-size:22px; font-weight:800; line-height:1.15; letter-spacing:-0.03em; margin-bottom:6px;">Tu primer commit</div>
+        <div style="font-size:13px; color:#64748b; line-height:1.6; font-weight:400; margin-bottom:10px;">Aprende a guardar cambios en el historial de tu proyecto de forma permanente.</div>
+        <code style="font-family:'JetBrains Mono',monospace; font-size:11px; background:#1e293b; color:#a3e635; padding:4px 10px; border-radius:5px;">git commit -m "init"</code>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Inter + JetBrains Mono</h3>
+      <p>La fuente estándar del desarrollo moderno. Neutral, legible, sin personalidad obvia. Usada por Linear, Vercel, Notion. Segura pero no sorprende.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Geist (Vercel's own, modern geometric) -->
+  <div class="card" data-choice="geist" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#faf9f7; padding:20px; min-height:180px;">
+      <div style="font-family:'Geist',system-ui; color:#0f172a;">
+        <div style="font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#7c3aed; margin-bottom:6px;">Módulo 1</div>
+        <div style="font-size:22px; font-weight:800; line-height:1.15; letter-spacing:-0.04em; margin-bottom:6px;">Tu primer commit</div>
+        <div style="font-size:13px; color:#64748b; line-height:1.6; font-weight:400; margin-bottom:10px;">Aprende a guardar cambios en el historial de tu proyecto de forma permanente.</div>
+        <code style="font-family:'JetBrains Mono',monospace; font-size:11px; background:#1e293b; color:#a3e635; padding:4px 10px; border-radius:5px;">git commit -m "init"</code>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Geist + JetBrains Mono</h3>
+      <p>Fuente de Vercel, diseñada para herramientas técnicas. Geométrica, muy compacta en lettering. Ligeramente más personalidad que Inter. Muy buena en tamaños grandes.</p>
+    </div>
+  </div>
+
+  <!-- Option C: DM Sans (warm, approachable, educational) -->
+  <div class="card" data-choice="dm-sans" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#faf9f7; padding:20px; min-height:180px;">
+      <div style="font-family:'DM Sans',system-ui; color:#0f172a;">
+        <div style="font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#7c3aed; margin-bottom:6px;">Módulo 1</div>
+        <div style="font-size:22px; font-weight:800; line-height:1.15; letter-spacing:-0.02em; margin-bottom:6px;">Tu primer commit</div>
+        <div style="font-size:13px; color:#64748b; line-height:1.6; font-weight:400; margin-bottom:10px;">Aprende a guardar cambios en el historial de tu proyecto de forma permanente.</div>
+        <code style="font-family:'JetBrains Mono',monospace; font-size:11px; background:#1e293b; color:#a3e635; padding:4px 10px; border-radius:5px;">git commit -m "init"</code>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — DM Sans + JetBrains Mono</h3>
+      <p>Más cálida y amable que Inter. Muy legible en cuerpo pequeño. Buena para plataformas educativas: profesional pero no fría. Usada por Google Fonts, Raycast docs.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px; font-size:13px;">El código siempre usa JetBrains Mono. La elección es para títulos y texto de interfaz.</p>

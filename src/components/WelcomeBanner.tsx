@@ -72,7 +72,7 @@ const WelcomeBanner: React.FC<WelcomeBannerProps> = ({ onStart, onOpenChallenges
             {t("welcome.title", "Welcome to Git Game")}
           </DialogTitle>
           <DialogDescription className="text-sm space-y-2 text-muted-foreground">
-            <p>{t("welcome.introShortImproved", "Edit a line of code and make your first commit in under 30 seconds. Or try a guided challenge.")}</p>
+            {t("welcome.introShortImproved", "Edit a line of code and make your first commit in under 30 seconds. Or try a guided challenge.")}
           </DialogDescription>
         </DialogHeader>
         <div className="mt-4 flex flex-wrap gap-2 justify-end pl-10 sm:pl-12">

@@ -7,13 +7,16 @@
     <!-- Preconnect to origins used in critical path -->
     <link rel="preconnect" href="https://cdn.gpteng.co" crossorigin />
     <link rel="preconnect" href="https://scripts.clarity.ms" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" />
     
     <!-- Critical CSS: Prevent FOUC and enable first paint without external CSS -->
     <style>
-      :root{--background:0 0% 100%;--foreground:240 10% 3.9%;--card:0 0% 100%;--card-foreground:240 10% 3.9%;--primary:221.2 83.2% 53.3%;--primary-foreground:210 40% 98%;--secondary:240 4.8% 95.9%;--muted:240 4.8% 95.9%;--muted-foreground:240 3.8% 46.1%;--accent:240 4.8% 95.9%;--border:240 5.9% 90%;--radius:0.5rem;--ring:221.2 83.2% 53.3%}
-      .dark{--background:240 10% 3.9%;--foreground:0 0% 98%;--card:240 10% 3.9%;--card-foreground:0 0% 98%;--primary:217.2 91.2% 59.8%;--muted:240 3.7% 15.9%;--muted-foreground:240 5% 64.9%;--border:240 3.7% 15.9%}
+      :root{--background:0 0% 100%;--foreground:240 10% 3.9%;--card:0 0% 100%;--card-foreground:240 10% 3.9%;--primary:14 86% 57%;--primary-foreground:210 40% 98%;--secondary:240 4.8% 95.9%;--muted:240 4.8% 95.9%;--muted-foreground:240 3.8% 46.1%;--accent:240 4.8% 95.9%;--border:240 5.9% 90%;--radius:0.5rem;--ring:14 86% 57%}
+      .dark{--background:240 10% 3.9%;--foreground:0 0% 98%;--card:240 10% 3.9%;--card-foreground:0 0% 98%;--primary:14 86% 62%;--muted:240 3.7% 15.9%;--muted-foreground:240 5% 64.9%;--border:240 3.7% 15.9%}
       *,::before,::after{box-sizing:border-box;border-width:0;border-style:solid}
-      html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+      html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:'DM Sans',system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
       body{margin:0;background:hsl(var(--background));color:hsl(var(--foreground));-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
       #root{min-height:100vh;display:flex;flex-direction:column}
       .min-h-screen{min-height:100vh}
@@ -43,8 +46,6 @@
     
     <!-- Security and Verification Meta Tags -->
     <meta name="google-site-verification" content="804e7e0b58ae3eb8" />
-    <meta name="msvalidate.01" content="YOUR_BING_VERIFICATION_CODE" />
-    
     <!-- Safari prefers PNG format and specific sizes -->
     <link rel="icon" type="image/png" href="/favicon-32x32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -63,18 +64,23 @@
     <meta name="msapplication-TileImage" content="/logo-96.png" />
     
     <!-- Security Headers - Solo los que son válidos en meta tags -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com https://www.clarity.ms https://scripts.clarity.ms blob:; img-src 'self' data: https://c.clarity.ms https://c.bing.com; connect-src 'self' https://cdn.jsdelivr.net https://*.clarity.ms https://clarity.ms ws://localhost:* ws://127.0.0.1:* http://localhost:*; worker-src 'self' blob:; font-src 'self' https://cdn.jsdelivr.net data:;" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com https://www.clarity.ms https://scripts.clarity.ms blob:; img-src 'self' data: https://c.clarity.ms https://c.bing.com; connect-src 'self' https://cdn.jsdelivr.net https://*.clarity.ms https://clarity.ms; worker-src 'self' blob:; font-src 'self' https://cdn.jsdelivr.net https://fonts.gstatic.com data:;" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="Referrer-Policy" content="no-referrer-when-downgrade" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
     <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload" />
 
-    <!-- STRUCTURED_DATA_START -->
-    <!-- STRUCTURED_DATA_END -->
-    
     <!-- Microsoft Clarity (deferred to avoid impacting initial mobile LCP) -->
     <script type="text/javascript">
       (function () {
+        var isLocalHost =
+          window.location.hostname === "localhost" ||
+          window.location.hostname === "127.0.0.1";
+
+        if (isLocalHost) {
+          return;
+        }
+
         var loadClarity = function () {
           (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};

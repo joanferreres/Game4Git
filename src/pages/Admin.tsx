@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,10 +9,9 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import LanguageSelector from '@/components/LanguageSelector';
 import { useAdminStore } from "@/store/gitStore";
 import { toast } from "sonner";
-import { useEffect } from 'react';
-
-// Store only a SHA-256 hash of the admin password (precomputed for "Shyrofv55")
-const ADMIN_PASSWORD_SHA256 = "dbf397e77ace83227fff7e391c1de9c0d164d9b4929d007de8ce0920e4523f7b";
+// Hash SHA-256 de la contraseña de administrador — configurar VITE_ADMIN_PASSWORD_HASH en Vercel env vars.
+// La autenticación es client-side (sin backend), por lo que es de baja seguridad: solo protege contra accesos casuales.
+const ADMIN_PASSWORD_SHA256 = import.meta.env.VITE_ADMIN_PASSWORD_HASH as string ?? "";
 
 async function hashTextSha256(text: string): Promise<string> {
   const encoder = new TextEncoder();
@@ -30,6 +29,7 @@ const Admin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [attempts, setAttempts] = useState(0);
   const [lockUntil, setLockUntil] = useState<number | null>(null);
+  const isAdminConfigured = ADMIN_PASSWORD_SHA256.trim().length > 0;
   
   const { 
     isGdbEnabled, 
@@ -44,21 +44,30 @@ const Admin = () => {
     setValgrindEnabled(true);
   }, [setGdbEnabled, setValgrindEnabled]);
 
-  // Restore session if present
-  if (!isAuthenticated && typeof window !== 'undefined') {
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const hasSession = sessionStorage.getItem('admin_session') === '1';
     if (hasSession) {
       setIsAuthenticated(true);
     }
+
     const storedLock = sessionStorage.getItem('admin_lock_until');
     if (storedLock) {
       const ts = parseInt(storedLock, 10);
-      if (!isNaN(ts)) setLockUntil(ts);
+      if (!Number.isNaN(ts)) {
+        setLockUntil(ts);
+      }
     }
-  }
+  }, []);
 
   const handleLogin = async () => {
     try {
+      if (!isAdminConfigured) {
+        toast.error("Admin no configurado. Define VITE_ADMIN_PASSWORD_HASH antes de usar este panel.");
+        return;
+      }
+
       // Cooldown: 15 minutes
       const now = Date.now();
       if (lockUntil && now < lockUntil) {
@@ -129,6 +138,15 @@ const Admin = () => {
                 Esta área está protegida. Se requiere autenticación.
               </AlertDescription>
             </Alert>
+
+            {!isAdminConfigured && (
+              <Alert className="border-red-500/50 bg-red-500/10">
+                <AlertCircle className="h-4 w-4 text-red-400" />
+                <AlertDescription className="text-red-200">
+                  Falta configurar <code>VITE_ADMIN_PASSWORD_HASH</code>. Sin esa variable el panel no se puede usar en producción.
+                </AlertDescription>
+              </Alert>
+            )}
             
             <div className="space-y-2">
               <Label htmlFor="password" className="text-gray-300">Contraseña de administrador</Label>
@@ -139,9 +157,9 @@ const Admin = () => {
                   placeholder="Ingresa la contraseña..."
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
+                  onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
                   className="bg-gray-700 border-gray-600 text-white pr-10"
-                  disabled={attempts >= 3 || isLocked}
+                  disabled={attempts >= 3 || isLocked || !isAdminConfigured}
                 />
                 <Button
                   type="button"
@@ -158,7 +176,7 @@ const Admin = () => {
             <Button 
               onClick={handleLogin} 
               className="w-full bg-blue-600 hover:bg-blue-700"
-              disabled={attempts >= 3 || isLocked || !password}
+              disabled={attempts >= 3 || isLocked || !password || !isAdminConfigured}
             >
               {isLocked ? "Bloqueado" : attempts >= 3 ? "Bloqueado" : "Acceder"}
             </Button>

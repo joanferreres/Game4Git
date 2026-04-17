@@ -2,6 +2,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 export default defineConfig({
   server: {
@@ -43,11 +44,11 @@ export default defineConfig({
     headers: {
       'Content-Security-Policy': [
         "default-src 'self'",
-        "connect-src 'self' ws: http: https: ws://localhost:24678 http://localhost:24678",
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com",
-        "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
-        "img-src 'self' data: blob:",
-        "font-src 'self' data: https://cdn.jsdelivr.net",
+        "connect-src 'self' ws: http: https: ws://localhost:24678 http://localhost:24678 https://cdn.jsdelivr.net https://*.clarity.ms https://clarity.ms",
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com https://www.clarity.ms https://scripts.clarity.ms blob:",
+        "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com",
+        "img-src 'self' data: blob: https://c.clarity.ms https://c.bing.com",
+        "font-src 'self' data: https://cdn.jsdelivr.net https://fonts.gstatic.com",
         "worker-src 'self' blob:",
         "frame-src 'self'",
         "object-src 'none'"
@@ -59,7 +60,11 @@ export default defineConfig({
     port: 4173,
     strictPort: true,
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    process.env.ANALYZE === 'true' && (visualizer({ open: true, gzipSize: true, filename: 'dist/bundle-stats.html' }) as any),
+  ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
