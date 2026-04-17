@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import AppNav from "@/components/AppNav";
 import SeoHead from "@/components/SeoHead";
+import { Button } from "@/components/ui/button";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -493,23 +494,43 @@ const Landing: React.FC = () => {
 
       {/* Footer */}
       <footer className="border-t border-border bg-background">
-        <div className="container max-w-full px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-1.5 font-bold text-[15px] tracking-tight text-foreground">
-            <span className="w-2 h-2 rounded-full bg-orange-brand" aria-hidden />
-            Game4Git
-          </div>
-          <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Game4Git
-          </p>
-          <div className="flex items-center gap-4">
-            <a
-              href="https://github.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-            >
-              GitHub
-            </a>
+        <div className="container max-w-full px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
+            <div className="flex items-center gap-1.5 font-bold text-[15px] tracking-tight text-foreground">
+              <span className="w-2 h-2 rounded-full bg-orange-brand" aria-hidden />
+              Game4Git
+            </div>
+            <p className="text-xs text-muted-foreground">
+              © {new Date().getFullYear()} Game4Git
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground sm:justify-end">
+              <a
+                href="mailto:game4git@gmail.com"
+                rel="noopener noreferrer"
+                className="transition-colors hover:text-foreground"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.href = "mailto:game4git@gmail.com";
+                }}
+              >
+                Contact
+              </a>
+              <span className="text-muted-foreground/50">|</span>
+              <Button
+                asChild
+                size="sm"
+                className="h-8 px-3 bg-primary text-primary-foreground hover:bg-primary/90"
+              >
+                <a
+                  href="https://ko-fi.com/joanferreres"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Tip the creator on Ko-fi"
+                >
+                  ☕ Tip
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </footer>
