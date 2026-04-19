@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import AppNav from "@/components/AppNav";
 import SeoHead from "@/components/SeoHead";
+import GitBranchScrollAnimation from "@/components/GitBranchScrollAnimation";
 import { Button } from "@/components/ui/button";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 
@@ -297,50 +298,9 @@ const Landing: React.FC = () => {
                 </div>
               </div>
             </div>
-            {/* Right: terminal snippet */}
+            {/* Right: animated git graph */}
             <div className="hidden md:block" aria-hidden>
-              <div className="bg-[#0f172a] rounded-xl border border-[#1e293b] p-4 font-mono text-[12px] leading-[2]">
-                <div className="flex items-center gap-1.5 mb-3">
-                  <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-green-500" />
-                  <span className="text-[10px] text-slate-500 ml-2">
-                    Game4Git — terminal
-                  </span>
-                </div>
-                <div>
-                  <span className="text-slate-500">$</span>{" "}
-                  <span className="text-slate-200">git init my-project</span>
-                </div>
-                <div>
-                  <span className="text-green-400">✓</span>{" "}
-                  <span className="text-slate-500">
-                    Initialized empty Git repository
-                  </span>
-                </div>
-                <div>
-                  <span className="text-slate-500">$</span>{" "}
-                  <span className="text-slate-200">git commit -m </span>
-                  <span className="text-amber-400">"feat: primer commit"</span>
-                </div>
-                <div>
-                  <span className="text-green-400">✓</span>{" "}
-                  <span className="text-slate-500">
-                    1 file changed — HEAD → main
-                  </span>
-                </div>
-                <div className="border-t border-[#1e293b] mt-2 pt-2 flex gap-2 flex-wrap">
-                  <span className="bg-[#fff4f1] text-[#c2410c] text-[10px] px-2 py-0.5 rounded">
-                    main
-                  </span>
-                  <span className="bg-green-950 text-green-400 text-[10px] px-2 py-0.5 rounded">
-                    feature/login
-                  </span>
-                  <span className="bg-blue-950 text-blue-400 text-[10px] px-2 py-0.5 rounded">
-                    HEAD
-                  </span>
-                </div>
-              </div>
+              <GitBranchScrollAnimation />
             </div>
           </div>
         </div>
