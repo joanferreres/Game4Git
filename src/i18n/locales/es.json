@@ -1438,5 +1438,12 @@
     "start": "Empezar →",
     "backToGuides": "← Volver a guías",
     "gitInitBadge": "git init"
+  },
+  "footer": {
+    "tagline": "Playground interactivo para aprender Git, GDB y Valgrind.",
+    "gdb": "Aprender GDB",
+    "valgrind": "Aprender Valgrind",
+    "contact": "Contacto",
+    "support": "Apoyar"
   }
 }

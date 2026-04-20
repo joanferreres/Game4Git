@@ -9,6 +9,12 @@
       ]
     },
     {
+      "source": "/(es/|ca/|fr/)?playground",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, follow" }
+      ]
+    },
+    {
       "source": "/privacy-policy.html",
       "headers": [
         { "key": "X-Robots-Tag", "value": "noindex, nofollow" }

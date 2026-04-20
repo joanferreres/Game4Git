@@ -27,11 +27,12 @@ import "../i18n"; // Importamos la configuración de i18n
 const GitExercises = lazy(() => import("@/components/GitExercises"));
 const ConflictResolver = lazy(() => import("@/components/ConflictResolver"));
 import { Link } from "react-router-dom";
-import { Bug, Shield } from "lucide-react";
+import { Shield } from "lucide-react";
 
 import { DeferUntilAfterPaint } from "@/components/DeferUntilAfterPaint";
 import AppNav from "@/components/AppNav";
 import SeoHead from "@/components/SeoHead";
+import SiteFooter from "@/components/SiteFooter";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 
 /** Matches CodeEditor layout to avoid CLS while the lazy chunk loads */
@@ -97,8 +98,6 @@ const GitGame: React.FC = () => {
   }, [setGdbEnabled, setValgrindEnabled]);
   const { t } = useTranslation();
   const localizePath = useLocalizedPath();
-  const gdbPath = localizePath("/gdb");
-  const valgrindPath = localizePath("/valgrind");
   const gitPracticeGamePath = localizePath("/git-practice-game");
   const gitBranchPracticePath = localizePath("/git-branch-practice");
   const gitMergeConflictsPath = localizePath("/git-merge-conflicts");
@@ -606,69 +605,7 @@ const GitGame: React.FC = () => {
         <GitExercises />
       </Suspense>
 
-      {/* Footer */}
-      <footer className="mt-6 sm:mt-8 py-3 sm:py-4 border-t border-border text-center text-xs sm:text-sm text-muted-foreground">
-        <div className="flex flex-col items-center justify-center space-y-2 sm:space-y-3">
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
-            <Link to={gdbPath} className="text-primary hover:underline flex items-center gap-1">
-              <Bug className="h-3.5 w-3.5" />
-              {t('home.footerGdb', 'Learn GDB')}
-            </Link>
-            <span className="text-muted-foreground/50">|</span>
-            <Link to={valgrindPath} className="text-primary hover:underline flex items-center gap-1">
-              <Shield className="h-3.5 w-3.5" />
-              {t('home.footerValgrind', 'Learn Valgrind')}
-            </Link>
-          </div>
-          <div className="flex items-center space-x-2">
-            <picture>
-              <source srcSet="/logo-24.webp" type="image/webp" />
-              <source srcSet="/logo-24.png" type="image/png" />
-              <img 
-                src="/logo-24.png" 
-                alt="Git Game Logo" 
-                className="h-5 w-5 sm:h-6 sm:w-6" 
-                loading="lazy"
-                decoding="async"
-                width="24"
-                height="24"
-              />
-            </picture>
-            <p className="font-medium">Git Game</p>
-          </div>
-          <div className="flex items-center justify-center space-x-2">
-            <p>&copy; {new Date().getFullYear()} FerVi. All rights reserved.</p>
-            <span>|</span>
-            <a
-              href="mailto:game4git@gmail.com"
-              rel="noopener noreferrer"
-              className="hover:text-primary transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
-                window.location.href = "mailto:game4git@gmail.com";
-              }}
-            >
-              Contact
-            </a>
-            <span>|</span>
-            <Button
-              asChild
-              size="sm"
-              className="h-8 px-3 bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
-            >
-              <a
-                href="https://ko-fi.com/joanferreres"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Tip the creator on Ko-fi"
-              >
-                ☕ Tip
-              </a>
-            </Button>
-          </div>
-          <p className="text-xs">Built with React, TypeScript and TailwindCSS. Learn Git concepts visually.</p>
-        </div>
-      </footer>
+      <SiteFooter className="mt-6 sm:mt-8" />
       </main>
     </div>
   );

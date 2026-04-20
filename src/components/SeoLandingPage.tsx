@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import AppNav from "@/components/AppNav";
+import SiteFooter from "@/components/SiteFooter";
 import SeoHead from "@/components/SeoHead";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 import { cn } from "@/lib/utils";
@@ -807,6 +808,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
           </section>
         </main>
       </div>
+      <SiteFooter />
     </div>
   );
 };

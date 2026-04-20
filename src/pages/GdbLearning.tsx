@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Terminal, Code, AlertCircle, Lightbulb, Copy, Check, Play, Users, BookOpen } from 'lucide-react';
 import SeoHead from '@/components/SeoHead';
 import AppNav from "@/components/AppNav";
+import SiteFooter from "@/components/SiteFooter";
 const LazyRealisticGdbTerminal = lazy(() => import('@/components/RealisticGdbTerminal'));
 
 
@@ -506,42 +507,7 @@ const GdbLearning: React.FC = () => {
         </Tabs>
       </main>
 
-      <footer className="mt-auto py-2 sm:py-3 border-t border-border text-center text-xs sm:text-sm text-muted-foreground">
-        <div className="flex flex-col items-center justify-center space-y-1 sm:space-y-2">
-          <div className="flex items-center space-x-2">
-            <picture>
-              <source srcSet="/logo-24.webp" type="image/webp" />
-              <source srcSet="/logo-24.png" type="image/png" />
-              <img 
-                src="/logo-24.png" 
-                alt="Git Game Logo" 
-                className="h-5 w-5 sm:h-6 sm:w-6" 
-                loading="lazy"
-                decoding="async"
-                width="24"
-                height="24"
-              />
-            </picture>
-            <p className="font-medium">Git Game</p>
-          </div>
-          <div className="flex items-center justify-center space-x-2">
-            <p>&copy; {new Date().getFullYear()} FerVi. All rights reserved.</p>
-            <span>|</span>
-            <a
-              href="mailto:game4git@gmail.com"
-              rel="noopener noreferrer"
-              className="hover:text-primary transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
-                window.location.href = "mailto:game4git@gmail.com";
-              }}
-            >
-              Contact
-            </a>
-          </div>
-          <p className="text-xs">Built with React, TypeScript and TailwindCSS. Learn Git concepts visually.</p>
-        </div>
-      </footer>
+      <SiteFooter className="mt-auto" />
     </div>
   );
 };
