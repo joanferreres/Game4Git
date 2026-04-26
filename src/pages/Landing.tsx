@@ -245,6 +245,20 @@ const Landing: React.FC = () => {
                     "Learn Git by doing. Visualize branches and merges while running real commands. Try guided challenges or switch to the terminal anytime."
                   )}{" "}
                   <Link
+                    to={localizePath("/git-practice-game")}
+                    className="underline hover:text-primary"
+                  >
+                    {t("landingPages.gitPracticeGame.eyebrow", "Practice Git online")}
+                  </Link>{" "}
+                  {t("home.seoIntroAnd", "and")}{" "}
+                  <Link
+                    to={localizePath("/git-branch-practice")}
+                    className="underline hover:text-primary"
+                  >
+                    {t("landingPages.gitBranchPractice.eyebrow", "Git branch practice")}
+                  </Link>
+                  .{" "}
+                  <Link
                     to={localizePath("/gdb")}
                     className="underline hover:text-primary"
                   >

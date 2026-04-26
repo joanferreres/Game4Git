@@ -54,24 +54,24 @@
       "description": "Apprenez GDB avec un guide interactif sur les points d'arrêt, l'exécution pas à pas, les traces de pile et l'inspection mémoire pour C et C++."
     },
     "valgrind": {
-      "title": "Apprendre Valgrind | Guide de débogage mémoire | Game4Git",
-      "description": "Apprenez Valgrind avec des exemples pratiques sur Memcheck, les fuites mémoire, les accès invalides et l'analyse de performance en C et C++."
+      "title": "Tutoriel Valgrind pour C/C++ | Guide mémoire | Game4Git",
+      "description": "Apprenez Valgrind pour C/C++ avec Memcheck pas à pas. Détectez les fuites mémoire, invalid reads et invalid frees avec des exemples pratiques."
     },
     "gitPracticeGame": {
-      "title": "Jeu pour pratiquer Git en ligne | Game4Git",
-      "description": "Jeu interactif Git pour pratiquer les commandes en ligne. Commits, branches et merges guidés — sans installation, jouez dans le navigateur."
+      "title": "Jeu pour pratiquer Git en ligne | Commandes Git | Game4Git",
+      "description": "Pratiquez Git en ligne avec commits, branches et merges interactifs. Entraînez de vraies commandes Git dans le navigateur avec des défis guidés."
     },
     "gitBranchPractice": {
-      "title": "Pratiquer les branches Git | Apprendre le branching visuellement | Game4Git",
-      "description": "Pratiquez les branches Git en ligne sans rien installer. Exercices interactifs pour créer des branches, changer de contexte et fusionner."
+      "title": "Pratiquer les branches Git en ligne | Apprendre le branching | Game4Git",
+      "description": "Apprenez le branching Git avec une pratique guidée. Créez, changez et fusionnez des branches en ligne avec un graphe Git visuel."
     },
     "gitMergeConflicts": {
       "title": "Conflits de merge Git | Apprendre à les résoudre | Game4Git",
       "description": "Apprenez les conflits de merge Git avec un playground visuel. Pratiquez les marqueurs de conflit, la résolution et les merges sûrs."
     },
     "valgrindMemoryLeaks": {
-      "title": "Valgrind memory leak | Guide pas à pas | Game4Git",
-      "description": "Apprenez à détecter les fuites mémoire avec Valgrind et Memcheck, à lire les rapports et à corriger les bugs mémoire courants en C et C++."
+      "title": "Tutoriel fuites mémoire Valgrind | Pas à pas | Game4Git",
+      "description": "Détectez les fuites mémoire avec Valgrind Memcheck pas à pas, lisez les rapports et corrigez les erreurs mémoire en C/C++."
     }
   },
   "welcome": {
@@ -924,7 +924,7 @@
     "gitPracticeGame": {
       "eyebrow": "Pratiquer Git en ligne",
       "heroTitle": "Jeu pour pratiquer Git avec commits, branches et merges",
-      "heroDescription": "Utilisez Game4Git pour pratiquer Git en ligne avec un playground visuel. Faites des changements, créez des commits, travaillez avec des branches et gagnez en confiance avant d'utiliser Git sur de vrais projets.",
+      "heroDescription": "Pratiquez les commandes Git en ligne dans un playground visuel. Faites des commits, créez des branches et fusionnez en sécurité avec un workflow proche du réel.",
       "primaryCta": "Commencer la pratique Git",
       "secondaryCta": "Ouvrir le playground principal",
       "highlights": [
@@ -972,7 +972,7 @@
     "gitBranchPractice": {
       "eyebrow": "Pratiquer les branches Git",
       "heroTitle": "Apprendre les branches Git avec une pratique guidée",
-      "heroDescription": "Pratiquez le branching Git visuellement. Créez des branches, naviguez entre elles et comprenez comment un travail isolé devient un merge propre.",
+      "heroDescription": "Apprenez le branching Git avec une pratique guidée. Créez des branches, changez de contexte et fusionnez avec confiance en suivant le graphe Git.",
       "primaryCta": "Commencer le défi branches",
       "secondaryCta": "Ouvrir le playground principal",
       "highlights": [
@@ -1068,7 +1068,7 @@
     "valgrindMemoryLeaks": {
       "eyebrow": "Détecter les fuites mémoire",
       "heroTitle": "Apprendre Valgrind pour les memory leaks pas à pas",
-      "heroDescription": "Utilisez ce guide pour comprendre comment Valgrind et Memcheck détectent les fuites, lectures invalides et mauvais usages de la mémoire dans des programmes C et C++.",
+      "heroDescription": "Suivez ce tutoriel Valgrind fuites mémoire: détectez les leaks, comprenez la sortie Memcheck et corrigez invalid reads ou frees en C/C++.",
       "primaryCta": "Ouvrir le guide Valgrind",
       "secondaryCta": "Ouvrir le playground principal",
       "highlights": [

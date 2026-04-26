@@ -40,6 +40,24 @@ export function SiteFooter({ className }: SiteFooterProps) {
               •
             </span>
             <Link
+              to={localizePath("/git-practice-game")}
+              className="transition-colors hover:text-foreground"
+            >
+              {t("landingPages.gitPracticeGame.eyebrow", "Practice Git online")}
+            </Link>
+            <span className="text-muted-foreground/50" aria-hidden>
+              •
+            </span>
+            <Link
+              to={localizePath("/git-branch-practice")}
+              className="transition-colors hover:text-foreground"
+            >
+              {t("landingPages.gitBranchPractice.eyebrow", "Git branch practice")}
+            </Link>
+            <span className="text-muted-foreground/50" aria-hidden>
+              •
+            </span>
+            <Link
               to={localizePath("/gdb")}
               className="transition-colors hover:text-foreground"
             >

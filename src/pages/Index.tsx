@@ -526,6 +526,14 @@ const GitGame: React.FC = () => {
           </h2>
           <p className="text-sm text-muted-foreground">
             {t("home.guidesDescription", "Start from the exact topic you want to practice and jump straight into the right challenge or debugging guide.")}
+            {" "}
+            <Link to={gitPracticeGamePath} className="underline hover:text-primary">
+              {t("landingPages.gitPracticeGame.eyebrow", "Practice Git online")}
+            </Link>
+            {" · "}
+            <Link to={gitBranchPracticePath} className="underline hover:text-primary">
+              {t("landingPages.gitBranchPractice.eyebrow", "Git branch practice")}
+            </Link>
           </p>
         </div>
         <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-4 mt-6">

@@ -54,24 +54,24 @@
       "description": "Learn GDB with an interactive guide covering breakpoints, stepping, stack traces, and memory inspection for C and C++ debugging."
     },
     "valgrind": {
-      "title": "Learn Valgrind | Memory Debugging Guide | Game4Git",
-      "description": "Learn Valgrind with practical examples for Memcheck, memory leaks, invalid accesses, and performance analysis in C and C++."
+      "title": "Valgrind Tutorial for C/C++ | Memory Debugging Guide | Game4Git",
+      "description": "Learn Valgrind for C/C++ with practical Memcheck examples. Detect memory leaks, invalid reads, and invalid frees step by step."
     },
     "gitPracticeGame": {
-      "title": "Git Practice Game | Practice Git Online | Game4Git",
-      "description": "Interactive git game to practice git commands online. Guided commits, branches, and merges — no installation, play in the browser."
+      "title": "Git Practice Game Online | Practice Git Commands | Game4Git",
+      "description": "Practice Git online with interactive commits, branches, and merges. Train real Git commands in the browser with guided challenges."
     },
     "gitBranchPractice": {
-      "title": "Git Branch Practice | Learn Branching Visually | Game4Git",
-      "description": "Practice Git branches online without installing Git. Interactive exercises to create branches, switch context, and merge safely."
+      "title": "Git Branch Practice Online | Learn Git Branching | Game4Git",
+      "description": "Learn Git branching with hands-on branch practice. Create, switch, and merge branches online with a visual Git graph."
     },
     "gitMergeConflicts": {
       "title": "Git Merge Conflicts | Learn to Resolve Conflicts | Game4Git",
       "description": "Learn Git merge conflicts with a visual playground. Practice conflict markers, resolution steps, and safe merges."
     },
     "valgrindMemoryLeaks": {
-      "title": "Valgrind Memory Leak Guide | Detect Leaks Step by Step | Game4Git",
-      "description": "Learn how to find memory leaks with Valgrind and Memcheck, read reports, and fix common C and C++ memory bugs."
+      "title": "Valgrind Memory Leak Tutorial | Find Leaks Step by Step | Game4Git",
+      "description": "Use Valgrind Memcheck to detect memory leaks step by step, read leak reports, and fix C/C++ memory errors confidently."
     }
   },
   "welcome": {
@@ -1149,7 +1149,7 @@
     "gitPracticeGame": {
       "eyebrow": "Practice Git online",
       "heroTitle": "Git practice game for commits, branches, and merges",
-      "heroDescription": "Use Game4Git to practice Git online with a visual playground. Make changes, create commits, branch safely, and build confidence before using Git on real projects.",
+      "heroDescription": "Practice Git commands online in a visual playground. Make commits, create branches, and merge safely while training the same workflow used in real repositories.",
       "primaryCta": "Start Git practice",
       "secondaryCta": "Open main playground",
       "highlights": [
@@ -1197,7 +1197,7 @@
     "gitBranchPractice": {
       "eyebrow": "Git branch practice",
       "heroTitle": "Learn Git branches with hands-on branch practice",
-      "heroDescription": "Practice Git branching visually. Create branches, switch between them, and understand how isolated work turns into clean merges.",
+      "heroDescription": "Learn Git branching with guided branch practice. Create branches, switch context, and merge with confidence while the visual graph shows every pointer move.",
       "primaryCta": "Start branch challenge",
       "secondaryCta": "Open main playground",
       "highlights": [
@@ -1293,7 +1293,7 @@
     "valgrindMemoryLeaks": {
       "eyebrow": "Find memory leaks",
       "heroTitle": "Learn Valgrind memory leak debugging step by step",
-      "heroDescription": "Use this guide to understand how Valgrind and Memcheck detect leaks, invalid reads, and memory misuse in C and C++ programs.",
+      "heroDescription": "Follow this Valgrind memory leak tutorial to detect leaks, understand Memcheck output, and fix invalid reads or frees in C/C++ code.",
       "primaryCta": "Open Valgrind guide",
       "secondaryCta": "Open main playground",
       "highlights": [

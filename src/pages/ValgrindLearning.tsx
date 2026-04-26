@@ -86,6 +86,7 @@ const ValgrindLearning: React.FC = () => {
       <AppNav variant="inner" badge="valgrind" showPlaygroundCta />
 
       <main className="max-w-7xl mx-auto w-full">
+        <h1 className="sr-only">{t('valgrind.intro.whatIs', 'What is Valgrind?')}</h1>
         {/* Tabs */}
         <Tabs
           defaultValue="introduction"

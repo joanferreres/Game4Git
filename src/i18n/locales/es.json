@@ -54,24 +54,24 @@
       "description": "Aprende GDB con una guía interactiva sobre breakpoints, ejecución paso a paso, stack traces e inspección de memoria para C y C++."
     },
     "valgrind": {
-      "title": "Aprende Valgrind | Guía de debugging de memoria | Game4Git",
-      "description": "Aprende Valgrind con ejemplos prácticos de Memcheck, fugas de memoria, accesos inválidos y análisis de rendimiento en C y C++."
+      "title": "Tutorial de Valgrind para C/C++ | Guía de memoria | Game4Git",
+      "description": "Aprende Valgrind para C/C++ con Memcheck paso a paso. Detecta fugas de memoria, invalid reads e invalid frees con ejemplos prácticos."
     },
     "gitPracticeGame": {
-      "title": "Juego para practicar Git online | Game4Git",
-      "description": "Juego interactivo de Git para practicar comandos online. Commits, ramas y merges guiados — sin instalación, juega en el navegador."
+      "title": "Juego para practicar Git online | Comandos Git | Game4Git",
+      "description": "Practica Git online con commits, ramas y merges interactivos. Entrena comandos Git reales en el navegador con retos guiados."
     },
     "gitBranchPractice": {
-      "title": "Practicar ramas en Git | Aprende branching visualmente | Game4Git",
-      "description": "Practica ramas de Git online sin instalar nada. Ejercicios interactivos para crear ramas, cambiar de contexto y fusionar."
+      "title": "Practicar ramas en Git online | Aprende branching | Game4Git",
+      "description": "Aprende branching en Git con práctica guiada. Crea, cambia y fusiona ramas online mientras ves el gráfico de Git en tiempo real."
     },
     "gitMergeConflicts": {
       "title": "Conflictos de merge en Git | Aprende a resolverlos | Game4Git",
       "description": "Aprende conflictos de merge en Git con un playground visual. Practica marcadores de conflicto, resolución y merges seguros."
     },
     "valgrindMemoryLeaks": {
-      "title": "Valgrind memory leak | Guía paso a paso | Game4Git",
-      "description": "Aprende a detectar memory leaks con Valgrind y Memcheck, interpretar los reportes y corregir errores comunes de memoria en C y C++."
+      "title": "Tutorial de memory leaks con Valgrind | Paso a paso | Game4Git",
+      "description": "Detecta memory leaks con Valgrind Memcheck paso a paso, interpreta reportes y corrige errores de memoria en C/C++."
     }
   },
   "welcome": {
@@ -1197,7 +1197,7 @@
     "gitPracticeGame": {
       "eyebrow": "Practica Git online",
       "heroTitle": "Juego para practicar Git con commits, ramas y merges",
-      "heroDescription": "Usa Game4Git para practicar Git online con un playground visual. Haz cambios, crea commits, trabaja con ramas y gana soltura antes de usar Git en proyectos reales.",
+      "heroDescription": "Practica comandos Git online en un playground visual. Haz commits, crea ramas y fusiona cambios con seguridad usando un flujo igual al de repositorios reales.",
       "primaryCta": "Empezar práctica de Git",
       "secondaryCta": "Abrir playground principal",
       "highlights": [
@@ -1245,7 +1245,7 @@
     "gitBranchPractice": {
       "eyebrow": "Practicar ramas en Git",
       "heroTitle": "Aprende ramas en Git con práctica guiada",
-      "heroDescription": "Practica branching en Git de forma visual. Crea ramas, muévete entre ellas y entiende cómo el trabajo aislado termina en merges limpios.",
+      "heroDescription": "Aprende branching en Git con práctica guiada. Crea ramas, cambia de contexto y fusiona con confianza mientras ves cada movimiento en el gráfico de Git.",
       "primaryCta": "Empezar reto de ramas",
       "secondaryCta": "Abrir playground principal",
       "highlights": [
@@ -1341,7 +1341,7 @@
     "valgrindMemoryLeaks": {
       "eyebrow": "Detectar fugas de memoria",
       "heroTitle": "Aprende Valgrind para memory leaks paso a paso",
-      "heroDescription": "Usa esta guía para entender cómo Valgrind y Memcheck detectan fugas, lecturas inválidas y mal uso de memoria en programas C y C++.",
+      "heroDescription": "Sigue este tutorial de Valgrind para memory leaks: detecta fugas, entiende la salida de Memcheck y corrige invalid reads o frees en C/C++.",
       "primaryCta": "Abrir guía de Valgrind",
       "secondaryCta": "Abrir playground principal",
       "highlights": [

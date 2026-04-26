@@ -54,24 +54,24 @@
       "description": "Aprèn GDB amb una guia interactiva sobre breakpoints, execució pas a pas, stack traces i inspecció de memòria per a C i C++."
     },
     "valgrind": {
-      "title": "Aprèn Valgrind | Guia de debugging de memòria | Game4Git",
-      "description": "Aprèn Valgrind amb exemples pràctics de Memcheck, fuites de memòria, accessos invàlids i anàlisi de rendiment en C i C++."
+      "title": "Tutorial de Valgrind per a C/C++ | Guia de memòria | Game4Git",
+      "description": "Aprèn Valgrind per a C/C++ amb Memcheck pas a pas. Detecta fuites de memòria, invalid reads i invalid frees amb exemples pràctics."
     },
     "gitPracticeGame": {
-      "title": "Joc per practicar Git online | Game4Git",
-      "description": "Joc interactiu de Git per practicar comandes online. Commits, branques i merges guiats — sense instal·lació, juga al navegador."
+      "title": "Joc per practicar Git online | Comandes Git | Game4Git",
+      "description": "Practica Git online amb commits, branques i merges interactius. Entrena comandes Git reals al navegador amb reptes guiats."
     },
     "gitBranchPractice": {
-      "title": "Practicar branques a Git | Aprèn branching visualment | Game4Git",
-      "description": "Practica branques de Git online sense instal·lar res. Exercicis interactius per crear branques, canviar de context i fusionar."
+      "title": "Practicar branques a Git online | Aprèn branching | Game4Git",
+      "description": "Aprèn branching a Git amb pràctica guiada. Crea, canvia i fusiona branques online mentre veus el gràfic de Git en temps real."
     },
     "gitMergeConflicts": {
       "title": "Conflictes de merge a Git | Aprèn a resoldre'ls | Game4Git",
       "description": "Aprèn conflictes de merge a Git amb un playground visual. Practica marcadors de conflicte, resolució i merges segurs."
     },
     "valgrindMemoryLeaks": {
-      "title": "Valgrind memory leak | Guia pas a pas | Game4Git",
-      "description": "Aprèn a detectar memory leaks amb Valgrind i Memcheck, interpretar els informes i corregir errors comuns de memòria en C i C++."
+      "title": "Tutorial de memory leaks amb Valgrind | Pas a pas | Game4Git",
+      "description": "Detecta memory leaks amb Valgrind Memcheck pas a pas, interpreta informes i corregeix errors de memòria en C/C++."
     }
   },
   "welcome": {
@@ -1033,7 +1033,7 @@
     "gitPracticeGame": {
       "eyebrow": "Practica Git online",
       "heroTitle": "Joc per practicar Git amb commits, branques i merges",
-      "heroDescription": "Utilitza Game4Git per practicar Git online amb un playground visual. Fes canvis, crea commits, treballa amb branques i guanya seguretat abans d'usar Git en projectes reals.",
+      "heroDescription": "Practica comandes Git online en un playground visual. Fes commits, crea branques i fusiona canvis amb seguretat seguint un flux real de repositori.",
       "primaryCta": "Començar pràctica de Git",
       "secondaryCta": "Obrir playground principal",
       "highlights": [
@@ -1081,7 +1081,7 @@
     "gitBranchPractice": {
       "eyebrow": "Practicar branques a Git",
       "heroTitle": "Aprèn branques a Git amb pràctica guiada",
-      "heroDescription": "Practica branching a Git de manera visual. Crea branques, mou-te entre elles i entén com la feina aïllada acaba en merges nets.",
+      "heroDescription": "Aprèn branching a Git amb pràctica guiada. Crea branques, canvia de context i fusiona amb confiança mentre veus cada moviment al gràfic de Git.",
       "primaryCta": "Començar repte de branques",
       "secondaryCta": "Obrir playground principal",
       "highlights": [
@@ -1177,7 +1177,7 @@
     "valgrindMemoryLeaks": {
       "eyebrow": "Detectar fuites de memòria",
       "heroTitle": "Aprèn Valgrind per a memory leaks pas a pas",
-      "heroDescription": "Utilitza aquesta guia per entendre com Valgrind i Memcheck detecten fuites, lectures invàlides i mal ús de memòria en programes C i C++.",
+      "heroDescription": "Segueix aquest tutorial de Valgrind per a memory leaks: detecta fuites, entén la sortida de Memcheck i corregeix invalid reads o frees en C/C++.",
       "primaryCta": "Obrir guia de Valgrind",
       "secondaryCta": "Obrir playground principal",
       "highlights": [
