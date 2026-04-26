@@ -107,6 +107,7 @@
     "eslint-plugin-security": "^2.1.1",
     "globals": "^15.15.0",
     "picomatch": "^4.0.4",
+    "playwright": "^1.59.1",
     "postcss": "^8.5.3",
     "rollup": "^3.29.5",
     "rollup-plugin-visualizer": "^7.0.1",
