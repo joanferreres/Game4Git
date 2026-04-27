@@ -87,5 +87,11 @@
       "destination": "https://game4git.games/$1",
       "permanent": true
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/((?!assets/|.*\\..*).*)",
+      "destination": "/index.html"
+    }
   ]
 } 
