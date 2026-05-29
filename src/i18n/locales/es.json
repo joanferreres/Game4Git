@@ -38,6 +38,7 @@
     "no": "No",
     "whatsHappening": "¿Qué está pasando?",
     "backToHome": "Volver al inicio",
+    "skipToMain": "Ir al contenido principal",
     "copyError": "No se pudo copiar el comando. Cópialo manualmente."
   },
   "general": {
@@ -72,7 +73,17 @@
     "valgrindMemoryLeaks": {
       "title": "Tutorial de memory leaks con Valgrind | Paso a paso | Game4Git",
       "description": "Detecta memory leaks con Valgrind Memcheck paso a paso, interpreta reportes y corrige errores de memoria en C/C++."
+    },
+    "playground": {
+      "title": "Playground Git online | Practica Git en el navegador | Game4Git",
+      "description": "Abre el playground interactivo de Git: gráfico de commits, área de staging, ramas y práctica de merges en el navegador, sin instalar nada."
     }
+  },
+  "playground": {
+    "prerenderTitle": "Playground interactivo de Git",
+    "prerenderLead": "Practica Git con un gráfico visual de commits, staging, ramas y retos guiados, todo en el navegador.",
+    "prerenderGuidesHeading": "Tutoriales guiados",
+    "prerenderBackHome": "Volver al inicio"
   },
   "welcome": {
     "title": "Bienvenido a Git Game",
@@ -1415,7 +1426,7 @@
     "seoIntroMobile": "Aprende Git practicando con commits visuales y desafíos guiados.",
     "seoIntroLabel": "Descripción de la app",
     "guidesTitle": "Guías populares",
-    "guidesDescription": "Empieza por el tema exacto que quieres practicar y entra directo en el reto o la guía de depuración adecuada.",
+    "guidesDescription": "Elige un tema—commits, ramas, conflictos de merge, Valgrind, GDB o fugas de memoria—y entra directo en la guía interactiva que toca.",
     "guidesPrimaryCta": "Ver guía",
     "faqTitle": "Preguntas frecuentes",
     "faq": {

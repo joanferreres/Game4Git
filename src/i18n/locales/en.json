@@ -38,6 +38,7 @@
     "no": "No",
     "whatsHappening": "What's happening?",
     "backToHome": "Back to Home",
+    "skipToMain": "Skip to main content",
     "copyError": "Could not copy command. Copy it manually."
   },
   "general": {
@@ -72,7 +73,17 @@
     "valgrindMemoryLeaks": {
       "title": "Valgrind Memory Leak Tutorial | Find Leaks Step by Step | Game4Git",
       "description": "Use Valgrind Memcheck to detect memory leaks step by step, read leak reports, and fix C/C++ memory errors confidently."
+    },
+    "playground": {
+      "title": "Git Playground Online | Practice Git in the Browser | Game4Git",
+      "description": "Open the interactive Git playground: visual commit graph, staging area, branches, and merge practice in your browser with no install."
     }
+  },
+  "playground": {
+    "prerenderTitle": "Interactive Git playground",
+    "prerenderLead": "Practice Git with a visual commit graph, staging, branches, and guided challenges—all in the browser.",
+    "prerenderGuidesHeading": "Guided tutorials",
+    "prerenderBackHome": "Back to home"
   },
   "welcome": {
     "title": "Welcome to Git Game",
@@ -1367,7 +1378,7 @@
     "seoIntroMobile": "Learn Git by doing with visual commits and guided challenges.",
     "seoIntroLabel": "App description",
     "guidesTitle": "Popular guides",
-    "guidesDescription": "Start from the exact topic you want to practice and jump straight into the right challenge or debugging guide.",
+    "guidesDescription": "Pick a topic—commits, branches, merge conflicts, Valgrind, GDB, or memory leaks—and jump straight into the matching interactive guide.",
     "guidesPrimaryCta": "Explore guide",
     "faqTitle": "FAQs",
     "faq": {

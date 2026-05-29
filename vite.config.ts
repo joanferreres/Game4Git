@@ -4,6 +4,27 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
 
+// frame-ancestors: permite embeber en iframe solo desde el portfolio; protege contra clickjacking.
+// Debe coincidir con vercel.json (Vercel aplica CSP en producción vía HTTP headers).
+const FRAME_ANCESTORS = "frame-ancestors 'self' https://joanferreresvivero.vercel.app";
+
+const previewSecurityHeaders = {
+  'Content-Security-Policy': [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com https://www.clarity.ms https://scripts.clarity.ms blob:",
+    "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com",
+    "img-src 'self' data: https://c.clarity.ms https://c.bing.com",
+    "connect-src 'self' https://cdn.jsdelivr.net https://*.clarity.ms https://clarity.ms",
+    "font-src 'self' https://cdn.jsdelivr.net https://fonts.gstatic.com data:",
+    "object-src 'none'",
+    "media-src 'self'",
+    "worker-src 'self' blob:",
+    FRAME_ANCESTORS,
+  ].join('; ') + ';',
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+};
+
 export default defineConfig({
   server: {
     host: '0.0.0.0',
@@ -59,6 +80,7 @@ export default defineConfig({
     // Ensure SPA fallback in preview too
     port: 4173,
     strictPort: true,
+    headers: previewSecurityHeaders,
   },
   plugins: [
     react(),

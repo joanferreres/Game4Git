@@ -237,7 +237,14 @@ const Landing: React.FC = () => {
                   {t(
                     "home.seoIntroMobile",
                     "Learn Git by doing with visual commits and guided challenges."
-                  )}
+                  )}{" "}
+                  <Link
+                    to={localizePath("/git-merge-conflicts")}
+                    className="underline hover:text-primary"
+                  >
+                    {t("landingPages.gitMergeConflicts.eyebrow", "Merge conflicts")}
+                  </Link>
+                  .
                 </p>
                 <p className="hidden sm:block text-sm text-muted-foreground leading-relaxed">
                   {t(
@@ -256,6 +263,20 @@ const Landing: React.FC = () => {
                     className="underline hover:text-primary"
                   >
                     {t("landingPages.gitBranchPractice.eyebrow", "Git branch practice")}
+                  </Link>
+                  {", "}
+                  <Link
+                    to={localizePath("/git-merge-conflicts")}
+                    className="underline hover:text-primary"
+                  >
+                    {t("landingPages.gitMergeConflicts.eyebrow", "Merge conflicts")}
+                  </Link>
+                  {", "}
+                  <Link
+                    to={localizePath("/valgrind-memory-leaks")}
+                    className="underline hover:text-primary"
+                  >
+                    {t("landingPages.valgrindMemoryLeaks.eyebrow", "Memory leaks")}
                   </Link>
                   .{" "}
                   <Link

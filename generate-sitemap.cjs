@@ -56,6 +56,7 @@ const buildAlternates = (pathname) => {
 const detectRoutes = () => {
   const baseRoutes = [
     { path: '/', priority: '1.0', changefreq: 'weekly' },
+    { path: '/playground', priority: '0.95', changefreq: 'weekly' },
     { path: '/git-practice-game', priority: '0.9', changefreq: 'weekly' },
     { path: '/git-branch-practice', priority: '0.9', changefreq: 'weekly' },
     { path: '/git-merge-conflicts', priority: '0.9', changefreq: 'weekly' },

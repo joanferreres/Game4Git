@@ -38,6 +38,7 @@
     "no": "No",
     "whatsHappening": "Què està passant?",
     "backToHome": "Tornar a l'inici",
+    "skipToMain": "Anar al contingut principal",
     "copyError": "No s'ha pogut copiar la comanda. Copia-la manualment."
   },
   "general": {
@@ -72,7 +73,17 @@
     "valgrindMemoryLeaks": {
       "title": "Tutorial de memory leaks amb Valgrind | Pas a pas | Game4Git",
       "description": "Detecta memory leaks amb Valgrind Memcheck pas a pas, interpreta informes i corregeix errors de memòria en C/C++."
+    },
+    "playground": {
+      "title": "Playground Git en línia | Practica Git al navegador | Game4Git",
+      "description": "Obre el playground interactiu de Git: gràfic de commits, staging, branques i pràctica de merges al navegador sense instal·lar res."
     }
+  },
+  "playground": {
+    "prerenderTitle": "Playground interactiu de Git",
+    "prerenderLead": "Practica Git amb un gràfic visual de commits, staging, branques i reptes guiats, tot al navegador.",
+    "prerenderGuidesHeading": "Tutorials guiats",
+    "prerenderBackHome": "Tornar a l'inici"
   },
   "welcome": {
     "introShortImproved": "Edita una línia de codi i fes el teu primer commit en menys de 30 segons. O prova un repte guiat.",
@@ -1240,7 +1251,7 @@
     "seoIntroMobile": "Aprèn Git practicant amb commits visuals i reptes guiats.",
     "seoIntroLabel": "Descripció de l'aplicació",
     "guidesTitle": "Guies populars",
-    "guidesDescription": "Comença pel tema exacte que vols practicar i entra directament al repte o a la guia de depuració adequada.",
+    "guidesDescription": "Tria un tema—commits, branques, conflictes de merge, Valgrind, GDB o fuites de memòria—i entra directament a la guia interactiva adequada.",
     "guidesPrimaryCta": "Veure guia",
     "faqTitle": "Preguntes freqüents",
     "faq": {

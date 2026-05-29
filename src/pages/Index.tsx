@@ -236,7 +236,7 @@ const GitGame: React.FC = () => {
     <div ref={rootRef} className="min-h-screen flex flex-col">
       <AppNav variant="inner" badge="git playground" centerBrand />
       <main id="main-content" className="container max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col flex-1">
-      <SeoHead page="home" />
+      <SeoHead page="playground" />
       {deferWelcomeBanner && (
         <WelcomeBanner
           onStart={() => {

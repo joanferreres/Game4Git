@@ -15,7 +15,8 @@ type SeoPageKey =
   | "gitPracticeGame"
   | "gitBranchPractice"
   | "gitMergeConflicts"
-  | "valgrindMemoryLeaks";
+  | "valgrindMemoryLeaks"
+  | "playground";
 
 const OG_LOCALE_MAP: Record<SupportedLocale, string> = {
   en: "en_US",

@@ -81,13 +81,13 @@ fi
 echo "🔒 Creating security headers configuration files..."
 
 # Create _headers file for Netlify
+# frame-ancestors: iframe solo desde el portfolio; sin X-Frame-Options (obsoleto frente a CSP)
 cat > dist/_headers << EOL
 /*
   X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
   Referrer-Policy: no-referrer-when-downgrade
-  Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com blob:; img-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net; worker-src 'self' blob:; font-src 'self' https://cdn.jsdelivr.net data:; frame-ancestors 'none';
+  Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com blob:; img-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net; worker-src 'self' blob:; font-src 'self' https://cdn.jsdelivr.net data:; frame-ancestors 'self' https://joanferreresvivero.vercel.app;
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
 EOL
@@ -100,10 +100,9 @@ cat > dist/vercel.json << EOL
       "source": "/(.*)",
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
         { "key": "X-XSS-Protection", "value": "1; mode=block" },
         { "key": "Referrer-Policy", "value": "no-referrer-when-downgrade" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com blob:; img-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net; worker-src 'self' blob:; font-src 'self' https://cdn.jsdelivr.net data:; frame-ancestors 'none';" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com blob:; img-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net; worker-src 'self' blob:; font-src 'self' https://cdn.jsdelivr.net data:; frame-ancestors 'self' https://joanferreresvivero.vercel.app;" },
         { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains; preload" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()" }
       ]

@@ -22,13 +22,13 @@ const NotFound = () => {
       <div className="absolute top-4 right-4">
         <LanguageSelector />
       </div>
-      <div className="text-center">
+      <main id="main-content" className="text-center">
         <h1 className="text-4xl font-bold mb-4">404</h1>
         <p className="text-xl text-gray-600 mb-4">{t('errors.notFound', 'Oops! Page not found')}</p>
         <Link to={homePath} className="text-blue-500 hover:text-blue-700 underline">
           {t('common.backToHome', 'Return to Home')}
         </Link>
-      </div>
+      </main>
     </div>
   );
 };

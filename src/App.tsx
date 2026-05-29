@@ -122,20 +122,24 @@ const publicRoutes = [
 
 const router = createBrowserRouter(publicRoutes);
 
-const App = () => (
+const App = () => {
+  const { t } = useTranslation();
+
+  return (
   <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
     <TooltipProvider delayDuration={200} skipDelayDuration={0}>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:text-sm focus:font-medium"
+        className="fixed left-4 top-4 z-[99999] inline-block rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-md outline-none ring-offset-2 transition-transform duration-200 -translate-y-[150%] focus:translate-y-0 focus-visible:ring-2 focus-visible:ring-ring"
       >
-        Skip to main content
+        {t("common.skipToMain", "Skip to main content")}
       </a>
       <RouterProvider router={router} />
       <SonnerToaster position="bottom-right" />
       <DeferredVercelMetrics />
     </TooltipProvider>
   </ThemeProvider>
-);
+  );
+};
 
 export default App;

@@ -38,6 +38,7 @@
     "no": "Non",
     "whatsHappening": "Que se passe-t-il ?",
     "backToHome": "Retour à l'accueil",
+    "skipToMain": "Aller au contenu principal",
     "copyError": "Impossible de copier la commande. Copiez-la manuellement."
   },
   "general": {
@@ -72,7 +73,17 @@
     "valgrindMemoryLeaks": {
       "title": "Tutoriel fuites mémoire Valgrind | Pas à pas | Game4Git",
       "description": "Détectez les fuites mémoire avec Valgrind Memcheck pas à pas, lisez les rapports et corrigez les erreurs mémoire en C/C++."
+    },
+    "playground": {
+      "title": "Playground Git en ligne | Pratiquer Git dans le navigateur | Game4Git",
+      "description": "Ouvrez le playground Git interactif : graphe de commits, zone de staging, branches et pratique des fusions dans le navigateur, sans installation."
     }
+  },
+  "playground": {
+    "prerenderTitle": "Playground Git interactif",
+    "prerenderLead": "Pratiquez Git avec un graphe de commits visuel, le staging, les branches et des défis guidés, le tout dans le navigateur.",
+    "prerenderGuidesHeading": "Tutoriels guidés",
+    "prerenderBackHome": "Retour à l'accueil"
   },
   "welcome": {
     "introShortImproved": "Modifiez une ligne de code et faites votre premier commit en moins de 30 secondes. Ou essayez un défi guidé.",
@@ -1131,7 +1142,7 @@
     "seoIntroMobile": "Apprenez Git en pratiquant avec des commits visuels et des défis guidés.",
     "seoIntroLabel": "Description de l'application",
     "guidesTitle": "Guides populaires",
-    "guidesDescription": "Commencez par le sujet exact que vous voulez pratiquer et entrez directement dans le bon défi ou le bon guide de débogage.",
+    "guidesDescription": "Choisissez un sujet—commits, branches, conflits de merge, Valgrind, GDB ou fuites mémoire—et ouvrez directement le guide interactif correspondant.",
     "guidesPrimaryCta": "Voir le guide",
     "faqTitle": "FAQ",
     "faq": {

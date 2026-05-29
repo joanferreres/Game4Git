@@ -92,7 +92,7 @@ const GdbLearning: React.FC = () => {
       <SeoHead page="gdb" />
       <AppNav variant="inner" badge="gdb" showPlaygroundCta />
 
-      <main className="max-w-7xl mx-auto w-full">
+      <main id="main-content" className="max-w-7xl mx-auto w-full">
         <h1 className="sr-only">{t('gdb.ui.whatIsTitle', 'What is GDB?')}</h1>
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="w-full grid grid-cols-2 md:grid-cols-5 gap-1 p-1 h-auto bg-muted/20 rounded-lg">

@@ -17,6 +17,7 @@ const OG_LOCALE_MAP = {
 
 const ROUTES = [
   { key: 'home', path: '/' },
+  { key: 'playground', path: '/playground' },
   { key: 'gdb', path: '/gdb' },
   { key: 'valgrind', path: '/valgrind' },
   { key: 'gitPracticeGame', path: '/git-practice-game' },
@@ -35,17 +36,17 @@ const LANDING_HERO_IMAGES = {
 
 const LANDING_ROUTE_CONFIG = {
   gitPracticeGame: {
-    primaryHref: (locale) => `${getLocalizedPath('/', locale)}?exercise=feature-branch`,
+    primaryHref: (locale) => `${getLocalizedPath('/playground', locale)}?exercise=feature-branch`,
     secondaryPath: '/',
     related: ['gitBranchPractice', 'gitMergeConflicts', 'gdb'],
   },
   gitBranchPractice: {
-    primaryHref: (locale) => `${getLocalizedPath('/', locale)}?exercise=feature-branch`,
+    primaryHref: (locale) => `${getLocalizedPath('/playground', locale)}?exercise=feature-branch`,
     secondaryPath: '/',
     related: ['gitPracticeGame', 'gitMergeConflicts', 'gdb'],
   },
   gitMergeConflicts: {
-    primaryHref: (locale) => `${getLocalizedPath('/', locale)}?exercise=merge-conflicts`,
+    primaryHref: (locale) => `${getLocalizedPath('/playground', locale)}?exercise=merge-conflicts`,
     secondaryPath: '/',
     related: ['gitBranchPractice', 'gitPracticeGame', 'gdb'],
   },
@@ -118,6 +119,8 @@ const getRouteTitle = (locale, routeKey) => {
       return t(locale, 'valgrind.pageTitle');
     case 'home':
       return t(locale, 'general.title');
+    case 'playground':
+      return t(locale, 'seo.playground.title');
     default:
       return t(locale, `landingPages.${routeKey}.heroTitle`);
   }
@@ -131,6 +134,8 @@ const getRouteDescription = (locale, routeKey) => {
       return t(locale, 'valgrind.intro.subtitle');
     case 'home':
       return t(locale, 'home.seoIntroShort');
+    case 'playground':
+      return t(locale, 'seo.playground.description');
     default:
       return t(locale, `landingPages.${routeKey}.heroDescription`);
   }
@@ -429,6 +434,48 @@ const buildValgrindMarkup = (locale) => {
       </main>`;
 };
 
+const buildPlaygroundMarkup = (locale) => {
+  const homePath = getLocalizedPath('/', locale);
+  const gdbPath = getLocalizedPath('/gdb', locale);
+  const valgrindPath = getLocalizedPath('/valgrind', locale);
+  const guideRoutes = [
+    { key: 'gitPracticeGame', path: '/git-practice-game' },
+    { key: 'gitBranchPractice', path: '/git-branch-practice' },
+    { key: 'gitMergeConflicts', path: '/git-merge-conflicts' },
+    { key: 'valgrindMemoryLeaks', path: '/valgrind-memory-leaks' },
+  ];
+
+  const guideListHtml = guideRoutes
+    .map(
+      (r) =>
+        `<li><a class="underline" href="${escapeHtml(getLocalizedPath(r.path, locale))}">${escapeHtml(
+          getRouteTitle(locale, r.key)
+        )}</a></li>`
+    )
+    .join('\n            ');
+
+  return `
+      <main id="main-content" class="container min-h-screen px-4 sm:px-6 lg:px-8 py-8">
+        <header class="mx-auto max-w-3xl text-center">
+          <a class="underline text-sm" href="${escapeHtml(homePath)}">${escapeHtml(
+    t(locale, 'playground.prerenderBackHome')
+  )}</a>
+          <h1 class="mt-3 text-3xl sm:text-4xl font-bold tracking-tight">${escapeHtml(
+            t(locale, 'playground.prerenderTitle')
+          )}</h1>
+          <p class="mt-3 text-sm sm:text-base text-muted-foreground">${escapeHtml(t(locale, 'playground.prerenderLead'))}</p>
+        </header>
+        <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
+          <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'playground.prerenderGuidesHeading'))}</h2>
+          <ul class="mt-4 space-y-2 text-sm">
+            ${guideListHtml}
+            <li><a class="underline" href="${escapeHtml(gdbPath)}">${escapeHtml(t(locale, 'gdb.pageTitle'))}</a></li>
+            <li><a class="underline" href="${escapeHtml(valgrindPath)}">${escapeHtml(t(locale, 'valgrind.pageTitle'))}</a></li>
+          </ul>
+        </section>
+      </main>`;
+};
+
 const buildLandingMarkup = (route, locale) => {
   const config = LANDING_ROUTE_CONFIG[route.key];
   const homePath = getLocalizedPath('/', locale);
@@ -606,6 +653,8 @@ const buildRouteMarkup = (route, locale) => {
       return buildValgrindMarkup(locale);
     case 'home':
       return buildHomeMarkup(locale);
+    case 'playground':
+      return buildPlaygroundMarkup(locale);
     default:
       return buildLandingMarkup(route, locale);
   }

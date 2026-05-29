@@ -65,11 +65,11 @@ echo "$CORS_COUNT"
 # Check for security headers in vercel.json
 echo "🔒 Checking for security headers in vercel.json..."
 if [ -f "vercel.json" ]; then
-  HEADERS_COUNT=$(grep -c "X-Content-Type-Options\|X-XSS-Protection\|X-Frame-Options\|Content-Security-Policy\|Strict-Transport-Security" vercel.json)
+  HEADERS_COUNT=$(grep -c "X-Content-Type-Options\|X-XSS-Protection\|frame-ancestors\|Content-Security-Policy\|Strict-Transport-Security" vercel.json)
   if [ "$HEADERS_COUNT" -ge 5 ]; then
     echo "✅ Security headers found in vercel.json" | tee $REPORT_DIR/headers-check.txt
   else
-    echo "❌ Missing security headers in vercel.json. Should have at least: CSP, X-Content-Type-Options, X-XSS-Protection, X-Frame-Options, and HSTS" | tee $REPORT_DIR/headers-check.txt
+    echo "❌ Missing security headers in vercel.json. Should have at least: CSP (with frame-ancestors), X-Content-Type-Options, X-XSS-Protection, and HSTS" | tee $REPORT_DIR/headers-check.txt
   fi
 else
   echo "❌ vercel.json not found" | tee $REPORT_DIR/headers-check.txt

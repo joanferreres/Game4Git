@@ -1,7 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useLayoutEffect, useRef } from "react";
+import { startTransition, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -207,9 +207,9 @@ const HERO_IMAGES: Record<LandingPageKey, string> = {
 const heroWebpSrc = (pngPath: string) => pngPath.replace(/\.png$/i, ".webp");
 
 /** Texto secundario con contraste suficiente en modo claro (WCAG) sin perder estética en oscuro. */
-const LANDING_BODY = "text-foreground/80 dark:text-muted-foreground";
-const LANDING_SUBTLE = "text-foreground/72 dark:text-muted-foreground";
-const LANDING_LABEL = "text-foreground/68 dark:text-muted-foreground";
+const LANDING_BODY = "text-foreground/85 dark:text-muted-foreground";
+const LANDING_SUBTLE = "text-foreground/80 dark:text-muted-foreground";
+const LANDING_LABEL = "text-foreground/78 dark:text-muted-foreground";
 
 function HeroPreviewMock({ pageKey, alt }: { pageKey: LandingPageKey; alt: string }) {
   const pngSrc = HERO_IMAGES[pageKey];
@@ -250,6 +250,21 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
   const secondaryHref = localizePath(config.secondaryPath);
   const featuredSteps = steps.slice(0, 3);
   const rootRef = useRef<HTMLDivElement>(null);
+  const [animationsReady, setAnimationsReady] = useState(false);
+
+  useEffect(() => {
+    let raf1 = 0;
+    let raf2 = 0;
+    raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        startTransition(() => setAnimationsReady(true));
+      });
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, []);
 
   const trustItems = [
     { icon: Zap, id: "trustInstant", label: t("landingPages.common.trustInstant") },
@@ -273,6 +288,10 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
 
   useGSAP(
     () => {
+      if (!animationsReady) {
+        return;
+      }
+
       const root = rootRef.current;
       if (!root) {
         return;
@@ -335,8 +354,13 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
         mm.revert();
       };
     },
-    { scope: rootRef, dependencies: [pageKey], revertOnUpdate: true }
+    { scope: rootRef, dependencies: [pageKey, animationsReady], revertOnUpdate: true }
   );
+
+  useLayoutEffect(() => {
+    if (!animationsReady) return;
+    ScrollTrigger.refresh();
+  }, [animationsReady, pageKey]);
 
   // Red de seguridad: al cruzar a viewport estrecho, limpiar estilos inline de GSAP (evita contenido invisible tras encoger desde desktop).
   useLayoutEffect(() => {
@@ -371,7 +395,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
       />
       <AppNav variant="inner" badge={config.badge} showPlaygroundCta />
       <div className="container relative max-w-full px-4 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-5 md:px-8">
-        <main className="mx-auto max-w-6xl space-y-16 sm:space-y-20 md:space-y-24">
+        <main id="main-content" className="mx-auto max-w-6xl space-y-16 sm:space-y-20 md:space-y-24">
           {/* Hero */}
           <section className="relative">
             <div className="pointer-events-none absolute -inset-x-6 -top-8 bottom-0 -z-10 rounded-[2.5rem] bg-gradient-to-b from-muted/30 to-transparent opacity-80 blur-2xl" />
@@ -380,7 +404,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                 <div data-landing-hero-chunk className="flex flex-wrap items-center gap-2">
                   <Badge
                     variant="secondary"
-                    className="rounded-full border border-border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] bg-orange-brand/10 text-orange-brand"
+                    className="rounded-full border border-orange-200/80 bg-orange-brand/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-950 dark:border-orange-900/40 dark:text-orange-200"
                   >
                     {t(`landingPages.${pageKey}.eyebrow`)}
                   </Badge>
