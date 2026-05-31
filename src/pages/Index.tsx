@@ -1,7 +1,4 @@
 import React, { useState, useEffect, lazy, Suspense, useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useInView } from "@/hooks/useInView";
 
@@ -23,7 +20,6 @@ import { Info, Play, Plus, ArrowDownUp, Upload, DownloadCloud, GitBranch as GitB
 import LanguageSelector from "@/components/LanguageSelector";
 
 import { useTranslation } from "react-i18next";
-import "../i18n"; // Importamos la configuración de i18n
 const GitExercises = lazy(() => import("@/components/GitExercises"));
 const ConflictResolver = lazy(() => import("@/components/ConflictResolver"));
 import { Link } from "react-router-dom";
@@ -59,8 +55,6 @@ const CodeEditorSkeleton: React.FC<{ label: string }> = ({ label }) => (
     </CardContent>
   </Card>
 );
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const GitGame: React.FC = () => {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -169,68 +163,6 @@ const GitGame: React.FC = () => {
 
   // Check if there's a pending merge conflict
   const conflictExists = hasPendingConflict();
-
-  useGSAP(
-    () => {
-      const root = rootRef.current;
-      if (!root) {
-        return;
-      }
-
-      const mm = gsap.matchMedia();
-      mm.add(
-        {
-          animate: "(prefers-reduced-motion: no-preference)",
-          desktop: "(min-width: 640px)",
-        },
-        (ctx) => {
-          const { animate, desktop } = ctx.conditions as { animate: boolean; desktop: boolean };
-          if (!animate || !desktop) {
-            gsap.set(
-              "[data-home-strip], [data-home-panel], [data-home-controls], .home-guide-card, .home-faq-item",
-              { clearProps: "all" }
-            );
-            return;
-          }
-
-          gsap.set("[data-home-strip], [data-home-panel], [data-home-controls]", {
-            autoAlpha: 0,
-            y: 16,
-          });
-          gsap.set(".home-guide-card, .home-faq-item", { autoAlpha: 0, y: 20 });
-
-          const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-          tl.to("[data-home-strip]", { autoAlpha: 1, y: 0, duration: 0.28 }, 0)
-            .to("[data-home-panel]", { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.07 }, "<0.1")
-            .to("[data-home-controls]", { autoAlpha: 1, y: 0, duration: 0.3 }, "<0.12");
-
-          ScrollTrigger.batch(".home-guide-card", {
-            start: "top 90%",
-            once: true,
-            interval: 0.06,
-            onEnter: (batch) => {
-              gsap.to(batch, { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.05, ease: "power2.out" });
-            },
-          });
-
-          ScrollTrigger.batch(".home-faq-item", {
-            start: "top 92%",
-            once: true,
-            interval: 0.06,
-            onEnter: (batch) => {
-              gsap.to(batch, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.04, ease: "power2.out" });
-            },
-          });
-        },
-        root
-      );
-
-      return () => {
-        mm.revert();
-      };
-    },
-    { scope: rootRef, dependencies: [showQuickGuide, showSecondaryBanner], revertOnUpdate: true }
-  );
 
   return (
     <div ref={rootRef} className="min-h-screen flex flex-col">

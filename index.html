@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- Preconnect to origins used in critical path -->
-    <link rel="preconnect" href="https://cdn.gpteng.co" crossorigin />
     <link rel="preconnect" href="https://scripts.clarity.ms" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" />
     
     <!-- Critical CSS: Prevent FOUC and enable first paint without external CSS -->
     <style>
@@ -44,6 +40,8 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Game4Git","url":"https://game4git.games","logo":"https://game4git.games/logo-96.png","sameAs":[]}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Game4Git","url":"https://game4git.games"}</script>
     <!-- SEO_END -->
+    <!-- STRUCTURED_DATA_START -->
+    <!-- STRUCTURED_DATA_END -->
     <meta name="author" content="FerVi" />
     
     <!-- Security and Verification Meta Tags -->
@@ -66,7 +64,7 @@
     <meta name="msapplication-TileImage" content="/logo-96.png" />
     
     <!-- Security Headers - Solo los que son válidos en meta tags -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com https://www.clarity.ms https://scripts.clarity.ms blob:; img-src 'self' data: https://c.clarity.ms https://c.bing.com; connect-src 'self' https://cdn.jsdelivr.net https://*.clarity.ms https://clarity.ms; worker-src 'self' blob:; font-src 'self' https://cdn.jsdelivr.net https://fonts.gstatic.com data:;" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://va.vercel-scripts.com https://www.clarity.ms https://scripts.clarity.ms blob:; img-src 'self' data: https://c.clarity.ms https://c.bing.com; connect-src 'self' https://cdn.jsdelivr.net https://*.clarity.ms https://clarity.ms; worker-src 'self' blob:; font-src 'self' data:;" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="Referrer-Policy" content="no-referrer-when-downgrade" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
@@ -104,29 +102,6 @@
 
   <body>
     <div id="root"><!-- APP_HTML --></div>
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script type="text/javascript">
-      (function () {
-        function loadGptEngineer() {
-          var s = document.createElement("script");
-          s.src = "https://cdn.gpteng.co/gptengineer.js";
-          s.type = "module";
-          s.defer = true;
-          document.body.appendChild(s);
-        }
-        if ("requestIdleCallback" in window) {
-          window.requestIdleCallback(loadGptEngineer, { timeout: 8000 });
-        } else {
-          window.addEventListener(
-            "load",
-            function () {
-              setTimeout(loadGptEngineer, 2500);
-            },
-            { once: true }
-          );
-        }
-      })();
-    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

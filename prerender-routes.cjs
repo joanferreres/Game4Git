@@ -34,6 +34,13 @@ const LANDING_HERO_IMAGES = {
   valgrindMemoryLeaks: '/hero-valgrind-memory-leaks.webp',
 };
 
+const LANDING_HERO_PNG = {
+  gitPracticeGame: '/hero-git-practice-game.png',
+  gitBranchPractice: '/hero-git-branch-practice.png',
+  gitMergeConflicts: '/hero-git-merge-conflicts.png',
+  valgrindMemoryLeaks: '/hero-valgrind-memory-leaks.png',
+};
+
 const LANDING_ROUTE_CONFIG = {
   gitPracticeGame: {
     primaryHref: (locale) => `${getLocalizedPath('/playground', locale)}?exercise=feature-branch`,
@@ -98,6 +105,24 @@ const t = (locale, key, fallback = '') => {
 };
 
 const isLandingRoute = (routeKey) => Object.prototype.hasOwnProperty.call(LANDING_ROUTE_CONFIG, routeKey);
+
+const buildHeroPictureMarkup = (routeKey, locale) => {
+  const webp = LANDING_HERO_IMAGES[routeKey];
+  const png = LANDING_HERO_PNG[routeKey];
+  if (!webp || !png) {
+    return '';
+  }
+
+  const alt = escapeHtml(t(locale, `landingPages.${routeKey}.heroTitle`));
+
+  return `
+                <div class="relative aspect-[1200/670] overflow-hidden rounded-b-2xl bg-gradient-to-br from-muted/40 via-background to-muted/20">
+                  <picture>
+                    <source type="image/webp" srcset="${webp}" />
+                    <img src="${png}" alt="${alt}" width="1200" height="670" fetchpriority="high" loading="eager" decoding="async" class="h-full w-full object-cover object-top" />
+                  </picture>
+                </div>`;
+};
 
 const buildAlternateLinks = (routePath) => {
   const defaultUrl = `${SITE_URL}${normalizePath(routePath)}`;
@@ -540,6 +565,7 @@ const buildLandingMarkup = (route, locale) => {
               </div>
 
               <div class="relative">
+                ${buildHeroPictureMarkup(route.key, locale)}
                 <div class="relative rounded-[28px] border border-border/70 bg-background/90 p-4 shadow-sm sm:p-5">
                   <div class="flex items-center justify-between gap-3 border-b border-border/60 pb-4">
                     <div>
@@ -669,7 +695,7 @@ const addCriticalPreloads = (template, routeKey) => {
     );
   }
   const assetsDir = path.join(DIST_DIR, 'assets');
-  if (fs.existsSync(assetsDir)) {
+  if (routeKey === 'playground' && fs.existsSync(assetsDir)) {
     const files = fs.readdirSync(assetsDir);
     const indexCss = files.find((f) => f.startsWith('Index-') && f.endsWith('.css'));
     if (indexCss) {

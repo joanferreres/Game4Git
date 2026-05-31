@@ -73,3 +73,22 @@ Snippet edits planned:
 Internal linking edits planned:
 Recrawl needed: yes/no
 ```
+
+## Post-optimization baseline (2026-05-31)
+
+Reference metrics before SEO/performance rollout (GSC last 28 days):
+
+| Metric | Value |
+|--------|-------|
+| Clicks | 58 |
+| Impressions | 3,531 |
+| CTR | 1.64% |
+| Avg position | 13.4 |
+| Home clicks | 51 |
+| `/git-practice-game` position | ~40 |
+| Lighthouse mobile home (lab) | 86, LCP 3.1s |
+| Lighthouse mobile git-practice-game (lab) | 75, LCP 4.9s |
+
+**Shipped in this release:** differentiated `seo.*` snippets, home guide copy, internal cross-links, self-hosted fonts, lazy GSAP, native FAQ on SEO landings, prerender hero images + JSON-LD, removed `gptengineer.js`, split Radix chunks (`ui-dropdown`, `ui-accordion`).
+
+Re-measure 14 days after deploy using the weekly cadence above.

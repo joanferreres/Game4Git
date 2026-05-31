@@ -1,9 +1,6 @@
-import React, { useRef } from "react";
+import React, { lazy, Suspense, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   Sparkles,
   GitBranch,
@@ -16,11 +13,12 @@ import {
 import AppNav from "@/components/AppNav";
 import SiteFooter from "@/components/SiteFooter";
 import SeoHead from "@/components/SeoHead";
-import GitBranchScrollAnimation from "@/components/GitBranchScrollAnimation";
-import { Button } from "@/components/ui/button";
+import { useHomeLandingAnimations } from "@/hooks/useLandingAnimations";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+const GitBranchScrollAnimation = lazy(
+  () => import("@/components/GitBranchScrollAnimation")
+);
 
 const GUIDE_BADGE =
   "font-mono text-[10px] text-muted-foreground bg-muted border border-border px-1.5 py-0.5 rounded";
@@ -72,8 +70,8 @@ const Landing: React.FC = () => {
   const guides = [
     {
       href: localizePath("/git-practice-game"),
-      title: t("landingPages.gitPracticeGame.heroTitle"),
-      description: t("landingPages.gitPracticeGame.heroDescription"),
+      title: t("home.guides.gitPractice.title"),
+      description: t("home.guides.gitPractice.description"),
       icon: Sparkles,
       color: "orange" as const,
       command: "git practice",
@@ -81,8 +79,8 @@ const Landing: React.FC = () => {
     },
     {
       href: localizePath("/git-branch-practice"),
-      title: t("landingPages.gitBranchPractice.heroTitle"),
-      description: t("landingPages.gitBranchPractice.heroDescription"),
+      title: t("home.guides.gitBranch.title"),
+      description: t("home.guides.gitBranch.description"),
       icon: GitBranch,
       color: "sky" as const,
       command: "git branch",
@@ -90,8 +88,8 @@ const Landing: React.FC = () => {
     },
     {
       href: localizePath("/git-merge-conflicts"),
-      title: t("landingPages.gitMergeConflicts.heroTitle"),
-      description: t("landingPages.gitMergeConflicts.heroDescription"),
+      title: t("home.guides.gitMerge.title"),
+      description: t("home.guides.gitMerge.description"),
       icon: GitMerge,
       color: "amber" as const,
       command: "git merge",
@@ -99,8 +97,8 @@ const Landing: React.FC = () => {
     },
     {
       href: localizePath("/gdb"),
-      title: t("gdb.pageTitle"),
-      description: t("gdb.subtitle"),
+      title: t("home.guides.gdb.title"),
+      description: t("home.guides.gdb.description"),
       icon: Terminal,
       color: "slate" as const,
       command: "gdb",
@@ -108,8 +106,8 @@ const Landing: React.FC = () => {
     },
     {
       href: localizePath("/valgrind"),
-      title: t("valgrind.pageTitle"),
-      description: t("valgrind.intro.subtitle"),
+      title: t("home.guides.valgrind.title"),
+      description: t("home.guides.valgrind.description"),
       icon: Cpu,
       color: "teal" as const,
       command: "valgrind",
@@ -117,8 +115,8 @@ const Landing: React.FC = () => {
     },
     {
       href: localizePath("/valgrind-memory-leaks"),
-      title: t("landingPages.valgrindMemoryLeaks.heroTitle"),
-      description: t("landingPages.valgrindMemoryLeaks.heroDescription"),
+      title: t("home.guides.valgrindLeaks.title"),
+      description: t("home.guides.valgrindLeaks.description"),
       icon: Shield,
       color: "green" as const,
       command: "valgrind --leak",
@@ -133,76 +131,7 @@ const Landing: React.FC = () => {
     { q: t("home.faq.q4"), a: t("home.faq.a4") },
   ];
 
-  useGSAP(
-    () => {
-      const root = rootRef.current;
-      if (!root) return;
-
-      const mm = gsap.matchMedia();
-      mm.add(
-        {
-          animate: "(prefers-reduced-motion: no-preference)",
-          desktop: "(min-width: 640px)",
-        },
-        (ctx) => {
-          const { animate, desktop } = ctx.conditions as {
-            animate: boolean;
-            desktop: boolean;
-          };
-          if (!animate || !desktop) {
-            gsap.set(
-              "[data-home-header], .home-guide-card, .home-faq-item",
-              { clearProps: "all" }
-            );
-            return;
-          }
-
-          gsap.set("[data-home-header]", { autoAlpha: 0, y: 16 });
-          gsap.set(".home-guide-card, .home-faq-item", {
-            autoAlpha: 0,
-            y: 20,
-          });
-
-          const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-          tl.to("[data-home-header]", { autoAlpha: 1, y: 0, duration: 0.35 }, 0);
-
-          ScrollTrigger.batch(".home-guide-card", {
-            start: "top 90%",
-            once: true,
-            interval: 0.06,
-            onEnter: (batch) => {
-              gsap.to(batch, {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.45,
-                stagger: 0.05,
-                ease: "power2.out",
-              });
-            },
-          });
-
-          ScrollTrigger.batch(".home-faq-item", {
-            start: "top 92%",
-            once: true,
-            interval: 0.06,
-            onEnter: (batch) => {
-              gsap.to(batch, {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.4,
-                stagger: 0.04,
-                ease: "power2.out",
-              });
-            },
-          });
-        },
-        root
-      );
-
-      return () => mm.revert();
-    },
-    { scope: rootRef }
-  );
+  useHomeLandingAnimations(rootRef);
 
   return (
     <div ref={rootRef} className="min-h-screen bg-background">
@@ -255,7 +184,7 @@ const Landing: React.FC = () => {
                     to={localizePath("/git-practice-game")}
                     className="underline hover:text-primary"
                   >
-                    {t("landingPages.gitPracticeGame.eyebrow", "Practice Git online")}
+                    {t("home.guides.gitPractice.title", "Git Practice Game")}
                   </Link>{" "}
                   {t("home.seoIntroAnd", "and")}{" "}
                   <Link
@@ -336,7 +265,9 @@ const Landing: React.FC = () => {
             </div>
             {/* Right: animated git graph */}
             <div className="hidden md:block" aria-hidden>
-              <GitBranchScrollAnimation />
+              <Suspense fallback={null}>
+                <GitBranchScrollAnimation />
+              </Suspense>
             </div>
           </div>
         </div>

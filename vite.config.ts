@@ -11,11 +11,11 @@ const FRAME_ANCESTORS = "frame-ancestors 'self' https://joanferreresvivero.verce
 const previewSecurityHeaders = {
   'Content-Security-Policy': [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com https://www.clarity.ms https://scripts.clarity.ms blob:",
-    "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com",
+    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://va.vercel-scripts.com https://www.clarity.ms https://scripts.clarity.ms blob:",
+    "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
     "img-src 'self' data: https://c.clarity.ms https://c.bing.com",
     "connect-src 'self' https://cdn.jsdelivr.net https://*.clarity.ms https://clarity.ms",
-    "font-src 'self' https://cdn.jsdelivr.net https://fonts.gstatic.com data:",
+    "font-src 'self' data:",
     "object-src 'none'",
     "media-src 'self'",
     "worker-src 'self' blob:",
@@ -66,10 +66,10 @@ export default defineConfig({
       'Content-Security-Policy': [
         "default-src 'self'",
         "connect-src 'self' ws: http: https: ws://localhost:24678 http://localhost:24678 https://cdn.jsdelivr.net https://*.clarity.ms https://clarity.ms",
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.gpteng.co https://cdn.jsdelivr.net https://va.vercel-scripts.com https://www.clarity.ms https://scripts.clarity.ms blob:",
-        "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com",
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://va.vercel-scripts.com https://www.clarity.ms https://scripts.clarity.ms blob:",
+        "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
         "img-src 'self' data: blob: https://c.clarity.ms https://c.bing.com",
-        "font-src 'self' data: https://cdn.jsdelivr.net https://fonts.gstatic.com",
+        "font-src 'self' data: https://cdn.jsdelivr.net",
         "worker-src 'self' blob:",
         "frame-src 'self'",
         "object-src 'none'"
@@ -132,6 +132,12 @@ export default defineConfig({
           // ScrollArea solo se usa en GitTerminal (lazy) - chunk separado para no cargar en carga inicial
           if (id.includes('node_modules/@radix-ui/react-scroll-area')) {
             return 'ui-scroll';
+          }
+          if (id.includes('node_modules/@radix-ui/react-accordion')) {
+            return 'ui-accordion';
+          }
+          if (id.includes('node_modules/@radix-ui/react-dropdown-menu')) {
+            return 'ui-dropdown';
           }
           if (id.includes('node_modules/@radix-ui')) {
             return 'ui';

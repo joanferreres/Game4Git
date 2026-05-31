@@ -15,7 +15,7 @@ fi
 
 # Generate sitemap.xml
 echo "🌐 Generating sitemap.xml..."
-node generate-sitemap.js
+node generate-sitemap.cjs
 
 # Clean up previous builds
 echo "🧹 Cleaning up previous builds..."

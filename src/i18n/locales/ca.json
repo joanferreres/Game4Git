@@ -42,25 +42,25 @@
     "copyError": "No s'ha pogut copiar la comanda. Copia-la manualment."
   },
   "general": {
-    "title": "Game4Git",
+    "title": "Joc de Git Online — Aprèn Jugant",
     "subtitle": "Aprèn Git jugant: visualitza branques i merges, resol desafiaments i practica comandes reals en el millor joc per a aprendre Git."
   },
   "seo": {
     "home": {
-      "title": "Joc de Git Online | Aprèn Git Jugant | Game4Git",
-      "description": "Joc per aprendre Git gratis — practica comandes, branques i merges sense instal·lar res. Exercicis interactius per a principiants."
+      "title": "Joc de Git Online | Branques, Merges i Guies Interactives | Game4Git",
+      "description": "Hub gratuït de jocs Git — guies interactives per a commits, branques, conflictes de merge, GDB i Valgrind. Juga online sense instal·lar res."
     },
     "gdb": {
-      "title": "Aprèn GDB | Guia interactiva de depuració | Game4Git",
-      "description": "Aprèn GDB amb una guia interactiva sobre breakpoints, execució pas a pas, stack traces i inspecció de memòria per a C i C++."
+      "title": "Com usar GDB | Tutorial interactiu de depuració | Game4Git",
+      "description": "Tutorial interactiu de GDB per a C/C++ — practica breakpoints, execució pas a pas, stack traces i inspecció de memòria al navegador."
     },
     "valgrind": {
-      "title": "Tutorial de Valgrind per a C/C++ | Guia de memòria | Game4Git",
-      "description": "Aprèn Valgrind per a C/C++ amb Memcheck pas a pas. Detecta fuites de memòria, invalid reads i invalid frees amb exemples pràctics."
+      "title": "Com usar Valgrind | Tutorial interactiu Memcheck | Game4Git",
+      "description": "Tutorial interactiu de Valgrind — aprèn Memcheck, detecta fuites de memòria i corregeix invalid reads amb exemples guiats."
     },
     "gitPracticeGame": {
-      "title": "Joc per practicar Git online | Comandes Git | Game4Git",
-      "description": "Practica Git online amb commits, branques i merges interactius. Entrena comandes Git reals al navegador amb reptes guiats."
+      "title": "Joc per Practicar Git | Aprèn Comandes Git Online | Game4Git",
+      "description": "Joc gratuït per practicar Git al navegador — entrena commit, branch, checkout i merge amb reptes guiats. Sense instal·lació."
     },
     "gitBranchPractice": {
       "title": "Practicar branques a Git online | Aprèn branching | Game4Git",
@@ -75,8 +75,8 @@
       "description": "Detecta memory leaks amb Valgrind Memcheck pas a pas, interpreta informes i corregeix errors de memòria en C/C++."
     },
     "playground": {
-      "title": "Playground Git en línia | Practica Git al navegador | Game4Git",
-      "description": "Obre el playground interactiu de Git: gràfic de commits, staging, branques i pràctica de merges al navegador sense instal·lar res."
+      "title": "Playground Git | Gràfic de Commits i Terminal | Game4Git",
+      "description": "Obre el playground Git: gràfic de commits en viu, staging, controls de branques i terminal opcional. Practica fluxos Git al navegador."
     }
   },
   "playground": {
@@ -1039,7 +1039,10 @@
       "heroPreviewAlt": "Vista prèvia de l’espai interactiu per aprendre Git al navegador.",
       "previewBadge": "Vista prèvia",
       "stepCountLabel_one": "{{count}} pas",
-      "stepCountLabel_other": "{{count}} passos"
+      "stepCountLabel_other": "{{count}} passos",
+      "openPlayground": "Obrir playground interactiu",
+      "alsoTry": "Prova també",
+      "and": "i"
     },
     "gitPracticeGame": {
       "eyebrow": "Practica Git online",
@@ -1253,6 +1256,32 @@
     "guidesTitle": "Guies populars",
     "guidesDescription": "Tria un tema—commits, branques, conflictes de merge, Valgrind, GDB o fuites de memòria—i entra directament a la guia interactiva adequada.",
     "guidesPrimaryCta": "Veure guia",
+    "guides": {
+      "gitPractice": {
+        "title": "Joc per Practicar Git",
+        "description": "Entrena commit, branch i merge en un joc guiat al navegador."
+      },
+      "gitBranch": {
+        "title": "Practicar Branques Git",
+        "description": "Crea, canvia i fusiona branques amb un gràfic visual en viu."
+      },
+      "gitMerge": {
+        "title": "Conflictes de Merge",
+        "description": "Aprèn marcadors de conflicte i resolució segura."
+      },
+      "gdb": {
+        "title": "Aprendre GDB",
+        "description": "Tutorial interactiu de depuració per a C i C++."
+      },
+      "valgrind": {
+        "title": "Aprendre Valgrind",
+        "description": "Fundamentals de Memcheck i depuració de memòria."
+      },
+      "valgrindLeaks": {
+        "title": "Fugues de Memòria amb Valgrind",
+        "description": "Troba i corregeix memory leaks pas a pas."
+      }
+    },
     "faqTitle": "Preguntes freqüents",
     "faq": {
       "q1": "Game4Git és gratuït?",

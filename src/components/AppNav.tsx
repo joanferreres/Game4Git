@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import LanguageSelector from "@/components/LanguageSelector";
+import { DeferUntilAfterPaint } from "@/components/DeferUntilAfterPaint";
 
 interface AppNavProps {
   variant: "landing" | "inner";
@@ -61,7 +62,9 @@ const AppNav = ({
               {t("nav.guides", "Guías")}
             </a>
             <ThemeToggle />
-            <LanguageSelector />
+            <DeferUntilAfterPaint>
+              <LanguageSelector />
+            </DeferUntilAfterPaint>
             <Link
               to={localizePath("/playground")}
               className="bg-orange-brand hover:bg-orange-brand-hover text-white text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors"
@@ -107,7 +110,9 @@ const AppNav = ({
                 </Link>
               )}
               <ThemeToggle />
-              <LanguageSelector />
+              <DeferUntilAfterPaint>
+                <LanguageSelector />
+              </DeferUntilAfterPaint>
             </div>
           </>
         ) : (
@@ -139,7 +144,9 @@ const AppNav = ({
                 </Link>
               )}
               <ThemeToggle />
-              <LanguageSelector />
+              <DeferUntilAfterPaint>
+                <LanguageSelector />
+              </DeferUntilAfterPaint>
             </div>
             {showStackedMobilePlaygroundCta && (
               <Link

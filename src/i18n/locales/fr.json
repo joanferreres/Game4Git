@@ -42,25 +42,25 @@
     "copyError": "Impossible de copier la commande. Copiez-la manuellement."
   },
   "general": {
-    "title": "Game4Git",
+    "title": "Jeu Git en Ligne — Apprendre en Jouant",
     "subtitle": "Apprenez Git en jouant visuellement dans ce terrain de jeu interactif : explorez les branches, relevez des défis pratiques et maîtrisez Git avec Game4Git."
   },
   "seo": {
     "home": {
-      "title": "Jeu Git en ligne | Apprendre Git en jouant | Game4Git",
-      "description": "Jeu Git gratuit — pratiquez les commandes, branches et merges sans rien installer. Exercices interactifs pour débutants."
+      "title": "Jeu Git en Ligne | Branches, Merges et Guides Interactifs | Game4Git",
+      "description": "Hub gratuit de jeux Git — guides interactifs pour commits, branches, conflits de merge, GDB et Valgrind. Jouez en ligne sans rien installer."
     },
     "gdb": {
-      "title": "Apprendre GDB | Guide interactif de débogage | Game4Git",
-      "description": "Apprenez GDB avec un guide interactif sur les points d'arrêt, l'exécution pas à pas, les traces de pile et l'inspection mémoire pour C et C++."
+      "title": "Comment utiliser GDB | Tutoriel interactif de débogage | Game4Git",
+      "description": "Tutoriel GDB interactif pour C/C++ — pratiquez breakpoints, exécution pas à pas, traces de pile et inspection mémoire dans le navigateur."
     },
     "valgrind": {
-      "title": "Tutoriel Valgrind pour C/C++ | Guide mémoire | Game4Git",
-      "description": "Apprenez Valgrind pour C/C++ avec Memcheck pas à pas. Détectez les fuites mémoire, invalid reads et invalid frees avec des exemples pratiques."
+      "title": "Comment utiliser Valgrind | Tutoriel Memcheck interactif | Game4Git",
+      "description": "Tutoriel Valgrind interactif — apprenez Memcheck, détectez les fuites mémoire et corrigez les invalid reads avec des exemples guidés."
     },
     "gitPracticeGame": {
-      "title": "Jeu pour pratiquer Git en ligne | Commandes Git | Game4Git",
-      "description": "Pratiquez Git en ligne avec commits, branches et merges interactifs. Entraînez de vraies commandes Git dans le navigateur avec des défis guidés."
+      "title": "Jeu pour Pratiquer Git | Apprendre les Commandes Git en Ligne | Game4Git",
+      "description": "Jeu gratuit pour pratiquer Git dans le navigateur — entraînez commit, branch, checkout et merge avec des défis guidés. Sans installation."
     },
     "gitBranchPractice": {
       "title": "Pratiquer les branches Git en ligne | Apprendre le branching | Game4Git",
@@ -75,8 +75,8 @@
       "description": "Détectez les fuites mémoire avec Valgrind Memcheck pas à pas, lisez les rapports et corrigez les erreurs mémoire en C/C++."
     },
     "playground": {
-      "title": "Playground Git en ligne | Pratiquer Git dans le navigateur | Game4Git",
-      "description": "Ouvrez le playground Git interactif : graphe de commits, zone de staging, branches et pratique des fusions dans le navigateur, sans installation."
+      "title": "Playground Git | Graphe de Commits et Terminal | Game4Git",
+      "description": "Ouvrez le playground Git : graphe de commits en direct, staging, contrôles de branches et terminal optionnel. Pratiquez Git dans le navigateur."
     }
   },
   "playground": {
@@ -930,7 +930,10 @@
       "heroPreviewAlt": "Aperçu de l’espace interactif pour apprendre Git dans le navigateur.",
       "previewBadge": "Aperçu live",
       "stepCountLabel_one": "{{count}} étape",
-      "stepCountLabel_other": "{{count}} étapes"
+      "stepCountLabel_other": "{{count}} étapes",
+      "openPlayground": "Ouvrir le playground interactif",
+      "alsoTry": "Essayez aussi",
+      "and": "et"
     },
     "gitPracticeGame": {
       "eyebrow": "Pratiquer Git en ligne",
@@ -1144,6 +1147,32 @@
     "guidesTitle": "Guides populaires",
     "guidesDescription": "Choisissez un sujet—commits, branches, conflits de merge, Valgrind, GDB ou fuites mémoire—et ouvrez directement le guide interactif correspondant.",
     "guidesPrimaryCta": "Voir le guide",
+    "guides": {
+      "gitPractice": {
+        "title": "Jeu pour Pratiquer Git",
+        "description": "Entraînez commit, branch et merge dans un jeu guidé dans le navigateur."
+      },
+      "gitBranch": {
+        "title": "Pratiquer les Branches Git",
+        "description": "Créez, changez et fusionnez des branches avec un graphe visuel en direct."
+      },
+      "gitMerge": {
+        "title": "Conflits de Merge",
+        "description": "Apprenez les marqueurs de conflit et la résolution sûre."
+      },
+      "gdb": {
+        "title": "Apprendre GDB",
+        "description": "Tutoriel interactif de débogage pour C et C++."
+      },
+      "valgrind": {
+        "title": "Apprendre Valgrind",
+        "description": "Bases de Memcheck et débogage mémoire."
+      },
+      "valgrindLeaks": {
+        "title": "Fuites Mémoire avec Valgrind",
+        "description": "Trouvez et corrigez les memory leaks pas à pas."
+      }
+    },
     "faqTitle": "FAQ",
     "faq": {
       "q1": "Game4Git est-il gratuit ?",

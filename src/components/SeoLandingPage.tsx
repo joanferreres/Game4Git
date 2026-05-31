@@ -1,14 +1,11 @@
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { startTransition, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { startTransition, useEffect, useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import AppNav from "@/components/AppNav";
 import SiteFooter from "@/components/SiteFooter";
 import SeoHead from "@/components/SeoHead";
+import { useSeoLandingAnimations } from "@/hooks/useLandingAnimations";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 import { cn } from "@/lib/utils";
 import {
@@ -27,8 +24,6 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export type LandingPageKey =
   | "gitPracticeGame"
@@ -227,6 +222,7 @@ function HeroPreviewMock({ pageKey, alt }: { pageKey: LandingPageKey; alt: strin
           className="h-full w-full object-cover object-top"
           loading="eager"
           decoding="async"
+          fetchPriority="high"
         />
       </picture>
       <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card/80 via-card/20 to-transparent" />
@@ -286,105 +282,84 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
     { span: "md:col-span-4", i: 2 },
   ] as const;
 
-  useGSAP(
-    () => {
-      if (!animationsReady) {
-        return;
-      }
+  useSeoLandingAnimations(rootRef, animationsReady);
 
-      const root = rootRef.current;
-      if (!root) {
-        return;
-      }
-
-      const mm = gsap.matchMedia();
-
-      const landingTargets = "[data-landing-header], [data-landing-hero-chunk], [data-landing-reveal]";
-
-      /*
-        Dos queries mutuamente excluyentes (ancho + movimiento) para que el revert de GSAP
-        no deje autoAlpha/opacity colgados al pasar de desktop a móvil.
-      */
-      mm.add("(max-width: 639px), (prefers-reduced-motion: reduce)", () => {
-        gsap.set(landingTargets, { clearProps: "all" });
-      }, root);
-
-      mm.add("(min-width: 640px) and (prefers-reduced-motion: no-preference)", () => {
-        /*
-          Solo animación en Y + opacidad 1 fija: nunca ocultar el hero (evita pantalla “vacía”
-          si el timeline o matchMedia fallan o revert dejan estilos a medias).
-        */
-        gsap.set("[data-landing-header]", { opacity: 1, visibility: "visible", y: 10 });
-        gsap.set("[data-landing-hero-chunk]", { opacity: 1, visibility: "visible", y: 20 });
-        gsap.set("[data-landing-reveal]", { opacity: 1, visibility: "visible", y: 28 });
-
-        const tl = gsap.timeline({
-          defaults: { ease: "power2.out" },
-        });
-
-        tl.to("[data-landing-header]", { y: 0, duration: 0.3 }, 0);
-        tl.to(
-          "[data-landing-hero-left] [data-landing-hero-chunk]",
-          { y: 0, duration: 0.45, stagger: 0.05 },
-          "<0.05"
-        );
-        tl.to(
-          "[data-landing-hero-right] [data-landing-hero-chunk]",
-          { y: 0, duration: 0.42, stagger: 0.05 },
-          "<0.08"
-        );
-
-        ScrollTrigger.batch("[data-landing-reveal]", {
-          start: "top 92%",
-          once: true,
-          interval: 0.06,
-          onEnter: (batch) => {
-            gsap.to(batch, {
-              y: 0,
-              duration: 0.5,
-              stagger: { each: 0.04, ease: "power1.out" },
-              ease: "power2.out",
-              overwrite: "auto",
-            });
-          },
-        });
-      }, root);
-
-      return () => {
-        mm.revert();
-      };
-    },
-    { scope: rootRef, dependencies: [pageKey, animationsReady], revertOnUpdate: true }
-  );
-
-  useLayoutEffect(() => {
-    if (!animationsReady) return;
-    ScrollTrigger.refresh();
-  }, [animationsReady, pageKey]);
-
-  // Red de seguridad: al cruzar a viewport estrecho, limpiar estilos inline de GSAP (evita contenido invisible tras encoger desde desktop).
-  useLayoutEffect(() => {
+  useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
 
-    const clearLandingCaptureStyles = () => {
-      const nodes = root.querySelectorAll(
-        "[data-landing-header], [data-landing-hero-chunk], [data-landing-reveal]"
-      );
-      if (nodes.length === 0) return;
-      gsap.set(nodes, { clearProps: "all" });
-      ScrollTrigger.refresh();
+    const clearOnMobile = () => {
+      if (!window.matchMedia("(max-width: 639px)").matches) return;
+      void import("gsap").then(({ gsap }) => {
+        gsap.set(
+          root.querySelectorAll(
+            "[data-landing-header], [data-landing-hero-chunk], [data-landing-reveal]"
+          ),
+          { clearProps: "all" }
+        );
+      });
     };
 
     const mq = window.matchMedia("(max-width: 639px)");
-    const onBreakpoint = () => {
-      if (mq.matches) clearLandingCaptureStyles();
-    };
-
-    onBreakpoint();
-    mq.addEventListener("change", onBreakpoint);
-    return () => mq.removeEventListener("change", onBreakpoint);
+    mq.addEventListener("change", clearOnMobile);
+    return () => mq.removeEventListener("change", clearOnMobile);
   }, [pageKey]);
+
+  const renderHeroCrossLinks = () => {
+    if (pageKey === "gitPracticeGame") {
+      return (
+        <p className={cn("mt-4 max-w-xl text-sm leading-relaxed", LANDING_SUBTLE)}>
+          {t("landingPages.common.alsoTry")}{" "}
+          <Link to={localizePath("/git-branch-practice")} className="underline hover:text-primary">
+            {t("home.guides.gitBranch.title")}
+          </Link>
+          {", "}
+          <Link to={localizePath("/git-merge-conflicts")} className="underline hover:text-primary">
+            {t("home.guides.gitMerge.title")}
+          </Link>
+          {" — "}
+          <Link to={localizePath("/playground")} className="underline hover:text-primary">
+            {t("landingPages.common.openPlayground")}
+          </Link>
+          .
+        </p>
+      );
+    }
+
+    if (pageKey === "gitBranchPractice") {
+      return (
+        <p className={cn("mt-4 max-w-xl text-sm leading-relaxed", LANDING_SUBTLE)}>
+          {t("landingPages.common.alsoTry")}{" "}
+          <Link to={localizePath("/git-practice-game")} className="underline hover:text-primary">
+            {t("home.guides.gitPractice.title")}
+          </Link>
+          {` ${t("landingPages.common.and")} `}
+          <Link to={localizePath("/git-merge-conflicts")} className="underline hover:text-primary">
+            {t("home.guides.gitMerge.title")}
+          </Link>
+          .
+        </p>
+      );
+    }
+
+    if (pageKey === "gitMergeConflicts") {
+      return (
+        <p className={cn("mt-4 max-w-xl text-sm leading-relaxed", LANDING_SUBTLE)}>
+          {t("landingPages.common.alsoTry")}{" "}
+          <Link to={localizePath("/git-branch-practice")} className="underline hover:text-primary">
+            {t("home.guides.gitBranch.title")}
+          </Link>
+          {` ${t("landingPages.common.and")} `}
+          <Link to={localizePath("/git-practice-game")} className="underline hover:text-primary">
+            {t("home.guides.gitPractice.title")}
+          </Link>
+          .
+        </p>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div ref={rootRef} className="relative min-h-screen overflow-x-hidden bg-background">
@@ -434,6 +409,7 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                 >
                   {t(`landingPages.${pageKey}.heroDescription`)}
                 </p>
+                {renderHeroCrossLinks()}
 
                 <div
                   data-landing-hero-chunk
@@ -734,18 +710,24 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                 <CardTitle className="text-xl font-bold sm:text-2xl">{t(`landingPages.${pageKey}.faqTitle`)}</CardTitle>
               </CardHeader>
               <CardContent className="pt-2">
-                <Accordion type="single" collapsible className="w-full">
+                <div className="divide-y divide-border/50">
                   {faqs.map((faq, index) => (
-                    <AccordionItem key={`${pageKey}-faq-${index}`} value={`${pageKey}-faq-${index}`} className="border-border/50">
-                      <AccordionTrigger className="py-4 text-left text-[15px] font-semibold hover:no-underline">
-                        {faq.q}
-                      </AccordionTrigger>
-                      <AccordionContent className={cn("pb-4 text-sm leading-relaxed", LANDING_BODY)}>
+                    <details
+                      key={`${pageKey}-faq-${index}`}
+                      className="group py-1"
+                    >
+                      <summary className="cursor-pointer list-none py-4 text-left text-[15px] font-semibold marker:content-none [&::-webkit-details-marker]:hidden">
+                        <span className="flex items-center justify-between gap-3">
+                          {faq.q}
+                          <span className="text-muted-foreground transition-transform group-open:rotate-180">▾</span>
+                        </span>
+                      </summary>
+                      <p className={cn("pb-4 text-sm leading-relaxed", LANDING_BODY)}>
                         {faq.a}
-                      </AccordionContent>
-                    </AccordionItem>
+                      </p>
+                    </details>
                   ))}
-                </Accordion>
+                </div>
               </CardContent>
             </Card>
             ) : null}
