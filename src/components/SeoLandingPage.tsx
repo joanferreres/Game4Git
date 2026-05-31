@@ -1,7 +1,7 @@
 import { startTransition, useEffect, useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { buttonVariants } from "@/lib/button-variants";
 import AppNav from "@/components/AppNav";
 import SiteFooter from "@/components/SiteFooter";
 import SeoHead from "@/components/SeoHead";
@@ -284,27 +284,6 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
 
   useSeoLandingAnimations(rootRef, animationsReady);
 
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-
-    const clearOnMobile = () => {
-      if (!window.matchMedia("(max-width: 639px)").matches) return;
-      void import("gsap").then(({ gsap }) => {
-        gsap.set(
-          root.querySelectorAll(
-            "[data-landing-header], [data-landing-hero-chunk], [data-landing-reveal]"
-          ),
-          { clearProps: "all" }
-        );
-      });
-    };
-
-    const mq = window.matchMedia("(max-width: 639px)");
-    mq.addEventListener("change", clearOnMobile);
-    return () => mq.removeEventListener("change", clearOnMobile);
-  }, [pageKey]);
-
   const renderHeroCrossLinks = () => {
     if (pageKey === "gitPracticeGame") {
       return (
@@ -415,24 +394,25 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                   data-landing-hero-chunk
                   className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
                 >
-                  <Button
-                    asChild
-                    size="lg"
-                    className="h-12 rounded-full px-8 text-base font-semibold shadow-lg shadow-black/10 bg-orange-brand text-white hover:bg-orange-brand-hover"
+                  <Link
+                    to={primaryHref}
+                    className={cn(
+                      buttonVariants({ size: "lg" }),
+                      "h-12 rounded-full px-8 text-base font-semibold shadow-lg shadow-black/10 bg-orange-brand text-white hover:bg-orange-brand-hover"
+                    )}
                   >
-                    <Link to={primaryHref}>
-                      {t(`landingPages.${pageKey}.primaryCta`)}
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="lg"
-                    className="h-12 rounded-full border-border/80 bg-background/90 px-7 text-base font-medium text-foreground backdrop-blur-sm hover:text-foreground"
+                    {t(`landingPages.${pageKey}.primaryCta`)}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                  <Link
+                    to={secondaryHref}
+                    className={cn(
+                      buttonVariants({ variant: "outline", size: "lg" }),
+                      "h-12 rounded-full border-border/80 bg-background/90 px-7 text-base font-medium text-foreground backdrop-blur-sm hover:text-foreground"
+                    )}
                   >
-                    <Link to={secondaryHref}>{t(`landingPages.${pageKey}.secondaryCta`)}</Link>
-                  </Button>
+                    {t(`landingPages.${pageKey}.secondaryCta`)}
+                  </Link>
                 </div>
 
                 <div
@@ -790,24 +770,25 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
                   {t("landingPages.common.finalCtaBody")}
                 </p>
                 <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-                  <Button
-                    asChild
-                    size="lg"
-                    className="h-12 min-w-[200px] rounded-full border-0 bg-white px-8 text-base font-semibold text-foreground shadow-lg hover:bg-white/95"
+                  <Link
+                    to={primaryHref}
+                    className={cn(
+                      buttonVariants({ size: "lg" }),
+                      "h-12 min-w-[200px] rounded-full border-0 bg-white px-8 text-base font-semibold text-foreground shadow-lg hover:bg-white/95"
+                    )}
                   >
-                    <Link to={primaryHref}>
-                      {t(`landingPages.${pageKey}.primaryCta`)}
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="lg"
-                    className="h-12 min-w-[200px] rounded-full border-white/40 bg-white/10 px-8 text-base font-semibold text-white backdrop-blur-sm hover:bg-white/20 hover:text-white"
+                    {t(`landingPages.${pageKey}.primaryCta`)}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                  <Link
+                    to={secondaryHref}
+                    className={cn(
+                      buttonVariants({ variant: "outline", size: "lg" }),
+                      "h-12 min-w-[200px] rounded-full border-white/40 bg-white/10 px-8 text-base font-semibold text-white backdrop-blur-sm hover:bg-white/20 hover:text-white"
+                    )}
                   >
-                    <Link to={secondaryHref}>{t(`landingPages.${pageKey}.secondaryCta`)}</Link>
-                  </Button>
+                    {t(`landingPages.${pageKey}.secondaryCta`)}
+                  </Link>
                 </div>
               </div>
             </div>

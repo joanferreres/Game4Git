@@ -148,7 +148,11 @@ export default defineConfig({
           if (id.includes('node_modules/zustand')) {
             return 'store';
           }
-          if (id.includes('node_modules/clsx') || id.includes('node_modules/tailwind-merge')) {
+          if (id.includes('node_modules/clsx') || id.includes('node_modules/tailwind-merge') ||
+              id.includes('node_modules/class-variance-authority') ||
+              id.includes('/src/lib/utils') ||
+              id.includes('/src/lib/button-variants') ||
+              id.includes('/src/lib/badge-variants')) {
             return 'utils';
           }
           // Do NOT chunk i18n separately: react-i18next uses React.createContext and needs React loaded first

@@ -12,6 +12,11 @@ const loadGsap = async (): Promise<{ gsap: GsapModule; ScrollTrigger: ScrollTrig
   return { gsap, ScrollTrigger };
 };
 
+const DESKTOP_ANIMATION_QUERY = "(min-width: 640px) and (prefers-reduced-motion: no-preference)";
+
+const canRunLandingAnimations = () =>
+  typeof window !== "undefined" && window.matchMedia(DESKTOP_ANIMATION_QUERY).matches;
+
 const scheduleIdle = (run: () => void) => {
   if (typeof window !== "undefined" && "requestIdleCallback" in window) {
     const id = window.requestIdleCallback(run, { timeout: 2500 });
@@ -21,10 +26,40 @@ const scheduleIdle = (run: () => void) => {
   return () => window.clearTimeout(t);
 };
 
+/** Defer GSAP until idle or first scroll/pointer to avoid competing with LCP. */
+const scheduleWhenIdleOrInteract = (run: () => void) => {
+  if (typeof window === "undefined") return () => {};
+
+  let started = false;
+  const start = () => {
+    if (started) return;
+    started = true;
+    cleanupListeners();
+    cancelIdle();
+    run();
+  };
+
+  const cleanupListeners = () => {
+    window.removeEventListener("scroll", start);
+    window.removeEventListener("pointerdown", start);
+  };
+
+  window.addEventListener("scroll", start, { once: true, passive: true });
+  window.addEventListener("pointerdown", start, { once: true, capture: true });
+
+  const cancelIdle = scheduleIdle(start);
+
+  return () => {
+    started = true;
+    cleanupListeners();
+    cancelIdle();
+  };
+};
+
 export function useHomeLandingAnimations(rootRef: RefObject<HTMLElement | null>) {
   useEffect(() => {
     const root = rootRef.current;
-    if (!root) return;
+    if (!root || !canRunLandingAnimations()) return;
 
     let cancelled = false;
     let revert: (() => void) | undefined;
@@ -93,10 +128,10 @@ export function useHomeLandingAnimations(rootRef: RefObject<HTMLElement | null>)
       });
     };
 
-    const cancelIdle = scheduleIdle(start);
+    const cancelSchedule = scheduleWhenIdleOrInteract(start);
     return () => {
       cancelled = true;
-      cancelIdle();
+      cancelSchedule();
       revert?.();
     };
   }, [rootRef]);
@@ -109,7 +144,7 @@ export function useSeoLandingAnimations(
   useEffect(() => {
     if (!enabled) return;
     const root = rootRef.current;
-    if (!root) return;
+    if (!root || !canRunLandingAnimations()) return;
 
     let cancelled = false;
     let revert: (() => void) | undefined;
@@ -164,10 +199,10 @@ export function useSeoLandingAnimations(
       });
     };
 
-    const cancelIdle = scheduleIdle(start);
+    const cancelSchedule = scheduleWhenIdleOrInteract(start);
     return () => {
       cancelled = true;
-      cancelIdle();
+      cancelSchedule();
       revert?.();
     };
   }, [rootRef, enabled]);

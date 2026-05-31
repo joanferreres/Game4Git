@@ -1,7 +1,6 @@
 import { lazy, Suspense, useEffect, type ComponentType, type ReactNode } from "react";
 import { ThemeProvider } from "./components/theme-provider";
 import { Toaster as SonnerToaster } from "sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { 
   createBrowserRouter,
   RouterProvider,
@@ -127,17 +126,15 @@ const App = () => {
 
   return (
   <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-    <TooltipProvider delayDuration={200} skipDelayDuration={0}>
-      <a
-        href="#main-content"
-        className="fixed left-4 top-4 z-[99999] inline-block rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-md outline-none ring-offset-2 transition-transform duration-200 -translate-y-[150%] focus:translate-y-0 focus-visible:ring-2 focus-visible:ring-ring"
-      >
-        {t("common.skipToMain", "Skip to main content")}
-      </a>
-      <RouterProvider router={router} />
-      <SonnerToaster position="bottom-right" />
-      <DeferredVercelMetrics />
-    </TooltipProvider>
+    <a
+      href="#main-content"
+      className="fixed left-4 top-4 z-[99999] inline-block rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-md outline-none ring-offset-2 transition-transform duration-200 -translate-y-[150%] focus:translate-y-0 focus-visible:ring-2 focus-visible:ring-ring"
+    >
+      {t("common.skipToMain", "Skip to main content")}
+    </a>
+    <RouterProvider router={router} />
+    <SonnerToaster position="bottom-right" />
+    <DeferredVercelMetrics />
   </ThemeProvider>
   );
 };
