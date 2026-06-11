@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { SITE_NAME } from "@/config/site";
+import { buttonVariants } from "@/lib/button-variants";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 
 interface SiteFooterProps {
   className?: string;
@@ -81,19 +81,17 @@ export function SiteFooter({ className }: SiteFooterProps) {
             >
               {t("footer.contact")}
             </a>
-            <Button
-              asChild
-              size="sm"
-              className="h-8 px-3 bg-primary text-primary-foreground hover:bg-primary/90"
+            <a
+              href="https://ko-fi.com/joanferreres"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                buttonVariants({ size: "sm" }),
+                "h-8 px-3 bg-primary text-primary-foreground hover:bg-primary/90"
+              )}
             >
-              <a
-                href="https://ko-fi.com/joanferreres"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                ☕ {t("footer.support")}
-              </a>
-            </Button>
+              ☕ {t("footer.support")}
+            </a>
           </div>
         </div>
 

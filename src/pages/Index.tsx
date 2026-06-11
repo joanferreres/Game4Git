@@ -1,4 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense, useRef } from "react";
+import "@fontsource/jetbrains-mono/400.css";
+import "@fontsource/jetbrains-mono/500.css";
+import "@/styles/playground.css";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useInView } from "@/hooks/useInView";
 

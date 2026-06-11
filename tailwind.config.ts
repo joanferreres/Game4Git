@@ -6,6 +6,17 @@ export default {
 	content: [
 		"./index.html",
 		"./src/**/*.{ts,tsx,js,jsx}",
+		"!./src/pages/Index.tsx",
+		"!./src/components/CodeEditor.tsx",
+		"!./src/components/DiffViewer.tsx",
+		"!./src/components/GitGraph.tsx",
+		"!./src/components/GitTerminal.tsx",
+		"!./src/components/GitControls.tsx",
+		"!./src/components/GitExercises.tsx",
+		"!./src/components/GitHistory.tsx",
+		"!./src/components/ConflictResolver.tsx",
+		"!./src/components/GitCommitNode.tsx",
+		"!./src/components/WelcomeBanner.tsx",
 	],
 	prefix: "",
 	theme: {
