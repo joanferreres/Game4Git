@@ -24,11 +24,14 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { SITE_URL } from "@/config/site";
 
 export type LandingPageKey =
   | "gitPracticeGame"
   | "gitBranchPractice"
   | "gitMergeConflicts"
+  | "gitRemoteWorkflow"
+  | "gitResetGuide"
   | "valgrindMemoryLeaks";
 
 type RelatedPageTarget =
@@ -38,9 +41,16 @@ type RelatedPageTarget =
   | "gitPracticeGame"
   | "gitBranchPractice"
   | "gitMergeConflicts"
+  | "gitRemoteWorkflow"
+  | "gitResetGuide"
   | "valgrindMemoryLeaks";
 
-type ExerciseId = "feature-branch" | "merge-conflicts";
+type ExerciseId =
+  | "feature-branch"
+  | "merge-conflicts"
+  | "remote-workflow"
+  | "undo-changes"
+  | "fast-forward-merge";
 
 interface LandingPageConfig {
   path: string;
@@ -82,7 +92,27 @@ const PAGE_CONFIG: Record<LandingPageKey, LandingPageConfig> = {
     icon: Swords,
     primaryAction: { type: "exercise", exercise: "merge-conflicts" },
     secondaryPath: "/",
-    related: ["gdb", "valgrind", "gitPracticeGame", "gitBranchPractice", "valgrindMemoryLeaks"],
+    related: ["gdb", "valgrind", "gitPracticeGame", "gitBranchPractice", "gitRemoteWorkflow", "valgrindMemoryLeaks"],
+  },
+  gitRemoteWorkflow: {
+    path: "/git-remote-workflow",
+    seoKey: "gitRemoteWorkflow",
+    badge: "git remote",
+    color: "sky",
+    icon: Globe2,
+    primaryAction: { type: "exercise", exercise: "remote-workflow" },
+    secondaryPath: "/playground",
+    related: ["gitPracticeGame", "gitResetGuide", "gitMergeConflicts", "gdb", "valgrind"],
+  },
+  gitResetGuide: {
+    path: "/git-reset-guide",
+    seoKey: "gitResetGuide",
+    badge: "git reset",
+    color: "orange",
+    icon: Zap,
+    primaryAction: { type: "exercise", exercise: "undo-changes" },
+    secondaryPath: "/playground",
+    related: ["gitRemoteWorkflow", "gitBranchPractice", "gitMergeConflicts", "gdb", "valgrind"],
   },
   valgrindMemoryLeaks: {
     path: "/valgrind-memory-leaks",
@@ -103,6 +133,8 @@ const PAGE_PATHS: Record<RelatedPageTarget, string> = {
   gitPracticeGame: "/git-practice-game",
   gitBranchPractice: "/git-branch-practice",
   gitMergeConflicts: "/git-merge-conflicts",
+  gitRemoteWorkflow: "/git-remote-workflow",
+  gitResetGuide: "/git-reset-guide",
   valgrindMemoryLeaks: "/valgrind-memory-leaks",
 };
 
@@ -115,6 +147,8 @@ const RELATED_META: Record<RelatedPageTarget, RelatedMeta> = {
   gitPracticeGame:     { icon: Sparkles,    accent: "bg-[#fff4f1] text-[#c2410c]" },
   gitBranchPractice:   { icon: GitBranch,   accent: "bg-sky-50 text-blue-700" },
   gitMergeConflicts:   { icon: Swords,      accent: "bg-amber-50 text-amber-700" },
+  gitRemoteWorkflow:   { icon: Globe2,      accent: "bg-sky-50 text-blue-700" },
+  gitResetGuide:       { icon: Zap,         accent: "bg-[#fff4f1] text-[#c2410c]" },
   valgrindMemoryLeaks: { icon: ShieldAlert, accent: "bg-green-50 text-green-700" },
 };
 
@@ -196,6 +230,8 @@ const HERO_IMAGES: Record<LandingPageKey, string> = {
   gitPracticeGame: "/hero-git-practice-game.png",
   gitBranchPractice: "/hero-git-branch-practice.png",
   gitMergeConflicts: "/hero-git-merge-conflicts.png",
+  gitRemoteWorkflow: "/hero-git-practice-game.png",
+  gitResetGuide: "/hero-git-branch-practice.png",
   valgrindMemoryLeaks: "/hero-valgrind-memory-leaks.png",
 };
 
@@ -346,6 +382,12 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
         page={config.seoKey}
         preloadHeroImage={heroWebpSrc(HERO_IMAGES[pageKey])}
         preloadHeroImageType="image/webp"
+        ogImage={`${SITE_URL}${HERO_IMAGES[pageKey]}`}
+        faqItems={faqs}
+        breadcrumbs={[
+          { name: t("general.title"), path: localizePath("/") },
+          { name: t(`landingPages.${pageKey}.heroTitle`), path: localizePath(config.path) },
+        ]}
       />
       <AppNav variant="inner" badge={config.badge} showPlaygroundCta />
       <div className="container relative max-w-full px-4 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-5 md:px-8">

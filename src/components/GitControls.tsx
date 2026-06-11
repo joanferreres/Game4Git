@@ -416,13 +416,7 @@ const GitControls: React.FC = () => {
 
   // Handle remote operations
   const handleFetch = () => {
-    toast.info(
-      t('git.gitFetch'), 
-      { 
-        description: t('explanations.gitFetch'),
-        duration: 5000
-      }
-    );
+    fetchRemote();
   };
 
   const handlePull = () => {
@@ -430,14 +424,7 @@ const GitControls: React.FC = () => {
       toast.error(t('messages.noActiveBranch'));
       return;
     }
-    
-    toast.info(
-      t('git.gitPull'), 
-      { 
-        description: t('explanations.gitPull'),
-        duration: 5000
-      }
-    );
+    pullRemote(activeBranchName);
   };
 
   const handlePush = () => {
@@ -445,14 +432,7 @@ const GitControls: React.FC = () => {
       toast.error(t('messages.noActiveBranch'));
       return;
     }
-    
-    toast.info(
-      t('git.gitPush'), 
-      { 
-        description: t('explanations.gitPush'),
-        duration: 5000
-      }
-    );
+    pushToRemote(activeBranchName);
   };
 
   const hasChangesToStage = workingChanges !== repository.commits.find(c => c.id === repository.HEAD)?.content;

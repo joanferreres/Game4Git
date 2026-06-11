@@ -77,6 +77,14 @@
     "playground": {
       "title": "Playground Git | Gráfico de Commits y Terminal | Game4Git",
       "description": "Abre el playground Git: gráfico de commits en vivo, staging, controles de ramas y terminal opcional. Practica flujos Git en el navegador."
+    },
+    "gitRemoteWorkflow": {
+      "title": "Git Remote Workflow | Fetch, Pull & Push Guide | Game4Git",
+      "description": "Practice git fetch, pull, and push with origin references on a visual graph. Learn remote workflows safely in the browser."
+    },
+    "gitResetGuide": {
+      "title": "Git Reset & Revert Guide | Undo Changes Safely | Game4Git",
+      "description": "Learn git reset, revert, and commit --amend with interactive exercises. See how each command changes history on the graph."
     }
   },
   "playground": {
@@ -619,7 +627,18 @@
       "frame": "Change current frame",
       "examineMemory": "Examine memory",
       "disassemble": "Disassemble"
-    }
+    },
+    "faq": {
+      "q1": "What is GDB?",
+      "a1": "GDB (GNU Debugger) lets you pause C/C++ programs, inspect variables, step through code, and analyze crashes with stack traces.",
+      "q2": "Why compile with -g before using GDB?",
+      "a2": "The -g flag adds debug symbols so GDB can map machine code to your source lines, variables, and function names.",
+      "q3": "What is the difference between next and step?",
+      "a3": "next steps over function calls; step enters them. Use next to stay at the current function level.",
+      "q4": "How do I debug a segmentation fault with GDB?",
+      "a4": "Run gdb ./program, type run, and when it crashes use backtrace to see the call stack and frame to inspect locals."
+    },
+    "faqTitle": "GDB FAQ"
   },
   "valgrind": {
     "cheatsheet": {
@@ -948,7 +967,18 @@
         "doublefree": "Double Free",
         "cacheanalysis": "Análisis de Cache"
       }
-    }
+    },
+    "faq": {
+      "q1": "What is Valgrind used for?",
+      "a1": "Valgrind helps you find memory leaks, invalid reads/writes, and other memory bugs in C and C++ programs using tools like Memcheck.",
+      "q2": "Do I need to compile with -g for Valgrind?",
+      "a2": "You can run Valgrind without debug symbols, but compiling with -g shows file names and line numbers in reports.",
+      "q3": "What does 'definitely lost' mean in a leak report?",
+      "a3": "It means allocated memory has no pointer left pointing to it — a classic memory leak you should fix.",
+      "q4": "Can Valgrind detect invalid frees and double frees?",
+      "a4": "Yes. Memcheck reports invalid frees, double frees, and use-after-free errors in addition to leaks."
+    },
+    "faqTitle": "Valgrind FAQ"
   },
   "gitHistory": {
     "title": "Historial de Git",
@@ -1115,59 +1145,135 @@
     },
     "mergeConflicts": {
       "tabTitle": "Merge Conflicts",
-      "title": "Resolver Merge Conflicts",
-      "description": "Aprende a identificar y resolver merge conflicts que ocurren al fusionar ramas con cambios conflictivos.",
+      "title": "Merge Conflicts Resolution",
+      "description": "Learn how to resolve merge conflicts when branches have competing changes.",
       "steps": {
-        "setupRepo": "Configurar repositorio con ramas 'master' y 'dev'",
-        "createFeatureA": "Crear y cambiar a la rama 'feature-a' desde 'dev'",
-        "commitFeatureA": "Hacer cambios al código y confirmarlos en 'feature-a'",
-        "createFeatureB": "Cambiar a 'dev' y crear la rama 'feature-b'",
-        "commitFeatureB": "Hacer cambios conflictivos en 'feature-b' y confirmarlos",
-        "resolveConflict": "Crear y resolver un merge conflict"
+        "createFeature": "Create branch 'feature-conflict', change the code, and commit",
+        "divergeMaster": "Checkout master and commit a different change on the same area",
+        "triggerConflict": "Merge 'feature-conflict' into master to trigger a conflict",
+        "resolveConflict": "Resolve the conflict in the Conflict Resolver panel and finish the merge"
       },
       "hints": {
-        "setupRepo": "Crea una rama 'dev' desde 'master'",
-        "createFeatureA": "Usa 'git checkout -b feature-a' desde la rama 'dev'",
-        "commitFeatureA": "Edita el código, prepara y confirma tus cambios",
-        "createFeatureB": "Regresa a 'dev' y crea una nueva rama con 'git checkout -b feature-b'",
-        "commitFeatureB": "Edita la misma parte del código, prepara y confirma tus cambios",
-        "resolveConflict": "Cambia a 'dev', intenta fusionar ambas ramas de características y resuelve el conflicto"
+        "createFeature": "git checkout -b feature-conflict, edit, git add ., git commit",
+        "divergeMaster": "git checkout master, edit the file differently, commit",
+        "triggerConflict": "git merge feature-conflict while on master",
+        "resolveConflict": "Use the resolver below the graph, then stage and commit"
       },
       "conflict": {
-        "title": "Conflicto de merge — resuélvelo abajo",
-        "description": "Edita el código: elimina los marcadores (<<<<<<<, =======, >>>>>>>) y combina ambas implementaciones. Luego haz clic en «Validar resolución».",
-        "fileTitle": "Contenido del Archivo con Conflictos:",
-        "placeholder": "Edita este código para resolver el conflicto...",
-        "instruction": "Elimina los marcadores de conflicto (<<<<<<< HEAD, =======, >>>>>>>), y edita el código para crear una solución funcional.",
-        "validate": "Validar Resolución",
-        "success": "¡Conflicto resuelto correctamente!",
-        "error": "Aún hay conflictos sin resolver. Elimina los marcadores de conflicto y proporciona una solución.",
-        "incomplete": "Has eliminado los marcadores de conflicto, pero tu solución debe incluir tanto la funcionalidad de registro como las mejoras de rendimiento."
+        "title": "Merge conflict — fix it below",
+        "description": "Edit the code: remove the markers (<<<<<<<, =======, >>>>>>>) and combine both implementations. Then click «Validate Resolution».",
+        "fileTitle": "Conflicted File Content:",
+        "placeholder": "Edit this code to resolve the conflict...",
+        "validate": "Validate Resolution",
+        "success": "Conflict resolved correctly!",
+        "error": "There are still unresolved conflicts. Remove the conflict markers and provide a solution.",
+        "incomplete": "You removed the conflict markers, but your solution must include both logging and performance improvements."
       },
       "scenario": {
-        "title": "Qué harás",
-        "description": "Tu equipo está trabajando en una funcionalidad. Dos desarrolladores han modificado la misma función de diferentes maneras.",
-        "descriptionSimple": "Dos desarrolladores cambiaron la misma función. Verás código con marcadores de conflicto (<<<<<<<, =======, >>>>>>>). Tu tarea:",
-        "step1": "Eliminar todos los marcadores de conflicto",
-        "step2": "Combinar ambas versiones: mantén el logging (console.log) Y el rendimiento (reduce / timestamp)",
-        "step3": "Haz clic en «Validar resolución» para comprobar tu respuesta"
+        "title": "What you'll do",
+        "descriptionSimple": "Two developers changed the same function. You will see code with conflict markers (<<<<<<<, =======, >>>>>>>). Your task:",
+        "step1": "Remove all conflict markers",
+        "step2": "Merge both versions: keep logging (console.log) AND performance (reduce / timestamp)",
+        "step3": "Click «Validate Resolution» to check your answer"
       },
       "resolution": {
-        "title": "Lista — tu solución debe:",
-        "step1": "No quedar marcadores de conflicto (<<<<<<<, =======, >>>>>>>)",
-        "step2": "Incluir console.log (logging de feature-b)",
-        "step3": "Incluir reduce() o timestamp (rendimiento de feature-a)",
-        "step4": "Ser JavaScript válido"
+        "title": "Checklist — your solution must:",
+        "step1": "No conflict markers (<<<<<<<, =======, >>>>>>>) left",
+        "step2": "Include console.log (logging from feature-b)",
+        "step3": "Include reduce() or timestamp (performance from feature-a)",
+        "step4": "Be valid JavaScript"
       },
-      "startExplanation": "Se te presentará un conflicto para resolver. Debes editar el código para crear una versión que combine correctamente ambas implementaciones.",
+      "startExplanation": "Edit the conflicted code below, then click «Validate Resolution» to complete the exercise.",
       "commands": {
-        "afterResolve": "# Después de resolver el conflicto en el editor",
+        "createBranch": "git checkout -b feature-conflict",
         "add": "git add .",
-        "commit": "git commit -m \"Fusionar y resolver conflictos\""
+        "commit": "git commit -m \"Feature change\"",
+        "checkoutMaster": "git checkout master",
+        "merge": "git merge feature-conflict"
       },
       "uiActions": {
-        "editFile": "Editar archivo para resolver conflicto",
-        "stageAndCommit": "Preparar y confirmar cambios resueltos"
+        "createBranches": "Create diverging branches with commits",
+        "triggerMerge": "Merge to trigger a conflict",
+        "resolve": "Resolve using the Conflict Resolver panel"
+      },
+      "objectives": {
+        "1": "Create conflicting changes in different branches",
+        "2": "Attempt to merge and encounter conflicts",
+        "3": "Resolve conflicts in the simulator",
+        "4": "Complete the merge successfully"
+      }
+    },
+    "undoChanges": {
+      "title": "Undoing Changes",
+      "description": "Practice git commit --amend, git reset, and git revert safely.",
+      "steps": {
+        "amend": "Commit a change, then amend the message to include '(amended)'",
+        "reset": "Make another commit, then git reset --hard HEAD~1",
+        "revert": "Commit again, then git revert HEAD to undo it with a new commit"
+      },
+      "hints": {
+        "amend": "git commit -m \"WIP\", then git commit --amend -m \"WIP (amended)\"",
+        "reset": "git reset --hard HEAD~1 removes the last commit from the branch",
+        "revert": "git revert HEAD creates a safe undo commit"
+      },
+      "commands": {
+        "commit": "git commit -m \"WIP\"",
+        "amend": "git commit --amend -m \"WIP (amended)\"",
+        "reset": "git reset --hard HEAD~1",
+        "revert": "git revert HEAD"
+      },
+      "uiActions": {
+        "amend": "Amend the last commit message",
+        "reset": "Hard reset to drop the last commit",
+        "revert": "Revert with a new commit"
+      }
+    },
+    "remoteWorkflow": {
+      "title": "Working with Remotes",
+      "description": "Practice git fetch, push, and pull with origin/master references on the graph.",
+      "steps": {
+        "fetch": "Run git fetch to load origin/* references",
+        "push": "Commit on master and git push to update origin/master",
+        "pull": "After fetch brings new remote commits, git pull to merge origin/master"
+      },
+      "hints": {
+        "fetch": "git fetch or use the Fetch button in Git Controls",
+        "push": "git push publishes your local master to origin/master",
+        "pull": "git pull merges remote changes into your current branch"
+      },
+      "commands": {
+        "fetch": "git fetch",
+        "push": "git push",
+        "pull": "git pull"
+      },
+      "uiActions": {
+        "fetch": "Fetch remote references",
+        "push": "Push local commits",
+        "pull": "Pull and merge remote changes"
+      }
+    },
+    "fastForwardMerge": {
+      "title": "Fast-forward vs Merge Commit",
+      "description": "See when Git fast-forwards and when --no-ff creates a merge commit.",
+      "steps": {
+        "ff": "Create 'feature-ff', commit, checkout master, and merge (fast-forward)",
+        "diverge": "Create 'feature-merge', commit on it and on master so histories diverge",
+        "noFf": "Merge feature-merge into master with --no-ff"
+      },
+      "hints": {
+        "ff": "When master has not diverged, merge moves the pointer forward",
+        "diverge": "Both branches need their own commits after the common base",
+        "noFf": "git merge --no-ff feature-merge forces a merge commit"
+      },
+      "commands": {
+        "createFf": "git checkout -b feature-ff",
+        "mergeFf": "git merge feature-ff",
+        "createMerge": "git checkout -b feature-merge",
+        "mergeNoFf": "git merge --no-ff feature-merge"
+      },
+      "uiActions": {
+        "ff": "Observe a fast-forward on the graph",
+        "noFf": "Force a merge commit with --no-ff"
       }
     }
   },
@@ -1399,6 +1505,102 @@
       ],
       "relatedTitle": "Guías relacionadas",
       "relatedDescription": "Muévete entre práctica de Git y temas de depuración según lo que quieras aprender después."
+    },
+    "gitRemoteWorkflow": {
+      "eyebrow": "Git remote workflow",
+      "heroTitle": "Learn git fetch, pull, and push with a visual remote workflow",
+      "heroDescription": "Practice syncing with origin/master: fetch remote refs, push your commits, and pull when the remote moves ahead — all on an interactive commit graph.",
+      "primaryCta": "Start remote challenge",
+      "secondaryCta": "Open playground",
+      "highlights": [
+        "See origin/* refs appear after fetch",
+        "Push local master to update origin/master",
+        "Pull and merge when histories diverge"
+      ],
+      "stepsTitle": "Remote workflow",
+      "steps": [
+        {
+          "title": "Fetch remote refs",
+          "description": "Run git fetch to download origin/master without changing your working branch."
+        },
+        {
+          "title": "Push your commits",
+          "description": "Publish local master so origin/master matches your latest commit."
+        },
+        {
+          "title": "Pull and merge",
+          "description": "When the remote advances, git pull merges those commits into your branch."
+        }
+      ],
+      "faqTitle": "Git remote FAQ",
+      "faq": [
+        {
+          "q": "What does git fetch do?",
+          "a": "Fetch downloads remote commits and updates origin/* references without merging them into your current branch."
+        },
+        {
+          "q": "When should I use git pull?",
+          "a": "Use pull when you want to integrate remote changes into your current branch — it fetches and merges in one step."
+        },
+        {
+          "q": "What is origin/master?",
+          "a": "It is the remote-tracking branch that points to the last known commit on master at origin."
+        },
+        {
+          "q": "Can I practice remotes without a real server?",
+          "a": "Yes. Game4Git simulates origin with visual refs on the graph so you can learn safely in the browser."
+        }
+      ],
+      "relatedTitle": "Related guides",
+      "relatedDescription": "Pair remote practice with reset/revert skills or branching basics."
+    },
+    "gitResetGuide": {
+      "eyebrow": "Git reset guide",
+      "heroTitle": "Learn git reset, revert, and amend to undo changes safely",
+      "heroDescription": "Understand soft, mixed, and hard reset, plus revert and amend — with exercises that show exactly how each command changes the commit graph.",
+      "primaryCta": "Start undo challenge",
+      "secondaryCta": "Open playground",
+      "highlights": [
+        "Amend the last commit message or content",
+        "Hard reset to move the branch pointer back",
+        "Revert with a new safe commit"
+      ],
+      "stepsTitle": "Undo workflow",
+      "steps": [
+        {
+          "title": "Amend the last commit",
+          "description": "Fix the most recent commit message or snapshot without adding a new node."
+        },
+        {
+          "title": "Reset to an earlier commit",
+          "description": "Use git reset --hard HEAD~1 when you want to drop the latest commit from the branch."
+        },
+        {
+          "title": "Revert safely",
+          "description": "Create a new commit that undoes a previous change — ideal for shared history."
+        }
+      ],
+      "faqTitle": "Git reset FAQ",
+      "faq": [
+        {
+          "q": "What is the difference between reset and revert?",
+          "a": "Reset moves your branch pointer backward; revert adds a new commit that undoes a past change — safer on shared branches."
+        },
+        {
+          "q": "What does git reset --hard do?",
+          "a": "It moves the branch to an earlier commit and discards staged and working changes to match that commit."
+        },
+        {
+          "q": "When should I use git commit --amend?",
+          "a": "Use amend to fix the latest commit before you push — for typos in the message or forgotten staged files."
+        },
+        {
+          "q": "Can I practice reset without breaking a real repo?",
+          "a": "Yes. The Game4Git playground lets you experiment and see the graph update instantly."
+        }
+      ],
+      "relatedTitle": "Related guides",
+      "relatedDescription": "Combine undo skills with remote workflows and merge practice."
     }
   },
   "home": {

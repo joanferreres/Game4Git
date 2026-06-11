@@ -56,6 +56,39 @@ const findMergeBase = (commits: GitCommit[], commit1Id: string, commit2Id: strin
   return null;
 };
 
+const isAncestor = (commits: GitCommit[], ancestorId: string, descendantId: string): boolean => {
+  if (ancestorId === descendantId) return true;
+  const ancestors = new Set<string>();
+  const queue = [descendantId];
+  while (queue.length > 0) {
+    const currentId = queue.shift()!;
+    if (ancestors.has(currentId)) continue;
+    ancestors.add(currentId);
+    const commit = commits.find((c) => c.id === currentId);
+    if (commit) queue.push(...commit.parentIds);
+  }
+  return ancestors.has(ancestorId);
+};
+
+const resolveCommitRef = (repository: GitRepository, ref: string): GitCommit | null => {
+  const normalized = ref.trim().toLowerCase();
+  if (normalized === "head") {
+    return repository.commits.find((c) => c.id === repository.HEAD) ?? null;
+  }
+  const tildeMatch = /^head~(\d+)$/.exec(normalized);
+  if (tildeMatch) {
+    let current = repository.commits.find((c) => c.id === repository.HEAD) ?? null;
+    const steps = Number(tildeMatch[1]);
+    for (let i = 0; i < steps && current; i++) {
+      const parentId = current.parentIds[0];
+      current = parentId ? repository.commits.find((c) => c.id === parentId) ?? null : null;
+    }
+    return current;
+  }
+  const byId = repository.commits.find((c) => c.id === ref || c.id.startsWith(ref));
+  return byId ?? null;
+};
+
 // Detect if there's a conflict using 3-way merge logic
 // A conflict only occurs when BOTH branches modified the SAME region relative to the base
 const detectConflict = (sourceContent: string, targetContent: string, baseContent: string): boolean => {
@@ -191,15 +224,22 @@ interface GitStore {
   selectedCommitId: string | null;
   
   // Actions
-  createCommit: (message: string) => void;
+  createCommit: (message: string) => boolean;
+  amendCommit: (message?: string) => boolean;
+  revertCommit: (commitId: string) => boolean;
   createBranch: (name: string) => void;
   switchBranch: (name: string) => void;
   updateWorkingChanges: (content: string) => void;
   resetWorkingChanges: () => void;
+  resetToRef: (mode: "soft" | "mixed" | "hard", ref: string) => boolean;
   selectCommit: (id: string | null) => void;
   stageChanges: (content: string) => void;
   resetToInitialCommit: () => void;
-  mergeBranch: (sourceBranchName: string, targetBranchName: string) => void;
+  mergeBranch: (
+    sourceBranchName: string,
+    targetBranchName: string,
+    options?: { noFf?: boolean }
+  ) => void;
   
   // Conflict resolution
   hasPendingConflict: () => boolean;
@@ -272,12 +312,15 @@ const useGitStore = create<GitStore>((set, get) => ({
     const { repository, stagedChanges } = get();
     
     // Ensure there are staged changes
-    if (!stagedChanges) return;
+    if (!stagedChanges) {
+      toast.error("Nothing staged. Use 'git add' before committing.");
+      return false;
+    }
     
     const newCommitId = generateId();
     const activeBranch = repository.branches.find(b => b.isActive);
     
-    if (!activeBranch) return;
+    if (!activeBranch) return false;
     
     const parentCommitId = activeBranch.commitId;
     
@@ -304,6 +347,78 @@ const useGitStore = create<GitStore>((set, get) => ({
       stagedChanges: null, // Clear staged changes after commit
       workingChanges: stagedChanges // Update working copy to match new commit
     });
+    return true;
+  },
+
+  amendCommit: (message?: string) => {
+    const { repository, stagedChanges } = get();
+    const activeBranch = repository.branches.find((b) => b.isActive);
+    if (!activeBranch) {
+      toast.error("No active branch to amend.");
+      return false;
+    }
+    const headCommit = repository.commits.find((c) => c.id === activeBranch.commitId);
+    if (!headCommit) return false;
+
+    const amendedContent = stagedChanges ?? headCommit.content;
+    const amendedMessage = message ?? headCommit.message;
+
+    const updatedCommit: GitCommit = {
+      ...headCommit,
+      message: amendedMessage,
+      content: amendedContent,
+      timestamp: Date.now(),
+    };
+
+    set({
+      repository: {
+        ...repository,
+        commits: repository.commits.map((c) => (c.id === headCommit.id ? updatedCommit : c)),
+      },
+      stagedChanges: null,
+      workingChanges: amendedContent,
+    });
+    toast.success("Last commit amended.");
+    return true;
+  },
+
+  revertCommit: (commitId: string) => {
+    const { repository } = get();
+    const target =
+      repository.commits.find((c) => c.id === commitId || c.id.startsWith(commitId)) ?? null;
+    if (!target) {
+      toast.error(`Commit '${commitId}' not found.`);
+      return false;
+    }
+    const activeBranch = repository.branches.find((b) => b.isActive);
+    if (!activeBranch) return false;
+
+    const newCommitId = generateId();
+    const revertCommit: GitCommit = {
+      id: newCommitId,
+      message: `Revert "${target.message}"`,
+      content: target.content,
+      timestamp: Date.now(),
+      parentIds: [activeBranch.commitId],
+    };
+
+    const updatedBranches = repository.branches.map((branch) =>
+      branch.isActive ? { ...branch, commitId: newCommitId } : branch
+    );
+
+    set({
+      repository: {
+        ...repository,
+        commits: [...repository.commits, revertCommit],
+        branches: updatedBranches,
+        HEAD: newCommitId,
+      },
+      workingChanges: target.content,
+      stagedChanges: null,
+      selectedCommitId: newCommitId,
+    });
+    toast.success(`Reverted commit ${target.id.slice(0, 7)}`);
+    return true;
   },
 
   // Create a new branch pointing to the current HEAD
@@ -361,6 +476,54 @@ const useGitStore = create<GitStore>((set, get) => ({
     set({ workingChanges: content });
   },
 
+  resetToRef: (mode: "soft" | "mixed" | "hard", ref: string) => {
+    const { repository, stagedChanges } = get();
+    const targetCommit = resolveCommitRef(repository, ref);
+    if (!targetCommit) {
+      toast.error(`Could not resolve '${ref}'.`);
+      return false;
+    }
+
+    const activeBranch = repository.branches.find((b) => b.isActive);
+    if (!activeBranch) return false;
+
+    if (mode === "soft") {
+      set({
+        repository: { ...repository, HEAD: targetCommit.id },
+        stagedChanges: stagedChanges ?? targetCommit.content,
+        workingChanges: get().workingChanges,
+      });
+      toast.success(`Soft reset to ${ref}.`);
+      return true;
+    }
+
+    if (mode === "mixed") {
+      set({
+        repository: { ...repository, HEAD: targetCommit.id },
+        stagedChanges: null,
+        workingChanges: get().workingChanges,
+      });
+      toast.success(`Mixed reset to ${ref}.`);
+      return true;
+    }
+
+    const updatedBranches = repository.branches.map((branch) =>
+      branch.isActive ? { ...branch, commitId: targetCommit.id } : branch
+    );
+    set({
+      repository: {
+        ...repository,
+        branches: updatedBranches,
+        HEAD: targetCommit.id,
+      },
+      workingChanges: targetCommit.content,
+      stagedChanges: null,
+      selectedCommitId: null,
+    });
+    toast.success(`Hard reset to ${ref}.`);
+    return true;
+  },
+
   // Reset the working changes to the current HEAD
   resetWorkingChanges: () => {
     const { repository } = get();
@@ -406,7 +569,11 @@ const useGitStore = create<GitStore>((set, get) => ({
   },
 
   // Merge a source branch into the target branch
-  mergeBranch: (sourceBranchName: string, targetBranchName: string) => {
+  mergeBranch: (
+    sourceBranchName: string,
+    targetBranchName: string,
+    options?: { noFf?: boolean }
+  ) => {
     const { repository } = get();
     const sourceBranch = repository.branches.find(b => b.name === sourceBranchName);
     const targetBranch = repository.branches.find(b => b.name === targetBranchName);
@@ -437,8 +604,32 @@ const useGitStore = create<GitStore>((set, get) => ({
     // Find the common ancestor (merge-base) for 3-way merge
     const mergeBase = findMergeBase(repository.commits, sourceBranch.commitId, targetBranch.commitId);
     const baseContent = mergeBase?.content || '';
-    
-    // Always create a merge commit (no fast-forward) to keep the tree visualization clear
+
+    const canFastForward =
+      !options?.noFf &&
+      isAncestor(repository.commits, targetBranchHeadCommit.id, sourceBranchHeadCommit.id);
+
+    if (canFastForward) {
+      const updatedBranches = repository.branches.map((branch) => {
+        if (branch.name === targetBranchName) {
+          return { ...branch, commitId: sourceBranchHeadCommit.id, isActive: true };
+        }
+        return { ...branch, isActive: false };
+      });
+      set({
+        repository: {
+          ...repository,
+          branches: updatedBranches,
+          HEAD: sourceBranchHeadCommit.id,
+        },
+        workingChanges: sourceBranchHeadCommit.content,
+        stagedChanges: null,
+        selectedCommitId: sourceBranchHeadCommit.id,
+      });
+      toast.success(`Fast-forward merge of '${sourceBranchName}' into '${targetBranchName}'.`);
+      return;
+    }
+
     // Detect merge conflicts using 3-way merge
     const hasConflict = detectConflict(sourceBranchHeadCommit.content, targetBranchHeadCommit.content, baseContent);
 

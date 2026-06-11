@@ -92,3 +92,18 @@ Reference metrics before SEO/performance rollout (GSC last 28 days):
 **Shipped in this release:** differentiated `seo.*` snippets, home guide copy, internal cross-links, self-hosted fonts, lazy GSAP, native FAQ on SEO landings, prerender hero images + JSON-LD, removed `gptengineer.js`, split Radix chunks (`ui-dropdown`, `ui-accordion`).
 
 Re-measure 14 days after deploy using the weekly cadence above.
+
+## Post-integral-improvement baseline (2026-06-11)
+
+After simulador Git (remotos, reset, revert, amend, FF/--no-ff), 3 ejercicios nuevos, SEO (JSON-LD unificado, BreadcrumbList, FAQs gdb/valgrind, landings `/git-remote-workflow` y `/git-reset-guide`, OG por landing, footer/manifest/logo):
+
+| Page | Mobile PSI (lab) | Notes |
+|------|------------------|-------|
+| Home `/` | 91 | FCP ~1.7s, LCP ~3.4s (baseline Fase 0 post-deploy) |
+| `/git-practice-game` | 89 | LCP ~2.9s |
+| `/playground` | — | Re-medir tras deploy |
+| New landings | — | Re-medir tras deploy |
+
+**Shipped:** `git fetch/pull/push` conectados al store; `origin/*` en grafo; `git reset`/`revert`/`amend`/`log`/`merge --abort`/`--no-ff`; ejercicios con localStorage; merge-conflicts en simulador real; 2 landings SEO + sitemap/prerender.
+
+Compare against Fase 0 baseline after next production deploy; target: maintain mobile PSI ≥ 85 on home and landings.

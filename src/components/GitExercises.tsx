@@ -28,19 +28,34 @@ import {
   BookOpen,
   Terminal,
   GitMerge,
-  AlertTriangle,
-  Code,
-  XCircle
+  XCircle,
+  RotateCcw,
+  Globe,
+  Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Textarea } from "@/components/ui/textarea";
 import { useTranslation } from "react-i18next";
 import useGitStore from "@/store/gitStore";
+import {
+  loadExerciseProgress,
+  saveExerciseProgress,
+  type ExerciseProgressMap,
+} from "@/hooks/useExerciseProgress";
 import { toast } from "sonner";
+
+const EXERCISE_IDS = [
+  "feature-branch",
+  "team-workflow",
+  "technical-tasks",
+  "merge-conflicts",
+  "undo-changes",
+  "remote-workflow",
+  "fast-forward-merge",
+] as const;
 
 interface Exercise {
   id: string;
@@ -66,20 +81,19 @@ gsap.registerPlugin(useGSAP);
 
 const GitExercises: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const { 
-    repository, 
+  const {
+    repository,
     workingChanges,
-    stagedChanges
+    stagedChanges,
+    hasPendingConflict,
   } = useGitStore();
 
   const [selectedExercise, setSelectedExercise] = useState<string>("feature-branch");
   const [progress, setProgress] = useState(0);
   const [forceUpdate, setForceUpdate] = useState(0);
-  const [conflictResolution, setConflictResolution] = useState("");
   const [sheetOpen, setSheetOpen] = useState(false);
   const [view, setView] = useState<"list" | "detail">("list");
   const [everOpened, setEverOpened] = useState(false);
-  const conflictTextareaRef = useRef<HTMLTextAreaElement>(null);
   const fabRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -92,11 +106,11 @@ const GitExercises: React.FC = () => {
     const searchParams = new URLSearchParams(window.location.search);
     const requestedExercise = searchParams.get("exercise");
 
-    if (requestedExercise !== "feature-branch" && requestedExercise !== "merge-conflicts") {
+    if (!EXERCISE_IDS.includes(requestedExercise as (typeof EXERCISE_IDS)[number])) {
       return;
     }
 
-    setSelectedExercise(requestedExercise);
+    setSelectedExercise(requestedExercise!);
     setView("detail");
     setSheetOpen(true);
     searchParams.delete("exercise");
@@ -113,7 +127,22 @@ const GitExercises: React.FC = () => {
   }, [sheetOpen, everOpened]);
   
   // Definir y actualizar los ejercicios en una función que depende de la traducción
-  const getInitialExercises = useCallback((): Record<string, Exercise> => ({
+  const getInitialExercises = useCallback((): Record<string, Exercise> => {
+    const isCommitAncestor = (ancestorId: string, descendantId: string): boolean => {
+      const visited = new Set<string>();
+      const queue = [descendantId];
+      while (queue.length > 0) {
+        const id = queue.shift()!;
+        if (id === ancestorId) return true;
+        if (visited.has(id)) continue;
+        visited.add(id);
+        const commit = repository.commits.find((c) => c.id === id);
+        if (commit) queue.push(...commit.parentIds);
+      }
+      return false;
+    };
+
+    return {
     "feature-branch": {
       id: "feature-branch",
       title: t("exercises.featureBranch.title", "Feature Branch Workflow"),
@@ -272,10 +301,9 @@ const GitExercises: React.FC = () => {
             
             // Check if dev has merged from story
             const hasStoryMerge = devCommit.parentIds.length > 1;
-            // Check if release has merged from dev
-            const hasDevMerge = releaseCommit.parentIds.length > 0;
-            
-            return hasStoryMerge && hasDevMerge;
+            const hasReleaseMerge = releaseCommit.parentIds.length > 1;
+
+            return hasStoryMerge && hasReleaseMerge;
           }
         },
         {
@@ -378,14 +406,15 @@ const GitExercises: React.FC = () => {
           hint: t("exercises.technicalTasks.hints.integrateTasks", "Switch to 'story-456' and merge both task branches"),
           isCompleted: false,
           validation: () => {
-            const storyBranch = repository.branches.find(b => b.name === "story-456");
-            if (!storyBranch) return false;
-            
-            // Check if the story branch has received merges
-            const commits = repository.commits.filter(c => c.id === storyBranch.commitId || c.parentIds.includes(storyBranch.commitId));
-            const mergesToStory = commits.filter(c => c.parentIds.length > 1);
-            
-            return mergesToStory.length >= 2;
+            const storyBranch = repository.branches.find((b) => b.name === "story-456");
+            const task1 = repository.branches.find((b) => b.name === "task-1");
+            const task2 = repository.branches.find((b) => b.name === "task-2");
+            if (!storyBranch || !task1 || !task2) return false;
+            const storyHead = storyBranch.commitId;
+            return (
+              isCommitAncestor(task1.commitId, storyHead) &&
+              isCommitAncestor(task2.commitId, storyHead)
+            );
           }
         },
         {
@@ -442,37 +471,263 @@ const GitExercises: React.FC = () => {
       isCompleted: false,
       steps: [
         {
-          id: "resolve-conflict",
-          description: t("exercises.mergeConflicts.steps.resolveConflict", "Resolve the merge conflict"),
-          hint: t("exercises.mergeConflicts.hints.resolveConflict", "Edit the conflicted file to remove the conflict markers and create a working solution"),
+          id: "create-feature-branch",
+          description: t("exercises.mergeConflicts.steps.createFeature", "Create branch 'feature-conflict', change the code, and commit"),
+          hint: t("exercises.mergeConflicts.hints.createFeature", "git checkout -b feature-conflict, edit, git add ., git commit"),
           isCompleted: false,
           validation: () => {
-            // Check if user has resolved the conflict manually
-            const correctResolution = conflictResolution.includes("<<<<<<< HEAD") === false && 
-                                       conflictResolution.includes("=======") === false && 
-                                       conflictResolution.includes(">>>>>>>") === false && 
-                                       conflictResolution.trim() !== "" &&
-                                       conflictResolution.includes("console.log") &&
-                                      (conflictResolution.includes("reduce") || conflictResolution.includes("timestamp"));
-            
-            return correctResolution;
-          }
-        }
+            const branch = repository.branches.find((b) => b.name === "feature-conflict");
+            if (!branch) return false;
+            const head = repository.commits.find((c) => c.id === branch.commitId);
+            return !!head && head.parentIds.length > 0;
+          },
+        },
+        {
+          id: "diverge-master",
+          description: t("exercises.mergeConflicts.steps.divergeMaster", "Checkout master and commit a different change on the same area"),
+          hint: t("exercises.mergeConflicts.hints.divergeMaster", "git checkout master, edit the file differently, commit"),
+          isCompleted: false,
+          validation: () => {
+            const master = repository.branches.find((b) => b.name === "master");
+            const feature = repository.branches.find((b) => b.name === "feature-conflict");
+            if (!master || !feature) return false;
+            return master.commitId !== feature.commitId;
+          },
+        },
+        {
+          id: "trigger-conflict",
+          description: t("exercises.mergeConflicts.steps.triggerConflict", "Merge 'feature-conflict' into master to trigger a conflict"),
+          hint: t("exercises.mergeConflicts.hints.triggerConflict", "git merge feature-conflict while on master"),
+          isCompleted: false,
+          validation: () => hasPendingConflict(),
+        },
+        {
+          id: "resolve-conflict",
+          description: t("exercises.mergeConflicts.steps.resolveConflict", "Resolve the conflict in the Conflict Resolver panel and finish the merge"),
+          hint: t("exercises.mergeConflicts.hints.resolveConflict", "Use the resolver below the graph, then stage and commit"),
+          isCompleted: false,
+          validation: () => {
+            if (hasPendingConflict()) return false;
+            const master = repository.branches.find((b) => b.name === "master");
+            if (!master) return false;
+            const head = repository.commits.find((c) => c.id === master.commitId);
+            return !!head && head.parentIds.length > 1;
+          },
+        },
       ],
       terminalCommands: [
-        t("exercises.mergeConflicts.commands.afterResolve", "# After resolving the conflict in the editor"),
+        t("exercises.mergeConflicts.commands.createBranch", "git checkout -b feature-conflict"),
         t("exercises.mergeConflicts.commands.add", "git add ."),
-        t("exercises.mergeConflicts.commands.commit", "git commit -m \"Merge and resolve conflicts\"")
+        t("exercises.mergeConflicts.commands.commit", "git commit -m \"Feature change\""),
+        t("exercises.mergeConflicts.commands.checkoutMaster", "git checkout master"),
+        t("exercises.mergeConflicts.commands.merge", "git merge feature-conflict"),
       ],
       uiActions: [
-        t("exercises.mergeConflicts.uiActions.editFile", "Edit file to resolve conflict"),
-        t("exercises.mergeConflicts.uiActions.stageAndCommit", "Stage and commit resolved changes")
-      ]
-    }
-  }), [t, repository.HEAD, repository.branches, repository.commits, workingChanges, conflictResolution]);
+        t("exercises.mergeConflicts.uiActions.createBranches", "Create diverging branches with commits"),
+        t("exercises.mergeConflicts.uiActions.triggerMerge", "Merge to trigger a conflict"),
+        t("exercises.mergeConflicts.uiActions.resolve", "Resolve using the Conflict Resolver panel"),
+      ],
+    },
+    "undo-changes": {
+      id: "undo-changes",
+      title: t("exercises.undoChanges.title", "Undoing Changes"),
+      description: t("exercises.undoChanges.description", "Practice git commit --amend, git reset, and git revert safely."),
+      difficulty: "intermediate",
+      isStarted: false,
+      isCompleted: false,
+      steps: [
+        {
+          id: "commit-and-amend",
+          description: t("exercises.undoChanges.steps.amend", "Commit a change, then amend the message to include '(amended)'"),
+          hint: t("exercises.undoChanges.hints.amend", "git commit -m \"WIP\", then git commit --amend -m \"WIP (amended)\""),
+          isCompleted: false,
+          validation: () =>
+            repository.commits.some((c) => c.message.includes("(amended)")),
+        },
+        {
+          id: "reset-hard",
+          description: t("exercises.undoChanges.steps.reset", "Make another commit, then git reset --hard HEAD~1"),
+          hint: t("exercises.undoChanges.hints.reset", "git reset --hard HEAD~1 removes the last commit from the branch"),
+          isCompleted: false,
+          validation: () => {
+            const master = repository.branches.find((b) => b.name === "master");
+            if (!master) return false;
+            const head = repository.commits.find((c) => c.id === master.commitId);
+            return !!head && !head.message.includes("(amended)");
+          },
+        },
+        {
+          id: "revert-commit",
+          description: t("exercises.undoChanges.steps.revert", "Commit again, then git revert HEAD to undo it with a new commit"),
+          hint: t("exercises.undoChanges.hints.revert", "git revert HEAD creates a safe undo commit"),
+          isCompleted: false,
+          validation: () =>
+            repository.commits.some((c) => c.message.startsWith('Revert "')),
+        },
+      ],
+      terminalCommands: [
+        t("exercises.undoChanges.commands.commit", "git commit -m \"WIP\""),
+        t("exercises.undoChanges.commands.amend", "git commit --amend -m \"WIP (amended)\""),
+        t("exercises.undoChanges.commands.reset", "git reset --hard HEAD~1"),
+        t("exercises.undoChanges.commands.revert", "git revert HEAD"),
+      ],
+      uiActions: [
+        t("exercises.undoChanges.uiActions.amend", "Amend the last commit message"),
+        t("exercises.undoChanges.uiActions.reset", "Hard reset to drop the last commit"),
+        t("exercises.undoChanges.uiActions.revert", "Revert with a new commit"),
+      ],
+    },
+    "remote-workflow": {
+      id: "remote-workflow",
+      title: t("exercises.remoteWorkflow.title", "Working with Remotes"),
+      description: t("exercises.remoteWorkflow.description", "Practice git fetch, push, and pull with origin/master references on the graph."),
+      difficulty: "intermediate",
+      isStarted: false,
+      isCompleted: false,
+      steps: [
+        {
+          id: "fetch-remote",
+          description: t("exercises.remoteWorkflow.steps.fetch", "Run git fetch to load origin/* references"),
+          hint: t("exercises.remoteWorkflow.hints.fetch", "git fetch or use the Fetch button in Git Controls"),
+          isCompleted: false,
+          validation: () => repository.remoteReferences.length > 0,
+        },
+        {
+          id: "push-master",
+          description: t("exercises.remoteWorkflow.steps.push", "Commit on master and git push to update origin/master"),
+          hint: t("exercises.remoteWorkflow.hints.push", "git push publishes your local master to origin/master"),
+          isCompleted: false,
+          validation: () => {
+            const master = repository.branches.find((b) => b.name === "master");
+            const remote = repository.remoteReferences.find((r) => r.name === "origin/master");
+            return !!(master && remote && master.commitId === remote.commitId);
+          },
+        },
+        {
+          id: "pull-merge",
+          description: t("exercises.remoteWorkflow.steps.pull", "After fetch brings new remote commits, git pull to merge origin/master"),
+          hint: t("exercises.remoteWorkflow.hints.pull", "git pull merges remote changes into your current branch"),
+          isCompleted: false,
+          validation: () => {
+            const master = repository.branches.find((b) => b.name === "master");
+            if (!master) return false;
+            const head = repository.commits.find((c) => c.id === master.commitId);
+            return !!head && head.message.includes("origin/master");
+          },
+        },
+      ],
+      terminalCommands: [
+        t("exercises.remoteWorkflow.commands.fetch", "git fetch"),
+        t("exercises.remoteWorkflow.commands.push", "git push"),
+        t("exercises.remoteWorkflow.commands.pull", "git pull"),
+      ],
+      uiActions: [
+        t("exercises.remoteWorkflow.uiActions.fetch", "Fetch remote references"),
+        t("exercises.remoteWorkflow.uiActions.push", "Push local commits"),
+        t("exercises.remoteWorkflow.uiActions.pull", "Pull and merge remote changes"),
+      ],
+    },
+    "fast-forward-merge": {
+      id: "fast-forward-merge",
+      title: t("exercises.fastForwardMerge.title", "Fast-forward vs Merge Commit"),
+      description: t("exercises.fastForwardMerge.description", "See when Git fast-forwards and when --no-ff creates a merge commit."),
+      difficulty: "intermediate",
+      isStarted: false,
+      isCompleted: false,
+      steps: [
+        {
+          id: "ff-merge",
+          description: t("exercises.fastForwardMerge.steps.ff", "Create 'feature-ff', commit, checkout master, and merge (fast-forward)"),
+          hint: t("exercises.fastForwardMerge.hints.ff", "When master has not diverged, merge moves the pointer forward"),
+          isCompleted: false,
+          validation: () => {
+            const feature = repository.branches.find((b) => b.name === "feature-ff");
+            const master = repository.branches.find((b) => b.name === "master");
+            if (!feature || !master) return false;
+            const masterHead = repository.commits.find((c) => c.id === master.commitId);
+            return (
+              master.commitId === feature.commitId &&
+              !!masterHead &&
+              masterHead.parentIds.length === 1
+            );
+          },
+        },
+        {
+          id: "diverge-branches",
+          description: t("exercises.fastForwardMerge.steps.diverge", "Create 'feature-merge', commit on it and on master so histories diverge"),
+          hint: t("exercises.fastForwardMerge.hints.diverge", "Both branches need their own commits after the common base"),
+          isCompleted: false,
+          validation: () => {
+            const feature = repository.branches.find((b) => b.name === "feature-merge");
+            const master = repository.branches.find((b) => b.name === "master");
+            if (!feature || !master) return false;
+            return feature.commitId !== master.commitId;
+          },
+        },
+        {
+          id: "no-ff-merge",
+          description: t("exercises.fastForwardMerge.steps.noFf", "Merge feature-merge into master with --no-ff"),
+          hint: t("exercises.fastForwardMerge.hints.noFf", "git merge --no-ff feature-merge forces a merge commit"),
+          isCompleted: false,
+          validation: () => {
+            const master = repository.branches.find((b) => b.name === "master");
+            if (!master) return false;
+            const head = repository.commits.find((c) => c.id === master.commitId);
+            return !!head && head.parentIds.length > 1;
+          },
+        },
+      ],
+      terminalCommands: [
+        t("exercises.fastForwardMerge.commands.createFf", "git checkout -b feature-ff"),
+        t("exercises.fastForwardMerge.commands.mergeFf", "git merge feature-ff"),
+        t("exercises.fastForwardMerge.commands.createMerge", "git checkout -b feature-merge"),
+        t("exercises.fastForwardMerge.commands.mergeNoFf", "git merge --no-ff feature-merge"),
+      ],
+      uiActions: [
+        t("exercises.fastForwardMerge.uiActions.ff", "Observe a fast-forward on the graph"),
+        t("exercises.fastForwardMerge.uiActions.noFf", "Force a merge commit with --no-ff"),
+      ],
+    },
+  };
+  }, [t, repository.HEAD, repository.branches, repository.commits, repository.remoteReferences, workingChanges, hasPendingConflict]);
   
   // Inicializar los ejercicios
   const [exercises, setExercises] = useState<Record<string, Exercise>>(getInitialExercises());
+
+  useEffect(() => {
+    const saved = loadExerciseProgress();
+    if (Object.keys(saved).length === 0) return;
+
+    setExercises((prev) => {
+      const next = { ...prev };
+      for (const [id, entry] of Object.entries(saved)) {
+        const exercise = next[id];
+        if (!exercise) continue;
+        next[id] = {
+          ...exercise,
+          isStarted: entry.isStarted,
+          isCompleted: entry.isCompleted,
+          steps: exercise.steps.map((step) => ({
+            ...step,
+            isCompleted: entry.completedStepIds.includes(step.id),
+          })),
+        };
+      }
+      return next;
+    });
+  }, []);
+
+  useEffect(() => {
+    const progressMap: ExerciseProgressMap = {};
+    for (const [id, exercise] of Object.entries(exercises)) {
+      progressMap[id] = {
+        isStarted: exercise.isStarted,
+        isCompleted: exercise.isCompleted,
+        completedStepIds: exercise.steps.filter((step) => step.isCompleted).map((step) => step.id),
+      };
+    }
+    saveExerciseProgress(progressMap);
+  }, [exercises]);
   
   // Efecto para actualizar los ejercicios cuando cambie el idioma
   useEffect(() => {
@@ -622,8 +877,6 @@ const GitExercises: React.FC = () => {
   useEffect(() => {
     const exercise = exercises[selectedExercise];
     if (!exercise || !exercise.isStarted) return;
-    // merge-conflicts only completes via Validate button, not auto
-    if (selectedExercise === "merge-conflicts") return;
     
     // Calculate progress
     let completedSteps = 0;
@@ -712,21 +965,15 @@ const GitExercises: React.FC = () => {
       isCompleted: false
     }));
     
-    // For merge-conflicts: reset textarea and go back to start screen
-    if (selectedExercise === "merge-conflicts") {
-      setConflictResolution("");
-    }
-    
     setExercises(prev => {
       const updated = {...prev};
-      const keepStarted = selectedExercise !== "merge-conflicts";
       
       // Actualizar el ejercicio seleccionado con los textos traducidos actualizados
       updated[selectedExercise] = {
         ...exercise,
         steps: resetSteps,
         isCompleted: false,
-        isStarted: keepStarted ? (prev[selectedExercise]?.isStarted || false) : false
+        isStarted: prev[selectedExercise]?.isStarted || false
       };
       
       return updated;
@@ -752,13 +999,15 @@ const GitExercises: React.FC = () => {
   const completedCount = Object.values(exercises).filter((e) => e.isCompleted).length;
   const challengeProgress = totalExercises > 0 ? (completedCount / totalExercises) * 100 : 0;
   const selectedExerciseData = exercises[selectedExercise];
-  const mergeExercise = exercises["merge-conflicts"];
 
   const exerciseMeta: Record<string, { icon: typeof GitBranch; accent: string }> = {
     "feature-branch": { icon: GitBranch, accent: "from-amber-500 via-orange-500 to-rose-500" },
     "team-workflow": { icon: Users, accent: "from-sky-500 via-cyan-500 to-blue-600" },
     "technical-tasks": { icon: Terminal, accent: "from-violet-500 via-fuchsia-500 to-purple-600" },
     "merge-conflicts": { icon: GitMerge, accent: "from-rose-500 via-red-500 to-orange-600" },
+    "undo-changes": { icon: RotateCcw, accent: "from-emerald-500 via-teal-500 to-cyan-600" },
+    "remote-workflow": { icon: Globe, accent: "from-indigo-500 via-blue-500 to-sky-600" },
+    "fast-forward-merge": { icon: Zap, accent: "from-yellow-500 via-amber-500 to-orange-600" },
   };
 
   const selectChallenge = (id: string) => {
@@ -841,7 +1090,7 @@ const GitExercises: React.FC = () => {
       <SheetContent
         side="right"
         className={`w-full p-0 overflow-y-auto transition-all duration-300 ease-in-out ${
-          view === "list" ? "sm:max-w-2xl" : selectedExercise === "merge-conflicts" ? "sm:max-w-full" : "sm:max-w-lg"
+          view === "list" ? "sm:max-w-2xl" : "sm:max-w-lg"
         }`}
       >
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-3 sm:p-4 md:p-6 pb-2 sm:pb-3 md:pb-4 border-b sticky top-0 bg-background z-10">
@@ -942,265 +1191,6 @@ const GitExercises: React.FC = () => {
                   );
                 })}
               </div>
-            </div>
-          ) : selectedExercise === "merge-conflicts" && mergeExercise ? (
-            <div className="p-3 sm:p-6 pt-0">
-              <Card className={`${selectedExercise === "merge-conflicts" && !mergeExercise.isCompleted ? "mx-auto max-w-5xl" : ""}`}>
-                <CardHeader className="p-3 sm:p-6">
-                  <div className="flex justify-between items-start">
-                    <CardTitle className="text-base sm:text-lg font-semibold flex items-center gap-1 sm:gap-2">
-                      <GitMerge className="h-4 w-4 sm:h-5 sm:w-5 text-blue-500" />
-                      {mergeExercise.title}
-                    </CardTitle>
-                    {renderDifficultyBadge(mergeExercise.difficulty)}
-                  </div>
-                  <CardDescription className="text-xs sm:text-sm mt-1">
-                    {mergeExercise.description}
-                  </CardDescription>
-                </CardHeader>
-                
-                {!mergeExercise.isStarted ? (
-                  <CardContent className="space-y-4 sm:space-y-6 p-3 sm:p-6">
-                    <div className="bg-amber-50 dark:bg-amber-950/30 p-3 sm:p-4 rounded-md border border-amber-200 dark:border-amber-800 space-y-2 sm:space-y-3">
-                      <h3 className="font-medium text-amber-800 dark:text-amber-200 flex items-center gap-1 sm:gap-2 text-xs sm:text-sm">
-                        <AlertTriangle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-amber-600 shrink-0" />
-                        {t("exercises.mergeConflicts.scenario.title", "What you'll do")}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-amber-700 dark:text-amber-300">
-                        {t("exercises.mergeConflicts.scenario.descriptionSimple", "Two developers changed the same function. You will see code with conflict markers (<<<<<<<, =======, >>>>>>>). Your task:")}
-                      </p>
-                      <ol className="list-decimal list-inside space-y-1 text-xs sm:text-sm text-amber-700 dark:text-amber-300">
-                        <li>{t("exercises.mergeConflicts.scenario.step1", "Remove all conflict markers")}</li>
-                        <li>{t("exercises.mergeConflicts.scenario.step2", "Merge both versions: keep logging (console.log) AND performance (reduce / timestamp)")}</li>
-                        <li>{t("exercises.mergeConflicts.scenario.step3", "Click «Validate Resolution» to check your answer")}</li>
-                      </ol>
-                    </div>
-                    
-                    <div className="text-center space-y-1 sm:space-y-2">
-                      <h3 className="text-base sm:text-lg font-medium">{t("exercises.readyToStart", "Ready to start?")}</h3>
-                      <p className="text-xs sm:text-sm text-muted-foreground">
-                        {t("exercises.mergeConflicts.startExplanation", "Edit the conflicted code below, then click «Validate Resolution» to complete the exercise.")}
-                      </p>
-                    </div>
-                    <div className="flex justify-center">
-                      <Button 
-                        onClick={startExercise}
-                        className="px-4 sm:px-8 text-xs sm:text-sm h-8 sm:h-10"
-                        size="auto"
-                      >
-                        {t("exercises.start", "Iniciar Ejercicio")}
-                      </Button>
-                    </div>
-                  </CardContent>
-                ) : mergeExercise.isCompleted ? (
-                  <CardContent className="flex flex-col items-center justify-center py-4 sm:py-8 space-y-3 sm:space-y-4 p-3 sm:p-6">
-                    <div className="text-center space-y-1 sm:space-y-2 mb-1 sm:mb-2">
-                      <h3 className="text-base sm:text-lg font-medium text-green-600">{t("exercises.exerciseFinished", "¡Ejercicio Completado!")}</h3>
-                      <p className="text-xs sm:text-sm text-muted-foreground">
-                        {t("exercises.finishedExplanation", "Has completado este ejercicio. Puedes reiniciarlo o continuar con otro.")}
-                      </p>
-                    </div>
-                    <div className="flex gap-2 sm:gap-4">
-                      <Button 
-                        onClick={resetExercise}
-                        variant="outline"
-                        size="auto"
-                        className="text-xs sm:text-sm h-8 sm:h-10"
-                      >
-                        {t("exercises.startAgain", "Comenzar de nuevo")}
-                      </Button>
-                      <Button 
-                        onClick={openNextChallenge}
-                        variant="default"
-                        size="auto"
-                        className="text-xs sm:text-sm h-8 sm:h-10"
-                      >
-                        {t("exercises.nextExercise", "Siguiente ejercicio")}
-                      </Button>
-                    </div>
-                  </CardContent>
-                ) : (
-                  <CardContent className="space-y-3 sm:space-y-6 p-3 sm:p-6">
-                    <Alert className="bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800">
-                      <AlertTriangle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-amber-600 shrink-0" />
-                      <AlertTitle className="text-amber-800 dark:text-amber-200 text-xs sm:text-sm">
-                        {t("exercises.mergeConflicts.conflict.title", "Merge conflict — fix it below")}
-                      </AlertTitle>
-                      <AlertDescription className="text-amber-700 dark:text-amber-300 mt-1 sm:mt-2 text-xs sm:text-sm">
-                        {t("exercises.mergeConflicts.conflict.description", "Edit the code: remove the markers (<<<<<<<, =======, >>>>>>>) and combine both implementations. Then click «Validate Resolution».")}
-                      </AlertDescription>
-                    </Alert>
-                    
-                    <div className="space-y-2 sm:space-y-4">
-                      <div className="flex justify-between items-center">
-                        <h4 className="text-xs sm:text-sm font-medium flex items-center gap-1">
-                          <Code className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                          {t("exercises.mergeConflicts.conflict.fileTitle", "Conflicted File Content:")}
-                        </h4>
-                        <Badge variant="outline" className="text-[10px] sm:text-xs bg-blue-50 text-blue-700">utils/feature.js</Badge>
-                      </div>
-                      <div className="border rounded-md">
-                        <Textarea 
-                          ref={conflictTextareaRef}
-                          value={conflictResolution || `<<<<<<< HEAD
-function addFeature(data) {
-  // Feature B implementation (current branch)
-  console.log("Processing data:", data);
-  console.log("Feature started at:", new Date().toISOString());
-  
-  // Process the data
-  const result = data.map(item => {
-    console.log("Processing item:", item.id);
-    return { ...item, processed: true };
-  });
-  
-  console.log("Feature completed");
-  return result;
-}
-=======
-function addFeature(data) {
-  // Feature A implementation (merging branch)
-  // Optimized version with better performance
-  
-  // Use more efficient data processing
-  const result = data.reduce((acc, item) => {
-    acc.push({
-      ...item,
-      processed: true,
-      timestamp: Date.now()
-    });
-    return acc;
-  }, []);
-  
-  return result;
-}
->>>>>>> feature-a`}
-                          onChange={(e) => setConflictResolution(e.target.value)}
-                          className="font-mono text-[9px] xs:text-[10px] sm:text-xs min-h-[250px] xs:min-h-[300px] sm:min-h-[350px] md:min-h-[450px] p-2 sm:p-4 w-full"
-                          placeholder={t("exercises.mergeConflicts.conflict.placeholder", "Edit this code to resolve the conflict...")}
-                        />
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4">
-                        <div className="bg-blue-50 dark:bg-blue-950/30 p-2 sm:p-4 rounded-md space-y-1.5 sm:space-y-3 border border-blue-100 dark:border-blue-900">
-                          <h4 className="font-medium text-blue-800 dark:text-blue-200 text-[10px] sm:text-xs">{t("exercises.mergeConflicts.resolution.title", "Checklist — your solution must:")}</h4>
-                          <ul className="space-y-1 sm:space-y-2 text-[9px] xs:text-[10px] sm:text-xs text-blue-700 dark:text-blue-300 list-disc pl-3 sm:pl-5">
-                            <li>{t("exercises.mergeConflicts.resolution.step1", "No conflict markers (<<<<<<<, =======, >>>>>>>) left")}</li>
-                            <li>{t("exercises.mergeConflicts.resolution.step2", "Include console.log (logging from feature-b)")}</li>
-                            <li>{t("exercises.mergeConflicts.resolution.step3", "Include reduce() or timestamp (performance from feature-a)")}</li>
-                            <li>{t("exercises.mergeConflicts.resolution.step4", "Be valid JavaScript")}</li>
-                          </ul>
-                        </div>
-                        
-                        <div className="flex flex-col justify-end">
-                          <Button
-                            size="sm"
-                            variant="default"
-                            className="w-full mt-auto text-[10px] xs:text-xs sm:text-sm h-7 sm:h-8 md:h-10"
-                            onClick={() => {
-                              const resolution = conflictResolution;
-                              if (
-                                !resolution.includes("<<<<<<< HEAD") && 
-                                !resolution.includes("=======") && 
-                                !resolution.includes(">>>>>>>") && 
-                                resolution.trim() !== "" &&
-                                resolution.includes("console.log") &&
-                                (resolution.includes("reduce") || resolution.includes("timestamp"))
-                              ) {
-                                toast.success(t("exercises.mergeConflicts.conflict.success", "¡Conflicto resuelto correctamente!"), {
-                                  duration: 3000,
-                                });
-                                
-                                // Update the step as completed
-                                setExercises(prev => {
-                                  const mergeState = prev["merge-conflicts"];
-                                  if (!mergeState) {
-                                    return prev;
-                                  }
-                                  const updatedSteps = mergeState.steps.map(step => {
-                                    if (step.id === "resolve-conflict") {
-                                      return { ...step, isCompleted: true };
-                                    }
-                                    return step;
-                                  });
-                                  
-                                  return {
-                                    ...prev,
-                                    ["merge-conflicts"]: {
-                                      ...mergeState,
-                                      steps: updatedSteps,
-                                      isCompleted: true
-                                    }
-                                  };
-                                });
-                                
-                                // Trigger check
-                                setForceUpdate(prev => prev + 1);
-                              } else if (
-                                !resolution.includes("<<<<<<< HEAD") && 
-                                !resolution.includes("=======") && 
-                                !resolution.includes(">>>>>>>") && 
-                                resolution.trim() !== ""
-                              ) {
-                                toast.error(t("exercises.mergeConflicts.conflict.incomplete", "You've removed the conflict markers, but your solution should include both the logging and the performance improvements."), {
-                                  duration: 3000,
-                                });
-                              } else {
-                                toast.error(t("exercises.mergeConflicts.conflict.error", "There are still unresolved conflicts. Remove the conflict markers and provide a solution."), {
-                                  duration: 3000,
-                                });
-                              }
-                            }}
-                          >
-                            {t("exercises.mergeConflicts.conflict.validate", "Validate Resolution")}
-                          </Button>
-                        </div>
-                      </div>
-                      
-                      <div className="flex justify-between items-center pt-4 sm:pt-6 mt-4 sm:mt-6 border-t">
-                        <Button 
-                          variant="outline" 
-                          size="sm"
-                          onClick={() => {
-                            setConflictResolution("");
-                            setExercises(prev => {
-                              const mergeState = prev["merge-conflicts"];
-                              if (!mergeState) {
-                                return prev;
-                              }
-                              return {
-                                ...prev,
-                                ["merge-conflicts"]: {
-                                  ...mergeState,
-                                  isStarted: false,
-                                  isCompleted: false,
-                                  steps: mergeState.steps.map(step => ({
-                                    ...step,
-                                    isCompleted: false
-                                  }))
-                                }
-                              };
-                            });
-                          }}
-                          className="gap-1 sm:gap-2 text-xs sm:text-sm"
-                        >
-                          <XCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                          {t("exercises.cancel", "Cancelar")}
-                        </Button>
-                        
-                        <SheetClose asChild>
-                          <Button 
-                            size="sm" 
-                            variant="secondary"
-                            className="gap-1 sm:gap-2 text-xs sm:text-sm"
-                          >
-                            {t("exercises.close", "Cerrar")}
-                          </Button>
-                        </SheetClose>
-                      </div>
-                    </div>
-                  </CardContent>
-                )}
-              </Card>
             </div>
           ) : selectedExerciseData ? (
             <div className="p-3 sm:p-6 pt-0">

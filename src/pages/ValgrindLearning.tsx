@@ -5,10 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AppNav from '@/components/AppNav';
 import SeoHead from '@/components/SeoHead';
+import { useLocalizedPath } from '@/lib/localizedRoutes';
 import SiteFooter from '@/components/SiteFooter';
 
 const ValgrindLearning: React.FC = () => {
   const { t } = useTranslation();
+  const localizePath = useLocalizedPath();
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
   const [copyError, setCopyError] = useState<string | null>(null);
 
@@ -82,7 +84,13 @@ const ValgrindLearning: React.FC = () => {
 
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
-      <SeoHead page="valgrind" />
+      <SeoHead
+        page="valgrind"
+        breadcrumbs={[
+          { name: t('general.title'), path: localizePath('/') },
+          { name: t('valgrind.pageTitle'), path: localizePath('/valgrind') },
+        ]}
+      />
       <AppNav variant="inner" badge="valgrind" showPlaygroundCta />
 
       <main id="main-content" className="max-w-7xl mx-auto w-full">

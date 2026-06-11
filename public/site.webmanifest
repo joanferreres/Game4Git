@@ -1,6 +1,6 @@
 {
-  "name": "Git Game",
-  "short_name": "Git Game",
+  "name": "Game4Git",
+  "short_name": "Game4Git",
   "icons": [
     {
       "src": "/favicon-16x16.png",
@@ -13,8 +13,8 @@
       "type": "image/png"
     },
     {
-      "src": "/logo.png",
-      "sizes": "192x192",
+      "src": "/logo-96.png",
+      "sizes": "96x96",
       "type": "image/png"
     },
     {
@@ -26,4 +26,4 @@
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
   "display": "standalone"
-} 
+}

@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Terminal, Code, AlertCircle, Lightbulb, Copy, Check, Play, Users, BookOpen } from 'lucide-react';
 import SeoHead from '@/components/SeoHead';
+import { useLocalizedPath } from '@/lib/localizedRoutes';
 import AppNav from "@/components/AppNav";
 import SiteFooter from "@/components/SiteFooter";
 const LazyRealisticGdbTerminal = lazy(() => import('@/components/RealisticGdbTerminal'));
@@ -13,6 +14,7 @@ const LazyRealisticGdbTerminal = lazy(() => import('@/components/RealisticGdbTer
 
 const GdbLearning: React.FC = () => {
   const { t } = useTranslation();
+  const localizePath = useLocalizedPath();
   const [activeTab, setActiveTab] = useState("introduction");
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
   const [copyError, setCopyError] = useState<string | null>(null);
@@ -89,7 +91,13 @@ const GdbLearning: React.FC = () => {
 
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
-      <SeoHead page="gdb" />
+      <SeoHead
+        page="gdb"
+        breadcrumbs={[
+          { name: t('general.title'), path: localizePath('/') },
+          { name: t('gdb.pageTitle'), path: localizePath('/gdb') },
+        ]}
+      />
       <AppNav variant="inner" badge="gdb" showPlaygroundCta />
 
       <main id="main-content" className="max-w-7xl mx-auto w-full">

@@ -58,6 +58,33 @@ export function SiteFooter({ className }: SiteFooterProps) {
               •
             </span>
             <Link
+              to={localizePath("/git-merge-conflicts")}
+              className="transition-colors hover:text-foreground"
+            >
+              {t("landingPages.gitMergeConflicts.eyebrow", "Merge conflicts")}
+            </Link>
+            <span className="text-muted-foreground/50" aria-hidden>
+              •
+            </span>
+            <Link
+              to={localizePath("/valgrind-memory-leaks")}
+              className="transition-colors hover:text-foreground"
+            >
+              {t("landingPages.valgrindMemoryLeaks.eyebrow", "Memory leaks")}
+            </Link>
+            <span className="text-muted-foreground/50" aria-hidden>
+              •
+            </span>
+            <Link
+              to={localizePath("/playground")}
+              className="transition-colors hover:text-foreground"
+            >
+              {t("nav.playground", "Playground")}
+            </Link>
+            <span className="text-muted-foreground/50" aria-hidden>
+              •
+            </span>
+            <Link
               to={localizePath("/gdb")}
               className="transition-colors hover:text-foreground"
             >

@@ -60,6 +60,8 @@ const detectRoutes = () => {
     { path: '/git-practice-game', priority: '0.9', changefreq: 'weekly' },
     { path: '/git-branch-practice', priority: '0.9', changefreq: 'weekly' },
     { path: '/git-merge-conflicts', priority: '0.9', changefreq: 'weekly' },
+    { path: '/git-remote-workflow', priority: '0.85', changefreq: 'weekly' },
+    { path: '/git-reset-guide', priority: '0.85', changefreq: 'weekly' },
     { path: '/gdb', priority: '0.8', changefreq: 'weekly' },
     { path: '/valgrind', priority: '0.8', changefreq: 'weekly' },
     { path: '/valgrind-memory-leaks', priority: '0.7', changefreq: 'weekly' },

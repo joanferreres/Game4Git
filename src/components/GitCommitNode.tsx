@@ -11,6 +11,7 @@ interface GitCommitNodeProps {
     isHead: boolean;
     isSelected: boolean;
     branchNames: string[];
+    remoteRefNames?: string[];
     isBranchHead: boolean;
     width: number;
     height: number;
@@ -24,7 +25,8 @@ const GitCommitNode: React.FC<GitCommitNodeProps> = ({ data }) => {
     branch, 
     isHead, 
     isSelected, 
-    branchNames, 
+    branchNames,
+    remoteRefNames = [],
     isBranchHead,
     width = 56, 
     height = 56,
@@ -100,6 +102,19 @@ const GitCommitNode: React.FC<GitCommitNodeProps> = ({ data }) => {
                 </Badge>
               ))}
             </div>
+            )}
+            {remoteRefNames.length > 0 && (
+              <div className="absolute -top-7 sm:-top-8 md:-top-9 right-0 flex flex-col items-end gap-1">
+                {remoteRefNames.map((refName) => (
+                  <Badge
+                    key={refName}
+                    variant="outline"
+                    className={`${badgeClass} bg-sky-500/10 text-sky-700 border-sky-300`}
+                  >
+                    {refName}
+                  </Badge>
+                ))}
+              </div>
             )}
             
             {/* Commit message */}

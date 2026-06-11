@@ -25,6 +25,8 @@ const ValgrindLearning = lazy(() => import("./pages/ValgrindLearning"));
 const GitPracticeGame = lazy(() => import("./pages/GitPracticeGame"));
 const GitBranchPractice = lazy(() => import("./pages/GitBranchPractice"));
 const GitMergeConflicts = lazy(() => import("./pages/GitMergeConflicts"));
+const GitRemoteWorkflow = lazy(() => import("./pages/GitRemoteWorkflow"));
+const GitResetGuide = lazy(() => import("./pages/GitResetGuide"));
 const ValgrindMemoryLeaks = lazy(() => import("./pages/ValgrindMemoryLeaks"));
 const Admin = lazy(() => import("./pages/Admin"));
 const Landing = lazy(() => import("./pages/Landing"));
@@ -93,6 +95,8 @@ const localizedPageDefinitions = [
   { path: "/git-practice-game", component: GitPracticeGame },
   { path: "/git-branch-practice", component: GitBranchPractice },
   { path: "/git-merge-conflicts", component: GitMergeConflicts },
+  { path: "/git-remote-workflow", component: GitRemoteWorkflow },
+  { path: "/git-reset-guide", component: GitResetGuide },
   { path: "/valgrind-memory-leaks", component: ValgrindMemoryLeaks },
 ];
 

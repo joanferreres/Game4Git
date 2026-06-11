@@ -260,6 +260,10 @@ const GitGraph: React.FC = () => {
       const branchNames = repository.branches
         .filter(b => b.commitId === commit.id)
         .map(b => b.name);
+
+      const remoteRefNames = repository.remoteReferences
+        .filter((ref) => ref.commitId === commit.id)
+        .map((ref) => ref.name.replace(/^origin\//, "origin/"));
       
       const isHead = repository.HEAD === commit.id;
       
@@ -277,6 +281,7 @@ const GitGraph: React.FC = () => {
           isHead,
           isBranchHead,
           branchNames,
+          remoteRefNames,
           isSelected: selectedCommitId === commit.id,
           width: nodeWidth,
           height: nodeHeight,

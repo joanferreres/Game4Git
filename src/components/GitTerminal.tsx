@@ -43,6 +43,10 @@ const GitTerminal: React.FC = () => {
     { command: "git pull", description: t("gitCommands.pull") },
     { command: "git push", description: t("gitCommands.push") },
     { command: "git reset --hard", description: t("gitCommands.reset") },
+    { command: "git log", description: t("gitCommands.log", "Show commit history") },
+    { command: "git revert <commit>", description: t("gitCommands.revert", "Revert a commit") },
+    { command: "git commit --amend", description: t("gitCommands.amend", "Amend last commit") },
+    { command: "git merge --abort", description: t("gitCommands.mergeAbort", "Abort merge") },
     { command: "git status", description: t("gitCommands.status") },
   ], [t]);
 
@@ -57,14 +61,19 @@ const GitTerminal: React.FC = () => {
     createBranch, 
     switchBranch, 
     resetWorkingChanges,
+    resetToRef,
     stageChanges,
     workingChanges,
-    resetToInitialCommit,
     mergeBranch,
     stagedChanges,
     fetchRemote,
     pullRemote,
-    pushToRemote
+    pushToRemote,
+    abortMerge,
+    hasPendingConflict,
+    amendCommit,
+    revertCommit,
+    createCommit: storeCreateCommit,
   } = useGitStore();
   
   const [command, setCommand] = useState("");
@@ -143,28 +152,47 @@ const GitTerminal: React.FC = () => {
         }
           
         case "commit": {
-          // Parse commit message from args (-m "message")
+          if (parts.includes("--amend")) {
+            const mIndex = parts.indexOf("-m");
+            let message: string | undefined;
+            if (mIndex !== -1 && mIndex + 1 < parts.length) {
+              message = parts.slice(mIndex + 1).join(" ");
+              if (message.startsWith('"') && message.endsWith('"')) {
+                message = message.slice(1, -1);
+              }
+            }
+            const ok = amendCommit(message);
+            addToHistory({
+              type: ok ? "output" : "error",
+              content: ok ? "Amended the last commit." : "Error: could not amend commit.",
+            });
+            return;
+          }
           const mIndex = parts.indexOf("-m");
           if (mIndex !== -1 && mIndex + 1 < parts.length) {
-            // Extract message, handling potential quotes
             let message = parts.slice(mIndex + 1).join(" ");
             if (message.startsWith('"') && message.endsWith('"')) {
               message = message.slice(1, -1);
             }
-            
-            try {
-              createCommit(message);
-              addToHistory({ type: "output", content: `[${repository.branches.find(b => b.isActive)?.name || "HEAD"}] ${message}` });
-              return;
-            } catch (err) {
-              addToHistory({ type: "error", content: "Error: You must stage changes before committing. Use 'git add' first." });
-              return;
+            const ok = storeCreateCommit(message);
+            if (ok) {
+              addToHistory({
+                type: "output",
+                content: `[${repository.branches.find((b) => b.isActive)?.name || "HEAD"}] ${message}`,
+              });
+            } else {
+              addToHistory({
+                type: "error",
+                content: "Error: You must stage changes before committing. Use 'git add' first.",
+              });
             }
-          } else {
-            addToHistory({ type: "error", content: "Error: Commit message required. Use 'git commit -m \"your message\"'." });
             return;
           }
-          break;
+          addToHistory({
+            type: "error",
+            content: 'Error: Commit message required. Use \'git commit -m "your message"\'.',
+          });
+          return;
         }
           
         case "branch": {
@@ -173,7 +201,7 @@ const GitTerminal: React.FC = () => {
             const branches = repository.branches.map(b => 
               b.isActive ? `* ${b.name}` : `  ${b.name}`
             );
-            addToHistory({ type: "output", content: branches.join("\\n") });
+            addToHistory({ type: "output", content: branches.join("\n") });
             return;
           } else if (parts.length === 3) {
             // Create branch
@@ -220,8 +248,24 @@ const GitTerminal: React.FC = () => {
         }
           
         case "merge": {
-          if (parts.length === 3) {
-            const sourceBranch = parts[2];
+          if (parts.length === 3 && parts[2] === "--abort") {
+            if (!hasPendingConflict()) {
+              addToHistory({ type: "error", content: "Error: No merge in progress to abort." });
+              return;
+            }
+            abortMerge();
+            addToHistory({ type: "output", content: "Merge aborted." });
+            return;
+          }
+          if (parts.length >= 3) {
+            const noFf = parts.includes("--no-ff");
+            const sourceBranch = parts.find(
+              (p) => p !== "merge" && p !== "--no-ff" && !p.startsWith("-")
+            );
+            if (!sourceBranch) {
+              addToHistory({ type: "error", content: "Error: Specify which branch to merge." });
+              return;
+            }
             const targetBranch = repository.branches.find(b => b.isActive)?.name;
             
             if (!targetBranch) {
@@ -239,42 +283,72 @@ const GitTerminal: React.FC = () => {
               return;
             }
             
-            try {
-              mergeBranch(sourceBranch, targetBranch);
-              addToHistory({ type: "output", content: `Merged branch '${sourceBranch}' into '${targetBranch}'.` });
-              return;
-            } catch (err) {
-              addToHistory({ type: "error", content: "Error merging branches." });
-              return;
-            }
-          } else {
-            addToHistory({ type: "error", content: "Error: Specify which branch to merge. Use 'git merge <branch-name>'." });
+            mergeBranch(sourceBranch, targetBranch, { noFf });
+            addToHistory({
+              type: "output",
+              content: `Merged branch '${sourceBranch}' into '${targetBranch}'.`,
+            });
             return;
           }
-          break;
+          addToHistory({
+            type: "error",
+            content: "Error: Specify which branch to merge. Use 'git merge <branch-name>'.",
+          });
+          return;
+        }
+
+        case "revert": {
+          if (parts.length >= 3) {
+            const ok = revertCommit(parts[2]);
+            addToHistory({
+              type: ok ? "output" : "error",
+              content: ok ? `Reverted commit ${parts[2]}.` : `Error: commit '${parts[2]}' not found.`,
+            });
+            return;
+          }
+          addToHistory({ type: "error", content: "Error: Specify a commit to revert." });
+          return;
         }
           
         case "reset": {
-          if (parts.length >= 3 && parts[2] === "--hard") {
-            if (parts.length === 3) {
-              // Reset to HEAD
-              resetWorkingChanges();
-              addToHistory({ type: "output", content: "Reset working directory to HEAD." });
-              return;
-            } else if (parts[3].toLowerCase() === "head") {
-              resetWorkingChanges();
-              addToHistory({ type: "output", content: "Reset working directory to HEAD." });
-              return;
-            }
-          } 
-          
-          if (parts.length === 2) {
-            // Simple reset (unstage)
+          const mode = parts.includes("--hard")
+            ? "hard"
+            : parts.includes("--soft")
+              ? "soft"
+              : "mixed";
+          const refToken = parts.find(
+            (p) => !["reset", "--hard", "--soft", "--mixed"].includes(p)
+          );
+          const ref = refToken ?? "HEAD";
+          if (mode === "mixed" && parts.length === 2) {
             resetWorkingChanges();
-            addToHistory({ type: "output", content: "Reset working directory to HEAD." });
+            addToHistory({ type: "output", content: "Unstaged changes (mixed reset to HEAD)." });
             return;
           }
-          break;
+          const ok = resetToRef(mode, ref);
+          addToHistory({
+            type: ok ? "output" : "error",
+            content: ok ? `${mode} reset to ${ref}.` : `Error: could not reset to ${ref}.`,
+          });
+          return;
+        }
+
+        case "log": {
+          const sorted = [...repository.commits].sort((a, b) => b.timestamp - a.timestamp);
+          const lines = sorted.map((commit) => {
+            const branchNames = repository.branches
+              .filter((b) => b.commitId === commit.id)
+              .map((b) => (b.isActive ? `* ${b.name}` : b.name))
+              .join(", ");
+            const remoteNames = repository.remoteReferences
+              .filter((r) => r.commitId === commit.id)
+              .map((r) => r.name)
+              .join(", ");
+            const refs = [branchNames, remoteNames].filter(Boolean).join(" | ");
+            return `${commit.id.slice(0, 7)} ${refs ? `(${refs})` : ""} ${commit.message}`;
+          });
+          addToHistory({ type: "output", content: lines.join("\n") || "No commits yet." });
+          return;
         }
           
         case "status": {
@@ -320,46 +394,29 @@ const GitTerminal: React.FC = () => {
         }
         
         case "fetch": {
-          toast.info(
-            t("git.gitFetch"), 
-            { 
-              description: t("explanations.gitFetch"),
-              duration: 5000
-            }
-          );
-          addToHistory({ type: "output", content: t("explanations.simulationFetch") });
+          fetchRemote();
+          addToHistory({ type: "output", content: "Fetched from remote." });
           return;
-          break;
         }
           
         case "pull": {
-          toast.info(
-            t("git.gitPull"), 
-            { 
-              description: t("explanations.gitPull"),
-              duration: 5000
-            }
-          );
-          
-          const currentBranch = repository.branches.find(b => b.isActive)?.name;
-          addToHistory({ type: "output", content: t("explanations.simulationPull").replace('current', currentBranch || '') });
+          const currentBranch = repository.branches.find((b) => b.isActive)?.name;
+          pullRemote(currentBranch);
+          addToHistory({
+            type: "output",
+            content: `Pulled into ${currentBranch || "active branch"}.`,
+          });
           return;
-          break;
         }
           
         case "push": {
-          toast.info(
-            t("git.gitPush"), 
-            { 
-              description: t("explanations.gitPush"),
-              duration: 5000
-            }
-          );
-          
-          const pushBranch = repository.branches.find(b => b.isActive)?.name;
-          addToHistory({ type: "output", content: t("explanations.simulationPush").replace('branch', pushBranch || '') });
+          const pushBranch = repository.branches.find((b) => b.isActive)?.name;
+          pushToRemote(pushBranch);
+          addToHistory({
+            type: "output",
+            content: `Pushed ${pushBranch || "branch"} to remote.`,
+          });
           return;
-          break;
         }
           
         default: {
@@ -388,10 +445,15 @@ const GitTerminal: React.FC = () => {
         `git checkout <branch>       - ${t("gitCommands.switchBranch")}`,
         `git checkout -b <branch>    - ${t("gitCommands.createAndSwitch")}`,
         `git merge <branch>          - ${t("gitCommands.merge")}`,
+        `git merge --no-ff <branch>  - ${t("gitCommands.mergeNoFf", "Merge with merge commit")}`,
+        `git merge --abort           - ${t("gitCommands.mergeAbort", "Abort merge")}`,
         `git fetch                   - ${t("gitCommands.fetch")}`,
         `git pull                    - ${t("gitCommands.pull")}`,
         `git push                    - ${t("gitCommands.push")}`,
-        `git reset [--hard]          - ${t("gitCommands.reset")}`,
+        `git reset [--soft|--mixed|--hard] [ref] - ${t("gitCommands.reset")}`,
+        `git log                     - ${t("gitCommands.log", "Show commit history")}`,
+        `git revert <commit>         - ${t("gitCommands.revert", "Revert a commit")}`,
+        `git commit --amend          - ${t("gitCommands.amend", "Amend last commit")}`,
         `git status                  - ${t("gitCommands.status")}`,
         "",
         `clear                       - ${t("gitCommands.clear")}`,

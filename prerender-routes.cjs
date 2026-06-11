@@ -23,6 +23,8 @@ const ROUTES = [
   { key: 'gitPracticeGame', path: '/git-practice-game' },
   { key: 'gitBranchPractice', path: '/git-branch-practice' },
   { key: 'gitMergeConflicts', path: '/git-merge-conflicts' },
+  { key: 'gitRemoteWorkflow', path: '/git-remote-workflow' },
+  { key: 'gitResetGuide', path: '/git-reset-guide' },
   { key: 'valgrindMemoryLeaks', path: '/valgrind-memory-leaks' },
 ];
 
@@ -32,6 +34,8 @@ const LANDING_HERO_IMAGES = {
   gitBranchPractice: '/hero-git-branch-practice.webp',
   gitMergeConflicts: '/hero-git-merge-conflicts.webp',
   valgrindMemoryLeaks: '/hero-valgrind-memory-leaks.webp',
+  gitRemoteWorkflow: '/hero-git-practice-game.webp',
+  gitResetGuide: '/hero-git-branch-practice.webp',
 };
 
 const LANDING_HERO_PNG = {
@@ -39,6 +43,8 @@ const LANDING_HERO_PNG = {
   gitBranchPractice: '/hero-git-branch-practice.png',
   gitMergeConflicts: '/hero-git-merge-conflicts.png',
   valgrindMemoryLeaks: '/hero-valgrind-memory-leaks.png',
+  gitRemoteWorkflow: '/hero-git-practice-game.png',
+  gitResetGuide: '/hero-git-branch-practice.png',
 };
 
 const LANDING_ROUTE_CONFIG = {
@@ -61,6 +67,16 @@ const LANDING_ROUTE_CONFIG = {
     primaryHref: (locale) => getLocalizedPath('/valgrind', locale),
     secondaryPath: '/',
     related: ['valgrind', 'gdb', 'gitPracticeGame'],
+  },
+  gitRemoteWorkflow: {
+    primaryHref: (locale) => `${getLocalizedPath('/playground', locale)}?exercise=remote-workflow`,
+    secondaryPath: '/playground',
+    related: ['gitPracticeGame', 'gitResetGuide', 'gitMergeConflicts', 'gdb'],
+  },
+  gitResetGuide: {
+    primaryHref: (locale) => `${getLocalizedPath('/playground', locale)}?exercise=undo-changes`,
+    secondaryPath: '/playground',
+    related: ['gitRemoteWorkflow', 'gitBranchPractice', 'gitMergeConflicts', 'gdb'],
   },
 };
 
@@ -166,10 +182,27 @@ const getRouteDescription = (locale, routeKey) => {
   }
 };
 
+const getOgImageForRoute = (routeKey) => {
+  const hero = LANDING_HERO_PNG[routeKey];
+  return hero ? `${SITE_URL}${hero}` : `${SITE_URL}/og-image.png`;
+};
+
+const buildBreadcrumbSchema = (items) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.name,
+    item: item.url,
+  })),
+});
+
 const buildSeoBlock = (route, locale) => {
   const title = t(locale, `seo.${route.key}.title`);
   const description = t(locale, `seo.${route.key}.description`);
   const canonicalUrl = getLocalizedUrl(route.path, locale);
+  const ogImage = getOgImageForRoute(route.key);
   const alternateLinks = buildAlternateLinks(route.path)
     .map(
       (alternate) =>
@@ -188,13 +221,13 @@ const buildSeoBlock = (route, locale) => {
     `    <meta data-rh="true" property="og:description" content="${escapeHtml(description)}" />`,
     `    <meta data-rh="true" property="og:type" content="website" />`,
     `    <meta data-rh="true" property="og:url" content="${escapeHtml(canonicalUrl)}" />`,
-    `    <meta data-rh="true" property="og:image" content="${SITE_URL}/og-image.png" />`,
+    `    <meta data-rh="true" property="og:image" content="${ogImage}" />`,
     `    <meta data-rh="true" property="og:site_name" content="Game4Git" />`,
     `    <meta data-rh="true" property="og:locale" content="${OG_LOCALE_MAP[locale]}" />`,
     `    <meta data-rh="true" name="twitter:card" content="summary_large_image" />`,
     `    <meta data-rh="true" name="twitter:title" content="${escapeHtml(title)}" />`,
     `    <meta data-rh="true" name="twitter:description" content="${escapeHtml(description)}" />`,
-    `    <meta data-rh="true" name="twitter:image" content="${SITE_URL}/og-image.png" />`,
+    `    <meta data-rh="true" name="twitter:image" content="${ogImage}" />`,
     `    <meta data-rh="true" name="twitter:site" content="@gitgame" />`,
   ].join('\n');
 };
@@ -277,7 +310,16 @@ const buildStructuredData = (route, locale) => {
     },
   };
 
-  const faqEntries = isLandingRoute(route.key) ? t(locale, `landingPages.${route.key}.faq`, []) : [];
+  const faqEntries = isLandingRoute(route.key)
+    ? t(locale, `landingPages.${route.key}.faq`, [])
+    : route.key === 'gdb' || route.key === 'valgrind'
+      ? [1, 2, 3, 4]
+          .map((index) => ({
+            q: t(locale, `${route.key}.faq.q${index}`),
+            a: t(locale, `${route.key}.faq.a${index}`),
+          }))
+          .filter((entry) => entry.q && entry.a)
+      : [];
   const faqSchema = buildFaqSchemaBlock(faqEntries);
   const schemaBlocks = [
     '    <script data-rh="true" type="application/ld+json">',
@@ -289,6 +331,30 @@ const buildStructuredData = (route, locale) => {
     schemaBlocks.push(
       '    <script data-rh="true" type="application/ld+json">',
       `      ${JSON.stringify(faqSchema)}`,
+      '    </script>'
+    );
+  }
+
+  const breadcrumbItems =
+    route.key === 'gdb' || route.key === 'valgrind'
+      ? [
+          { name: t(locale, 'general.title'), url: getLocalizedUrl('/', locale) },
+          {
+            name: t(locale, route.key === 'gdb' ? 'gdb.pageTitle' : 'valgrind.pageTitle'),
+            url,
+          },
+        ]
+      : isLandingRoute(route.key)
+        ? [
+            { name: t(locale, 'general.title'), url: getLocalizedUrl('/', locale) },
+            { name: t(locale, `landingPages.${route.key}.heroTitle`), url },
+          ]
+        : null;
+
+  if (breadcrumbItems) {
+    schemaBlocks.push(
+      '    <script data-rh="true" type="application/ld+json">',
+      `      ${JSON.stringify(buildBreadcrumbSchema(breadcrumbItems))}`,
       '    </script>'
     );
   }
