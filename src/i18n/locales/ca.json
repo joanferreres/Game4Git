@@ -79,12 +79,12 @@
       "description": "Obre el playground Git: gràfic de commits en viu, staging, controls de branques i terminal opcional. Practica fluxos Git al navegador."
     },
     "gitRemoteWorkflow": {
-      "title": "Git Remote Workflow | Fetch, Pull & Push Guide | Game4Git",
-      "description": "Practice git fetch, pull, and push with origin references on a visual graph. Learn remote workflows safely in the browser."
+      "title": "Flux amb remots Git | Fetch, Pull i Push | Game4Git",
+      "description": "Practica git fetch, pull i push amb referències origin en un gràfic visual. Aprèn fluxos remots amb seguretat al navegador."
     },
     "gitResetGuide": {
-      "title": "Git Reset & Revert Guide | Undo Changes Safely | Game4Git",
-      "description": "Learn git reset, revert, and commit --amend with interactive exercises. See how each command changes history on the graph."
+      "title": "Guia git reset i revert | Desfer canvis amb seguretat | Game4Git",
+      "description": "Aprèn git reset, revert i commit --amend amb exercicis interactius. Veu com cada comanda canvia l'historial al gràfic."
     }
   },
   "playground": {
@@ -143,6 +143,28 @@
     "availableCommands": "Comandes disponibles",
     "availableCommandsTitle": "Comandes disponibles",
     "placeholder": "Escriu comanda git..."
+  },
+  "gitCommands": {
+    "stageAll": "Preparar tots els canvis",
+    "stageFile": "Preparar canvis per al fitxer hello.c",
+    "commit": "Confirmar canvis preparats amb un missatge",
+    "listBranches": "Llistar branques",
+    "createBranch": "Crear una branca nova",
+    "switchBranch": "Canviar a una branca",
+    "createAndSwitch": "Crear i canviar a una branca nova",
+    "merge": "Fusionar la branca especificada a la branca actual",
+    "fetch": "Obtenir últims canvis del repositori remot",
+    "pull": "Obtenir i fusionar canvis del repositori remot",
+    "push": "Enviar canvis locals al repositori remot",
+    "reset": "Restablir el directori de treball a HEAD",
+    "log": "Mostrar historial de commits",
+    "revert": "Revertir un commit",
+    "amend": "Enmendar l'últim commit",
+    "mergeAbort": "Avortar fusió",
+    "mergeNoFf": "Fusionar creant commit de merge",
+    "status": "Mostrar estat actual",
+    "clear": "Netejar terminal",
+    "help": "Mostrar ajuda"
   },
   "messages": {
     "firstCommit": "🎉 El teu primer commit! Molt bé.",
@@ -352,77 +374,77 @@
       }
     },
     "mergeConflicts": {
-      "tabTitle": "Merge Conflicts",
-      "title": "Merge Conflicts Resolution",
-      "description": "Learn how to resolve merge conflicts when branches have competing changes.",
+      "tabTitle": "Conflictes de fusió",
+      "title": "Resolució de conflictes de fusió",
+      "description": "Aprèn a resoldre conflictes de merge quan les branques tenen canvis incompatibles.",
       "steps": {
-        "createFeature": "Create branch 'feature-conflict', change the code, and commit",
-        "divergeMaster": "Checkout master and commit a different change on the same area",
-        "triggerConflict": "Merge 'feature-conflict' into master to trigger a conflict",
-        "resolveConflict": "Resolve the conflict in the Conflict Resolver panel and finish the merge"
+        "createFeature": "Crea la branca 'feature-conflict', modifica el codi i fes commit",
+        "divergeMaster": "Canvia a master i confirma un canvi diferent a la mateixa zona",
+        "triggerConflict": "Fusiona 'feature-conflict' a master per provocar un conflicte",
+        "resolveConflict": "Resol el conflicte al panell Conflict Resolver i completa la fusió"
       },
       "hints": {
-        "createFeature": "git checkout -b feature-conflict, edit, git add ., git commit",
-        "divergeMaster": "git checkout master, edit the file differently, commit",
-        "triggerConflict": "git merge feature-conflict while on master",
-        "resolveConflict": "Use the resolver below the graph, then stage and commit"
+        "createFeature": "git checkout -b feature-conflict, edita, git add ., git commit",
+        "divergeMaster": "git checkout master, edita el fitxer d'una altra manera, commit",
+        "triggerConflict": "git merge feature-conflict estant a master",
+        "resolveConflict": "Fes servir el resolvedor sota el gràfic, després add i commit"
       },
       "conflict": {
-        "title": "Merge conflict — fix it below",
-        "description": "Edit the code: remove the markers (<<<<<<<, =======, >>>>>>>) and combine both implementations. Then click «Validate Resolution».",
-        "fileTitle": "Conflicted File Content:",
-        "placeholder": "Edit this code to resolve the conflict...",
-        "validate": "Validate Resolution",
-        "success": "Conflict resolved correctly!",
-        "error": "There are still unresolved conflicts. Remove the conflict markers and provide a solution.",
-        "incomplete": "You removed the conflict markers, but your solution must include both logging and performance improvements."
+        "title": "Conflicte de fusió — corregeix-lo a sota",
+        "description": "Edita el codi: elimina els marcadors (<<<<<<<, =======, >>>>>>>) i combina les dues versions. Després prem «Validar resolució».",
+        "fileTitle": "Contingut del fitxer en conflicte:",
+        "placeholder": "Edita aquest codi per resoldre el conflicte...",
+        "validate": "Validar resolució",
+        "success": "Conflicte resolt correctament!",
+        "error": "Encara hi ha conflictes sense resoldre. Elimina els marcadors i proporciona una solució.",
+        "incomplete": "Has eliminat els marcadors, però la solució ha d'incloure logging i millores de rendiment."
       },
       "scenario": {
-        "title": "What you'll do",
-        "descriptionSimple": "Two developers changed the same function. You will see code with conflict markers (<<<<<<<, =======, >>>>>>>). Your task:",
-        "step1": "Remove all conflict markers",
-        "step2": "Merge both versions: keep logging (console.log) AND performance (reduce / timestamp)",
-        "step3": "Click «Validate Resolution» to check your answer"
+        "title": "Què faràs",
+        "descriptionSimple": "Dos desenvolupadors van canviar la mateixa funció. Veuràs codi amb marcadors de conflicte (<<<<<<<, =======, >>>>>>>). La teva tasca:",
+        "step1": "Eliminar tots els marcadors de conflicte",
+        "step2": "Combinar les dues versions: conservar logging (console.log) I rendiment (reduce / timestamp)",
+        "step3": "Prem «Validar resolució» per comprovar la resposta"
       },
       "resolution": {
-        "title": "Checklist — your solution must:",
-        "step1": "No conflict markers (<<<<<<<, =======, >>>>>>>) left",
-        "step2": "Include console.log (logging from feature-b)",
-        "step3": "Include reduce() or timestamp (performance from feature-a)",
-        "step4": "Be valid JavaScript"
+        "title": "Llista de comprovació — la solució ha de:",
+        "step1": "No deixar marcadors (<<<<<<<, =======, >>>>>>>)",
+        "step2": "Incloure console.log (logging de feature-b)",
+        "step3": "Incloure reduce() o timestamp (rendiment de feature-a)",
+        "step4": "Ser JavaScript vàlid"
       },
-      "startExplanation": "Edit the conflicted code below, then click «Validate Resolution» to complete the exercise.",
+      "startExplanation": "Edita el codi en conflicte a sota i prem «Validar resolució» per completar l'exercici.",
       "objectives": {
-        "1": "Create conflicting changes in different branches",
-        "2": "Attempt to merge and encounter conflicts",
-        "3": "Resolve conflicts in the simulator",
-        "4": "Complete the merge successfully"
+        "1": "Crear canvis conflictius en branques diferents",
+        "2": "Intentar fusionar i trobar conflictes",
+        "3": "Resoldre conflictes al simulador",
+        "4": "Completar la fusió amb èxit"
       },
       "commands": {
         "createBranch": "git checkout -b feature-conflict",
         "add": "git add .",
-        "commit": "git commit -m \"Feature change\"",
+        "commit": "git commit -m \"Canvi de feature\"",
         "checkoutMaster": "git checkout master",
         "merge": "git merge feature-conflict"
       },
       "uiActions": {
-        "createBranches": "Create diverging branches with commits",
-        "triggerMerge": "Merge to trigger a conflict",
-        "resolve": "Resolve using the Conflict Resolver panel"
+        "createBranches": "Crear branques divergents amb commits",
+        "triggerMerge": "Fusionar per provocar un conflicte",
+        "resolve": "Resoldre amb el panell Conflict Resolver"
       }
     },
     "undoChanges": {
-      "title": "Undoing Changes",
-      "description": "Practice git commit --amend, git reset, and git revert safely.",
+      "title": "Desfer canvis",
+      "description": "Practica git commit --amend, git reset i git revert amb seguretat.",
       "steps": {
-        "amend": "Commit a change, then amend the message to include '(amended)'",
-        "reset": "Make another commit, then git reset --hard HEAD~1",
-        "revert": "Commit again, then git revert HEAD to undo it with a new commit"
+        "amend": "Fes un commit i enmena el missatge per incloure '(amended)'",
+        "reset": "Fes un altre commit i després git reset --hard HEAD~1",
+        "revert": "Confirma de nou i usa git revert HEAD per desfer-ho amb un commit nou"
       },
       "hints": {
-        "amend": "git commit -m \"WIP\", then git commit --amend -m \"WIP (amended)\"",
-        "reset": "git reset --hard HEAD~1 removes the last commit from the branch",
-        "revert": "git revert HEAD creates a safe undo commit"
+        "amend": "git commit -m \"WIP\", després git commit --amend -m \"WIP (amended)\"",
+        "reset": "git reset --hard HEAD~1 elimina l'últim commit de la branca",
+        "revert": "git revert HEAD crea un commit segur que desfà el canvi"
       },
       "commands": {
         "commit": "git commit -m \"WIP\"",
@@ -431,23 +453,23 @@
         "revert": "git revert HEAD"
       },
       "uiActions": {
-        "amend": "Amend the last commit message",
-        "reset": "Hard reset to drop the last commit",
-        "revert": "Revert with a new commit"
+        "amend": "Enmendar el missatge de l'últim commit",
+        "reset": "Reset dur per eliminar l'últim commit",
+        "revert": "Revertir amb un commit nou"
       }
     },
     "remoteWorkflow": {
-      "title": "Working with Remotes",
-      "description": "Practice git fetch, push, and pull with origin/master references on the graph.",
+      "title": "Treball amb remots",
+      "description": "Practica git fetch, push i pull amb referències origin/master al gràfic.",
       "steps": {
-        "fetch": "Run git fetch to load origin/* references",
-        "push": "Commit on master and git push to update origin/master",
-        "pull": "After fetch brings new remote commits, git pull to merge origin/master"
+        "fetch": "Executa git fetch per carregar referències origin/*",
+        "push": "Confirma a master i git push per actualitzar origin/master",
+        "pull": "Després d'un fetch amb commits nous al remot, git pull per fusionar origin/master"
       },
       "hints": {
-        "fetch": "git fetch or use the Fetch button in Git Controls",
-        "push": "git push publishes your local master to origin/master",
-        "pull": "git pull merges remote changes into your current branch"
+        "fetch": "git fetch o el botó Fetch als Controls de Git",
+        "push": "git push publica el teu master local a origin/master",
+        "pull": "git pull fusiona els canvis remots a la branca actual"
       },
       "commands": {
         "fetch": "git fetch",
@@ -455,23 +477,23 @@
         "pull": "git pull"
       },
       "uiActions": {
-        "fetch": "Fetch remote references",
-        "push": "Push local commits",
-        "pull": "Pull and merge remote changes"
+        "fetch": "Obtenir referències remotes",
+        "push": "Enviar commits locals",
+        "pull": "Pull i fusionar canvis remots"
       }
     },
     "fastForwardMerge": {
-      "title": "Fast-forward vs Merge Commit",
-      "description": "See when Git fast-forwards and when --no-ff creates a merge commit.",
+      "title": "Fast-forward vs commit de merge",
+      "description": "Observa quan Git fa fast-forward i quan --no-ff crea un commit de merge.",
       "steps": {
-        "ff": "Create 'feature-ff', commit, checkout master, and merge (fast-forward)",
-        "diverge": "Create 'feature-merge', commit on it and on master so histories diverge",
-        "noFf": "Merge feature-merge into master with --no-ff"
+        "ff": "Crea 'feature-ff', confirma, checkout master i fusiona (fast-forward)",
+        "diverge": "Crea 'feature-merge', confirma-hi i a master per divergir historials",
+        "noFf": "Fusiona feature-merge a master amb --no-ff"
       },
       "hints": {
-        "ff": "When master has not diverged, merge moves the pointer forward",
-        "diverge": "Both branches need their own commits after the common base",
-        "noFf": "git merge --no-ff feature-merge forces a merge commit"
+        "ff": "Si master no ha divergit, el merge avança el punter",
+        "diverge": "Ambdues branques necessiten commits propis després de la base comuna",
+        "noFf": "git merge --no-ff feature-merge força un commit de merge"
       },
       "commands": {
         "createFf": "git checkout -b feature-ff",
@@ -480,8 +502,8 @@
         "mergeNoFf": "git merge --no-ff feature-merge"
       },
       "uiActions": {
-        "ff": "Observe a fast-forward on the graph",
-        "noFf": "Force a merge commit with --no-ff"
+        "ff": "Observar un fast-forward al gràfic",
+        "noFf": "Forçar un commit de merge amb --no-ff"
       }
     }
   },
@@ -751,16 +773,16 @@
       "disassemble": "Disassemble"
     },
     "faq": {
-      "q1": "What is GDB?",
-      "a1": "GDB (GNU Debugger) lets you pause C/C++ programs, inspect variables, step through code, and analyze crashes with stack traces.",
-      "q2": "Why compile with -g before using GDB?",
-      "a2": "The -g flag adds debug symbols so GDB can map machine code to your source lines, variables, and function names.",
-      "q3": "What is the difference between next and step?",
-      "a3": "next steps over function calls; step enters them. Use next to stay at the current function level.",
-      "q4": "How do I debug a segmentation fault with GDB?",
-      "a4": "Run gdb ./program, type run, and when it crashes use backtrace to see the call stack and frame to inspect locals."
+      "q1": "Què és GDB?",
+      "a1": "GDB (GNU Debugger) et permet aturar programes C/C++, inspeccionar variables, avançar pas a pas i analitzar fallades amb traces de pila.",
+      "q2": "Per què compilar amb -g abans d'usar GDB?",
+      "a2": "L'opció -g afegeix símbols de depuració perquè GDB associï el codi màquina amb les teves línies, variables i noms de funció.",
+      "q3": "Quina diferència hi ha entre next i step?",
+      "a3": "next salta les crides a funcions; step hi entra. Fes servir next per quedar-te al nivell actual.",
+      "q4": "Com depuro un segmentation fault amb GDB?",
+      "a4": "Executa gdb ./programa, escriu run i, quan falli, usa backtrace per veure la pila i frame per inspeccionar variables locals."
     },
-    "faqTitle": "GDB FAQ"
+    "faqTitle": "FAQ de GDB"
   },
   "valgrind": {
     "errorTypes": {
@@ -1129,16 +1151,16 @@
       }
     },
     "faq": {
-      "q1": "What is Valgrind used for?",
-      "a1": "Valgrind helps you find memory leaks, invalid reads/writes, and other memory bugs in C and C++ programs using tools like Memcheck.",
-      "q2": "Do I need to compile with -g for Valgrind?",
-      "a2": "You can run Valgrind without debug symbols, but compiling with -g shows file names and line numbers in reports.",
-      "q3": "What does 'definitely lost' mean in a leak report?",
-      "a3": "It means allocated memory has no pointer left pointing to it — a classic memory leak you should fix.",
-      "q4": "Can Valgrind detect invalid frees and double frees?",
-      "a4": "Yes. Memcheck reports invalid frees, double frees, and use-after-free errors in addition to leaks."
+      "q1": "Per a què serveix Valgrind?",
+      "a1": "Valgrind ajuda a trobar fuites de memòria, lectures/escriptures invàlides i altres errors de memòria en C/C++ amb eines com Memcheck.",
+      "q2": "Cal compilar amb -g per Valgrind?",
+      "a2": "Pots executar Valgrind sense símbols de depuració, però compilar amb -g mostra noms de fitxer i números de línia als informes.",
+      "q3": "Què significa 'definitely lost' en un informe de fuites?",
+      "a3": "Significa que la memòria assignada ja no té cap punter que hi apunti: una fuita clàssica que has de corregir.",
+      "q4": "Pot Valgrind detectar alliberaments invàlids i double free?",
+      "a4": "Sí. Memcheck informa d'alliberaments invàlids, double free i ús després d'alliberar, a més de fuites."
     },
-    "faqTitle": "Valgrind FAQ"
+    "faqTitle": "FAQ de Valgrind"
   },
   "landingPages": {
     "common": {
@@ -1353,100 +1375,100 @@
       "relatedDescription": "Mou-te entre pràctica de Git i temes de depuració segons el que vulguis aprendre després."
     },
     "gitRemoteWorkflow": {
-      "eyebrow": "Git remote workflow",
-      "heroTitle": "Learn git fetch, pull, and push with a visual remote workflow",
-      "heroDescription": "Practice syncing with origin/master: fetch remote refs, push your commits, and pull when the remote moves ahead — all on an interactive commit graph.",
-      "primaryCta": "Start remote challenge",
-      "secondaryCta": "Open playground",
+      "eyebrow": "Flux amb remots Git",
+      "heroTitle": "Aprèn git fetch, pull i push amb un flux remot visual",
+      "heroDescription": "Practica la sincronització amb origin/master: fetch de refs remotes, push dels teus commits i pull quan el remot avança, tot en un gràfic interactiu.",
+      "primaryCta": "Començar repte remot",
+      "secondaryCta": "Obrir playground",
       "highlights": [
-        "See origin/* refs appear after fetch",
-        "Push local master to update origin/master",
-        "Pull and merge when histories diverge"
+        "Veure refs origin/* després d'un fetch",
+        "Push de master local per actualitzar origin/master",
+        "Pull i merge quan els historials divergeixen"
       ],
-      "stepsTitle": "Remote workflow",
+      "stepsTitle": "Flux remot",
       "steps": [
         {
-          "title": "Fetch remote refs",
-          "description": "Run git fetch to download origin/master without changing your working branch."
+          "title": "Fetch de refs remotes",
+          "description": "Executa git fetch per descarregar origin/master sense canviar la branca de treball."
         },
         {
-          "title": "Push your commits",
-          "description": "Publish local master so origin/master matches your latest commit."
+          "title": "Push dels teus commits",
+          "description": "Publica master local perquè origin/master coincideixi amb el teu últim commit."
         },
         {
-          "title": "Pull and merge",
-          "description": "When the remote advances, git pull merges those commits into your branch."
+          "title": "Pull i merge",
+          "description": "Quan el remot avança, git pull fusiona aquests commits a la teva branca."
         }
       ],
-      "faqTitle": "Git remote FAQ",
+      "faqTitle": "FAQ de remots Git",
       "faq": [
         {
-          "q": "What does git fetch do?",
-          "a": "Fetch downloads remote commits and updates origin/* references without merging them into your current branch."
+          "q": "Què fa git fetch?",
+          "a": "Fetch descarrega commits remots i actualitza referències origin/* sense fusionar-les a la branca actual."
         },
         {
-          "q": "When should I use git pull?",
-          "a": "Use pull when you want to integrate remote changes into your current branch — it fetches and merges in one step."
+          "q": "Quan he d'usar git pull?",
+          "a": "Fes servir pull quan vulguis integrar canvis remots a la branca actual: fa fetch i merge en un pas."
         },
         {
-          "q": "What is origin/master?",
-          "a": "It is the remote-tracking branch that points to the last known commit on master at origin."
+          "q": "Què és origin/master?",
+          "a": "És la branca de seguiment remot que apunta a l'últim commit conegut de master a origin."
         },
         {
-          "q": "Can I practice remotes without a real server?",
-          "a": "Yes. Game4Git simulates origin with visual refs on the graph so you can learn safely in the browser."
+          "q": "Puc practicar remots sense un servidor real?",
+          "a": "Sí. Game4Git simula origin amb refs visuals al gràfic per aprendre amb seguretat al navegador."
         }
       ],
-      "relatedTitle": "Related guides",
-      "relatedDescription": "Pair remote practice with reset/revert skills or branching basics."
+      "relatedTitle": "Guies relacionades",
+      "relatedDescription": "Combina la pràctica remota amb reset/revert o amb el bàsic de branques."
     },
     "gitResetGuide": {
-      "eyebrow": "Git reset guide",
-      "heroTitle": "Learn git reset, revert, and amend to undo changes safely",
-      "heroDescription": "Understand soft, mixed, and hard reset, plus revert and amend — with exercises that show exactly how each command changes the commit graph.",
-      "primaryCta": "Start undo challenge",
-      "secondaryCta": "Open playground",
+      "eyebrow": "Guia git reset",
+      "heroTitle": "Aprèn git reset, revert i amend per desfer canvis amb seguretat",
+      "heroDescription": "Entén reset soft, mixed i hard, més revert i amend, amb exercicis que mostren com cada comanda canvia el gràfic de commits.",
+      "primaryCta": "Començar repte de desfer",
+      "secondaryCta": "Obrir playground",
       "highlights": [
-        "Amend the last commit message or content",
-        "Hard reset to move the branch pointer back",
-        "Revert with a new safe commit"
+        "Enmendar el missatge o contingut de l'últim commit",
+        "Reset dur per retrocedir el punter de la branca",
+        "Revertir amb un commit nou i segur"
       ],
-      "stepsTitle": "Undo workflow",
+      "stepsTitle": "Flux de desfer",
       "steps": [
         {
-          "title": "Amend the last commit",
-          "description": "Fix the most recent commit message or snapshot without adding a new node."
+          "title": "Enmendar l'últim commit",
+          "description": "Corregeix el missatge o instantània del commit més recent sense afegir un node nou."
         },
         {
-          "title": "Reset to an earlier commit",
-          "description": "Use git reset --hard HEAD~1 when you want to drop the latest commit from the branch."
+          "title": "Reset a un commit anterior",
+          "description": "Fes servir git reset --hard HEAD~1 quan vulguis eliminar l'últim commit de la branca."
         },
         {
-          "title": "Revert safely",
-          "description": "Create a new commit that undoes a previous change — ideal for shared history."
+          "title": "Revertir amb seguretat",
+          "description": "Crea un commit nou que desfà un canvi anterior, ideal en historial compartit."
         }
       ],
-      "faqTitle": "Git reset FAQ",
+      "faqTitle": "FAQ de git reset",
       "faq": [
         {
-          "q": "What is the difference between reset and revert?",
-          "a": "Reset moves your branch pointer backward; revert adds a new commit that undoes a past change — safer on shared branches."
+          "q": "Quina diferència hi ha entre reset i revert?",
+          "a": "Reset mou el punter de la branca enrere; revert afegeix un commit que desfà un canvi passat, més segur en branques compartides."
         },
         {
-          "q": "What does git reset --hard do?",
-          "a": "It moves the branch to an earlier commit and discards staged and working changes to match that commit."
+          "q": "Què fa git reset --hard?",
+          "a": "Mou la branca a un commit anterior i descarta canvis en staging i working copy per coincidir amb aquell commit."
         },
         {
-          "q": "When should I use git commit --amend?",
-          "a": "Use amend to fix the latest commit before you push — for typos in the message or forgotten staged files."
+          "q": "Quan he d'usar git commit --amend?",
+          "a": "Fes servir amend per corregir l'últim commit abans de push: typos al missatge o fitxers oblidats en staging."
         },
         {
-          "q": "Can I practice reset without breaking a real repo?",
-          "a": "Yes. The Game4Git playground lets you experiment and see the graph update instantly."
+          "q": "Puc practicar reset sense trencar un repo real?",
+          "a": "Sí. El playground de Game4Git permet experimentar i veure el gràfic actualitzar-se a l'instant."
         }
       ],
-      "relatedTitle": "Related guides",
-      "relatedDescription": "Combine undo skills with remote workflows and merge practice."
+      "relatedTitle": "Guies relacionades",
+      "relatedDescription": "Combina desfer canvis amb fluxos remots i pràctica de merge."
     }
   },
   "home": {

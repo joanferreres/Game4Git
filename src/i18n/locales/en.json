@@ -319,6 +319,11 @@
     "pull": "Fetch and merge changes from the remote repository",
     "push": "Push local changes to the remote repository",
     "reset": "Reset working directory to HEAD",
+    "log": "Show commit history",
+    "revert": "Revert a commit",
+    "amend": "Amend last commit",
+    "mergeAbort": "Abort merge",
+    "mergeNoFf": "Merge with merge commit",
     "status": "Show current status",
     "clear": "Clear terminal",
     "help": "Show help"
