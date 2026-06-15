@@ -27,7 +27,6 @@ const GitCommitNode: React.FC<GitCommitNodeProps> = ({ data }) => {
     isSelected, 
     branchNames,
     remoteRefNames = [],
-    isBranchHead,
     width = 56, 
     height = 56,
     hasConflict
@@ -68,6 +67,22 @@ const GitCommitNode: React.FC<GitCommitNodeProps> = ({ data }) => {
       ? 'text-[9px] px-1.5 py-0.5' 
       : 'text-xs px-2 py-0.5';
 
+  const branchBadgeColor = (branchLabel: string) => {
+    if (branchLabel === "master") return "bg-green-700";
+    if (
+      branchLabel.toLowerCase().includes("someone") ||
+      branchLabel.toLowerCase().includes("else")
+    ) {
+      return "bg-orange-700";
+    }
+    return "bg-blue-700";
+  };
+
+  const refLabels = [
+    ...branchNames.map((name) => ({ type: "branch" as const, name })),
+    ...remoteRefNames.map((name) => ({ type: "remote" as const, name })),
+  ];
+
   return (
     <TooltipProvider>
       <Tooltip>
@@ -88,32 +103,27 @@ const GitCommitNode: React.FC<GitCommitNodeProps> = ({ data }) => {
               <GitCommitIcon size={iconSize} />
             </div>
             
-            {/* Branches */}
-            {isBranchHead && (
-              <div className="absolute -top-7 sm:-top-8 md:-top-9 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1">
-                {branchNames.map((branchLabel) => (
-                <Badge 
-                  key={branchLabel} 
-                    className={`${badgeClass} font-medium shadow-sm text-white
-                    ${branchLabel === 'master' ? 'bg-green-700' : 
-                    branchLabel.toLowerCase().includes('someone') || branchLabel.toLowerCase().includes('else') ? 'bg-orange-700' : 'bg-blue-700'}`}
-                >
-                  {branchLabel}
-                </Badge>
-              ))}
-            </div>
-            )}
-            {remoteRefNames.length > 0 && (
-              <div className="absolute -top-7 sm:-top-8 md:-top-9 right-0 flex flex-col items-end gap-1">
-                {remoteRefNames.map((refName) => (
-                  <Badge
-                    key={refName}
-                    variant="outline"
-                    className={`${badgeClass} bg-sky-500/10 text-sky-700 border-sky-300`}
-                  >
-                    {refName}
-                  </Badge>
-                ))}
+            {/* Branch + remote refs (stacked above the node) */}
+            {refLabels.length > 0 && (
+              <div className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1 flex -translate-x-1/2 flex-col items-center gap-0.5">
+                {refLabels.map(({ type, name }) =>
+                  type === "branch" ? (
+                    <Badge
+                      key={`branch-${name}`}
+                      className={`${badgeClass} whitespace-nowrap font-medium text-white shadow-sm ${branchBadgeColor(name)}`}
+                    >
+                      {name}
+                    </Badge>
+                  ) : (
+                    <Badge
+                      key={`remote-${name}`}
+                      variant="outline"
+                      className={`${badgeClass} whitespace-nowrap border-sky-300 bg-sky-500/10 text-sky-700 shadow-sm`}
+                    >
+                      {name}
+                    </Badge>
+                  )
+                )}
               </div>
             )}
             
