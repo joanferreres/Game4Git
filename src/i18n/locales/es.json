@@ -175,6 +175,7 @@
     "sourceSameAsTarget": "Las ramas de origen y destino no pueden ser la misma.",
     "mergedBranch": "Rama fusionada",
     "into": "en",
+    "willMergeHint": "Esto fusionará \"{{source}}\" en \"{{target}}\".",
     "noActiveBranch": "No hay rama activa",
     "hasUnsavedChanges": "Tienes cambios sin guardar. Usa \"Git Add\" para prepararlos.",
     "stagedAndReady": "Cambios preparados y listos para commit"

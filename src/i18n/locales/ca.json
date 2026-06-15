@@ -186,6 +186,7 @@
     "sourceSameAsTarget": "Les branques d'origen i destí no poden ser la mateixa.",
     "mergedBranch": "Branca fusionada",
     "into": "a",
+    "willMergeHint": "Això fusionarà \"{{source}}\" a \"{{target}}\".",
     "noActiveBranch": "No hi ha branca activa",
     "hasUnsavedChanges": "Tens canvis sense guardar. Fes servir \"Git Add\" per preparar-los.",
     "stagedAndReady": "Canvis preparats i a punt per commit"

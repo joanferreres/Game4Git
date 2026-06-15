@@ -213,12 +213,13 @@ const GitExercises: React.FC = () => {
           isCompleted: false,
           validation: () => {
             const devBranch = repository.branches.find(b => b.name === "dev");
-            if (!devBranch) return false;
-            const devCommit = repository.commits.find(c => c.id === devBranch.commitId);
-            if (!devCommit) return false;
-
-            // Si el commit en dev tiene múltiples padres, es un merge commit
-            return devCommit.parentIds.length > 1;
+            const feature = repository.branches.find(b => b.name === "feature-login");
+            if (!devBranch || !feature) return false;
+            const featureHead = repository.commits.find(c => c.id === feature.commitId);
+            if (!featureHead || featureHead.parentIds.length === 0) return false;
+            // dev now contains feature-login's work — true for both a fast-forward
+            // and a merge commit (Git fast-forwards when dev has not diverged).
+            return isCommitAncestor(feature.commitId, devBranch.commitId);
           }
         }
       ],
@@ -293,17 +294,20 @@ const GitExercises: React.FC = () => {
           validation: () => {
             const devBranch = repository.branches.find(b => b.name === "dev");
             const releaseBranch = repository.branches.find(b => b.name === "release");
-            if (!devBranch || !releaseBranch) return false;
-            
-            const devCommit = repository.commits.find(c => c.id === devBranch.commitId);
-            const releaseCommit = repository.commits.find(c => c.id === releaseBranch.commitId);
-            if (!devCommit || !releaseCommit) return false;
-            
-            // Check if dev has merged from story
-            const hasStoryMerge = devCommit.parentIds.length > 1;
-            const hasReleaseMerge = releaseCommit.parentIds.length > 1;
+            const story = repository.branches.find(b => b.name === "story-123");
+            if (!devBranch || !releaseBranch || !story) return false;
 
-            return hasStoryMerge && hasReleaseMerge;
+            const storyHead = repository.commits.find(c => c.id === story.commitId);
+            const devHead = repository.commits.find(c => c.id === devBranch.commitId);
+            if (!storyHead || storyHead.parentIds.length === 0) return false;
+            if (!devHead || devHead.parentIds.length === 0) return false;
+
+            // story-123 integrated into dev, and dev integrated into release
+            // (each step is valid whether Git fast-forwarded or made a merge commit).
+            return (
+              isCommitAncestor(story.commitId, devBranch.commitId) &&
+              isCommitAncestor(devBranch.commitId, releaseBranch.commitId)
+            );
           }
         },
         {
@@ -313,13 +317,12 @@ const GitExercises: React.FC = () => {
           isCompleted: false,
           validation: () => {
             const masterBranch = repository.branches.find(b => b.name === "master");
-            if (!masterBranch) return false;
-            
-            const masterCommit = repository.commits.find(c => c.id === masterBranch.commitId);
-            if (!masterCommit) return false;
-            
-            // Check if master has a merge commit from release
-            return masterCommit.parentIds.length > 1;
+            const releaseBranch = repository.branches.find(b => b.name === "release");
+            if (!masterBranch || !releaseBranch) return false;
+            const releaseHead = repository.commits.find(c => c.id === releaseBranch.commitId);
+            if (!releaseHead || releaseHead.parentIds.length === 0) return false;
+            // release integrated into master (fast-forward or merge commit).
+            return isCommitAncestor(releaseBranch.commitId, masterBranch.commitId);
           }
         }
       ],
@@ -552,8 +555,11 @@ const GitExercises: React.FC = () => {
           validation: () => {
             const master = repository.branches.find((b) => b.name === "master");
             if (!master) return false;
-            const head = repository.commits.find((c) => c.id === master.commitId);
-            return !!head && !head.message.includes("(amended)");
+            // `reset --hard HEAD~1` drops the last commit: it stays in the commit
+            // list but becomes unreachable from master. Detect that dangling commit.
+            return repository.commits.some(
+              (c) => !isCommitAncestor(c.id, master.commitId)
+            );
           },
         },
         {
@@ -610,9 +616,15 @@ const GitExercises: React.FC = () => {
           isCompleted: false,
           validation: () => {
             const master = repository.branches.find((b) => b.name === "master");
-            if (!master) return false;
+            const remote = repository.remoteReferences.find((r) => r.name === "origin/master");
+            if (!master || !remote) return false;
             const head = repository.commits.find((c) => c.id === master.commitId);
-            return !!head && head.message.includes("origin/master");
+            if (!head) return false;
+            // Pull integrates origin/master either by fast-forward (master now points
+            // at the fetched remote commit) or by a merge commit referencing it.
+            return master.commitId === remote.commitId
+              ? head.message.includes("Remote update")
+              : head.parentIds.length > 1 && head.message.includes("origin/master");
           },
         },
       ],

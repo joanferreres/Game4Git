@@ -163,6 +163,7 @@
     "sourceSameAsTarget": "Source and target branches cannot be the same.",
     "mergedBranch": "Merged branch",
     "into": "into",
+    "willMergeHint": "This will merge \"{{source}}\" into \"{{target}}\".",
     "noActiveBranch": "No active branch",
     "hasUnsavedChanges": "You have unsaved changes. Use \"Git Add\" to stage them.",
     "stagedAndReady": "Changes staged and ready to commit"

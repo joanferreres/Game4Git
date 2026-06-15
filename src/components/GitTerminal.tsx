@@ -58,9 +58,8 @@ const GitTerminal: React.FC = () => {
   const { 
     repository, 
     createCommit, 
-    createBranch, 
-    switchBranch, 
-    resetWorkingChanges,
+    createBranch,
+    switchBranch,
     resetToRef,
     stageChanges,
     workingChanges,
@@ -282,12 +281,16 @@ const GitTerminal: React.FC = () => {
               addToHistory({ type: "error", content: "Error: Cannot merge a branch into itself." });
               return;
             }
-            
-            mergeBranch(sourceBranch, targetBranch, { noFf });
-            addToHistory({
-              type: "output",
-              content: `Merged branch '${sourceBranch}' into '${targetBranch}'.`,
-            });
+
+            const result = mergeBranch(sourceBranch, targetBranch, { noFf });
+            const mergeMessages: Record<typeof result.status, { type: "output" | "error"; content: string }> = {
+              "fast-forward": { type: "output", content: `Updating ${targetBranch} (fast-forward) <- ${sourceBranch}.` },
+              merged: { type: "output", content: `Merge made by the 'recursive' strategy: '${sourceBranch}' into '${targetBranch}'.` },
+              conflict: { type: "error", content: `CONFLICT: automatic merge of '${sourceBranch}' failed; fix conflicts and then commit the result.` },
+              "up-to-date": { type: "output", content: "Already up to date." },
+              error: { type: "error", content: result.status === "error" ? `Error: ${result.message}` : "" },
+            };
+            addToHistory(mergeMessages[result.status]);
             return;
           }
           addToHistory({
@@ -320,11 +323,8 @@ const GitTerminal: React.FC = () => {
             (p) => !["reset", "--hard", "--soft", "--mixed"].includes(p)
           );
           const ref = refToken ?? "HEAD";
-          if (mode === "mixed" && parts.length === 2) {
-            resetWorkingChanges();
-            addToHistory({ type: "output", content: "Unstaged changes (mixed reset to HEAD)." });
-            return;
-          }
+          // Bare `git reset` is `git reset --mixed HEAD`: it unstages the index but
+          // keeps the working tree. resetToRef('mixed','HEAD') does exactly that.
           const ok = resetToRef(mode, ref);
           addToHistory({
             type: ok ? "output" : "error",
@@ -532,10 +532,8 @@ const GitTerminal: React.FC = () => {
         <div className="h-[calc(100%-48px)] flex flex-col">
           <ScrollArea className="flex-1 p-4 font-mono text-sm bg-black text-green-400 max-h-[400px]" ref={scrollAreaRef}>
             {history.map((line, index) => (
-              <div key={index} className={`mb-1 ${line.type === "error" ? "text-red-400" : ""}`}>
-                {line.content.split("\\n").map((text, i) => (
-                  <div key={`${index}-${i}`}>{text}</div>
-                ))}
+              <div key={index} className={`mb-1 whitespace-pre-wrap ${line.type === "error" ? "text-red-400" : ""}`}>
+                {line.content}
               </div>
             ))}
           </ScrollArea>

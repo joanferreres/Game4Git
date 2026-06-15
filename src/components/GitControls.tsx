@@ -408,10 +408,12 @@ const GitControls: React.FC = () => {
       toast.error("Source and target branches cannot be the same.");
       return;
     }
-    mergeBranch(sourceBranchToMerge, targetBranchForMerge);
-    toast.success(`Merged branch "${sourceBranchToMerge}" into "${targetBranchForMerge}"`);
-    setSourceBranchToMerge(undefined); // Reset selection
-    // setTargetBranchForMerge(undefined); // Optionally reset target, or let it persist (current active branch)
+    // mergeBranch reports the real outcome (merged / fast-forward / conflict /
+    // up-to-date) via its own toast, so we don't add a contradictory one here.
+    const result = mergeBranch(sourceBranchToMerge, targetBranchForMerge);
+    if (result.status !== "conflict") {
+      setSourceBranchToMerge(undefined); // Reset selection (keep it on conflict so the user keeps context)
+    }
   };
 
   // Handle remote operations
@@ -688,7 +690,7 @@ const GitControls: React.FC = () => {
             )}
             {sourceBranchToMerge && targetBranchForMerge && sourceBranchToMerge !== targetBranchForMerge && (
               <p className="text-[10px] sm:text-xs text-muted-foreground">
-                {t('messages.mergedBranch')} "{sourceBranchToMerge}" {t('messages.into')} "{targetBranchForMerge}".
+                {t('messages.willMergeHint', 'This will merge "{{source}}" into "{{target}}".', { source: sourceBranchToMerge, target: targetBranchForMerge })}
               </p>
             )}
           </div>

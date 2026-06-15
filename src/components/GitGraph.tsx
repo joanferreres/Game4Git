@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useTransition } from "react";
+import React, { useCallback, useMemo, useTransition } from "react";
 import {
   ReactFlow,
   Background,
@@ -61,13 +61,7 @@ const GitGraph: React.FC = () => {
   const { repository, selectedCommitId, selectCommit } = useGitStore();
   const [isPending, startTransition] = useTransition();
   const { t } = useTranslation();
-  
-  // Cache for branch lanes and commit positions to ensure stability
-  const branchLanesCache = useRef<Record<string, number>>({
-    "master": 0
-  });
-  const commitBranchCache = useRef<Record<string, string>>({});
-  
+
   const { nodes, edges } = useMemo(() => {
     const newNodes: Node[] = [];
     const newEdges: Edge[] = [];
@@ -85,15 +79,15 @@ const GitGraph: React.FC = () => {
     const commitMap: Record<string, GitCommit> = {};
     sortedCommits.forEach(commit => (commitMap[commit.id] = commit));
 
-    // Track which commit belongs to which branch
-    // Initialize with cached branch assignments if available
-    const commitBranch: Record<string, string> = { ...commitBranchCache.current };
-    
+    // Track which commit belongs to which branch (computed fresh each render,
+    // so the layout is a pure, deterministic function of the repository state).
+    const commitBranch: Record<string, string> = {};
+
     // Map commitId to its position
     const nodePositions: Record<string, { x: number; y: number }> = {};
-    
-    // Track branch Y-positions - use cached positions to maintain stability
-    const branchLanes: Record<string, number> = { ...branchLanesCache.current };
+
+    // Track branch Y-positions. master is always lane 0.
+    const branchLanes: Record<string, number> = { master: 0 };
     
     // Track X position of last commit on each lane
     const laneLastX: Record<number, number> = {};
@@ -125,11 +119,6 @@ const GitGraph: React.FC = () => {
 
     // Helper function to determine which branch a commit belongs to
     const determineBranchForCommit = (commit: GitCommit): string => {
-      // Check if we have a cached assignment for this commit
-      if (commitBranchCache.current[commit.id]) {
-        return commitBranchCache.current[commit.id];
-      }
-      
       // First check if this commit is the head of any branch
       const headBranches = branchHeads[commit.id] || [];
       if (headBranches.length > 0) {
@@ -174,12 +163,7 @@ const GitGraph: React.FC = () => {
     // First pass: Determine which branch each commit belongs to
     sortedCommits.forEach(commit => {
       commitBranch[commit.id] = determineBranchForCommit(commit);
-      // Cache this assignment for future stability
-      commitBranchCache.current[commit.id] = commitBranch[commit.id];
     });
-    
-    // Update branch lanes cache for future renders
-    branchLanesCache.current = { ...branchLanes };
 
     // Second pass: Position commits
     sortedCommits.forEach(commit => {

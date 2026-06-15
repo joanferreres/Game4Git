@@ -2,7 +2,13 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { GitRepository, GitCommit, GitBranch, CodeFile, RemoteReference } from '../types/git';
 import { toast } from 'sonner';
-import * as diffLib from 'diff';
+import { threeWayMerge } from '../lib/threeWayMerge';
+
+// Result of a merge attempt, so the UI can report what actually happened
+// instead of always assuming success.
+export type MergeResult =
+  | { status: 'fast-forward' | 'merged' | 'conflict' | 'up-to-date' }
+  | { status: 'error'; message: string };
 
 // Initial C file content
 const initialContent = `#include <stdio.h>
@@ -89,133 +95,6 @@ const resolveCommitRef = (repository: GitRepository, ref: string): GitCommit | n
   return byId ?? null;
 };
 
-// Detect if there's a conflict using 3-way merge logic
-// A conflict only occurs when BOTH branches modified the SAME region relative to the base
-const detectConflict = (sourceContent: string, targetContent: string, baseContent: string): boolean => {
-  // If contents are identical, there's no conflict
-  if (sourceContent === targetContent) return false;
-  
-  // If target hasn't changed from base, no conflict (source changes can be applied directly)
-  if (targetContent === baseContent) return false;
-  
-  // If source hasn't changed from base, no conflict (nothing to merge)
-  if (sourceContent === baseContent) return false;
-  
-  // Both branches have changes - check if they overlap
-  const sourceChanges = diffLib.diffLines(baseContent, sourceContent);
-  const targetChanges = diffLib.diffLines(baseContent, targetContent);
-  
-  // Get line numbers that were modified in each branch
-  const getModifiedLines = (changes: diffLib.Change[]): Set<number> => {
-    const modified = new Set<number>();
-    let lineNum = 0;
-    
-    for (const change of changes) {
-      const lines = change.value.split('\n').length - (change.value.endsWith('\n') ? 1 : 0);
-      
-      if (change.removed || change.added) {
-        // Mark these lines as modified
-        for (let i = 0; i < Math.max(lines, 1); i++) {
-          modified.add(lineNum + i);
-        }
-      }
-      
-      if (!change.added) {
-        lineNum += lines;
-      }
-    }
-    
-    return modified;
-  };
-  
-  const sourceModified = getModifiedLines(sourceChanges);
-  const targetModified = getModifiedLines(targetChanges);
-  
-  // Check if any lines were modified by both branches
-  for (const line of sourceModified) {
-    if (targetModified.has(line)) {
-      return true; // Same line modified by both - conflict!
-    }
-  }
-  
-  // No overlapping changes
-  return false;
-};
-
-// Generate content with conflict markers
-const generateConflictContent = (
-  sourceContent: string,
-  targetContent: string,
-  sourceBranchName: string,
-  targetBranchName: string
-): string => {
-  const differences = diffLib.diffLines(targetContent, sourceContent);
-  let result = '';
-  
-  // Track our position in the original content
-  let inConflict = false;
-  let targetBuffer = '';
-  let sourceBuffer = '';
-  
-  // Process differences and identify conflict regions
-  differences.forEach((part, index) => {
-    // Check if next part will be a conflict continuation
-    const nextPart = differences[index + 1];
-    const isConflictStart = (part.added && nextPart?.removed) || (part.removed && nextPart?.added);
-    const isConflictEnd = (inConflict && !part.added && !part.removed);
-    
-    if (isConflictStart && !inConflict) {
-      // Start new conflict
-      inConflict = true;
-      
-      if (part.added) {
-        sourceBuffer = part.value;
-        targetBuffer = ''; // Will be filled by next part
-      } else if (part.removed) {
-        targetBuffer = part.value;
-        sourceBuffer = ''; // Will be filled by next part
-      }
-    } else if (inConflict) {
-      if (part.added) {
-        sourceBuffer += part.value;
-      } else if (part.removed) {
-        targetBuffer += part.value;
-      } else {
-        // End conflict and output markers
-        result += `<<<<<<< HEAD (${targetBranchName})\n`;
-        result += targetBuffer;
-        if (!targetBuffer.endsWith('\n')) result += '\n';
-        result += `=======\n`;
-        result += sourceBuffer;
-        if (!sourceBuffer.endsWith('\n')) result += '\n';
-        result += `>>>>>>> ${sourceBranchName}\n`;
-        result += part.value;
-        
-        // Reset conflict state
-        inConflict = false;
-        targetBuffer = '';
-        sourceBuffer = '';
-      }
-    } else {
-      // No conflict, just output the content
-      result += part.value;
-    }
-  });
-  
-  // If we end with a conflict in progress, close it
-  if (inConflict) {
-    result += `<<<<<<< HEAD (${targetBranchName})\n`;
-    result += targetBuffer;
-    if (!targetBuffer.endsWith('\n')) result += '\n';
-    result += `=======\n`;
-    result += sourceBuffer;
-    if (!sourceBuffer.endsWith('\n')) result += '\n';
-    result += `>>>>>>> ${sourceBranchName}\n`;
-  }
-  
-  return result;
-};
-
 interface GitStore {
   repository: GitRepository;
   currentFile: CodeFile;
@@ -239,7 +118,7 @@ interface GitStore {
     sourceBranchName: string,
     targetBranchName: string,
     options?: { noFf?: boolean }
-  ) => void;
+  ) => MergeResult;
   
   // Conflict resolution
   hasPendingConflict: () => boolean;
@@ -393,11 +272,36 @@ const useGitStore = create<GitStore>((set, get) => ({
     const activeBranch = repository.branches.find((b) => b.isActive);
     if (!activeBranch) return false;
 
+    const headCommit = repository.commits.find((c) => c.id === activeBranch.commitId);
+    if (!headCommit) return false;
+
+    // Reverting a commit means undoing the diff it introduced (its parent -> target)
+    // and applying that inverse on top of the current HEAD. Modelled as a 3-way
+    // merge: base = target, ours = HEAD, theirs = target's parent.
+    const parentCommit = target.parentIds[0]
+      ? repository.commits.find((c) => c.id === target.parentIds[0]) ?? null
+      : null;
+    const parentContent = parentCommit?.content ?? '';
+    const { content: revertedContent, hasConflict } = threeWayMerge(
+      target.content,
+      headCommit.content,
+      parentContent,
+      'HEAD',
+      `parent of ${target.id.slice(0, 7)}`
+    );
+
+    if (hasConflict) {
+      toast.error(
+        `Revert of ${target.id.slice(0, 7)} conflicts with later changes. Resolve manually.`
+      );
+      return false;
+    }
+
     const newCommitId = generateId();
     const revertCommit: GitCommit = {
       id: newCommitId,
       message: `Revert "${target.message}"`,
-      content: target.content,
+      content: revertedContent,
       timestamp: Date.now(),
       parentIds: [activeBranch.commitId],
     };
@@ -413,7 +317,7 @@ const useGitStore = create<GitStore>((set, get) => ({
         branches: updatedBranches,
         HEAD: newCommitId,
       },
-      workingChanges: target.content,
+      workingChanges: revertedContent,
       stagedChanges: null,
       selectedCommitId: newCommitId,
     });
@@ -477,7 +381,7 @@ const useGitStore = create<GitStore>((set, get) => ({
   },
 
   resetToRef: (mode: "soft" | "mixed" | "hard", ref: string) => {
-    const { repository, stagedChanges } = get();
+    const { repository } = get();
     const targetCommit = resolveCommitRef(repository, ref);
     if (!targetCommit) {
       toast.error(`Could not resolve '${ref}'.`);
@@ -487,35 +391,30 @@ const useGitStore = create<GitStore>((set, get) => ({
     const activeBranch = repository.branches.find((b) => b.isActive);
     if (!activeBranch) return false;
 
+    // Every reset mode moves the CURRENT BRANCH (and HEAD with it) to the target
+    // commit. The modes differ only in what happens to the index and working tree.
+    const updatedBranches = repository.branches.map((branch) =>
+      branch.isActive ? { ...branch, commitId: targetCommit.id } : branch
+    );
+    const baseRepo = { ...repository, branches: updatedBranches, HEAD: targetCommit.id };
+
     if (mode === "soft") {
-      set({
-        repository: { ...repository, HEAD: targetCommit.id },
-        stagedChanges: stagedChanges ?? targetCommit.content,
-        workingChanges: get().workingChanges,
-      });
+      // Keep the working tree and the staged index untouched.
+      set({ repository: baseRepo, selectedCommitId: null });
       toast.success(`Soft reset to ${ref}.`);
       return true;
     }
 
     if (mode === "mixed") {
-      set({
-        repository: { ...repository, HEAD: targetCommit.id },
-        stagedChanges: null,
-        workingChanges: get().workingChanges,
-      });
+      // Reset the index (unstage), keep the working tree.
+      set({ repository: baseRepo, stagedChanges: null, selectedCommitId: null });
       toast.success(`Mixed reset to ${ref}.`);
       return true;
     }
 
-    const updatedBranches = repository.branches.map((branch) =>
-      branch.isActive ? { ...branch, commitId: targetCommit.id } : branch
-    );
+    // Hard: reset the index and the working tree to the target commit.
     set({
-      repository: {
-        ...repository,
-        branches: updatedBranches,
-        HEAD: targetCommit.id,
-      },
+      repository: baseRepo,
       workingChanges: targetCommit.content,
       stagedChanges: null,
       selectedCommitId: null,
@@ -579,32 +478,43 @@ const useGitStore = create<GitStore>((set, get) => ({
     const targetBranch = repository.branches.find(b => b.name === targetBranchName);
 
     if (!sourceBranch) {
-      toast.error(`Source branch "${sourceBranchName}" not found.`);
-      return;
+      const message = `Source branch "${sourceBranchName}" not found.`;
+      toast.error(message);
+      return { status: 'error', message };
     }
 
     if (!targetBranch) {
-      toast.error(`Target branch "${targetBranchName}" not found.`);
-      return;
+      const message = `Target branch "${targetBranchName}" not found.`;
+      toast.error(message);
+      return { status: 'error', message };
     }
 
     if (sourceBranchName === targetBranchName) {
-      toast.error("Cannot merge a branch into itself.");
-      return;
+      const message = "Cannot merge a branch into itself.";
+      toast.error(message);
+      return { status: 'error', message };
     }
 
     const sourceBranchHeadCommit = repository.commits.find(c => c.id === sourceBranch.commitId);
     const targetBranchHeadCommit = repository.commits.find(c => c.id === targetBranch.commitId);
 
     if (!sourceBranchHeadCommit || !targetBranchHeadCommit) {
-      toast.error("Could not find head commits for branches.");
-      return;
+      const message = "Could not find head commits for branches.";
+      toast.error(message);
+      return { status: 'error', message };
     }
-    
-    // Find the common ancestor (merge-base) for 3-way merge
-    const mergeBase = findMergeBase(repository.commits, sourceBranch.commitId, targetBranch.commitId);
-    const baseContent = mergeBase?.content || '';
 
+    // Already up to date: the target already contains every commit from source.
+    if (
+      sourceBranchHeadCommit.id === targetBranchHeadCommit.id ||
+      isAncestor(repository.commits, sourceBranchHeadCommit.id, targetBranchHeadCommit.id)
+    ) {
+      toast.info(`'${targetBranchName}' is already up to date.`);
+      return { status: 'up-to-date' };
+    }
+
+    // Fast-forward: target has no commits of its own since the branch point,
+    // so we just move the target pointer up to the source tip (no merge commit).
     const canFastForward =
       !options?.noFf &&
       isAncestor(repository.commits, targetBranchHeadCommit.id, sourceBranchHeadCommit.id);
@@ -627,22 +537,22 @@ const useGitStore = create<GitStore>((set, get) => ({
         selectedCommitId: sourceBranchHeadCommit.id,
       });
       toast.success(`Fast-forward merge of '${sourceBranchName}' into '${targetBranchName}'.`);
-      return;
+      return { status: 'fast-forward' };
     }
 
-    // Detect merge conflicts using 3-way merge
-    const hasConflict = detectConflict(sourceBranchHeadCommit.content, targetBranchHeadCommit.content, baseContent);
+    // Three-way merge. "ours" is the branch we merge into (target/HEAD),
+    // "theirs" is the branch being merged in (source).
+    const mergeBase = findMergeBase(repository.commits, sourceBranch.commitId, targetBranch.commitId);
+    const baseContent = mergeBase?.content ?? '';
+    const { content: mergedContent, hasConflict } = threeWayMerge(
+      baseContent,
+      targetBranchHeadCommit.content,
+      sourceBranchHeadCommit.content,
+      `HEAD (${targetBranchName})`,
+      sourceBranchName
+    );
 
     if (hasConflict) {
-      // Create conflict content with markers
-      const conflictContent = generateConflictContent(
-        sourceBranchHeadCommit.content, 
-        targetBranchHeadCommit.content,
-        sourceBranchName,
-        targetBranchName
-      );
-
-      // Store conflict information
       set({
         repository: {
           ...repository,
@@ -651,27 +561,26 @@ const useGitStore = create<GitStore>((set, get) => ({
             targetCommitId: targetBranchHeadCommit.id,
             sourceBranch: sourceBranchName,
             targetBranch: targetBranchName,
-            conflictContent
-          }
+            conflictContent: mergedContent,
+          },
         },
-        workingChanges: conflictContent,
+        workingChanges: mergedContent,
       });
 
       toast.error("Merge conflict detected. Please resolve the conflicts and commit the changes.");
-      return;
+      return { status: 'conflict' };
     }
-    
-    // If no conflict, continue with normal merge
+
+    // Clean merge: record a merge commit whose content combines both sides.
     const newCommitId = generateId();
-    const mergeCommitMessage = `Merge branch '${sourceBranchName}' into ${targetBranchName}`;
-    
     const mergeCommit: GitCommit = {
       id: newCommitId,
-      message: mergeCommitMessage,
-      content: sourceBranchHeadCommit.content, // Simplification: take source branch content
+      message: `Merge branch '${sourceBranchName}' into ${targetBranchName}`,
+      content: mergedContent,
       timestamp: Date.now(),
-      // Parents are the heads of the target and source branches
-      parentIds: [targetBranchHeadCommit.id, sourceBranchHeadCommit.id].sort(), 
+      // First parent is the branch we were on (target), second is the merged-in
+      // branch (source) — this preserves Git's first-parent semantics.
+      parentIds: [targetBranchHeadCommit.id, sourceBranchHeadCommit.id],
     };
 
     // Update branches: target branch points to new merge commit and becomes active.
@@ -693,6 +602,8 @@ const useGitStore = create<GitStore>((set, get) => ({
       stagedChanges: null,
       selectedCommitId: newCommitId,
     }));
+    toast.success(`Merged '${sourceBranchName}' into '${targetBranchName}'.`);
+    return { status: 'merged' };
   },
 
   // Operaciones Remotas
@@ -787,81 +698,119 @@ const useGitStore = create<GitStore>((set, get) => ({
 
   // Pull: Fetch + Merge de los cambios remotos a la rama local
   pullRemote: (branchName?: string) => {
-    const { repository } = get();
-    
     // Usar la rama activa si no se especifica
-    const targetBranchName = branchName || repository.branches.find(b => b.isActive)?.name;
-    
+    const targetBranchName =
+      branchName || get().repository.branches.find(b => b.isActive)?.name;
+
     if (!targetBranchName) {
       toast.error("No branch selected for pull operation");
       return;
     }
-    
+
+    // Primero hacemos fetch (esto puede traer nuevos commits del remoto)...
+    get().fetchRemote();
+
+    // ...y luego leemos el estado ACTUALIZADO (no la copia previa al fetch).
+    const repository = get().repository;
     const targetBranch = repository.branches.find(b => b.name === targetBranchName);
     if (!targetBranch) {
       toast.error(`Branch '${targetBranchName}' not found`);
       return;
     }
-    
-    // Primero hacemos fetch
-    get().fetchRemote();
-    
-    // Luego buscamos si hay cambios en el remoto para la rama
+
     const remoteRefName = `${repository.remoteName}/${targetBranchName}`;
     const remoteRef = repository.remoteReferences.find(ref => ref.name === remoteRefName);
-    
     if (!remoteRef) {
       toast.error(`No remote reference found for branch '${targetBranchName}'`);
       return;
     }
-    
-    // Si la rama local ya está en el mismo commit que el remoto, no hay nada que hacer
-    if (targetBranch.commitId === remoteRef.commitId) {
+
+    const remoteCommit = repository.commits.find(c => c.id === remoteRef.commitId);
+    const localCommit = repository.commits.find(c => c.id === targetBranch.commitId);
+    if (!remoteCommit || !localCommit) {
+      toast.error("Could not resolve commits for pull.");
+      return;
+    }
+
+    // Local already contains the remote tip -> nothing to pull.
+    if (
+      localCommit.id === remoteCommit.id ||
+      isAncestor(repository.commits, remoteCommit.id, localCommit.id)
+    ) {
       toast.info(`Branch '${targetBranchName}' is already up to date`);
       return;
     }
-    
-    // Ahora hay que hacer merge del remoto a la rama local
-    const remoteCommit = repository.commits.find(c => c.id === remoteRef.commitId);
-    if (!remoteCommit) {
-      toast.error("Remote commit not found in local repository");
+
+    const setActive = (commitId: string) =>
+      repository.branches.map(branch =>
+        branch.name === targetBranchName
+          ? { ...branch, commitId, isActive: true }
+          : { ...branch, isActive: false }
+      );
+
+    // Fast-forward: local is behind the remote with no local commits of its own.
+    if (isAncestor(repository.commits, localCommit.id, remoteCommit.id)) {
+      set({
+        repository: {
+          ...repository,
+          branches: setActive(remoteCommit.id),
+          HEAD: remoteCommit.id,
+        },
+        workingChanges: remoteCommit.content,
+        stagedChanges: null,
+      });
+      toast.success(`Fast-forwarded '${targetBranchName}' to ${remoteRefName}.`);
       return;
     }
-    
-    const localCommit = repository.commits.find(c => c.id === targetBranch.commitId);
-    if (!localCommit) {
-      toast.error("Local commit not found");
+
+    // Diverged -> 3-way merge (ours = local, theirs = remote).
+    const mergeBase = findMergeBase(repository.commits, localCommit.id, remoteCommit.id);
+    const { content: mergedContent, hasConflict } = threeWayMerge(
+      mergeBase?.content ?? '',
+      localCommit.content,
+      remoteCommit.content,
+      `HEAD (${targetBranchName})`,
+      remoteRefName
+    );
+
+    if (hasConflict) {
+      set({
+        repository: {
+          ...repository,
+          pendingMergeConflict: {
+            sourceCommitId: remoteCommit.id,
+            targetCommitId: localCommit.id,
+            sourceBranch: remoteRefName,
+            targetBranch: targetBranchName,
+            conflictContent: mergedContent,
+          },
+        },
+        workingChanges: mergedContent,
+      });
+      toast.error("Pull produced a merge conflict. Resolve the conflicts and commit.");
       return;
     }
-    
-    // Creamos un nuevo commit de merge
+
     const mergeCommitId = generateId();
     const mergeCommit: GitCommit = {
       id: mergeCommitId,
       message: `Merge branch '${remoteRefName}' into ${targetBranchName}`,
-      content: remoteCommit.content, // Tomamos el contenido del remoto
+      content: mergedContent,
       timestamp: Date.now(),
-      parentIds: [targetBranch.commitId, remoteRef.commitId]
+      parentIds: [localCommit.id, remoteCommit.id],
     };
-    
-    // Actualizamos la rama local para que apunte al nuevo commit
-    const updatedBranches = repository.branches.map(branch => 
-      branch.name === targetBranchName 
-        ? { ...branch, commitId: mergeCommitId, isActive: true } 
-        : { ...branch, isActive: false }
-    );
-    
+
     set({
       repository: {
         ...repository,
         commits: [...repository.commits, mergeCommit],
-        branches: updatedBranches,
-        HEAD: mergeCommitId
+        branches: setActive(mergeCommitId),
+        HEAD: mergeCommitId,
       },
-      workingChanges: remoteCommit.content,
-      stagedChanges: null
+      workingChanges: mergedContent,
+      stagedChanges: null,
     });
-    
+
     toast.success(`Pulled and merged changes from ${remoteRefName} into ${targetBranchName}`);
   },
 
@@ -961,7 +910,8 @@ const useGitStore = create<GitStore>((set, get) => ({
       message: mergeCommitMessage,
       content: resolvedContent,
       timestamp: Date.now(),
-      parentIds: [conflict.targetCommitId, conflict.sourceCommitId].sort(),
+      // First parent = the branch we were on (target), second = merged-in (source).
+      parentIds: [conflict.targetCommitId, conflict.sourceCommitId],
       hasConflict: true // Marcar que este commit resolvió conflictos
     };
     
