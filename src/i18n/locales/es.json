@@ -47,43 +47,43 @@
   },
   "seo": {
     "home": {
-      "title": "Juego de Git Online | Ramas, Merges y Guías Interactivas | Game4Git",
-      "description": "Hub gratuito de juegos Git — guías interactivas para commits, ramas, conflictos de merge, GDB y Valgrind. Juega online sin instalar nada."
+      "title": "Juego de Git Online — Aprende Git Jugando Gratis | Game4Git",
+      "description": "Juego de git gratis online — aprende git jugando con guías interactivas para commits, ramas, conflictos de merge, GDB y Valgrind. Sin instalación."
     },
     "gdb": {
-      "title": "Cómo usar GDB | Tutorial interactivo de depuración | Game4Git",
+      "title": "Tutorial de GDB — Depuración interactiva | Game4Git",
       "description": "Tutorial interactivo de GDB para C/C++ — practica breakpoints, ejecución paso a paso, stack traces e inspección de memoria en el navegador."
     },
     "valgrind": {
-      "title": "Cómo usar Valgrind | Tutorial interactivo Memcheck | Game4Git",
+      "title": "Tutorial de Valgrind — Memcheck interactivo | Game4Git",
       "description": "Tutorial interactivo de Valgrind — aprende Memcheck, detecta fugas de memoria y corrige invalid reads con ejemplos guiados."
     },
     "gitPracticeGame": {
-      "title": "Juego para Practicar Git | Aprende Comandos Git Online | Game4Git",
-      "description": "Juego gratis para practicar Git en el navegador — entrena commit, branch, checkout y merge con retos guiados. Sin instalación."
+      "title": "Juego para Practicar Git — Aprende Git Jugando | Game4Git",
+      "description": "Juego gratis para practicar git online — aprende git jugando con retos guiados de commit, branch, checkout y merge. Sin instalación."
     },
     "gitBranchPractice": {
-      "title": "Practicar ramas en Git online | Aprende branching | Game4Git",
-      "description": "Aprende branching en Git con práctica guiada. Crea, cambia y fusiona ramas online mientras ves el gráfico de Git en tiempo real."
+      "title": "Practicar Ramas Git — Tutorial Interactivo de Branching | Game4Git",
+      "description": "Aprende branching en Git online con práctica guiada. Crea, cambia y fusiona ramas con un gráfico visual — juego de git gratis para principiantes."
     },
     "gitMergeConflicts": {
-      "title": "Conflictos de merge en Git | Aprende a resolverlos | Game4Git",
+      "title": "Conflictos de merge en Git — Resuélvelos | Game4Git",
       "description": "Aprende conflictos de merge en Git con un playground visual. Practica marcadores de conflicto, resolución y merges seguros."
     },
     "valgrindMemoryLeaks": {
-      "title": "Tutorial de memory leaks con Valgrind | Paso a paso | Game4Git",
+      "title": "Memory leaks con Valgrind — Tutorial paso a paso | Game4Git",
       "description": "Detecta memory leaks con Valgrind Memcheck paso a paso, interpreta reportes y corrige errores de memoria en C/C++."
     },
     "playground": {
-      "title": "Playground Git | Gráfico de Commits y Terminal | Game4Git",
-      "description": "Abre el playground Git: gráfico de commits en vivo, staging, controles de ramas y terminal opcional. Practica flujos Git en el navegador."
+      "title": "Playground Git — Juego de Git Gratis con Gráfico Visual | Game4Git",
+      "description": "Juega nuestro juego de git gratis en el navegador: gráfico de commits en vivo, staging, ramas y terminal. Practica git online sin instalar nada."
     },
     "gitRemoteWorkflow": {
       "title": "Flujo con remotos Git | Fetch, Pull y Push | Game4Git",
       "description": "Practica git fetch, pull y push con referencias origin en un gráfico visual. Aprende flujos remotos de forma segura en el navegador."
     },
     "gitResetGuide": {
-      "title": "Guía git reset y revert | Deshacer cambios con seguridad | Game4Git",
+      "title": "Guía git reset y revert — Deshacer cambios | Game4Git",
       "description": "Aprende git reset, revert y commit --amend con ejercicios interactivos. Ve cómo cada comando cambia el historial en el gráfico."
     }
   },
@@ -1634,7 +1634,7 @@
     "statGuides": "Guías interactivas",
     "statLanguages": "Idiomas",
     "statInstalls": "Instalaciones necesarias",
-    "seoIntroMobile": "Aprende Git practicando con commits visuales y desafíos guiados.",
+    "seoIntroMobile": "Juega nuestro juego de git gratis online — aprende git practicando con commits visuales y desafíos guiados.",
     "seoIntroLabel": "Descripción de la app",
     "guidesTitle": "Guías populares",
     "guidesDescription": "Elige un tema—commits, ramas, conflictos de merge, Valgrind, GDB o fugas de memoria—y entra directo en la guía interactiva que toca.",

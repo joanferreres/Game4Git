@@ -47,8 +47,8 @@
   },
   "seo": {
     "home": {
-      "title": "Joc de Git Online | Branques, Merges i Guies Interactives | Game4Git",
-      "description": "Hub gratuït de jocs Git — guies interactives per a commits, branques, conflictes de merge, GDB i Valgrind. Juga online sense instal·lar res."
+      "title": "Joc de Git Online — Aprèn Git Jugant Gratis | Game4Git",
+      "description": "Joc de git gratuït online — aprèn git jugant amb guies interactives per a commits, branques, conflictes de merge, GDB i Valgrind. Sense instal·lació."
     },
     "gdb": {
       "title": "Com usar GDB | Tutorial interactiu de depuració | Game4Git",
@@ -59,12 +59,12 @@
       "description": "Tutorial interactiu de Valgrind — aprèn Memcheck, detecta fuites de memòria i corregeix invalid reads amb exemples guiats."
     },
     "gitPracticeGame": {
-      "title": "Joc per Practicar Git | Aprèn Comandes Git Online | Game4Git",
-      "description": "Joc gratuït per practicar Git al navegador — entrena commit, branch, checkout i merge amb reptes guiats. Sense instal·lació."
+      "title": "Joc per Practicar Git — Aprèn Git Jugant | Game4Git",
+      "description": "Joc gratuït per practicar git online — aprèn git jugant amb reptes guiats de commit, branch, checkout i merge. Sense instal·lació."
     },
     "gitBranchPractice": {
-      "title": "Practicar branques a Git online | Aprèn branching | Game4Git",
-      "description": "Aprèn branching a Git amb pràctica guiada. Crea, canvia i fusiona branques online mentre veus el gràfic de Git en temps real."
+      "title": "Practicar Branques Git — Tutorial Interactiu de Branching | Game4Git",
+      "description": "Aprèn branching a Git online amb pràctica guiada. Crea, canvia i fusiona branques amb un gràfic visual — joc de git gratis per a principiants."
     },
     "gitMergeConflicts": {
       "title": "Conflictes de merge a Git | Aprèn a resoldre'ls | Game4Git",
@@ -75,15 +75,15 @@
       "description": "Detecta memory leaks amb Valgrind Memcheck pas a pas, interpreta informes i corregeix errors de memòria en C/C++."
     },
     "playground": {
-      "title": "Playground Git | Gràfic de Commits i Terminal | Game4Git",
-      "description": "Obre el playground Git: gràfic de commits en viu, staging, controls de branques i terminal opcional. Practica fluxos Git al navegador."
+      "title": "Playground Git — Joc de Git Gratis amb Gràfic Visual | Game4Git",
+      "description": "Juga el nostre joc de git gratis al navegador: gràfic de commits en viu, staging, branques i terminal. Practica git online sense instal·lar res."
     },
     "gitRemoteWorkflow": {
       "title": "Flux amb remots Git | Fetch, Pull i Push | Game4Git",
       "description": "Practica git fetch, pull i push amb referències origin en un gràfic visual. Aprèn fluxos remots amb seguretat al navegador."
     },
     "gitResetGuide": {
-      "title": "Guia git reset i revert | Desfer canvis amb seguretat | Game4Git",
+      "title": "Guia git reset i revert — Desfer canvis | Game4Git",
       "description": "Aprèn git reset, revert i commit --amend amb exercicis interactius. Veu com cada comanda canvia l'historial al gràfic."
     }
   },

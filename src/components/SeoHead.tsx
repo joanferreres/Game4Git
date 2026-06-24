@@ -46,6 +46,11 @@ const WEBSITE_SCHEMA = {
   "@type": "WebSite",
   name: SITE_NAME,
   url: SITE_URL,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${SITE_URL}/playground`,
+    "query-input": "required name=search_term_string",
+  },
 };
 
 export type FaqItem = { q: string; a: string };
@@ -179,6 +184,22 @@ export const SeoHead = ({
         }
       : null;
 
+  const learningResourceSchema =
+    page === "home"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "LearningResource",
+          name: title,
+          description,
+          url: canonicalUrl,
+          inLanguage: locale,
+          learningResourceType: "Interactive game",
+          isAccessibleForFree: true,
+          educationalLevel: "Beginner",
+          teaches: "Git version control",
+        }
+      : null;
+
   return (
     <Helmet prioritizeSeoTags>
       {preloadHeroImage ? (
@@ -223,6 +244,9 @@ export const SeoHead = ({
       )}
       {webApplicationSchema ? (
         <script type="application/ld+json">{JSON.stringify(webApplicationSchema)}</script>
+      ) : null}
+      {learningResourceSchema ? (
+        <script type="application/ld+json">{JSON.stringify(learningResourceSchema)}</script>
       ) : null}
       <script type="application/ld+json">{JSON.stringify(webPageSchema)}</script>
       {faqSchema ? (

@@ -47,24 +47,24 @@
   },
   "seo": {
     "home": {
-      "title": "Git Game Online | Branches, Merges & Interactive Guides | Game4Git",
-      "description": "Free git game hub — explore interactive guides for commits, branches, merge conflicts, GDB and Valgrind. Play online with nothing to install."
+      "title": "Git Game Online — Learn Git by Playing Free | Game4Git",
+      "description": "Free git game online — learn git by playing with interactive guides for commits, branches, merge conflicts, GDB and Valgrind. No install required."
     },
     "gdb": {
       "title": "How to Use GDB | Interactive Debugger Tutorial | Game4Git",
       "description": "Interactive GDB tutorial for C/C++ — practice breakpoints, stepping, stack traces and memory inspection in your browser."
     },
     "valgrind": {
-      "title": "How to Use Valgrind | Interactive Memcheck Tutorial | Game4Git",
+      "title": "Valgrind Tutorial — Interactive Memcheck Guide | Game4Git",
       "description": "Interactive Valgrind tutorial — learn Memcheck, detect memory leaks and fix invalid reads with guided examples in the browser."
     },
     "gitPracticeGame": {
-      "title": "Git Practice Game | Learn Git Commands Online | Game4Git",
-      "description": "Free git practice game in your browser — train commit, branch, checkout and merge with guided challenges. No install required."
+      "title": "Git Practice Game — Learn Git Commands by Playing | Game4Git",
+      "description": "Free git practice game online — learn git by playing with guided challenges for commit, branch, checkout and merge. No install required."
     },
     "gitBranchPractice": {
-      "title": "Git Branch Practice Online | Learn Git Branching | Game4Git",
-      "description": "Learn Git branching with hands-on branch practice. Create, switch, and merge branches online with a visual Git graph."
+      "title": "Git Branch Practice — Interactive Branching Tutorial | Game4Git",
+      "description": "Learn git branching online with hands-on practice. Create, switch, and merge branches with a visual Git graph — free git game for beginners."
     },
     "gitMergeConflicts": {
       "title": "Git Merge Conflicts | Learn to Resolve Conflicts | Game4Git",
@@ -79,12 +79,12 @@
       "description": "Learn git reset, revert, and commit --amend with interactive exercises. See how each command changes history on the graph."
     },
     "valgrindMemoryLeaks": {
-      "title": "Valgrind Memory Leak Tutorial | Find Leaks Step by Step | Game4Git",
+      "title": "Valgrind Memory Leak Tutorial — Find Leaks Fast | Game4Git",
       "description": "Use Valgrind Memcheck to detect memory leaks step by step, read leak reports, and fix C/C++ memory errors confidently."
     },
     "playground": {
-      "title": "Git Playground | Interactive Commit Graph & Terminal | Game4Git",
-      "description": "Open the Git playground: live commit graph, staging area, branch controls and optional terminal. Practice Git workflows in the browser."
+      "title": "Git Playground — Free Git Game with Visual Graph | Game4Git",
+      "description": "Play our free git game in the browser: live commit graph, staging area, branch controls and terminal. Practice git online with nothing to install."
     }
   },
   "playground": {
@@ -144,7 +144,8 @@
     "commandNotRecognized": "Error: Command not recognized:",
     "availableCommands": "Available commands",
     "availableCommandsTitle": "Available commands",
-    "placeholder": "Type git command..."
+    "placeholder": "Type git command...",
+    "inputLabel": "Git terminal command input"
   },
   "messages": {
     "firstCommit": "🎉 Your first commit! Well done.",
@@ -1316,6 +1317,10 @@
         {
           "q": "Is this a git game online for beginners?",
           "a": "Yes. Game4Git is a free interactive git game designed for beginners. Practice commits, branches, and merges with instant feedback — no setup required."
+        },
+        {
+          "q": "Can I practice git online for free?",
+          "a": "Yes. Game4Git is a free git game you can play in any browser. No account, download, or installation required."
         }
       ],
       "relatedTitle": "Related guides",
@@ -1587,7 +1592,8 @@
     "statGuides": "Interactive guides",
     "statLanguages": "Languages",
     "statInstalls": "Installs required",
-    "seoIntroMobile": "Learn Git by doing with visual commits and guided challenges.",
+    "seoIntroMobile": "Play our free git game online — learn git by doing with visual commits and guided challenges.",
+    "codeEditorLabel": "Code editor for hello.c file",
     "seoIntroLabel": "App description",
     "guidesTitle": "Popular guides",
     "guidesDescription": "Pick a topic—commits, branches, merge conflicts, Valgrind, GDB, or memory leaks—and jump straight into the matching interactive guide.",

@@ -14,6 +14,7 @@ import AppNav from "@/components/AppNav";
 import SiteFooter from "@/components/SiteFooter";
 import SeoHead from "@/components/SeoHead";
 import { useHomeLandingAnimations } from "@/hooks/useLandingAnimations";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 
 const GitBranchScrollAnimation = lazy(
@@ -66,6 +67,7 @@ const Landing: React.FC = () => {
   const { t } = useTranslation();
   const localizePath = useLocalizedPath();
   const rootRef = useRef<HTMLDivElement>(null);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const guides = [
     {
@@ -149,7 +151,7 @@ const Landing: React.FC = () => {
             {/* Left */}
             <div>
               <div
-                className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-widest text-orange-brand mb-4"
+                className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-widest text-orange-brand-accessible mb-4"
                 aria-hidden
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-orange-brand" />
@@ -165,8 +167,22 @@ const Landing: React.FC = () => {
                 <p className="text-sm text-muted-foreground leading-relaxed sm:hidden">
                   {t(
                     "home.seoIntroMobile",
-                    "Learn Git by doing with visual commits and guided challenges."
+                    "Play our free git game online — learn git by doing with visual commits and guided challenges."
                   )}{" "}
+                  <Link
+                    to={localizePath("/playground")}
+                    className="underline hover:text-primary"
+                  >
+                    {t("nav.playground", "Playground")}
+                  </Link>
+                  {" · "}
+                  <Link
+                    to={localizePath("/git-practice-game")}
+                    className="underline hover:text-primary"
+                  >
+                    {t("home.guides.gitPractice.title", "Git Practice Game")}
+                  </Link>
+                  {" · "}
                   <Link
                     to={localizePath("/git-merge-conflicts")}
                     className="underline hover:text-primary"
@@ -264,11 +280,13 @@ const Landing: React.FC = () => {
               </div>
             </div>
             {/* Right: animated git graph */}
-            <div className="hidden md:block" aria-hidden>
-              <Suspense fallback={null}>
-                <GitBranchScrollAnimation />
-              </Suspense>
-            </div>
+            {isDesktop ? (
+              <div aria-hidden>
+                <Suspense fallback={null}>
+                  <GitBranchScrollAnimation />
+                </Suspense>
+              </div>
+            ) : null}
           </div>
         </div>
       </section>
@@ -280,7 +298,7 @@ const Landing: React.FC = () => {
       >
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-10 md:mb-12">
-            <p className="text-[11px] font-semibold uppercase tracking-widest text-orange-brand mb-2">
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-orange-brand-accessible mb-2">
               {t("home.statGuides", "Guías interactivas")}
             </p>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground mb-3">
@@ -302,7 +320,6 @@ const Landing: React.FC = () => {
                   key={guide.href}
                   to={guide.href}
                   className="home-guide-card group bg-card border border-border rounded-lg p-4 flex flex-col gap-3 hover:shadow-md focus-visible:ring-2 focus-visible:ring-orange-brand focus-visible:ring-offset-2 transition-all duration-150 hover:-translate-y-0.5"
-                  aria-label={guide.title}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div

@@ -38,6 +38,37 @@ const PageLoader = () => (
   </div>
 );
 
+const isHomePath = (pathname: string) => {
+  const normalized = pathname.replace(/\/$/, "") || "/";
+  return normalized === "/" || /^\/(es|ca|fr)$/.test(normalized);
+};
+
+const RouteAwarePageLoader = () => {
+  const location = useLocation();
+  const { t } = useTranslation();
+
+  if (isHomePath(location.pathname)) {
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="bg-[#faf9f7] dark:bg-muted/20 border-b border-border/60">
+          <div className="container max-w-full px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+            <div className="max-w-6xl mx-auto min-h-[340px]">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-4">
+                {t("general.title")}
+              </h1>
+              <p className="text-sm text-muted-foreground max-w-lg">
+                {t("general.subtitle")}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return <PageLoader />;
+};
+
 const LocaleSync = ({ children }: { children: ReactNode }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -81,7 +112,7 @@ const LocaleSync = ({ children }: { children: ReactNode }) => {
 
 const renderPage = (PageComponent: ComponentType) => (
   <LocaleSync>
-    <Suspense fallback={<PageLoader />}>
+    <Suspense fallback={<RouteAwarePageLoader />}>
       <PageComponent />
     </Suspense>
   </LocaleSync>
