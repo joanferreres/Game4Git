@@ -7,6 +7,7 @@ import {
   getLocaleFromPathname,
   type SupportedLocale,
 } from "@/lib/localizedRoutes";
+import { SITE_NAME, SITE_URL } from "@/config/site";
 
 type SeoPageKey =
   | "home"
@@ -27,8 +28,6 @@ const OG_LOCALE_MAP: Record<SupportedLocale, string> = {
   fr: "fr_FR",
 };
 
-const SITE_NAME = "Game4Git";
-const SITE_URL = "https://game4git.games";
 const DEFAULT_OG_IMAGE_URL = `${SITE_URL}/og-image.png`;
 const TWITTER_HANDLE = "@gitgame";
 

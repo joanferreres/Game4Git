@@ -79,8 +79,14 @@
   "redirects": [
     {
       "source": "/(.*)",
+      "has": [{ "type": "host", "value": "game4git.games" }],
+      "destination": "https://game4git.vercel.app/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
       "has": [{ "type": "host", "value": "www.game4git.games" }],
-      "destination": "https://game4git.games/$1",
+      "destination": "https://game4git.vercel.app/$1",
       "permanent": true
     }
   ],

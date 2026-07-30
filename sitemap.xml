@@ -1,15 +1,443 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://game4git.games/</loc>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.games/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.games/?lng=en"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.games/?lng=es"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.games/?lng=ca"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.games/?lng=fr"/>
+    <loc>https://game4git.vercel.app/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr" />
+    <lastmod>2026-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://game4git.vercel.app/es</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/ca</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/fr</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/playground</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/playground" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/playground" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/playground" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/playground" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/playground" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/es/playground</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/playground" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/playground" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/playground" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/playground" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/playground" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/ca/playground</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/playground" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/playground" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/playground" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/playground" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/playground" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/fr/playground</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/playground" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/playground" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/playground" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/playground" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/playground" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/git-practice-game</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-practice-game" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-practice-game" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-practice-game" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-practice-game" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-practice-game" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/es/git-practice-game</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-practice-game" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-practice-game" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-practice-game" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-practice-game" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-practice-game" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/ca/git-practice-game</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-practice-game" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-practice-game" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-practice-game" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-practice-game" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-practice-game" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/fr/git-practice-game</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-practice-game" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-practice-game" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-practice-game" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-practice-game" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-practice-game" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/git-branch-practice</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-branch-practice" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-branch-practice" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-branch-practice" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-branch-practice" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-branch-practice" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/es/git-branch-practice</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-branch-practice" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-branch-practice" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-branch-practice" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-branch-practice" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-branch-practice" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/ca/git-branch-practice</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-branch-practice" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-branch-practice" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-branch-practice" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-branch-practice" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-branch-practice" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/fr/git-branch-practice</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-branch-practice" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-branch-practice" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-branch-practice" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-branch-practice" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-branch-practice" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/git-merge-conflicts</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-merge-conflicts" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-merge-conflicts" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-merge-conflicts" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-merge-conflicts" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-merge-conflicts" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/es/git-merge-conflicts</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-merge-conflicts" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-merge-conflicts" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-merge-conflicts" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-merge-conflicts" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-merge-conflicts" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/ca/git-merge-conflicts</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-merge-conflicts" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-merge-conflicts" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-merge-conflicts" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-merge-conflicts" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-merge-conflicts" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/fr/git-merge-conflicts</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-merge-conflicts" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-merge-conflicts" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-merge-conflicts" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-merge-conflicts" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-merge-conflicts" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/git-remote-workflow</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-remote-workflow" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-remote-workflow" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-remote-workflow" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-remote-workflow" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-remote-workflow" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/es/git-remote-workflow</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-remote-workflow" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-remote-workflow" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-remote-workflow" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-remote-workflow" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-remote-workflow" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/ca/git-remote-workflow</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-remote-workflow" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-remote-workflow" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-remote-workflow" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-remote-workflow" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-remote-workflow" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/fr/git-remote-workflow</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-remote-workflow" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-remote-workflow" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-remote-workflow" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-remote-workflow" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-remote-workflow" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/git-reset-guide</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-reset-guide" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-reset-guide" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-reset-guide" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-reset-guide" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-reset-guide" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/es/git-reset-guide</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-reset-guide" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-reset-guide" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-reset-guide" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-reset-guide" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-reset-guide" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/ca/git-reset-guide</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-reset-guide" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-reset-guide" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-reset-guide" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-reset-guide" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-reset-guide" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/fr/git-reset-guide</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/git-reset-guide" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/git-reset-guide" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/git-reset-guide" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/git-reset-guide" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/git-reset-guide" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/gdb</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/gdb" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/gdb" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/gdb" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/gdb" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/gdb" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/es/gdb</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/gdb" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/gdb" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/gdb" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/gdb" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/gdb" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/ca/gdb</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/gdb" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/gdb" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/gdb" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/gdb" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/gdb" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/fr/gdb</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/gdb" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/gdb" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/gdb" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/gdb" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/gdb" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/valgrind</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/valgrind" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/valgrind" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/valgrind" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/valgrind" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/valgrind" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/es/valgrind</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/valgrind" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/valgrind" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/valgrind" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/valgrind" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/valgrind" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/ca/valgrind</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/valgrind" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/valgrind" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/valgrind" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/valgrind" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/valgrind" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/fr/valgrind</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/valgrind" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/valgrind" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/valgrind" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/valgrind" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/valgrind" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/valgrind-memory-leaks</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/valgrind-memory-leaks" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/valgrind-memory-leaks" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/valgrind-memory-leaks" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/valgrind-memory-leaks" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/valgrind-memory-leaks" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/es/valgrind-memory-leaks</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/valgrind-memory-leaks" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/valgrind-memory-leaks" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/valgrind-memory-leaks" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/valgrind-memory-leaks" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/valgrind-memory-leaks" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/ca/valgrind-memory-leaks</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/valgrind-memory-leaks" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/valgrind-memory-leaks" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/valgrind-memory-leaks" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/valgrind-memory-leaks" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/valgrind-memory-leaks" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://game4git.vercel.app/fr/valgrind-memory-leaks</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://game4git.vercel.app/valgrind-memory-leaks" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://game4git.vercel.app/valgrind-memory-leaks" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://game4git.vercel.app/es/valgrind-memory-leaks" />
+    <xhtml:link rel="alternate" hreflang="ca" href="https://game4git.vercel.app/ca/valgrind-memory-leaks" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://game4git.vercel.app/fr/valgrind-memory-leaks" />
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
-
