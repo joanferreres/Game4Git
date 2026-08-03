@@ -31,11 +31,15 @@
       "headers": [
         {
           "key": "Content-Type",
-          "value": "application/xml; charset=utf-8"
+          "value": "text/xml; charset=utf-8"
         },
         {
           "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "inline"
         }
       ]
     },
@@ -71,7 +75,7 @@
       ]
     },
     {
-      "source": "/(.*)",
+      "source": "/((?!sitemap\\.xml$|robots\\.txt$).*)",
       "headers": [
         {
           "key": "Content-Security-Policy",
@@ -101,7 +105,7 @@
     }
   ],
   "trailingSlash": false,
-  "cleanUrls": true,
+  "cleanUrls": false,
   "redirects": [
     {
       "source": "/(.*)",
@@ -122,4 +126,4 @@
       "destination": "/index.html"
     }
   ]
-} 
+}
