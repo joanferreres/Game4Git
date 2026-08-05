@@ -3,4 +3,4 @@ Disallow: /privacy-policy.html
 Disallow: /.well-known/
 Disallow: /admin
 
-Sitemap: https://game4git.games/sitemap.xml
+Sitemap: https://game4git.vercel.app/sitemap.xml

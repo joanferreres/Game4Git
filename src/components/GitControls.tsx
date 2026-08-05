@@ -449,7 +449,7 @@ const GitControls: React.FC = () => {
   const renderContent = () => {
     if (useTerminal) {
       return (
-        <Suspense fallback={<div className="p-4 text-sm text-muted-foreground animate-pulse">{t('common.loading', 'Loading terminal...')}</div>}>
+        <Suspense fallback={<div className="p-4 min-h-[200px] text-sm text-muted-foreground animate-pulse flex items-center">{t('common.loading', 'Loading terminal...')}</div>}>
           <GitTerminal />
         </Suspense>
       );

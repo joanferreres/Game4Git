@@ -89,8 +89,9 @@ export default {
 					merge: '#9c27b0',
 					editor: '#1e293b'
 				},
-				'orange-brand': '#f05133',
-				'orange-brand-hover': '#d9441f',
+				'orange-brand': '#d9441f',
+				'orange-brand-hover': '#c43d22',
+				'orange-brand-accessible': '#c43d22',
 				'sheet-dark': '#0f172a'
 			},
 			borderRadius: {

@@ -4,12 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Preconnect to origins used in critical path -->
-    <link rel="preconnect" href="https://scripts.clarity.ms" crossorigin />
-    
     <!-- Critical CSS: Prevent FOUC and enable first paint without external CSS -->
     <style>
-      :root{--background:0 0% 100%;--foreground:240 10% 3.9%;--card:0 0% 100%;--card-foreground:240 10% 3.9%;--primary:14 86% 57%;--primary-foreground:210 40% 98%;--secondary:240 4.8% 95.9%;--muted:240 4.8% 95.9%;--muted-foreground:240 3.8% 46.1%;--accent:240 4.8% 95.9%;--border:240 5.9% 90%;--radius:0.5rem;--ring:14 86% 57%}
+      :root{--background:0 0% 100%;--foreground:240 10% 3.9%;--card:0 0% 100%;--card-foreground:240 10% 3.9%;--primary:14 86% 57%;--primary-foreground:210 40% 98%;--secondary:240 4.8% 95.9%;--muted:240 4.8% 95.9%;--muted-foreground:240 3.8% 44%;--accent:240 4.8% 95.9%;--border:240 5.9% 90%;--radius:0.5rem;--ring:14 86% 57%}
       .dark{--background:240 10% 3.9%;--foreground:0 0% 98%;--card:240 10% 3.9%;--card-foreground:0 0% 98%;--primary:14 86% 62%;--muted:240 3.7% 15.9%;--muted-foreground:240 5% 64.9%;--border:240 3.7% 15.9%}
       *,::before,::after{box-sizing:border-box;border-width:0;border-style:solid}
       html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:'DM Sans',system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
@@ -35,10 +32,10 @@
     </style>
     
     <!-- SEO_START -->
-    <title data-rh="true">Game4Git</title>
-    <meta data-rh="true" name="description" content="Learn Git online with Game4Git." />
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Game4Git","url":"https://game4git.games","logo":"https://game4git.games/logo-96.png","sameAs":[]}</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Game4Git","url":"https://game4git.games"}</script>
+    <title data-rh="true">Git Game Online — Learn Git by Playing Free | Game4Git</title>
+    <meta data-rh="true" name="description" content="Free git game hub — play online, learn git by playing with interactive guides for commits, branches, merge conflicts, GDB and Valgrind. No install required." />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Game4Git","url":"https://game4git.vercel.app","logo":"https://game4git.vercel.app/logo-96.png","sameAs":[]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Game4Git","url":"https://game4git.vercel.app"}</script>
     <!-- SEO_END -->
     <!-- STRUCTURED_DATA_START -->
     <!-- STRUCTURED_DATA_END -->
@@ -89,12 +86,20 @@
           })(window, document, "clarity", "script", "vmw9xs81kh");
         };
 
-        if ("requestIdleCallback" in window) {
-          window.requestIdleCallback(loadClarity, { timeout: 4000 });
+        // Load analytics only after the page has fully loaded AND the main thread is
+        // idle, so it never competes with LCP/hydration on mobile.
+        var scheduleClarity = function () {
+          if ("requestIdleCallback" in window) {
+            window.requestIdleCallback(loadClarity, { timeout: 10000 });
+          } else {
+            setTimeout(loadClarity, 3000);
+          }
+        };
+
+        if (document.readyState === "complete") {
+          scheduleClarity();
         } else {
-          window.addEventListener("load", function () {
-            setTimeout(loadClarity, 1500);
-          }, { once: true });
+          window.addEventListener("load", scheduleClarity, { once: true });
         }
       })();
     </script>

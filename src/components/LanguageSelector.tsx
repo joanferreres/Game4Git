@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getLocaleFromPathname, getLocalizedPath, type SupportedLocale } from "@/lib/localizedRoutes";
 
 const LanguageSelector: React.FC = () => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const currentLocale = getLocaleFromPathname(location.pathname);
@@ -49,9 +49,10 @@ const LanguageSelector: React.FC = () => {
         <button
           type="button"
           className={cn(buttonVariants({ variant: "outline", size: "icon" }), "relative")}
+          aria-label={t("common.selectLanguage", "Select Language")}
         >
           <Globe className="h-4 w-4 text-foreground" />
-          <span className="absolute top-0 right-0 -mt-1 -mr-1 bg-primary text-primary-foreground text-[8px] font-bold rounded-full w-3 h-3 flex items-center justify-center uppercase">
+          <span className="absolute top-0 right-0 -mt-1 -mr-1 bg-orange-brand text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center uppercase">
             {currentLocale}
           </span>
         </button>

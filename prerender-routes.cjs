@@ -2,10 +2,60 @@
 
 const fs = require('fs');
 const path = require('path');
+const Beasties = require('beasties');
 const { SITE_URL } = require('./src/config/site.cjs');
 
 const DIST_DIR = path.join(__dirname, 'dist');
 const INDEX_FILE = path.join(DIST_DIR, 'index.html');
+
+// Maps each prerendered route to its lazy page source so we can resolve, from
+// the Vite manifest, the exact JS chunks needed to render it and preload them.
+const ROUTE_SOURCE = {
+  home: 'src/pages/Landing.tsx',
+  playground: 'src/pages/Index.tsx',
+  gdb: 'src/pages/GdbLearning.tsx',
+  valgrind: 'src/pages/ValgrindLearning.tsx',
+  gitPracticeGame: 'src/pages/GitPracticeGame.tsx',
+  gitBranchPractice: 'src/pages/GitBranchPractice.tsx',
+  gitMergeConflicts: 'src/pages/GitMergeConflicts.tsx',
+  gitRemoteWorkflow: 'src/pages/GitRemoteWorkflow.tsx',
+  gitResetGuide: 'src/pages/GitResetGuide.tsx',
+  valgrindMemoryLeaks: 'src/pages/ValgrindMemoryLeaks.tsx',
+};
+
+const readManifest = () => {
+  for (const p of [
+    path.join(DIST_DIR, '.vite', 'manifest.json'),
+    path.join(DIST_DIR, 'manifest.json'),
+  ]) {
+    if (fs.existsSync(p)) {
+      try {
+        return JSON.parse(fs.readFileSync(p, 'utf8'));
+      } catch {
+        return null;
+      }
+    }
+  }
+  return null;
+};
+
+const MANIFEST = readManifest();
+
+/** Walk the static-import graph of a route's page chunk → list of /assets/*.js to modulepreload. */
+const getRouteChunkPreloads = (routeKey) => {
+  const source = ROUTE_SOURCE[routeKey];
+  if (!MANIFEST || !source || !MANIFEST[source]) return [];
+  const files = new Set();
+  const visit = (key) => {
+    const entry = MANIFEST[key];
+    if (!entry || !entry.file || files.has(entry.file)) return;
+    files.add(entry.file);
+    // Only follow static imports (synchronously needed); skip dynamicImports (lazy widgets).
+    (entry.imports || []).forEach(visit);
+  };
+  visit(source);
+  return [...files].map((file) => `/${file}`.replace(/^\/+/, '/'));
+};
 const LOCALES = ['en', 'es', 'ca', 'fr'];
 const DEFAULT_LOCALE = 'en';
 const OG_LOCALE_MAP = {
@@ -761,17 +811,35 @@ const addCriticalPreloads = (template, routeKey) => {
     );
   }
   const assetsDir = path.join(DIST_DIR, 'assets');
-  if (routeKey === 'playground' && fs.existsSync(assetsDir)) {
+  if (fs.existsSync(assetsDir)) {
     const files = fs.readdirSync(assetsDir);
-    const indexCss = files.find((f) => f.startsWith('Index-') && f.endsWith('.css'));
-    if (indexCss) {
-      parts.push(`\n    <link rel="preload" href="/assets/${indexCss}" as="style">`);
+    const mainCss = files.find((f) => f.startsWith('index-') && f.endsWith('.css'));
+    if (mainCss) {
+      parts.push(`\n    <link rel="preload" href="/assets/${mainCss}" as="style">`);
     }
+    if (routeKey === 'playground') {
+      const indexCss = files.find((f) => f.startsWith('Index-') && f.endsWith('.css'));
+      if (indexCss && indexCss !== mainCss) {
+        parts.push(`\n    <link rel="preload" href="/assets/${indexCss}" as="style">`);
+      }
+    }
+  }
+  // Preload the route's JS chunk graph so the lazy page mounts without a fetch
+  // waterfall (the hero/LCP element paints sooner).
+  for (const href of getRouteChunkPreloads(routeKey)) {
+    parts.push(`\n    <link rel="modulepreload" href="${href}" crossorigin>`);
   }
   if (parts.length === 0) {
     return template;
   }
-  return template.replace(/(<link rel="preconnect"[^>]+>)/, `$1${parts.join('')}`);
+  const injection = parts.join('');
+  if (/<meta name="viewport"[^>]*>/.test(template)) {
+    return template.replace(
+      /(<meta name="viewport"[^>]*>)/,
+      `$1${injection}`
+    );
+  }
+  return template.replace('</head>', `${injection}\n  </head>`);
 };
 
 const injectRouteIntoTemplate = (template, route, locale) =>
@@ -813,23 +881,46 @@ const buildAdminHtml = (template) =>
       </main>`
     );
 
-const prerender = () => {
+// Inlines above-the-fold critical CSS and makes the full stylesheet load
+// non-blocking (preload→swap). Removes the render-blocking CSS request without
+// FOUC. Falls back to the original HTML if extraction fails, so the build is
+// never broken by it.
+const inlineCriticalCss = async (beasties, html) => {
+  try {
+    return await beasties.process(html);
+  } catch (error) {
+    console.warn('  ⚠️  beasties skipped a page:', error && error.message);
+    return html;
+  }
+};
+
+const prerender = async () => {
   if (!fs.existsSync(INDEX_FILE)) {
     throw new Error(`Missing build output: ${INDEX_FILE}`);
   }
 
   const template = fs.readFileSync(INDEX_FILE, 'utf8');
-
-  ROUTES.forEach((route) => {
-    LOCALES.forEach((locale) => {
-      const outputPath = getLocalizedPath(route.path, locale);
-      const html = injectRouteIntoTemplate(template, route, locale);
-      writeHtmlFile(outputPath, html);
-    });
+  const beasties = new Beasties({
+    path: DIST_DIR,
+    publicPath: '/',
+    preload: 'swap',
+    pruneSource: false,
+    logLevel: 'silent',
   });
 
-  writeHtmlFile('/admin', buildAdminHtml(template));
-  console.log('✅ Prerender generated for localized routes and admin.');
+  for (const route of ROUTES) {
+    for (const locale of LOCALES) {
+      const outputPath = getLocalizedPath(route.path, locale);
+      const html = injectRouteIntoTemplate(template, route, locale);
+      writeHtmlFile(outputPath, await inlineCriticalCss(beasties, html));
+    }
+  }
+
+  writeHtmlFile('/admin', await inlineCriticalCss(beasties, buildAdminHtml(template)));
+  console.log('✅ Prerender generated (critical CSS inlined, route chunks preloaded).');
 };
 
-prerender();
+prerender().catch((error) => {
+  console.error('❌ Prerender failed:', error);
+  process.exit(1);
+});

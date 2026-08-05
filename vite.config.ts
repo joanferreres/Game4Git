@@ -94,6 +94,10 @@ export default defineConfig({
   },
   build: {
     target: "es2020",
+    // Emit dist/.vite/manifest.json so the prerender step can resolve each
+    // route's JS chunk graph and inject <link rel="modulepreload"> hints
+    // (removes the lazy-route fetch waterfall → faster mount → earlier LCP).
+    manifest: true,
     minify: "terser" as const,
     terserOptions: {
       compress: {

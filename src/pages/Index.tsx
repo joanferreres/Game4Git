@@ -34,13 +34,19 @@ import SeoHead from "@/components/SeoHead";
 import SiteFooter from "@/components/SiteFooter";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 
-/** Matches CodeEditor layout to avoid CLS while the lazy chunk loads */
+/** Matches panel column heights to avoid CLS while lazy chunks load */
+const PANEL_HEIGHT =
+  "h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] min-h-[350px]";
+
 const LazyPanelFallback = () => (
-  <div className="min-h-[72px] animate-pulse rounded-lg bg-muted/30" aria-hidden />
+  <div
+    className={`${PANEL_HEIGHT} animate-pulse rounded-lg bg-muted/30`}
+    aria-hidden
+  />
 );
 
 const CodeEditorSkeleton: React.FC<{ label: string }> = ({ label }) => (
-  <Card className="w-full h-full overflow-hidden flex flex-col">
+  <Card className={`w-full ${PANEL_HEIGHT} overflow-hidden flex flex-col`}>
     <CardHeader className="py-3 px-4 shrink-0">
       <CardTitle className="text-sm flex items-center gap-2">
         <span className="w-3 h-3 rounded-full bg-git-editor shrink-0" aria-hidden />
@@ -49,7 +55,7 @@ const CodeEditorSkeleton: React.FC<{ label: string }> = ({ label }) => (
     </CardHeader>
     <CardContent className="p-0 flex-1 min-h-0">
       <div
-        className="h-full min-h-[200px] bg-[#2d2d2d] flex items-center justify-center"
+        className="h-full bg-[#2d2d2d] flex items-center justify-center"
         aria-busy="true"
         aria-label={label}
       >
@@ -480,7 +486,6 @@ const GitGame: React.FC = () => {
                 key={guide.href}
                 to={guide.href}
                 className="home-guide-card group bg-card border border-border rounded-lg p-4 flex flex-col gap-3 hover:shadow-md focus-visible:ring-2 focus-visible:ring-orange-brand focus-visible:ring-offset-2 transition-all duration-150 hover:-translate-y-0.5"
-                aria-label={guide.title}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${colors.icon}`}>

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { cpp } from "@codemirror/lang-cpp";
 import { oneDark } from "@codemirror/theme-one-dark";
@@ -6,6 +6,7 @@ import { EditorView } from "@codemirror/view";
 import { EditorState } from "@codemirror/state";
 import useGitStore from "@/store/gitStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useTranslation } from "react-i18next";
 
 interface CodeEditorProps {
   readOnly?: boolean;
@@ -15,7 +16,10 @@ interface CodeEditorProps {
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ readOnly = false, content, language = "c" }) => {
   const { workingChanges, updateWorkingChanges } = useGitStore();
+  const { t } = useTranslation();
+  const editorWrapperRef = useRef<HTMLDivElement>(null);
   const editorContent = content ?? workingChanges;
+  const editorLabel = t("home.codeEditorLabel", "Code editor for hello.c file");
 
   const handleValueChange = (value: string) => {
     if (!readOnly) {
@@ -36,6 +40,13 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ readOnly = false, content, lang
     [languageExtension, readOnly]
   );
 
+  useEffect(() => {
+    const contentEditable = editorWrapperRef.current?.querySelector(".cm-content");
+    if (contentEditable) {
+      contentEditable.setAttribute("aria-label", editorLabel);
+    }
+  }, [editorContent, editorLabel]);
+
   return (
     <Card className="w-full h-full overflow-hidden">
       <CardHeader className="py-3 px-4">
@@ -48,7 +59,10 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ readOnly = false, content, lang
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0 h-[calc(100%-48px)]">
-        <div className="h-full bg-[#282c34] text-[#f8f8f2] font-mono text-sm overflow-auto">
+        <div
+          ref={editorWrapperRef}
+          className="h-full bg-[#282c34] text-[#f8f8f2] font-mono text-sm overflow-auto"
+        >
           <CodeMirror
             value={editorContent ?? ""}
             onChange={handleValueChange}
@@ -64,7 +78,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ readOnly = false, content, lang
             editable={!readOnly}
             height="100%"
             className="h-full"
-            aria-label="Code editor for hello.c file"
           />
         </div>
       </CardContent>

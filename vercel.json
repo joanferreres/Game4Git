@@ -27,6 +27,36 @@
       ]
     },
     {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/xml; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "inline"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
       "source": "/assets/(.*)",
       "headers": [
         {
@@ -45,7 +75,7 @@
       ]
     },
     {
-      "source": "/(.*)",
+      "source": "/((?!sitemap\\.xml$|robots\\.txt$).*)",
       "headers": [
         {
           "key": "Content-Security-Policy",
@@ -75,12 +105,18 @@
     }
   ],
   "trailingSlash": false,
-  "cleanUrls": true,
+  "cleanUrls": false,
   "redirects": [
     {
       "source": "/(.*)",
+      "has": [{ "type": "host", "value": "game4git.games" }],
+      "destination": "https://game4git.vercel.app/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
       "has": [{ "type": "host", "value": "www.game4git.games" }],
-      "destination": "https://game4git.games/$1",
+      "destination": "https://game4git.vercel.app/$1",
       "permanent": true
     }
   ],
@@ -90,4 +126,4 @@
       "destination": "/index.html"
     }
   ]
-} 
+}

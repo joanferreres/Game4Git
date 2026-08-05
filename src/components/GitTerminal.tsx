@@ -544,8 +544,9 @@ const GitTerminal: React.FC = () => {
                 ref={inputRef}
                 value={command}
                 onChange={(e) => setCommand(e.target.value)}
-                className="border-none focus-visible:ring-0 bg-transparent font-mono text-green-400"
+                className="border-none focus-visible:ring-0 bg-transparent font-mono text-green-400 min-h-[40px]"
                 placeholder={t("terminal.placeholder")}
+                aria-label={t("terminal.inputLabel", "Git terminal command input")}
               />
             </div>
           </form>

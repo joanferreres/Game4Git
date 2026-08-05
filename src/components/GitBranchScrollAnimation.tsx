@@ -1,9 +1,4 @@
-import React, { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+import React, { useEffect, useRef } from "react";
 
 type Commit = {
   id: string;
@@ -32,10 +27,21 @@ const COMMITS: Commit[] = [
 const GitBranchScrollAnimation: React.FC = () => {
   const rootRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(
-    () => {
-      const root = rootRef.current;
-      if (!root) return;
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    let cancelled = false;
+    let revertMedia: (() => void) | undefined;
+
+    const setup = async () => {
+      const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+      gsap.registerPlugin(ScrollTrigger);
+
+      if (cancelled || !rootRef.current) return;
 
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
@@ -102,21 +108,18 @@ const GitBranchScrollAnimation: React.FC = () => {
           );
         };
 
-        // main trunk
         drawPath("main-1");
         popCommit("c1");
         drawPath("main-2");
         popCommit("c2");
         showLabel("main", "<");
 
-        // feature/auth branch
         drawPath("feat-out");
         showLabel("feat", "<0.1");
         popCommit("f1");
         drawPath("feat-cont");
         popCommit("f2");
 
-        // feature merges back
         drawPath("feat-merge");
         tl.to(
           scope("[data-path='main-3']"),
@@ -125,12 +128,10 @@ const GitBranchScrollAnimation: React.FC = () => {
         );
         popCommit("c3");
 
-        // bugfix branch
         drawPath("bugfix-out");
         showLabel("bugfix", "<0.1");
         popCommit("b1");
 
-        // bugfix merges back
         drawPath("bugfix-merge");
         tl.to(
           scope("[data-path='main-4']"),
@@ -139,7 +140,6 @@ const GitBranchScrollAnimation: React.FC = () => {
         );
         popCommit("c4");
 
-        // release
         drawPath("main-5");
         popCommit("c5");
 
@@ -151,10 +151,16 @@ const GitBranchScrollAnimation: React.FC = () => {
         });
       });
 
-      return () => mm.revert();
-    },
-    { scope: rootRef }
-  );
+      revertMedia = () => mm.revert();
+    };
+
+    void setup();
+
+    return () => {
+      cancelled = true;
+      revertMedia?.();
+    };
+  }, []);
 
   return (
     <div
@@ -200,7 +206,6 @@ const GitBranchScrollAnimation: React.FC = () => {
             </filter>
           </defs>
 
-          {/* Branch labels */}
           <g className="git-scroll-label" data-label="main">
             <rect
               x={MAIN_X + 22}
@@ -268,7 +273,6 @@ const GitBranchScrollAnimation: React.FC = () => {
             </text>
           </g>
 
-          {/* Paths: main trunk segments */}
           <path
             className="git-scroll-path"
             data-path="main-1"
@@ -360,7 +364,6 @@ const GitBranchScrollAnimation: React.FC = () => {
             strokeLinecap="round"
           />
 
-          {/* Commit dots + messages */}
           {COMMITS.map((c) => {
             const msgOnLeft = c.x > MAIN_X;
             const msgX = msgOnLeft ? c.x - 18 : c.x + 18;
