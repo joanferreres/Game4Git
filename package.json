@@ -13,6 +13,7 @@
     "lint": "npx eslint . || true",
     "preview": "npx vite preview",
     "test:build": "node test-build.js",
+    "test:webmcp": "node scripts/webmcp.test.mjs",
     "prepare:prod": "chmod +x ./prepare-for-prod.sh && ./prepare-for-prod.sh",
     "deploy": "npm run build && vercel --prod",
     "deploy:vercel": "npm run security:check && npx vercel --prod",

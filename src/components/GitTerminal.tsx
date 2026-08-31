@@ -26,6 +26,18 @@ interface CommandExample {
   description: string;
 }
 
+// TypeScript's DOM types do not yet include the experimental WebMCP attributes.
+// React forwards these lower-case attributes to the native elements at runtime.
+const webMcpTerminalFormAttributes = {
+  toolname: "run-simulated-git-command",
+  tooldescription: "Run a Git command in Game4Git's simulated learning terminal. Commands affect only the in-browser exercise.",
+  toolautosubmit: true,
+} as unknown as React.FormHTMLAttributes<HTMLFormElement>;
+
+const webMcpCommandInputAttributes = {
+  toolparamdescription: "A Git command to run in the simulated exercise, such as git status or git branch.",
+} as unknown as React.InputHTMLAttributes<HTMLInputElement>;
+
 const GitTerminal: React.FC = () => {
   const { t } = useTranslation();
   
@@ -537,13 +549,19 @@ const GitTerminal: React.FC = () => {
               </div>
             ))}
           </ScrollArea>
-          <form onSubmit={handleSubmit} className="border-t border-border p-2 bg-black">
+          <form
+            onSubmit={handleSubmit}
+            {...webMcpTerminalFormAttributes}
+            className="border-t border-border p-2 bg-black"
+          >
             <div className="flex items-center">
               <span className="text-green-400 mr-2 font-mono">$</span>
               <Input
                 ref={inputRef}
                 value={command}
                 onChange={(e) => setCommand(e.target.value)}
+                name="command"
+                {...webMcpCommandInputAttributes}
                 className="border-none focus-visible:ring-0 bg-transparent font-mono text-green-400 min-h-[40px]"
                 placeholder={t("terminal.placeholder")}
                 aria-label={t("terminal.inputLabel", "Git terminal command input")}

@@ -103,6 +103,15 @@ export function SiteFooter({ className }: SiteFooterProps) {
               •
             </span>
             <a
+              href="/developers/"
+              className="transition-colors hover:text-foreground"
+            >
+              {t("footer.developers", "Developers")}
+            </a>
+            <span className="text-muted-foreground/50" aria-hidden>
+              •
+            </span>
+            <a
               href="mailto:game4git@gmail.com"
               className="transition-colors hover:text-foreground"
             >

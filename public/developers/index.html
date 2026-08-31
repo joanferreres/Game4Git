@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Game4Git for Developers</title>
+    <meta name="description" content="Developer documentation for using Game4Git's browser-based Git learning experiences with AI agents." />
+    <link rel="canonical" href="https://game4git.com/developers/" />
+    <style>body{max-width:760px;margin:0 auto;padding:32px 20px;font:16px/1.55 system-ui,sans-serif;color:#1f2937}h1,h2{line-height:1.2}code{background:#f3f4f6;padding:2px 4px;border-radius:4px}a{color:#c2410c}section{margin:32px 0}.note{padding:16px;background:#fff7ed;border-left:4px solid #ea580c}</style>
+  </head>
+  <body>
+    <main>
+      <p><a href="/">← Game4Git</a></p>
+      <h1>Game4Git for Developers</h1>
+      <p>Game4Git provides browser-based, simulated Git practice. It is designed for learning workflows safely; it does not access a user's local repositories or run commands on their machine.</p>
+
+      <section>
+        <h2>Quickstart</h2>
+        <ol>
+          <li>Open the <a href="/playground/">interactive playground</a>.</li>
+          <li>Choose a guided practice, such as <a href="/git-branch-practice/">Git branches</a> or <a href="/git-merge-conflicts/">merge conflicts</a>.</li>
+          <li>Experiment with Git commands in the simulated terminal and observe the graph.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>AI-agent integration</h2>
+        <p>On browsers that support WebMCP, Game4Git exposes two in-page tools:</p>
+        <ul>
+          <li><code>open-game4git-playground</code> — opens the interactive playground in English, Spanish, Catalan, or French.</li>
+          <li><code>open-game4git-guide</code> — opens a focused guided practice for branches, merge conflicts, remote workflows, reset, or first Git practice.</li>
+        </ul>
+        <p>Read the machine-oriented guidance at <a href="/llms.txt">/llms.txt</a>.</p>
+      </section>
+
+      <section>
+        <h2>Sandbox and access</h2>
+        <p>The public learning environment is the sandbox: it is free, runs entirely in the browser, and needs no account or API key. Game4Git does not currently provide a remote API, API keys, or a hosted MCP server.</p>
+        <p class="note">Use this integration for learning navigation and simulated exercises only. Do not use it for repository automation or production Git operations.</p>
+      </section>
+    </main>
+  </body>
+</html>
