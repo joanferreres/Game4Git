@@ -1,12 +1,12 @@
 {
   "urls": [
-    "https://game4git.vercel.app/",
-    "https://game4git.vercel.app/gdb",
-    "https://game4git.vercel.app/valgrind",
-    "https://game4git.vercel.app/git-practice-game",
-    "https://game4git.vercel.app/git-branch-practice",
-    "https://game4git.vercel.app/git-merge-conflicts",
-    "https://game4git.vercel.app/valgrind-memory-leaks"
+    "https://game4git.com/",
+    "https://game4git.com/gdb/",
+    "https://game4git.com/valgrind/",
+    "https://game4git.com/git-practice-game/",
+    "https://game4git.com/git-branch-practice/",
+    "https://game4git.com/git-merge-conflicts/",
+    "https://game4git.com/valgrind-memory-leaks/"
   ],
   "strategies": [
     "mobile",

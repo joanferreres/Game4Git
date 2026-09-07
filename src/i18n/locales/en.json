@@ -59,16 +59,16 @@
       "description": "Interactive Valgrind tutorial — learn Memcheck, detect memory leaks and fix invalid reads with guided examples in the browser."
     },
     "gitPracticeGame": {
-      "title": "Git Practice Game — Learn Git Commands by Playing | Game4Git",
-      "description": "Free git practice game online — learn git by playing with guided challenges for commit, branch, checkout and merge. No install required."
+      "title": "Git Practice Game — Play Git Commands Online Free | Game4Git",
+      "description": "Play a free Git practice game online. Practice Git commands, commits, branches and merges with guided challenges — no install required."
     },
     "gitBranchPractice": {
-      "title": "Git Branch Practice — Interactive Branching Tutorial | Game4Git",
-      "description": "Learn git branching online with hands-on practice. Create, switch, and merge branches with a visual Git graph — free git game for beginners."
+      "title": "Git Branch Game — Practice Git Branching Online Free | Game4Git",
+      "description": "Play a free Git branching game online. Create, switch and merge branches on a visual Git graph built for beginners."
     },
     "gitMergeConflicts": {
-      "title": "Git Merge Conflicts | Learn to Resolve Conflicts | Game4Git",
-      "description": "Learn Git merge conflicts with a visual playground. Practice conflict markers, resolution steps, and safe merges."
+      "title": "Git Merge Conflict Game — Practice Conflict Markers | Game4Git",
+      "description": "Practice resolving Git merge conflicts in a visual playground. Learn conflict markers, resolution steps and safe merges."
     },
     "gitRemoteWorkflow": {
       "title": "Git Remote Workflow | Fetch, Pull & Push Guide | Game4Git",
@@ -1277,7 +1277,7 @@
     "gitPracticeGame": {
       "eyebrow": "Practice Git online",
       "heroTitle": "Git practice game for commits, branches, and merges",
-      "heroDescription": "Practice Git commands online in a visual playground. Make commits, create branches, and merge safely while training the same workflow used in real repositories.",
+      "heroDescription": "Play a free Git practice game online in a visual playground. Practice Git commands, make commits, create branches, and merge safely using the same workflow as real repositories.",
       "primaryCta": "Start Git practice",
       "secondaryCta": "Open main playground",
       "highlights": [
@@ -1329,7 +1329,7 @@
     "gitBranchPractice": {
       "eyebrow": "Git branch practice",
       "heroTitle": "Learn Git branches with hands-on branch practice",
-      "heroDescription": "Learn Git branching with guided branch practice. Create branches, switch context, and merge with confidence while the visual graph shows every pointer move.",
+      "heroDescription": "Play a Git branch game and practice Git branching online. Create branches, switch context, and merge with confidence while the visual graph shows every pointer move.",
       "primaryCta": "Start branch challenge",
       "secondaryCta": "Open main playground",
       "highlights": [
@@ -1652,5 +1652,61 @@
     "valgrind": "Learn Valgrind",
     "contact": "Contact",
     "support": "Support"
+  },
+  "admin": {
+    "viewDashboard": "View Dashboard",
+    "openDashboard": "Open Analytics Dashboard",
+    "dashboardDesc": "Access the analytics dashboard with detailed metrics: unique visitors, page views, referrers, UTM, countries, devices, browsers and operating systems."
+  },
+  "adminStats": {
+    "title": "📊 Analytics Dashboard",
+    "subtitle": "Secure admin area — View site analytics",
+    "dashboardTitle": "📊 Analytics Dashboard",
+    "dashboardSubtitle": "Anonymous, privacy-first metrics — 90 day retention",
+    "authRequired": "This area is protected. Admin authentication required.",
+    "notConfigured": "Admin not configured. Define VITE_ADMIN_PASSWORD_HASH before using this panel.",
+    "notConfiguredDesc": "Missing <code>VITE_ADMIN_PASSWORD_HASH</code>. Without this variable the panel cannot be used in production.",
+    "password": "Admin Password",
+    "passwordPlaceholder": "Enter password...",
+    "login": "Access Dashboard",
+    "locked": "Locked",
+    "wrongPassword": "Incorrect password. Attempt",
+    "tooManyAttempts": "Too many failed attempts. Access blocked for 15 minutes.",
+    "attemptsRemaining": "Attempts remaining: {{count}}",
+    "blocked": "Access blocked for security. Try again in {{minutes}} min.",
+    "loginSuccess": "Access authorized! Welcome to the Analytics Dashboard.",
+    "loggedOut": "Logged out successfully",
+    "logoutError": "Failed to logout",
+    "logout": "Logout",
+    "refresh": "Refresh",
+    "refreshed": "Data refreshed",
+    "fetchError": "Failed to fetch analytics data",
+    "sessionExpired": "Session expired. Please log in again.",
+    "sessionActive": "Session active",
+    "minutes": "minutes",
+    "timeRange": "Time Range",
+    "uniqueVisitors": "Unique Visitors",
+    "pageViews": "Page Views",
+    "sessions": "Sessions",
+    "activeNow": "Active Now",
+    "last5min": "Last 5 minutes",
+    "topPaths": "Top Pages",
+    "topPathsDesc": "Most viewed pages with unique visitor count",
+    "referrers": "Referrers",
+    "referrersDesc": "Where visitors came from (domain only)",
+    "utmSources": "UTM Sources",
+    "utmSourcesDesc": "Campaign sources from UTM parameters",
+    "countries": "Countries",
+    "countriesDesc": "Visitor countries (ISO codes)",
+    "devices": "Devices",
+    "browsers": "Browsers",
+    "operatingSystems": "Operating Systems",
+    "backToHome": "← Back to Home",
+    "privacyNotice": "Privacy & Data Protection",
+    "privacyNoIPs": "No IP addresses stored — only anonymous hashed identifiers",
+    "privacyNoFullReferrers": "No full referrer URLs — only root domains (e.g., google.com)",
+    "privacyNoPersonalData": "No personal data collected — fully anonymous aggregates",
+    "privacyAdminExcluded": "Admin sessions automatically excluded from public metrics",
+    "privacyRetention": "Data auto-deleted after {{days}} days"
   }
 }

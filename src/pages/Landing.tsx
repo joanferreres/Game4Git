@@ -365,7 +365,7 @@ const Landing: React.FC = () => {
         <div className="max-w-6xl mx-auto">
           <div className="bg-[#0f172a] rounded-2xl p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
-              <p className="font-mono text-[11px] text-slate-500 mb-3">
+              <p className="font-mono text-[11px] text-slate-300 mb-3">
                 $ git playground --open
               </p>
               <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-3">
@@ -390,24 +390,24 @@ const Landing: React.FC = () => {
                   <span className="w-2 h-2 rounded-full bg-[#334155]" />
                 </div>
                 <div>
-                  <span className="text-slate-500">$</span>{" "}
+                  <span className="text-slate-300">$</span>{" "}
                   <span className="text-slate-200">git branch feature/nav</span>
                 </div>
                 <div>
-                  <span className="text-slate-500">$</span>{" "}
+                  <span className="text-slate-300">$</span>{" "}
                   <span className="text-slate-200">git checkout feature/nav</span>
                 </div>
                 <div>
                   <span className="text-green-400">✓</span>{" "}
-                  <span className="text-slate-500">Switched to branch 'feature/nav'</span>
+                  <span className="text-slate-300">Switched to branch 'feature/nav'</span>
                 </div>
                 <div>
-                  <span className="text-slate-500">$</span>{" "}
+                  <span className="text-slate-300">$</span>{" "}
                   <span className="text-slate-200">git merge main</span>
                 </div>
                 <div>
                   <span className="text-green-400">✓</span>{" "}
-                  <span className="text-slate-500">Already up to date.</span>
+                  <span className="text-slate-300">Already up to date.</span>
                 </div>
               </div>
             </div>

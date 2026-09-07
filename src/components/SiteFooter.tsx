@@ -123,7 +123,7 @@ export function SiteFooter({ className }: SiteFooterProps) {
               rel="noopener noreferrer"
               className={cn(
                 buttonVariants({ size: "sm" }),
-                "h-8 px-3 bg-primary text-primary-foreground hover:bg-primary/90"
+                "h-8 px-3 bg-orange-brand text-white hover:bg-orange-brand-hover"
               )}
             >
               ☕ {t("footer.support")}

@@ -89,8 +89,8 @@ export default {
 					merge: '#9c27b0',
 					editor: '#1e293b'
 				},
-				'orange-brand': '#d9441f',
-				'orange-brand-hover': '#c43d22',
+				'orange-brand': '#c43d22',
+				'orange-brand-hover': '#a8341d',
 				'orange-brand-accessible': '#c43d22',
 				'sheet-dark': '#0f172a'
 			},

@@ -2,12 +2,12 @@
 
 ## Español
 
-### Proceso de despliegue en Vercel
+### Proceso de despliegue en Cloudflare Workers
 
-Para desplegar esta aplicación en Vercel:
+Para desplegar esta aplicación en Cloudflare Workers:
 
-1. Asegúrate de tener una cuenta en [Vercel](https://vercel.com).
-2. Instala la CLI de Vercel: `npm install -g vercel`
+1. Asegúrate de tener una cuenta en [Cloudflare](https://dash.cloudflare.com).
+2. Autentica Wrangler: `npx wrangler login`
 3. Ejecuta los siguientes comandos:
 
 ```bash
@@ -17,75 +17,44 @@ npm run build
 # Ejecutar comprobaciones de seguridad
 npm run security:check
 
-# Desplegar en Vercel
-vercel --prod
+# Desplegar en Cloudflare Workers
+npm run deploy
 ```
 
 La aplicación utiliza los siguientes archivos de configuración para el despliegue:
-- `vercel.json`: Configuración de rutas, headers de seguridad y redirecciones
+- `wrangler.jsonc`: Worker, assets SPA y observabilidad
+- `public/_headers`: Cabeceras de seguridad y caché
 - `deploy.sh`: Script que automatiza el proceso de despliegue
 
+### Dominio personalizado
+
+Tras el primer deploy, adjunta `game4git.com` al Worker en el dashboard de Cloudflare:
+
+**Workers & Pages → game4git → Settings → Domains & Routes → Add → Custom Domain**
+
+Si el DNS de `game4git.com` ya está en Cloudflare, el registro CNAME se crea automáticamente.
+
 ### Notas importantes
-- La aplicación requiere Node.js 16.x o superior
-- Se han resuelto los problemas con CSP (Content Security Policy) y X-Frame-Options
-- Vercel configurará automáticamente las variables de entorno según `vercel.json`
+- La aplicación requiere Node.js 18.x o superior
+- El fallback SPA (`not_found_handling: single-page-application`) cubre las rutas de React Router
+- Variables de build como `VITE_ADMIN_PASSWORD_HASH` se definen en el entorno de build / Workers Builds
 
 ## Català
 
-### Procés de desplegament a Vercel
+### Procés de desplegament a Cloudflare Workers
 
-Per desplegar aquesta aplicació a Vercel:
+1. Compte a [Cloudflare](https://dash.cloudflare.com).
+2. `npx wrangler login`
+3. `npm run deploy`
 
-1. Assegura't de tenir un compte a [Vercel](https://vercel.com).
-2. Instal·la la CLI de Vercel: `npm install -g vercel`
-3. Executa les següents comandes:
-
-```bash
-# Realitzar el build de l'aplicació
-npm run build
-
-# Executar comprovacions de seguretat
-npm run security:check
-
-# Desplegar a Vercel
-vercel --prod
-```
-
-L'aplicació utilitza els següents fitxers de configuració per al desplegament:
-- `vercel.json`: Configuració de rutes, capçaleres de seguretat i redireccions
-- `deploy.sh`: Script que automatitza el procés de desplegament
-
-### Notes importants
-- L'aplicació requereix Node.js 16.x o superior
-- S'han resolt els problemes amb CSP (Content Security Policy) i X-Frame-Options
-- Vercel configurarà automàticament les variables d'entorn segons `vercel.json`
+Fitxers clau: `wrangler.jsonc`, `public/_headers`, `deploy.sh`.
 
 ## Français
 
-### Processus de déploiement sur Vercel
+### Processus de déploiement sur Cloudflare Workers
 
-Pour déployer cette application sur Vercel:
+1. Compte sur [Cloudflare](https://dash.cloudflare.com).
+2. `npx wrangler login`
+3. `npm run deploy`
 
-1. Assurez-vous d'avoir un compte sur [Vercel](https://vercel.com).
-2. Installez la CLI de Vercel: `npm install -g vercel`
-3. Exécutez les commandes suivantes:
-
-```bash
-# Construire l'application
-npm run build
-
-# Exécuter les vérifications de sécurité
-npm run security:check
-
-# Déployer sur Vercel
-vercel --prod
-```
-
-L'application utilise les fichiers de configuration suivants pour le déploiement:
-- `vercel.json`: Configuration des routes, des en-têtes de sécurité et des redirections
-- `deploy.sh`: Script qui automatise le processus de déploiement
-
-### Notes importantes
-- L'application nécessite Node.js 16.x ou supérieur
-- Les problèmes avec CSP (Content Security Policy) et X-Frame-Options ont été résolus
-- Vercel configurera automatiquement les variables d'environnement selon `vercel.json` 
+Fichiers clés : `wrangler.jsonc`, `public/_headers`, `deploy.sh`.

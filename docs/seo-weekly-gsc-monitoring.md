@@ -4,12 +4,12 @@
 Track ranking recovery on high-priority non-branded pages and iterate snippets based on CTR and position changes.
 
 ## Scope
-- Property: `sc-domain:game4git.games`
+- Property: `sc-domain:game4git.com`
 - Primary pages:
-  - `https://game4git.games/git-practice-game`
-  - `https://game4git.games/git-branch-practice`
-  - `https://game4git.games/valgrind`
-  - `https://game4git.games/valgrind-memory-leaks`
+  - `https://game4git.com/git-practice-game`
+  - `https://game4git.com/git-branch-practice`
+  - `https://game4git.com/valgrind`
+  - `https://game4git.com/valgrind-memory-leaks`
 
 ## Weekly cadence
 Run every Monday using two windows:
@@ -59,6 +59,39 @@ Run every Monday using two windows:
    - `country`
 3. URL inspection for all primary pages
 4. Confirm sitemap status still healthy
+
+## API access
+
+The project includes a local Search Console report script:
+
+```bash
+npm run analyze:gsc
+```
+
+Private Search Console data requires OAuth with the read-only webmaster scope and a Google Cloud quota project. If the report says the token has insufficient scopes or is missing a quota project, authorize Application Default Credentials once:
+
+```bash
+gcloud auth application-default login --scopes=https://www.googleapis.com/auth/webmasters.readonly,https://www.googleapis.com/auth/cloud-platform
+gcloud auth application-default set-quota-project sonrie-canguro
+gcloud services enable searchconsole.googleapis.com --project=sonrie-canguro
+```
+
+Then confirm the account can see the property and generate the report:
+
+```bash
+npm run analyze:gsc -- --list-sites
+npm run analyze:gsc
+```
+
+The report writes:
+
+- `reports/gsc/latest.json`
+- `reports/gsc/latest.md`
+- Timestamped snapshots under `reports/gsc/<generated-at>/`
+
+Default property: `sc-domain:game4git.com`.
+
+The report includes 28-day vs previous-28-day comparison, top queries, pages, devices, countries, search appearances, query opportunities, sitemap status, and URL Inspection API results for priority pages.
 
 ## Change log template
 Use this template for each weekly pass:

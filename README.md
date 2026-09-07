@@ -4,11 +4,11 @@
 
 Aprende Git jugando con Game4Git: el único juego para practicar comandos git reales, retos y visualizar ramas y merges en español, inglés, catalán (Joc per a aprendre Git) y francés (Jeu pour apprendre Git en jouant). Practice real Git commands, solve challenges, and visualize branches in a hands-on learning git game in English, Spanish, Catalan and French!
 
-[![Git Game Logo](public/logo.png)](https://game4git.games)
+[![Git Game Logo](public/logo.png)](https://game4git.com)
 
 `EN · ES · CA · FR` · Dark Mode · SPA Routing · SEO-ready · Accessibility-first
 
-`Live:` [game4git.games](https://game4git.games) · `Author:` FerVi
+`Live:` [game4git.com](https://game4git.com) · `Author:` FerVi
 
 </div>
 
@@ -95,6 +95,15 @@ Learn Git like you learn to ride a bike: balance first, speed later. Git Game tu
 - Optional: set `PAGESPEED_API_KEY` for higher quota stability.
 - Results are written to `reports/pagespeed/latest.json` and `reports/pagespeed/latest.md`.
 - Timestamped snapshots are also written under `reports/pagespeed/<timestamp>/`.
+
+### Google Search Console reports
+
+- Run `npm run analyze:gsc -- --list-sites` to confirm Search Console access.
+- Run `npm run analyze:gsc` to generate the 28-day organic search report for `sc-domain:game4git.com`.
+- If Google reports insufficient scopes or missing quota project, authorize once with `gcloud auth application-default login --scopes=https://www.googleapis.com/auth/webmasters.readonly,https://www.googleapis.com/auth/cloud-platform`, then run `gcloud auth application-default set-quota-project sonrie-canguro`.
+- The quota project must have Search Console API enabled: `gcloud services enable searchconsole.googleapis.com --project=sonrie-canguro`.
+- Results are written to `reports/gsc/latest.json` and `reports/gsc/latest.md`.
+- Timestamped snapshots are also written under `reports/gsc/<generated-at>/`.
 
 ### What makes it stand out
 

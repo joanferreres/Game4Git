@@ -1,1 +1,1 @@
-✅ Security headers found in vercel.json
+❌ Missing security headers in public/_headers. Should have at least: CSP (with frame-ancestors), X-Content-Type-Options, X-XSS-Protection, and HSTS

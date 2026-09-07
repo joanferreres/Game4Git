@@ -59,16 +59,16 @@
       "description": "Tutorial interactivo de Valgrind — aprende Memcheck, detecta fugas de memoria y corrige invalid reads con ejemplos guiados."
     },
     "gitPracticeGame": {
-      "title": "Juego para Practicar Git — Aprende Git Jugando | Game4Git",
-      "description": "Juego gratis para practicar git online — aprende git jugando con retos guiados de commit, branch, checkout y merge. Sin instalación."
+      "title": "Juego de Git Online — Practica Git Jugando Gratis | Game4Git",
+      "description": "Juega y practica Git gratis online. Aprende Git jugando con retos guiados de commits, ramas, checkout y merge, sin instalar nada."
     },
     "gitBranchPractice": {
-      "title": "Practicar Ramas Git — Tutorial Interactivo de Branching | Game4Git",
-      "description": "Aprende branching en Git online con práctica guiada. Crea, cambia y fusiona ramas con un gráfico visual — juego de git gratis para principiantes."
+      "title": "Juego de Ramas Git — Practica Branching Online | Game4Git",
+      "description": "Juega y practica ramas de Git online: crea, cambia y fusiona ramas con un gráfico visual para principiantes."
     },
     "gitMergeConflicts": {
-      "title": "Conflictos de merge en Git — Resuélvelos | Game4Git",
-      "description": "Aprende conflictos de merge en Git con un playground visual. Practica marcadores de conflicto, resolución y merges seguros."
+      "title": "Conflictos de Merge en Git — Practica y Resuélvelos | Game4Git",
+      "description": "Practica conflictos de merge en Git con un playground visual: marcadores de conflicto, resolución y merges seguros."
     },
     "valgrindMemoryLeaks": {
       "title": "Memory leaks con Valgrind — Tutorial paso a paso | Game4Git",
@@ -1323,7 +1323,7 @@
     "gitPracticeGame": {
       "eyebrow": "Practica Git online",
       "heroTitle": "Juego para practicar Git con commits, ramas y merges",
-      "heroDescription": "Practica comandos Git online en un playground visual. Haz commits, crea ramas y fusiona cambios con seguridad usando un flujo igual al de repositorios reales.",
+      "heroDescription": "Juega y practica Git online gratis en un playground visual. Aprende Git jugando: haz commits, crea ramas y fusiona cambios con un flujo igual al de repositorios reales.",
       "primaryCta": "Empezar práctica de Git",
       "secondaryCta": "Abrir playground principal",
       "highlights": [
@@ -1371,7 +1371,7 @@
     "gitBranchPractice": {
       "eyebrow": "Practicar ramas en Git",
       "heroTitle": "Aprende ramas en Git con práctica guiada",
-      "heroDescription": "Aprende branching en Git con práctica guiada. Crea ramas, cambia de contexto y fusiona con confianza mientras ves cada movimiento en el gráfico de Git.",
+      "heroDescription": "Juega y practica ramas de Git online con una guía interactiva. Crea ramas, cambia de contexto y fusiona con confianza mientras ves cada movimiento en el gráfico de Git.",
       "primaryCta": "Empezar reto de ramas",
       "secondaryCta": "Abrir playground principal",
       "highlights": [
@@ -1693,5 +1693,61 @@
     "valgrind": "Aprender Valgrind",
     "contact": "Contacto",
     "support": "Apoyar"
+  },
+  "admin": {
+    "viewDashboard": "Ver Panel",
+    "openDashboard": "Abrir Panel de Analíticas",
+    "dashboardDesc": "Accede al panel de analíticas con métricas detalladas: visitantes únicos, páginas vistas, referentes, UTM, países, dispositivos, navegadores y sistemas operativos."
+  },
+  "adminStats": {
+    "title": "📊 Panel de Analíticas",
+    "subtitle": "Área segura de administración — Ver analíticas del sitio",
+    "dashboardTitle": "📊 Panel de Analíticas",
+    "dashboardSubtitle": "Métricas anónimas y privadas — Retención 90 días",
+    "authRequired": "Esta área está protegida. Se requiere autenticación de administrador.",
+    "notConfigured": "Admin no configurado. Define VITE_ADMIN_PASSWORD_HASH antes de usar este panel.",
+    "notConfiguredDesc": "Falta <code>VITE_ADMIN_PASSWORD_HASH</code>. Sin esa variable el panel no se puede usar en producción.",
+    "password": "Contraseña de administrador",
+    "passwordPlaceholder": "Introduce la contraseña...",
+    "login": "Acceder al panel",
+    "locked": "Bloqueado",
+    "wrongPassword": "Contraseña incorrecta. Intento",
+    "tooManyAttempts": "Demasiados intentos fallidos. Acceso bloqueado 15 minutos.",
+    "attemptsRemaining": "Intentos restantes: {{count}}",
+    "blocked": "Acceso bloqueado por seguridad. Inténtalo de nuevo en {{minutes}} min.",
+    "loginSuccess": "¡Acceso autorizado! Bienvenido al Panel de Analíticas.",
+    "loggedOut": "Sesión cerrada correctamente",
+    "logoutError": "Error al cerrar sesión",
+    "logout": "Cerrar sesión",
+    "refresh": "Actualizar",
+    "refreshed": "Datos actualizados",
+    "fetchError": "Error al obtener los datos de analíticas",
+    "sessionExpired": "Sesión expirada. Por favor, inicia sesión de nuevo.",
+    "sessionActive": "Sesión activa",
+    "minutes": "minutos",
+    "timeRange": "Rango temporal",
+    "uniqueVisitors": "Visitantes únicos",
+    "pageViews": "Páginas vistas",
+    "sessions": "Sesiones",
+    "activeNow": "Activos ahora",
+    "last5min": "Últimos 5 minutos",
+    "topPaths": "Páginas más vistas",
+    "topPathsDesc": "Páginas con más visitas y visitantes únicos",
+    "referrers": "Referentes",
+    "referrersDesc": "De dónde vienen los visitantes (solo dominio)",
+    "utmSources": "Fuentes UTM",
+    "utmSourcesDesc": "Fuentes de campaña desde parámetros UTM",
+    "countries": "Países",
+    "countriesDesc": "Países de los visitantes (códigos ISO)",
+    "devices": "Dispositivos",
+    "browsers": "Navegadores",
+    "operatingSystems": "Sistemas operativos",
+    "backToHome": "← Volver al inicio",
+    "privacyNotice": "Privacidad y Protección de Datos",
+    "privacyNoIPs": "No se guardan IPs — solo identificadores anónimos con hash",
+    "privacyNoFullReferrers": "No se guardan URLs completas de referentes — solo dominios raíz (ej. google.com)",
+    "privacyNoPersonalData": "No se recogen datos personales — solo agregados anónimos",
+    "privacyAdminExcluded": "Las sesiones de admin se excluyen automáticamente de las métricas públicas",
+    "privacyRetention": "Datos auto-borrados tras {{days}} días"
   }
 }

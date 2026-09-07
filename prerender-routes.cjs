@@ -88,6 +88,15 @@ const LANDING_HERO_IMAGES = {
   gitResetGuide: '/hero-git-branch-practice.webp',
 };
 
+const LANDING_HERO_MOBILE_IMAGES = {
+  gitPracticeGame: '/hero-git-practice-game-sm.webp',
+  gitBranchPractice: '/hero-git-branch-practice-sm.webp',
+  gitMergeConflicts: '/hero-git-merge-conflicts-sm.webp',
+  valgrindMemoryLeaks: '/hero-valgrind-memory-leaks-sm.webp',
+  gitRemoteWorkflow: '/hero-git-practice-game-sm.webp',
+  gitResetGuide: '/hero-git-branch-practice-sm.webp',
+};
+
 const LANDING_HERO_PNG = {
   gitPracticeGame: '/hero-git-practice-game.png',
   gitBranchPractice: '/hero-git-branch-practice.png',
@@ -153,14 +162,24 @@ const normalizePath = (pathname) => {
   return pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
 };
 
-function getLocalizedPath(pathname, locale) {
-  const normalized = normalizePath(pathname);
-
-  if (locale === DEFAULT_LOCALE) {
-    return normalized;
+const ensureTrailingSlash = (pathname) => {
+  if (!pathname || pathname === '/') {
+    return '/';
   }
 
-  return normalized === '/' ? `/${locale}` : `/${locale}${normalized}`;
+  return pathname.endsWith('/') ? pathname : `${pathname}/`;
+};
+
+function getLocalizedPath(pathname, locale) {
+  const normalized = normalizePath(pathname);
+  const localized =
+    locale === DEFAULT_LOCALE
+      ? normalized
+      : normalized === '/'
+        ? `/${locale}`
+        : `/${locale}${normalized}`;
+
+  return ensureTrailingSlash(localized);
 }
 
 const getLocalizedUrl = (pathname, locale) => `${SITE_URL}${getLocalizedPath(pathname, locale)}`;
@@ -174,24 +193,26 @@ const isLandingRoute = (routeKey) => Object.prototype.hasOwnProperty.call(LANDIN
 
 const buildHeroPictureMarkup = (routeKey, locale) => {
   const webp = LANDING_HERO_IMAGES[routeKey];
+  const mobileWebp = LANDING_HERO_MOBILE_IMAGES[routeKey];
   const png = LANDING_HERO_PNG[routeKey];
   if (!webp || !png) {
     return '';
   }
 
   const alt = escapeHtml(t(locale, `landingPages.${routeKey}.heroTitle`));
+  const webpSrcSet = mobileWebp ? `${mobileWebp} 960w, ${webp} 1200w` : `${webp} 1200w`;
 
   return `
                 <div class="relative aspect-[1200/670] overflow-hidden rounded-b-2xl bg-gradient-to-br from-muted/40 via-background to-muted/20">
                   <picture>
-                    <source type="image/webp" srcset="${webp}" />
-                    <img src="${png}" alt="${alt}" width="1200" height="670" fetchpriority="high" loading="eager" decoding="async" class="h-full w-full object-cover object-top" />
+                    <source type="image/webp" srcset="${webpSrcSet}" sizes="(min-width: 1024px) min(42vw, 720px), 100vw" />
+                    <img src="${png}" alt="${alt}" width="1200" height="670" sizes="(min-width: 1024px) min(42vw, 720px), 100vw" fetchpriority="high" loading="eager" decoding="async" class="h-full w-full object-cover object-top" />
                   </picture>
                 </div>`;
 };
 
 const buildAlternateLinks = (routePath) => {
-  const defaultUrl = `${SITE_URL}${normalizePath(routePath)}`;
+  const defaultUrl = getLocalizedUrl(routePath, DEFAULT_LOCALE);
 
   return [
     { hreflang: 'x-default', href: defaultUrl },
@@ -805,9 +826,11 @@ const buildRouteMarkup = (route, locale) => {
 const addCriticalPreloads = (template, routeKey) => {
   const parts = [];
   const heroSrc = LANDING_HERO_IMAGES[routeKey];
+  const mobileHeroSrc = LANDING_HERO_MOBILE_IMAGES[routeKey];
   if (heroSrc) {
+    const imageSrcSet = mobileHeroSrc ? `${mobileHeroSrc} 960w, ${heroSrc} 1200w` : `${heroSrc} 1200w`;
     parts.push(
-      `\n    <link rel="preload" href="${heroSrc}" as="image" type="image/webp" fetchpriority="high">`
+      `\n    <link rel="preload" href="${mobileHeroSrc || heroSrc}" as="image" type="image/webp" imagesrcset="${imageSrcSet}" imagesizes="(min-width: 1024px) min(42vw, 720px), 100vw" fetchpriority="high">`
     );
   }
   const assetsDir = path.join(DIST_DIR, 'assets');

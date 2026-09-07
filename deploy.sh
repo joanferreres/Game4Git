@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Git Visualizer Deployment Script
-# This script prepares and deploys the Git Visualizer application to Vercel
+# Prepares and deploys the application to Cloudflare Workers
 
 set -e  # Exit immediately if a command exits with a non-zero status
 
-echo "🚀 Starting deployment process for Git Visualizer"
+echo "🚀 Starting deployment process for Git Visualizer (Cloudflare Workers)"
 
 # Step 1: Run security checks
 echo "🔒 Running security checks..."
@@ -14,7 +14,7 @@ echo ""
 
 # Step 2: Check for outdated critical dependencies
 echo "📦 Checking for outdated dependencies..."
-npm outdated
+npm outdated || true
 echo ""
 
 # Step 3: Build the application
@@ -29,17 +29,21 @@ if [ ! -d "dist" ]; then
   exit 1
 fi
 
-# Step 5: Deploy to Vercel
-echo "🌍 Deploying to Vercel..."
+if [ ! -f "dist/_headers" ]; then
+  echo "⚠️  Warning: dist/_headers not found — security headers may be missing"
+fi
+
+# Step 5: Deploy to Cloudflare Workers
+echo "🌍 Deploying to Cloudflare Workers..."
 echo "NOTE: You may be prompted to log in if not already authenticated"
 
 # Ask for confirmation before deploying
-read -p "Are you sure you want to deploy to Vercel? (y/n) " -n 1 -r
+read -p "Are you sure you want to deploy to Cloudflare? (y/n) " -n 1 -r
 echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  npx vercel --prod
+  npx wrangler deploy
   echo "🎉 Deployment completed successfully!"
 else
   echo "⏹️ Deployment cancelled."
   exit 0
-fi 
+fi

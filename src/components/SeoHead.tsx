@@ -47,7 +47,7 @@ const WEBSITE_SCHEMA = {
   url: SITE_URL,
   potentialAction: {
     "@type": "SearchAction",
-    target: `${SITE_URL}/playground`,
+    target: `${SITE_URL}/playground/`,
     "query-input": "required name=search_term_string",
   },
 };
@@ -59,6 +59,9 @@ interface SeoHeadProps {
   page: SeoPageKey;
   /** Ruta absoluta desde la raíz del sitio (p. ej. /hero-foo.webp) para acelerar LCP en landings. */
   preloadHeroImage?: string;
+  /** Candidatos responsive del hero para que el preload no fuerce la imagen grande en móvil. */
+  preloadHeroImageSrcSet?: string;
+  preloadHeroImageSizes?: string;
   /** p. ej. `image/webp` cuando el preload apunta a WebP. */
   preloadHeroImageType?: string;
   /** OG/Twitter image; por defecto og-image global o hero de landing. */
@@ -94,6 +97,8 @@ const buildBreadcrumbSchema = (items: BreadcrumbItem[], locale: SupportedLocale)
 export const SeoHead = ({
   page,
   preloadHeroImage,
+  preloadHeroImageSrcSet,
+  preloadHeroImageSizes,
   preloadHeroImageType,
   ogImage,
   faqItems,
@@ -208,6 +213,8 @@ export const SeoHead = ({
           href={preloadHeroImage}
           type={preloadHeroImageType || undefined}
           fetchPriority="high"
+          imageSrcSet={preloadHeroImageSrcSet || undefined}
+          imageSizes={preloadHeroImageSizes || undefined}
         />
       ) : null}
       <title>{title}</title>

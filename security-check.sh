@@ -6,7 +6,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
-# Script for automating security checks before deployment to Vercel
+# Script for automating security checks before deployment to Cloudflare Workers
 # Author: System Administrator
 # Date: $(date +%Y-%m-%d)
 
@@ -62,19 +62,24 @@ CORS_COUNT=$(cat $REPORT_DIR/cors-issues.txt | wc -l)
 echo "$CORS_COUNT" > $REPORT_DIR/cors-count.txt
 echo "$CORS_COUNT"
 
-# Check for security headers in vercel.json
-echo "🔒 Checking for security headers in vercel.json..."
-if [ -f "vercel.json" ]; then
-  HEADERS_COUNT=$(grep -c "X-Content-Type-Options\|X-XSS-Protection\|frame-ancestors\|Content-Security-Policy\|Strict-Transport-Security" vercel.json)
+# Check for security headers in public/_headers (Cloudflare Workers)
+echo "🔒 Checking for security headers in public/_headers..."
+HEADERS_FILE="public/_headers"
+if [ -f "$HEADERS_FILE" ]; then
+  HEADERS_COUNT=$(grep -c "X-Content-Type-Options\|X-XSS-Protection\|frame-ancestors\|Content-Security-Policy\|Strict-Transport-Security" "$HEADERS_FILE")
   if [ "$HEADERS_COUNT" -ge 5 ]; then
-    echo "✅ Security headers found in vercel.json" | tee $REPORT_DIR/headers-check.txt
+    echo "✅ Security headers found in public/_headers" | tee $REPORT_DIR/headers-check.txt
   else
-    echo "❌ Missing security headers in vercel.json. Should have at least: CSP (with frame-ancestors), X-Content-Type-Options, X-XSS-Protection, and HSTS" | tee $REPORT_DIR/headers-check.txt
+    echo "❌ Missing security headers in public/_headers. Should have at least: CSP (with frame-ancestors), X-Content-Type-Options, X-XSS-Protection, and HSTS" | tee $REPORT_DIR/headers-check.txt
   fi
 else
-  echo "❌ vercel.json not found" | tee $REPORT_DIR/headers-check.txt
+  echo "❌ public/_headers not found" | tee $REPORT_DIR/headers-check.txt
+  HEADERS_COUNT=0
 fi
 
+if [ ! -f "wrangler.jsonc" ]; then
+  echo "❌ wrangler.jsonc not found" | tee -a $REPORT_DIR/headers-check.txt
+fi
 # Check for exposed API keys or secrets
 echo "🔑 Checking for exposed API keys or secrets..."
 SECRETS_PATTERN="(api[_-]?key|api[_-]?secret|access[_-]?key|access[_-]?secret|password|secret|token)[\"']?\s*[:=]\s*[\"'][a-zA-Z0-9_\-]{16,}[\"']"
@@ -90,7 +95,7 @@ Security Check Summary ($(date))
 ===============================
 - Dependencies with vulnerabilities: $VULN_COUNT
 $(cat $REPORT_DIR/high-vulnerabilities.txt 2>/dev/null || echo "No high or critical vulnerabilities found")
-- Security headers check: $(if [ -f "vercel.json" ] && [ "$HEADERS_COUNT" -ge 5 ]; then echo "Passed"; else echo "Failed"; fi)
+- Security headers check: $(if [ -f "public/_headers" ] && [ "${HEADERS_COUNT:-0}" -ge 5 ]; then echo "Passed"; else echo "Failed"; fi)
 - Potential exposed secrets: $SECRETS_COUNT
 - Outdated packages: $OUTDATED_COUNT
 - CORS issues: $CORS_COUNT
@@ -104,7 +109,7 @@ echo "✅ Security checks completed! Review $REPORT_DIR/summary.txt for details.
 echo -e "🚀 Next steps:
 1. Review and fix any security issues found
 2. Run 'npm audit fix' to automatically fix vulnerable dependencies
-3. Ensure all security headers are properly configured in vercel.json
+3. Ensure all security headers are properly configured in public/_headers
 4. Deploy only when all critical security issues are resolved"
 
 # Always exit with success code to avoid blocking the build/deployment process

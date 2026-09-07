@@ -22,6 +22,19 @@ export const normalizePathname = (pathname: string): string => {
   return normalized;
 };
 
+export const ensureTrailingSlash = (pathname: string): string => {
+  const suffixStart = pathname.search(/[?#]/);
+  const pathOnly = suffixStart === -1 ? pathname : pathname.slice(0, suffixStart);
+  const suffix = suffixStart === -1 ? "" : pathname.slice(suffixStart);
+  const normalized = pathOnly || "/";
+
+  if (normalized === "/") {
+    return `/${suffix}`;
+  }
+
+  return `${normalized.endsWith("/") ? normalized : `${normalized}/`}${suffix}`;
+};
+
 export const isSupportedLocale = (value: string | null | undefined): value is SupportedLocale =>
   Boolean(value && SUPPORTED_LOCALE_SET.has(value));
 
@@ -54,12 +67,14 @@ export const getLocaleFromPathname = (pathname: string): SupportedLocale => {
 
 export const getLocalizedPath = (pathname: string, locale: SupportedLocale): string => {
   const routePath = stripLocalePrefix(pathname);
+  const localized =
+    locale === DEFAULT_LOCALE
+      ? routePath
+      : routePath === "/"
+        ? `/${locale}`
+        : `/${locale}${routePath}`;
 
-  if (locale === DEFAULT_LOCALE) {
-    return routePath;
-  }
-
-  return routePath === "/" ? `/${locale}` : `/${locale}${routePath}`;
+  return ensureTrailingSlash(localized);
 };
 
 export const getLocalizedUrl = (pathname: string, locale: SupportedLocale): string =>
@@ -72,7 +87,7 @@ export const getCanonicalUrl = (pathname: string): string => {
 
 export const getAlternateLinks = (pathname: string) => {
   const routePath = stripLocalePrefix(pathname);
-  const defaultUrl = `${SITE_URL}${routePath}`;
+  const defaultUrl = getLocalizedUrl(routePath, DEFAULT_LOCALE);
 
   return [
     { hrefLang: "x-default", href: defaultUrl },

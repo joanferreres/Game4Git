@@ -5,16 +5,16 @@ import path from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
 
 // frame-ancestors: permite embeber en iframe solo desde el portfolio; protege contra clickjacking.
-// Debe coincidir con vercel.json (Vercel aplica CSP en producción vía HTTP headers).
+// Debe coincidir con public/_headers (Cloudflare Workers aplica CSP en producción).
 const FRAME_ANCESTORS = "frame-ancestors 'self' https://joanferreresvivero.vercel.app";
 
 const previewSecurityHeaders = {
   'Content-Security-Policy': [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://va.vercel-scripts.com https://www.clarity.ms https://scripts.clarity.ms blob:",
+    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://static.cloudflareinsights.com blob:",
     "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
-    "img-src 'self' data: https://c.clarity.ms https://c.bing.com",
-    "connect-src 'self' https://cdn.jsdelivr.net https://*.clarity.ms https://clarity.ms",
+    "img-src 'self' data: https://c.bing.com",
+    "connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com",
     "font-src 'self' data:",
     "object-src 'none'",
     "media-src 'self'",
@@ -65,10 +65,10 @@ export default defineConfig({
     headers: {
       'Content-Security-Policy': [
         "default-src 'self'",
-        "connect-src 'self' ws: http: https: ws://localhost:24678 http://localhost:24678 https://cdn.jsdelivr.net https://*.clarity.ms https://clarity.ms",
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://va.vercel-scripts.com https://www.clarity.ms https://scripts.clarity.ms blob:",
+        "connect-src 'self' ws: http: https: ws://localhost:24678 http://localhost:24678 https://cdn.jsdelivr.net https://cloudflareinsights.com",
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://static.cloudflareinsights.com blob:",
         "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
-        "img-src 'self' data: blob: https://c.clarity.ms https://c.bing.com",
+        "img-src 'self' data: blob: https://c.bing.com",
         "font-src 'self' data: https://cdn.jsdelivr.net",
         "worker-src 'self' blob:",
         "frame-src 'self'",

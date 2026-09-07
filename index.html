@@ -34,8 +34,8 @@
     <!-- SEO_START -->
     <title data-rh="true">Git Game Online — Learn Git by Playing Free | Game4Git</title>
     <meta data-rh="true" name="description" content="Free git game hub — play online, learn git by playing with interactive guides for commits, branches, merge conflicts, GDB and Valgrind. No install required." />
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Game4Git","url":"https://game4git.vercel.app","logo":"https://game4git.vercel.app/logo-96.png","sameAs":[]}</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Game4Git","url":"https://game4git.vercel.app"}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Game4Git","url":"https://game4git.com","logo":"https://game4git.com/logo-96.png","sameAs":[]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Game4Git","url":"https://game4git.com"}</script>
     <!-- SEO_END -->
     <!-- STRUCTURED_DATA_START -->
     <!-- STRUCTURED_DATA_END -->
@@ -47,13 +47,11 @@
     <link rel="icon" type="image/png" href="/favicon-32x32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     
-    <!-- Standard favicons -->
-    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <!-- PNG favicons avoid downloading the 279 KB legacy ICO on first load. -->
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="/favicon-48x48.png" sizes="48x48" />
     <link rel="icon" type="image/png" href="/logo-96.png" sizes="96x96" />
-    <link rel="shortcut icon" href="/favicon.ico" />
     
     <!-- Web App Manifest -->
     <link rel="manifest" href="/site.webmanifest" />
@@ -61,48 +59,11 @@
     <meta name="msapplication-TileImage" content="/logo-96.png" />
     
     <!-- Security Headers - Solo los que son válidos en meta tags -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://va.vercel-scripts.com https://www.clarity.ms https://scripts.clarity.ms blob:; img-src 'self' data: https://c.clarity.ms https://c.bing.com; connect-src 'self' https://cdn.jsdelivr.net https://*.clarity.ms https://clarity.ms; worker-src 'self' blob:; font-src 'self' data:;" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://static.cloudflareinsights.com blob:; img-src 'self' data: https://c.bing.com; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com; worker-src 'self' blob:; font-src 'self' data:;" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="Referrer-Policy" content="no-referrer-when-downgrade" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
     <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload" />
-
-    <!-- Microsoft Clarity (deferred to avoid impacting initial mobile LCP) -->
-    <script type="text/javascript">
-      (function () {
-        var isLocalHost =
-          window.location.hostname === "localhost" ||
-          window.location.hostname === "127.0.0.1";
-
-        if (isLocalHost) {
-          return;
-        }
-
-        var loadClarity = function () {
-          (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-          })(window, document, "clarity", "script", "vmw9xs81kh");
-        };
-
-        // Load analytics only after the page has fully loaded AND the main thread is
-        // idle, so it never competes with LCP/hydration on mobile.
-        var scheduleClarity = function () {
-          if ("requestIdleCallback" in window) {
-            window.requestIdleCallback(loadClarity, { timeout: 10000 });
-          } else {
-            setTimeout(loadClarity, 3000);
-          }
-        };
-
-        if (document.readyState === "complete") {
-          scheduleClarity();
-        } else {
-          window.addEventListener("load", scheduleClarity, { once: true });
-        }
-      })();
-    </script>
   </head>
 
   <body>

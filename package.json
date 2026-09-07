@@ -13,12 +13,18 @@
     "lint": "npx eslint . || true",
     "preview": "npx vite preview",
     "test:build": "node test-build.js",
+    "test:perf-config": "node scripts/perf-config-check.mjs",
+    "test:gsc-report": "node scripts/gsc-report.test.mjs",
+    "test:edge-routing": "node scripts/edge-routing.test.mjs",
     "test:webmcp": "node scripts/webmcp.test.mjs",
     "prepare:prod": "chmod +x ./prepare-for-prod.sh && ./prepare-for-prod.sh",
-    "deploy": "npm run build && vercel --prod",
-    "deploy:vercel": "npm run security:check && npx vercel --prod",
+    "deploy": "npm run build && wrangler deploy",
+    "deploy:cloudflare": "npm run security:check && npm run build && wrangler deploy",
+    "cf:dev": "npm run build && wrangler dev",
+    "cf:typegen": "wrangler types",
     "generate:sitemap": "node generate-sitemap.cjs",
     "analyze:pagespeed": "node scripts/pagespeed-report.mjs",
+    "analyze:gsc": "node scripts/gsc-report.mjs",
     "optimize:heroes": "node scripts/optimize-hero-images.mjs",
     "prebuild": "npm run generate:sitemap",
     "postbuild": "node prerender-routes.cjs",
@@ -62,8 +68,6 @@
     "@radix-ui/react-tooltip": "^1.2.6",
     "@sentry/react": "^10.49.0",
     "@uiw/react-codemirror": "^4.25.9",
-    "@vercel/analytics": "^1.5.0",
-    "@vercel/speed-insights": "^1.2.0",
     "@xyflow/react": "^12.6.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -120,6 +124,7 @@
     "terser": "^5.39.2",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.58.2",
-    "vite": "^6.4.2"
+    "vite": "^6.4.2",
+    "wrangler": "^4.121.0"
   }
 }

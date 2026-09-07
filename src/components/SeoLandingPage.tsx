@@ -236,6 +236,10 @@ const HERO_IMAGES: Record<LandingPageKey, string> = {
 };
 
 const heroWebpSrc = (pngPath: string) => pngPath.replace(/\.png$/i, ".webp");
+const heroMobileWebpSrc = (pngPath: string) => pngPath.replace(/\.png$/i, "-sm.webp");
+const HERO_IMAGE_SIZES = "(min-width: 1024px) min(42vw, 720px), 100vw";
+const heroWebpSrcSet = (pngPath: string) =>
+  `${heroMobileWebpSrc(pngPath)} 960w, ${heroWebpSrc(pngPath)} 1200w`;
 
 /** Texto secundario con contraste suficiente en modo claro (WCAG) sin perder estética en oscuro. */
 const LANDING_BODY = "text-foreground/85 dark:text-muted-foreground";
@@ -244,17 +248,17 @@ const LANDING_LABEL = "text-foreground/78 dark:text-muted-foreground";
 
 function HeroPreviewMock({ pageKey, alt }: { pageKey: LandingPageKey; alt: string }) {
   const pngSrc = HERO_IMAGES[pageKey];
-  const webpSrc = heroWebpSrc(pngSrc);
+  const webpSrcSet = heroWebpSrcSet(pngSrc);
   return (
     <div className="relative aspect-[1200/670] overflow-hidden rounded-b-2xl bg-gradient-to-br from-muted/40 via-background to-muted/20">
       <picture>
-        <source type="image/webp" srcSet={webpSrc} />
+        <source type="image/webp" srcSet={webpSrcSet} sizes={HERO_IMAGE_SIZES} />
         <img
           src={pngSrc}
           alt={alt}
           width={1200}
           height={670}
-          sizes="(min-width: 1024px) min(42vw, 720px), 100vw"
+          sizes={HERO_IMAGE_SIZES}
           className="h-full w-full object-cover object-top"
           loading="eager"
           decoding="async"
@@ -380,7 +384,9 @@ const SeoLandingPage = ({ pageKey }: SeoLandingPageProps) => {
     <div ref={rootRef} className="relative min-h-screen overflow-x-hidden bg-background">
       <SeoHead
         page={config.seoKey}
-        preloadHeroImage={heroWebpSrc(HERO_IMAGES[pageKey])}
+        preloadHeroImage={heroMobileWebpSrc(HERO_IMAGES[pageKey])}
+        preloadHeroImageSrcSet={heroWebpSrcSet(HERO_IMAGES[pageKey])}
+        preloadHeroImageSizes={HERO_IMAGE_SIZES}
         preloadHeroImageType="image/webp"
         ogImage={`${SITE_URL}${HERO_IMAGES[pageKey]}`}
         faqItems={faqs}

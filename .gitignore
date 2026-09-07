@@ -36,6 +36,8 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+.wrangler
+.dev.vars
 
 # Generated reports
 reports/pagespeed/

@@ -3,13 +3,14 @@ import { ThemeProvider } from "./components/theme-provider";
 import { Toaster as SonnerToaster } from "sonner";
 import { 
   createBrowserRouter,
+  Navigate,
   RouterProvider,
   useLocation,
   useNavigate,
   useNavigationType,
 } from "react-router-dom";
-import { DeferredVercelMetrics } from "@/components/DeferredVercelMetrics";
 import { useTranslation } from "react-i18next";
+import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import {
   getLocaleFromPathname,
   getLocalizedPath,
@@ -28,7 +29,7 @@ const GitMergeConflicts = lazy(() => import("./pages/GitMergeConflicts"));
 const GitRemoteWorkflow = lazy(() => import("./pages/GitRemoteWorkflow"));
 const GitResetGuide = lazy(() => import("./pages/GitResetGuide"));
 const ValgrindMemoryLeaks = lazy(() => import("./pages/ValgrindMemoryLeaks"));
-const Admin = lazy(() => import("./pages/Admin"));
+const AdminStats = lazy(() => import("./pages/AdminStats"));
 const Landing = lazy(() => import("./pages/Landing"));
 
 // Loading fallback component
@@ -112,6 +113,7 @@ const LocaleSync = ({ children }: { children: ReactNode }) => {
 
 const renderPage = (PageComponent: ComponentType) => (
   <LocaleSync>
+    <AnalyticsTracker />
     <Suspense fallback={<RouteAwarePageLoader />}>
       <PageComponent />
     </Suspense>
@@ -140,12 +142,18 @@ const publicRoutes = [
     }))
   ),
   {
-    path: "/admin",
+    path: "/admin/",
     element: (
       <Suspense fallback={<PageLoader />}>
-        <Admin />
+        <AdminStats />
       </Suspense>
     ),
+    errorElement: renderPage(NotFound),
+  },
+  { path: "/admin", element: <Navigate to="/admin/" replace /> },
+  {
+    path: "/admin/stats/",
+    element: <Navigate to="/admin/" replace />,
     errorElement: renderPage(NotFound),
   },
   {
@@ -169,7 +177,6 @@ const App = () => {
     </a>
     <RouterProvider router={router} />
     <SonnerToaster position="bottom-right" />
-    <DeferredVercelMetrics />
   </ThemeProvider>
   );
 };

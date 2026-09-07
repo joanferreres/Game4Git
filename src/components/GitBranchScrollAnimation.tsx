@@ -171,7 +171,7 @@ const GitBranchScrollAnimation: React.FC = () => {
         <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
         <span className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
         <span className="w-2.5 h-2.5 rounded-full bg-green-500" />
-        <span className="ml-2 font-mono text-[10px] text-slate-500">
+        <span className="ml-2 font-mono text-[10px] text-slate-300">
           Game4Git — git graph
         </span>
       </div>

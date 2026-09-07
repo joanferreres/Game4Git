@@ -30,19 +30,29 @@ const normalizePath = (pathname) => {
   return pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
 };
 
-const getLocalizedPath = (pathname, locale) => {
-  const normalized = normalizePath(pathname);
-
-  if (locale === DEFAULT_LOCALE) {
-    return normalized;
+const ensureTrailingSlash = (pathname) => {
+  if (!pathname || pathname === '/') {
+    return '/';
   }
 
-  return normalized === '/' ? `/${locale}` : `/${locale}${normalized}`;
+  return pathname.endsWith('/') ? pathname : `${pathname}/`;
+};
+
+const getLocalizedPath = (pathname, locale) => {
+  const normalized = normalizePath(pathname);
+  const localized =
+    locale === DEFAULT_LOCALE
+      ? normalized
+      : normalized === '/'
+        ? `/${locale}`
+        : `/${locale}${normalized}`;
+
+  return ensureTrailingSlash(localized);
 };
 
 const buildAlternates = (pathname) => {
   const routePath = normalizePath(pathname);
-  const defaultUrl = `${BASE_URL}${routePath}`;
+  const defaultUrl = `${BASE_URL}${getLocalizedPath(routePath, DEFAULT_LOCALE)}`;
 
   return [
     { hreflang: 'x-default', href: defaultUrl },
@@ -56,7 +66,6 @@ const buildAlternates = (pathname) => {
 const detectRoutes = () => {
   const baseRoutes = [
     { path: '/', priority: '1.0', changefreq: 'weekly' },
-    { path: '/playground', priority: '0.95', changefreq: 'weekly' },
     { path: '/git-practice-game', priority: '0.9', changefreq: 'weekly' },
     { path: '/git-branch-practice', priority: '0.9', changefreq: 'weekly' },
     { path: '/git-merge-conflicts', priority: '0.9', changefreq: 'weekly' },
