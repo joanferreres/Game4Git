@@ -53,13 +53,16 @@ const RouteAwarePageLoader = () => {
       <div className="min-h-screen bg-background">
         <div className="bg-[#faf9f7] dark:bg-muted/20 border-b border-border/60">
           <div className="container max-w-full px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-            <div className="max-w-6xl mx-auto min-h-[340px]">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-4">
-                {t("general.title")}
-              </h1>
-              <p className="text-sm text-muted-foreground max-w-lg">
-                {t("general.subtitle")}
-              </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center max-w-6xl mx-auto">
+              <div className="min-h-[220px] sm:min-h-[280px]">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-4">
+                  {t("general.title")}
+                </h1>
+                <p className="text-sm text-muted-foreground max-w-lg">
+                  {t("general.subtitle")}
+                </p>
+              </div>
+              <div className="hidden md:block aspect-[900/630] w-full rounded-xl bg-[#0f172a]/80" aria-hidden />
             </div>
           </div>
         </div>

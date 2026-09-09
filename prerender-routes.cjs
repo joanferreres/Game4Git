@@ -890,7 +890,7 @@ const buildAdminHtml = (template) =>
     .replace(/<html lang="[^"]*">/, '<html lang="en">')
     .replace(
       /<!-- SEO_START -->[\s\S]*?<!-- SEO_END -->/,
-      `<!-- SEO_START -->\n    <title data-rh="true">Game4Git Admin</title>\n    <meta data-rh="true" name="description" content="Game4Git admin area." />\n    <meta data-rh="true" name="robots" content="noindex, nofollow" />\n    <link data-rh="true" rel="canonical" href="${SITE_URL}/admin" />\n    <!-- SEO_END -->`
+      `<!-- SEO_START -->\n    <title data-rh="true">Game4Git Admin</title>\n    <meta data-rh="true" name="description" content="Game4Git admin area." />\n    <meta data-rh="true" name="robots" content="noindex, nofollow" />\n    <link data-rh="true" rel="canonical" href="${SITE_URL}/admin/" />\n    <!-- SEO_END -->`
     )
     .replace(/<!-- STRUCTURED_DATA_START -->[\s\S]*?<!-- STRUCTURED_DATA_END -->/, '<!-- STRUCTURED_DATA_START -->\n    <!-- STRUCTURED_DATA_END -->')
     .replace(

@@ -279,14 +279,18 @@ const Landing: React.FC = () => {
                 </div>
               </div>
             </div>
-            {/* Right: animated git graph */}
-            {isDesktop ? (
-              <div aria-hidden>
-                <Suspense fallback={null}>
-                  <GitBranchScrollAnimation />
+            {/* Right: reserve aspect ratio on md+ so lazy GSAP never shifts layout */}
+            <div className="hidden md:block" aria-hidden>
+              <div className="aspect-[900/630] w-full">
+                <Suspense
+                  fallback={
+                    <div className="h-full w-full rounded-xl border border-[#1e293b] bg-[#0f172a] animate-pulse" />
+                  }
+                >
+                  {isDesktop ? <GitBranchScrollAnimation /> : null}
                 </Suspense>
               </div>
-            ) : null}
+            </div>
           </div>
         </div>
       </section>

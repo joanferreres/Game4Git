@@ -42,13 +42,13 @@
     "copyError": "Impossible de copier la commande. Copiez-la manuellement."
   },
   "general": {
-    "title": "Jeu Git en Ligne — Apprendre en Jouant",
-    "subtitle": "Apprenez Git en jouant visuellement dans ce terrain de jeu interactif : explorez les branches, relevez des défis pratiques et maîtrisez Git avec Game4Git."
+    "title": "Apprendre Git en Jouant — Jeu en Ligne Gratuit",
+    "subtitle": "Apprenez Git en jouant : visualisez les branches, relevez des défis et pratiquez de vraies commandes dans le navigateur."
   },
   "seo": {
     "home": {
-      "title": "Jeu Git en Ligne — Apprenez Git en Jouant Gratuitement | Game4Git",
-      "description": "Jeu git gratuit en ligne — apprenez git en jouant avec des guides interactifs pour commits, branches, conflits de merge, GDB et Valgrind. Sans installation."
+      "title": "Apprendre Git en Jouant Gratuitement — Jeu en Ligne | Game4Git",
+      "description": "Apprendre git en jouant en ligne gratuitement — jeu interactif de commits, branches, conflits de merge, GDB et Valgrind. Sans installation."
     },
     "gdb": {
       "title": "Tutoriel GDB — Débogage interactif | Game4Git",
@@ -1378,7 +1378,7 @@
     "statGuides": "Guides interactifs",
     "statLanguages": "Langues",
     "statInstalls": "Installations requises",
-    "seoIntroMobile": "Apprenez Git en pratiquant avec des commits visuels et des défis guidés.",
+    "seoIntroMobile": "Apprendre git en jouant en ligne gratuitement — commits visuels et défis guidés dans le navigateur.",
     "seoIntroLabel": "Description de l'application",
     "guidesTitle": "Guides populaires",
     "guidesDescription": "Choisissez un sujet—commits, branches, conflits de merge, Valgrind, GDB ou fuites mémoire—et ouvrez directement le guide interactif correspondant.",

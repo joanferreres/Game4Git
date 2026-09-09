@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import {
+  ensureTrailingSlash,
   getAlternateLinks,
   getCanonicalUrl,
   getLocaleFromPathname,
@@ -90,7 +91,9 @@ const buildBreadcrumbSchema = (items: BreadcrumbItem[], locale: SupportedLocale)
     "@type": "ListItem",
     position: index + 1,
     name: item.name,
-    item: `${SITE_URL}${item.path === "/" && locale !== "en" ? `/${locale}` : item.path}`,
+    item: `${SITE_URL}${ensureTrailingSlash(
+      item.path === "/" && locale !== "en" ? `/${locale}` : item.path
+    )}`,
   })),
 });
 

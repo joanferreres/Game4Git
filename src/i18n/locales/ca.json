@@ -42,13 +42,13 @@
     "copyError": "No s'ha pogut copiar la comanda. Copia-la manualment."
   },
   "general": {
-    "title": "Joc de Git Online — Aprèn Jugant",
-    "subtitle": "Aprèn Git jugant: visualitza branques i merges, resol desafiaments i practica comandes reals en el millor joc per a aprendre Git."
+    "title": "Aprèn Git Jugant — Joc Online Gratuït",
+    "subtitle": "Aprèn Git jugant: visualitza branques, resol desafiaments i practica comandes reals al navegador."
   },
   "seo": {
     "home": {
-      "title": "Joc de Git Online — Aprèn Git Jugant Gratis | Game4Git",
-      "description": "Joc de git gratuït online — aprèn git jugant amb guies interactives per a commits, branques, conflictes de merge, GDB i Valgrind. Sense instal·lació."
+      "title": "Aprèn Git Jugant Gratis — Joc Online | Game4Git",
+      "description": "Aprèn git jugant online gratis — joc interactiu de commits, branques, conflictes de merge, GDB i Valgrind. Sense instal·lació."
     },
     "gdb": {
       "title": "Com usar GDB | Tutorial interactiu de depuració | Game4Git",
@@ -1486,7 +1486,7 @@
     "statGuides": "Guies interactives",
     "statLanguages": "Idiomes",
     "statInstalls": "Instal·lacions necessàries",
-    "seoIntroMobile": "Aprèn Git practicant amb commits visuals i reptes guiats.",
+    "seoIntroMobile": "Aprèn git jugant online gratis — commits visuals i reptes guiats al navegador.",
     "seoIntroLabel": "Descripció de l'aplicació",
     "guidesTitle": "Guies populars",
     "guidesDescription": "Tria un tema—commits, branques, conflictes de merge, Valgrind, GDB o fuites de memòria—i entra directament a la guia interactiva adequada.",

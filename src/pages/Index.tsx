@@ -45,6 +45,28 @@ const LazyPanelFallback = () => (
   />
 );
 
+/** Matches GitControls card height — never reuse PANEL_HEIGHT (that was causing huge CLS). */
+const GitControlsFallback = () => (
+  <div
+    className="w-full min-h-[480px] sm:min-h-[520px] rounded-lg border bg-card overflow-hidden animate-pulse"
+    aria-hidden
+  >
+    <div className="h-12 sm:h-14 border-b border-border/60 bg-muted/20" />
+    <div className="p-3 sm:p-6 space-y-3">
+      <div className="h-8 rounded-md bg-muted/40 w-full" />
+      <div className="h-8 rounded-md bg-muted/40 w-3/4" />
+      <div className="h-24 rounded-md bg-muted/30 w-full" />
+      <div className="h-8 rounded-md bg-muted/40 w-full" />
+      <div className="h-20 rounded-md bg-muted/30 w-full" />
+    </div>
+  </div>
+);
+
+/** Fixed FAB placeholder — must NOT use in-flow panel height. */
+const FixedFabFallback = ({ className }: { className: string }) => (
+  <div className={className} aria-hidden />
+);
+
 const CodeEditorSkeleton: React.FC<{ label: string }> = ({ label }) => (
   <Card className={`w-full ${PANEL_HEIGHT} overflow-hidden flex flex-col`}>
     <CardHeader className="py-3 px-4 shrink-0">
@@ -302,8 +324,16 @@ const GitGame: React.FC = () => {
       </DeferUntilAfterPaint>
 
       {/* Floating Action Button for Git History Sheet - deferred to reduce forced reflow */}
-      <DeferUntilAfterPaint fallback={<div className="fixed top-1/2 right-4 transform -translate-y-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full" aria-hidden />}>
-        <Suspense fallback={<LazyPanelFallback />}>
+      <DeferUntilAfterPaint
+        fallback={
+          <FixedFabFallback className="fixed top-1/2 right-4 transform -translate-y-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full" />
+        }
+      >
+        <Suspense
+          fallback={
+            <FixedFabFallback className="fixed top-1/2 right-4 transform -translate-y-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-muted/40 animate-pulse" />
+          }
+        >
           <GitHistory />
         </Suspense>
       </DeferUntilAfterPaint>
@@ -445,7 +475,7 @@ const GitGame: React.FC = () => {
 
       {/* Bottom Control Panel */}
       <div data-home-controls>
-        <Suspense fallback={<LazyPanelFallback />}>
+        <Suspense fallback={<GitControlsFallback />}>
           <GitControls />
         </Suspense>
       </div>

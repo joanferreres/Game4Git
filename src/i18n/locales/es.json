@@ -42,13 +42,13 @@
     "copyError": "No se pudo copiar el comando. Cópialo manualmente."
   },
   "general": {
-    "title": "Juego de Git Online — Aprende Jugando",
-    "subtitle": "Aprende conceptos de Git visualmente con este playground interactivo"
+    "title": "Aprender Git Jugando — Juego Online Gratis",
+    "subtitle": "Aprende Git jugando: visualiza ramas, resuelve retos y practica comandos reales en el navegador."
   },
   "seo": {
     "home": {
-      "title": "Juego de Git Online — Aprende Git Jugando Gratis | Game4Git",
-      "description": "Juego de git gratis online — aprende git jugando con guías interactivas para commits, ramas, conflictos de merge, GDB y Valgrind. Sin instalación."
+      "title": "Aprender Git Jugando Gratis — Juego Online | Game4Git",
+      "description": "Aprender git jugando online gratis — juego interactivo de commits, ramas, conflictos de merge, GDB y Valgrind. Sin instalación."
     },
     "gdb": {
       "title": "Tutorial de GDB — Depuración interactiva | Game4Git",
@@ -1610,7 +1610,7 @@
     }
   },
   "home": {
-    "seoIntroShort": "Aprende Git jugando con Game4Git, el juego para aprender Git. Visualiza ramas, resuelve retos interactivos y domina git practicando.",
+    "seoIntroShort": "Aprender git jugando online con Game4Git — el juego gratis para aprender Git. Visualiza ramas, resuelve retos interactivos y domina git practicando.",
     "seoIntroAnd": "y",
     "seoIntroTailShort": "conceptos básicos incluidos.",
     "startFirstChallenge": "Empieza el primer reto",
@@ -1634,7 +1634,7 @@
     "statGuides": "Guías interactivas",
     "statLanguages": "Idiomas",
     "statInstalls": "Instalaciones necesarias",
-    "seoIntroMobile": "Juega nuestro juego de git gratis online — aprende git practicando con commits visuales y desafíos guiados.",
+    "seoIntroMobile": "Aprender git jugando online gratis — commits visuales y desafíos guiados en el navegador.",
     "seoIntroLabel": "Descripción de la app",
     "guidesTitle": "Guías populares",
     "guidesDescription": "Elige un tema—commits, ramas, conflictos de merge, Valgrind, GDB o fugas de memoria—y entra directo en la guía interactiva que toca.",

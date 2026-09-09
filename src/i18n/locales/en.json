@@ -42,13 +42,13 @@
     "copyError": "Could not copy command. Copy it manually."
   },
   "general": {
-    "title": "Git Game Online — Learn by Playing",
-    "subtitle": "Learn Git concepts visually with this interactive playground"
+    "title": "Learn Git Game Online — Play Free",
+    "subtitle": "Learn Git by playing: visualize branches, solve challenges, and practice real commands in your browser."
   },
   "seo": {
     "home": {
-      "title": "Git Game Online — Learn Git by Playing Free | Game4Git",
-      "description": "Free git game online — learn git by playing with interactive guides for commits, branches, merge conflicts, GDB and Valgrind. No install required."
+      "title": "Learn Git Game Online Free — Play & Practice | Game4Git",
+      "description": "Learn git game online free — play interactive challenges for commits, branches, merge conflicts, GDB and Valgrind. No install required."
     },
     "gdb": {
       "title": "How to Use GDB | Interactive Debugger Tutorial | Game4Git",
@@ -1568,7 +1568,7 @@
     }
   },
   "home": {
-    "seoIntroShort": "Learn Git by playing with Game4Git, the game for learning Git. Visualize branches, solve interactive challenges, and master git by practicing.",
+    "seoIntroShort": "Learn git game online with Game4Git — the free game to learn Git by playing. Visualize branches, solve interactive challenges, and master git by practicing.",
     "seoIntroAnd": "and",
     "seoIntroTailShort": "basics included.",
     "startFirstChallenge": "Start first challenge",
@@ -1592,7 +1592,7 @@
     "statGuides": "Interactive guides",
     "statLanguages": "Languages",
     "statInstalls": "Installs required",
-    "seoIntroMobile": "Play our free git game online — learn git by doing with visual commits and guided challenges.",
+    "seoIntroMobile": "Learn git game online free — play visual commits and guided challenges in your browser.",
     "codeEditorLabel": "Code editor for hello.c file",
     "seoIntroLabel": "App description",
     "guidesTitle": "Popular guides",
