@@ -320,7 +320,7 @@ const AdminStats = () => {
 
   const dayLabels = (() => {
     const locale = i18n.language || "en";
-    const formatter = new Intl.DateTimeFormat(locale, { weekday: "short" });
+    const formatter = new Intl.DateTimeFormat(locale, { weekday: "short", timeZone: "UTC" });
     // Sunday=0 … Saturday=6 to match SQLite strftime('%w')
     return Array.from({ length: 7 }, (_, dow) => {
       const d = new Date(Date.UTC(2024, 0, 7 + dow));
@@ -624,10 +624,12 @@ const AdminStats = () => {
                       .map((row) => row.map((cell) => `"${String(cell).split('"').join('""')}"`).join(","))
                       .join("\n");
                     const link = document.createElement("a");
-                    link.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+                    const objectUrl = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+                    link.href = objectUrl;
                     link.download = `game4git-${activeTab}-${timeRange}.csv`;
                     link.click();
-                    URL.revokeObjectURL(link.href);
+                    // Safari can cancel the download if the blob URL is revoked immediately.
+                    window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
                   }}
                 >
                   <Download className="mr-2 h-4 w-4" />

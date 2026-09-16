@@ -31,7 +31,8 @@ function getReferrer(): string | null {
 
 async function sendAnalyticsEvent(path: string): Promise<void> {
   try {
-    await ensureTurnstileWidget();
+    // Warm widget in background; do not block track on deferred script load (fail-open).
+    void ensureTurnstileWidget();
     const turnstileToken = await getTurnstileToken('analytics', 4000);
     const utm = extractUtmParams();
     const referrer = getReferrer();

@@ -16,10 +16,42 @@ let widgetId: string | null = null;
 let hostEl: HTMLDivElement | null = null;
 let scriptPromise: Promise<void> | null = null;
 let ensurePromise: Promise<void> | null = null;
+let idleGatePromise: Promise<void> | null = null;
 let pendingResolve: ((token: string | null) => void) | null = null;
 
 function siteKey(): string {
   return (import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined) || "";
+}
+
+/** Defer Turnstile work until after first paint / idle so it doesn't compete with LCP. */
+function waitForIdleLoad(timeoutMs = 2000): Promise<void> {
+  if (typeof window === "undefined") return Promise.resolve();
+  if (idleGatePromise) return idleGatePromise;
+
+  idleGatePromise = new Promise<void>((resolve) => {
+    let settled = false;
+    const done = () => {
+      if (settled) return;
+      settled = true;
+      resolve();
+    };
+
+    const ric = (
+      window as Window & {
+        requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+      }
+    ).requestIdleCallback;
+
+    if (typeof ric === "function") {
+      ric(() => done(), { timeout: timeoutMs });
+      return;
+    }
+
+    // Fallback: wait ~2s or until next paint + short delay.
+    window.setTimeout(done, timeoutMs);
+  });
+
+  return idleGatePromise;
 }
 
 function settlePending(token: string | null): void {
@@ -128,6 +160,7 @@ export async function ensureTurnstileWidget(): Promise<void> {
 
   ensurePromise = (async () => {
     try {
+      await waitForIdleLoad(2000);
       await loadTurnstileScript();
     } catch {
       return;
