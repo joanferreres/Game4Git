@@ -1748,6 +1748,17 @@
     "privacyNoFullReferrers": "No se guardan URLs completas de referentes — solo dominios raíz (ej. google.com)",
     "privacyNoPersonalData": "No se recogen datos personales — solo agregados anónimos",
     "privacyAdminExcluded": "Las sesiones de admin se excluyen automáticamente de las métricas públicas",
-    "privacyRetention": "Datos auto-borrados tras {{days}} días"
+    "privacyRetention": "Datos auto-borrados tras {{days}} días",
+    "verifiedOnly": "Solo verificadas",
+    "includeUnverified": "Incluir no verificadas",
+    "verifiedRate": "Tasa verificada",
+    "comparePeriod": "Comparar periodo",
+    "filterPath": "Filtrar por ruta",
+    "filterCountry": "Filtrar por país",
+    "heatmap": "Mapa de calor semanal",
+    "map": "Mapa de países",
+    "noData": "Sin datos para este periodo",
+    "pageViewsSeries": "Páginas vistas",
+    "visitorsSeries": "Visitantes únicos"
   }
 }

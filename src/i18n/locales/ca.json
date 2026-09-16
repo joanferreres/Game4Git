@@ -1595,6 +1595,17 @@
     "privacyNoFullReferrers": "No es guarden URLs completes de referents — només dominis arrel (ex. google.com)",
     "privacyNoPersonalData": "No es recullen dades personals — només agregats anònims",
     "privacyAdminExcluded": "Les sessions d'admin s'exclouen automàticament de les mètriques públiques",
-    "privacyRetention": "Dades auto-esborrades després de {{days}} dies"
+    "privacyRetention": "Dades auto-esborrades després de {{days}} dies",
+    "verifiedOnly": "Només verificades",
+    "includeUnverified": "Incloure no verificades",
+    "verifiedRate": "Taxa verificada",
+    "comparePeriod": "Comparar període",
+    "filterPath": "Filtrar per ruta",
+    "filterCountry": "Filtrar per país",
+    "heatmap": "Mapa de calor setmanal",
+    "map": "Mapa de països",
+    "noData": "Sense dades per a aquest període",
+    "pageViewsSeries": "Pàgines vistes",
+    "visitorsSeries": "Visitants únics"
   }
 }

@@ -16,9 +16,9 @@ assert.match(worker, /heatmap/);
 assert.match(worker, /verification/);
 assert.match(worker, /strftime\('\%Y-\%m-\%dT\%H|\%Y-\%m-%dT\%H|hour/);
 
-// Task 6 deferred: dashboard UI contracts (kept commented until Recharts UI)
-// assert.match(dashboard, /includeUnverified|Solo verificadas|verifiedOnly/);
-// assert.match(dashboard, /heatmap|Heatmap|CountryMap|recharts|AreaChart|LineChart/);
+// Task 6: dashboard UI contracts
+assert.match(dashboard, /includeUnverified|Solo verificadas|verifiedOnly/);
+assert.match(dashboard, /heatmap|Heatmap|CountryMap|recharts|AreaChart|LineChart|ComposedChart/);
 
 assert.match(dashboard, /Traffic overview/);
 assert.match(dashboard, /Export CSV/);
