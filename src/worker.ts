@@ -938,10 +938,12 @@ export default {
       if (sessionToken) {
         const validation = await validateAdminSession(env.ANALYTICS_DB, sessionToken, ipHash);
         if (!validation.valid) {
-          return Response.redirect("/admin/", 302);
+          const redirect = Response.redirect(new URL("/admin/", request.url), 302);
+          clearAdminSessionCookie(redirect);
+          return redirect;
         }
       } else if (!pathname.endsWith("/")) {
-        return Response.redirect("/admin/", 302);
+        return Response.redirect(new URL("/admin/", request.url), 302);
       }
     }
 
