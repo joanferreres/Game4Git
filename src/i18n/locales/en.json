@@ -1707,6 +1707,17 @@
     "privacyNoFullReferrers": "No full referrer URLs — only root domains (e.g., google.com)",
     "privacyNoPersonalData": "No personal data collected — fully anonymous aggregates",
     "privacyAdminExcluded": "Admin sessions automatically excluded from public metrics",
-    "privacyRetention": "Data auto-deleted after {{days}} days"
+    "privacyRetention": "Data auto-deleted after {{days}} days",
+    "verifiedOnly": "Verified only",
+    "includeUnverified": "Include unverified",
+    "verifiedRate": "Verified rate",
+    "comparePeriod": "Compare period",
+    "filterPath": "Filter by path",
+    "filterCountry": "Filter by country",
+    "heatmap": "Weekly heatmap",
+    "map": "Country map",
+    "noData": "No data for this period",
+    "pageViewsSeries": "Page views",
+    "visitorsSeries": "Unique visitors"
   }
 }

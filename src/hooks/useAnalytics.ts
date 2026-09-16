@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
+import { ensureTurnstileWidget, getTurnstileToken, resetTurnstile } from '@/lib/turnstile';
 
 interface UtmParams {
   utm_source: string | null;
@@ -30,17 +31,22 @@ function getReferrer(): string | null {
 
 async function sendAnalyticsEvent(path: string): Promise<void> {
   try {
+    // Warm widget in background; do not block track on deferred script load (fail-open).
+    void ensureTurnstileWidget();
+    const turnstileToken = await getTurnstileToken('analytics', 4000);
     const utm = extractUtmParams();
     const referrer = getReferrer();
 
     await fetch('/api/analytics/track', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ path, referrer, utm }),
+      body: JSON.stringify({ path, referrer, utm, turnstileToken }),
       credentials: 'include',
     });
   } catch (e) {
     console.debug('Analytics tracking failed:', e);
+  } finally {
+    resetTurnstile();
   }
 }
 

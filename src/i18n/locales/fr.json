@@ -1487,6 +1487,17 @@
     "privacyNoFullReferrers": "Aucune URL complète de référent — seulement domaines racine (ex. google.com)",
     "privacyNoPersonalData": "Aucune donnée personnelle collectée — seulement agrégats anonymes",
     "privacyAdminExcluded": "Sessions admin exclues automatiquement des métriques publiques",
-    "privacyRetention": "Données auto-supprimées après {{days}} jours"
+    "privacyRetention": "Données auto-supprimées après {{days}} jours",
+    "verifiedOnly": "Vérifiées uniquement",
+    "includeUnverified": "Inclure non vérifiées",
+    "verifiedRate": "Taux vérifié",
+    "comparePeriod": "Comparer la période",
+    "filterPath": "Filtrer par chemin",
+    "filterCountry": "Filtrer par pays",
+    "heatmap": "Carte de chaleur hebdomadaire",
+    "map": "Carte des pays",
+    "noData": "Aucune donnée pour cette période",
+    "pageViewsSeries": "Pages vues",
+    "visitorsSeries": "Visiteurs uniques"
   }
 }
