@@ -39,6 +39,48 @@ Si el DNS de `game4git.com` ya está en Cloudflare, el registro CNAME se crea au
 - El fallback SPA (`not_found_handling: single-page-application`) cubre las rutas de React Router
 - Variables de build como `VITE_ADMIN_PASSWORD_HASH` se definen en el entorno de build / Workers Builds
 
+### Turnstile (analytics verificadas)
+
+Widget invisible `game4git-analytics` para marcar pageviews como verificadas en D1 (`verified=1`). Si Turnstile falla o se bloquea, el track sigue respondiendo 200 con `verified=0` (fail-open).
+
+**Build / cliente (público):**
+
+| Variable | Dónde | Valor |
+|----------|-------|-------|
+| `VITE_TURNSTILE_SITE_KEY` | `.env`, CI/Workers Builds | Sitekey del widget Turnstile |
+
+**Worker (secretos — nunca en el repo):**
+
+| Variable | Dónde | Valor |
+|----------|-------|-------|
+| `TURNSTILE_SECRET` | `wrangler secret put` / `.dev.vars` local | Secret key del widget |
+| `TURNSTILE_HOSTNAMES` | `wrangler secret put` / `.dev.vars` local | Hostnames permitidos en siteverify, separados por coma |
+
+Ejemplos:
+
+```bash
+# Local (.dev.vars)
+TURNSTILE_SECRET=<secret>
+TURNSTILE_HOSTNAMES=localhost,127.0.0.1,game4git.com,www.game4git.com
+
+# Producción (solo dominios reales, sin localhost)
+printf '%s' '<secret>' | npx wrangler secret put TURNSTILE_SECRET
+printf '%s' 'game4git.com,www.game4git.com' | npx wrangler secret put TURNSTILE_HOSTNAMES
+```
+
+**Migración D1** (columna `verified`):
+
+```bash
+npx wrangler d1 migrations apply game4git-analytics --remote
+```
+
+**Turnstile (analytics verified)** — same vars in English:
+
+- `VITE_TURNSTILE_SITE_KEY`: public sitekey at build time (`.env`, Workers Builds).
+- `TURNSTILE_SECRET`: Worker secret; Turnstile secret key.
+- `TURNSTILE_HOSTNAMES`: comma-separated hostnames accepted by siteverify (`game4git.com,www.game4git.com` in prod; add `localhost,127.0.0.1` for local `.dev.vars`).
+- Ensure the Turnstile widget domains include production hosts before deploy.
+
 ## Català
 
 ### Procés de desplegament a Cloudflare Workers

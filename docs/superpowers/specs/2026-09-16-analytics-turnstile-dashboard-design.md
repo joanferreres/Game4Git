@@ -1,7 +1,7 @@
 # Analytics Turnstile + Professional Dashboard
 
 **Date:** 2026-09-16  
-**Status:** Approved  
+**Status:** Implemented  
 **Approach:** Turnstile invisible + `verified` flag (fail-open suave) + dashboard analytics completo
 
 ---
