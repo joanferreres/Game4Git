@@ -938,7 +938,11 @@ export default {
       if (sessionToken) {
         const validation = await validateAdminSession(env.ANALYTICS_DB, sessionToken, ipHash);
         if (!validation.valid) {
-          const redirect = Response.redirect(new URL("/admin/", request.url), 302);
+          // Response.redirect() headers are immutable — build a mutable 302 so we can clear the cookie.
+          const redirect = new Response(null, {
+            status: 302,
+            headers: { Location: new URL("/admin/", request.url).toString() },
+          });
           clearAdminSessionCookie(redirect);
           return redirect;
         }
