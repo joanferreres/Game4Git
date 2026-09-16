@@ -649,6 +649,10 @@ async function handleAdminStats(
   const url = new URL(request.url);
   const requestedRange = url.searchParams.get("range") || "7d";
   const range = ["24h", "7d", "30d", "90d"].includes(requestedRange) ? requestedRange : "7d";
+  const includeUnverified = url.searchParams.get("includeUnverified") === "1";
+  const pathFilter = url.searchParams.get("path");
+  const countryFilter = url.searchParams.get("country");
+  const compare = url.searchParams.get("compare") === "1";
   const now = Date.now();
 
   let startTime: number;
@@ -672,155 +676,280 @@ async function handleAdminStats(
   const periodLength = now - startTime;
   const previousStartTime = startTime - periodLength;
 
+  const buildFilters = (opts: {
+    timestampGte?: number;
+    timestampLt?: number;
+    includeVerifiedFilter?: boolean;
+  }) => {
+    const filters: string[] = ["is_admin = 0"];
+    const binds: unknown[] = [];
+    if (opts.timestampGte !== undefined) {
+      filters.push("timestamp >= ?");
+      binds.push(opts.timestampGte);
+    }
+    if (opts.timestampLt !== undefined) {
+      filters.push("timestamp < ?");
+      binds.push(opts.timestampLt);
+    }
+    if (opts.includeVerifiedFilter !== false && !includeUnverified) {
+      filters.push("verified = 1");
+    }
+    if (pathFilter) {
+      filters.push("path = ?");
+      binds.push(pathFilter);
+    }
+    if (countryFilter) {
+      filters.push("country = ?");
+      binds.push(countryFilter);
+    }
+    return { where: filters.join(" AND "), binds };
+  };
+
+  const mainFilters = buildFilters({ timestampGte: startTime });
+  const previousFilters = buildFilters({
+    timestampGte: previousStartTime,
+    timestampLt: startTime,
+  });
+  const activeFilters = buildFilters({ timestampGte: now - 5 * 60 * 1000 });
+  // Verification badge: ignore verified toggle, keep path/country
+  const verificationFilters = buildFilters({
+    timestampGte: startTime,
+    includeVerifiedFilter: false,
+  });
+
+  const timelineBucketExpr =
+    range === "24h"
+      ? `strftime('%Y-%m-%dT%H:00:00Z', timestamp / 1000, 'unixepoch')`
+      : `strftime('%Y-%m-%d', timestamp / 1000, 'unixepoch')`;
+
   const percentageChange = (current: number, previous: number) => {
     if (previous === 0) return current === 0 ? 0 : 100;
     return Math.round(((current - previous) / previous) * 1000) / 10;
   };
 
   try {
-    const [
-      overview,
-      previousOverview,
-      timeline,
-      paths,
-      referrers,
-      utmSources,
-      countries,
-      devices,
-      browsers,
-      os,
-      activeNow,
-    ] = await Promise.all([
-      env.ANALYTICS_DB
-        .prepare(
-          `SELECT 
-            COUNT(DISTINCT visitor_id) as unique_visitors,
-            COUNT(*) as page_views,
-            COUNT(DISTINCT session_id) as sessions
-           FROM analytics_events 
-           WHERE timestamp >= ? AND is_admin = 0`
-        )
-        .bind(startTime)
-        .first<{ unique_visitors: number; page_views: number; sessions: number }>(),
-
-      env.ANALYTICS_DB
-        .prepare(
-          `SELECT
-            COUNT(DISTINCT visitor_id) as unique_visitors,
-            COUNT(*) as page_views,
-            COUNT(DISTINCT session_id) as sessions
-           FROM analytics_events
-           WHERE timestamp >= ? AND timestamp < ? AND is_admin = 0`
-        )
-        .bind(previousStartTime, startTime)
-        .first<{ unique_visitors: number; page_views: number; sessions: number }>(),
-
-      env.ANALYTICS_DB
-        .prepare(
-          `SELECT
-            strftime('%Y-%m-%d', timestamp / 1000, 'unixepoch') as date,
+    const timelineSql = `SELECT
+            ${timelineBucketExpr} as date,
             COUNT(*) as page_views,
             COUNT(DISTINCT visitor_id) as unique_visitors
            FROM analytics_events
-           WHERE timestamp >= ? AND timestamp < ? AND is_admin = 0
+           WHERE ${mainFilters.where} AND timestamp < ?
            GROUP BY date
-           ORDER BY date ASC`
-        )
-        .bind(startTime, now)
+           ORDER BY date ASC`;
+
+    const overviewSql = `SELECT
+            COUNT(DISTINCT visitor_id) as unique_visitors,
+            COUNT(*) as page_views,
+            COUNT(DISTINCT session_id) as sessions
+           FROM analytics_events
+           WHERE ${mainFilters.where}`;
+
+    const previousOverviewSql = `SELECT
+            COUNT(DISTINCT visitor_id) as unique_visitors,
+            COUNT(*) as page_views,
+            COUNT(DISTINCT session_id) as sessions
+           FROM analytics_events
+           WHERE ${previousFilters.where}`;
+
+    const comparisonTimelineSql = `SELECT
+            ${timelineBucketExpr} as date,
+            COUNT(*) as page_views,
+            COUNT(DISTINCT visitor_id) as unique_visitors
+           FROM analytics_events
+           WHERE ${previousFilters.where}
+           GROUP BY date
+           ORDER BY date ASC`;
+
+    const queryPromises: Promise<unknown>[] = [
+      env.ANALYTICS_DB
+        .prepare(overviewSql)
+        .bind(...mainFilters.binds)
+        .first<{ unique_visitors: number; page_views: number; sessions: number }>(),
+
+      env.ANALYTICS_DB
+        .prepare(previousOverviewSql)
+        .bind(...previousFilters.binds)
+        .first<{ unique_visitors: number; page_views: number; sessions: number }>(),
+
+      env.ANALYTICS_DB
+        .prepare(timelineSql)
+        .bind(...mainFilters.binds, now)
         .all<{ date: string; page_views: number; unique_visitors: number }>(),
 
       env.ANALYTICS_DB
         .prepare(
           `SELECT path, COUNT(*) as views, COUNT(DISTINCT visitor_id) as visitors
            FROM analytics_events
-           WHERE timestamp >= ? AND is_admin = 0
+           WHERE ${mainFilters.where}
            GROUP BY path
            ORDER BY views DESC
            LIMIT 20`
         )
-        .bind(startTime)
+        .bind(...mainFilters.binds)
         .all<{ path: string; views: number; visitors: number }>(),
 
       env.ANALYTICS_DB
         .prepare(
           `SELECT referrer, COUNT(*) as count
            FROM analytics_events
-           WHERE timestamp >= ? AND is_admin = 0 AND referrer IS NOT NULL
+           WHERE ${mainFilters.where} AND referrer IS NOT NULL
            GROUP BY referrer
            ORDER BY count DESC
            LIMIT 20`
         )
-        .bind(startTime)
+        .bind(...mainFilters.binds)
         .all<{ referrer: string; count: number }>(),
 
       env.ANALYTICS_DB
         .prepare(
           `SELECT utm_source, COUNT(*) as count
            FROM analytics_events
-           WHERE timestamp >= ? AND is_admin = 0 AND utm_source IS NOT NULL
+           WHERE ${mainFilters.where} AND utm_source IS NOT NULL
            GROUP BY utm_source
            ORDER BY count DESC
            LIMIT 20`
         )
-        .bind(startTime)
+        .bind(...mainFilters.binds)
         .all<{ utm_source: string; count: number }>(),
 
       env.ANALYTICS_DB
         .prepare(
           `SELECT country, COUNT(*) as count
            FROM analytics_events
-           WHERE timestamp >= ? AND is_admin = 0 AND country IS NOT NULL
+           WHERE ${mainFilters.where} AND country IS NOT NULL
            GROUP BY country
            ORDER BY count DESC
            LIMIT 20`
         )
-        .bind(startTime)
+        .bind(...mainFilters.binds)
         .all<{ country: string; count: number }>(),
 
       env.ANALYTICS_DB
         .prepare(
           `SELECT device_type, COUNT(*) as count
            FROM analytics_events
-           WHERE timestamp >= ? AND is_admin = 0 AND device_type IS NOT NULL
+           WHERE ${mainFilters.where} AND device_type IS NOT NULL
            GROUP BY device_type
            ORDER BY count DESC`
         )
-        .bind(startTime)
+        .bind(...mainFilters.binds)
         .all<{ device_type: string; count: number }>(),
 
       env.ANALYTICS_DB
         .prepare(
           `SELECT browser, COUNT(*) as count
            FROM analytics_events
-           WHERE timestamp >= ? AND is_admin = 0 AND browser IS NOT NULL
+           WHERE ${mainFilters.where} AND browser IS NOT NULL
            GROUP BY browser
            ORDER BY count DESC
            LIMIT 15`
         )
-        .bind(startTime)
+        .bind(...mainFilters.binds)
         .all<{ browser: string; count: number }>(),
 
       env.ANALYTICS_DB
         .prepare(
           `SELECT os, COUNT(*) as count
            FROM analytics_events
-           WHERE timestamp >= ? AND is_admin = 0 AND os IS NOT NULL
+           WHERE ${mainFilters.where} AND os IS NOT NULL
            GROUP BY os
            ORDER BY count DESC
            LIMIT 15`
         )
-        .bind(startTime)
+        .bind(...mainFilters.binds)
         .all<{ os: string; count: number }>(),
 
       env.ANALYTICS_DB
         .prepare(
           `SELECT COUNT(DISTINCT visitor_id) as active_visitors
            FROM analytics_events
-           WHERE timestamp >= ? AND is_admin = 0`
+           WHERE ${activeFilters.where}`
         )
-        .bind(now - 5 * 60 * 1000)
+        .bind(...activeFilters.binds)
         .first<{ active_visitors: number }>(),
-    ]);
+
+      env.ANALYTICS_DB
+        .prepare(
+          `SELECT
+            SUM(CASE WHEN verified = 1 THEN 1 ELSE 0 END) as verified_events,
+            COUNT(*) as total_events
+           FROM analytics_events
+           WHERE ${verificationFilters.where}`
+        )
+        .bind(...verificationFilters.binds)
+        .first<{ verified_events: number; total_events: number }>(),
+
+      env.ANALYTICS_DB
+        .prepare(
+          `SELECT
+            CAST(strftime('%w', timestamp / 1000, 'unixepoch') AS INTEGER) as dow,
+            CAST(strftime('%H', timestamp / 1000, 'unixepoch') AS INTEGER) as hour,
+            COUNT(*) as count
+           FROM analytics_events
+           WHERE ${mainFilters.where}
+           GROUP BY dow, hour`
+        )
+        .bind(...mainFilters.binds)
+        .all<{ dow: number; hour: number; count: number }>(),
+    ];
+
+    if (compare) {
+      queryPromises.push(
+        env.ANALYTICS_DB
+          .prepare(comparisonTimelineSql)
+          .bind(...previousFilters.binds)
+          .all<{ date: string; page_views: number; unique_visitors: number }>()
+      );
+    }
+
+    const results = await Promise.all(queryPromises);
+    const overview = results[0] as {
+      unique_visitors: number;
+      page_views: number;
+      sessions: number;
+    } | null;
+    const previousOverview = results[1] as {
+      unique_visitors: number;
+      page_views: number;
+      sessions: number;
+    } | null;
+    const timeline = results[2] as D1Result<{
+      date: string;
+      page_views: number;
+      unique_visitors: number;
+    }>;
+    const paths = results[3] as D1Result<{ path: string; views: number; visitors: number }>;
+    const referrers = results[4] as D1Result<{ referrer: string; count: number }>;
+    const utmSources = results[5] as D1Result<{ utm_source: string; count: number }>;
+    const countries = results[6] as D1Result<{ country: string; count: number }>;
+    const devices = results[7] as D1Result<{ device_type: string; count: number }>;
+    const browsers = results[8] as D1Result<{ browser: string; count: number }>;
+    const os = results[9] as D1Result<{ os: string; count: number }>;
+    const activeNow = results[10] as { active_visitors: number } | null;
+    const verificationRow = results[11] as {
+      verified_events: number;
+      total_events: number;
+    } | null;
+    const heatmap = results[12] as D1Result<{ dow: number; hour: number; count: number }>;
+    const comparisonTimeline = compare
+      ? (results[13] as D1Result<{ date: string; page_views: number; unique_visitors: number }>)
+      : null;
+
+    const verifiedEvents = Number(verificationRow?.verified_events || 0);
+    const totalEvents = Number(verificationRow?.total_events || 0);
+    const verifiedRate =
+      totalEvents === 0 ? 0 : Math.round((verifiedEvents / totalEvents) * 1000) / 10;
+
+    const comparisonPayload = compare
+      ? {
+          overview: {
+            uniqueVisitors: previousOverview?.unique_visitors || 0,
+            pageViews: previousOverview?.page_views || 0,
+            sessions: previousOverview?.sessions || 0,
+          },
+          timeline: comparisonTimeline?.results || [],
+        }
+      : undefined;
 
     return new Response(
       JSON.stringify({
@@ -837,8 +966,14 @@ async function handleAdminStats(
           sessions: previousOverview?.sessions || 0,
         },
         changes: {
-          uniqueVisitors: percentageChange(overview?.unique_visitors || 0, previousOverview?.unique_visitors || 0),
-          pageViews: percentageChange(overview?.page_views || 0, previousOverview?.page_views || 0),
+          uniqueVisitors: percentageChange(
+            overview?.unique_visitors || 0,
+            previousOverview?.unique_visitors || 0
+          ),
+          pageViews: percentageChange(
+            overview?.page_views || 0,
+            previousOverview?.page_views || 0
+          ),
           sessions: percentageChange(overview?.sessions || 0, previousOverview?.sessions || 0),
         },
         timeline: timeline.results || [],
@@ -849,6 +984,13 @@ async function handleAdminStats(
         devices: devices.results || [],
         browsers: browsers.results || [],
         os: os.results || [],
+        verification: {
+          verifiedEvents,
+          totalEvents,
+          verifiedRate,
+        },
+        heatmap: heatmap.results || [],
+        comparison: comparisonPayload,
       }),
       { status: 200, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" } }
     );
