@@ -41,3 +41,4 @@ dist-ssr
 
 # Generated reports
 reports/pagespeed/
+.worktrees/
