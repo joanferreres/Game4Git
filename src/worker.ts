@@ -43,6 +43,8 @@ type Env = {
   ANALYTICS_DB: D1Database;
   ADMIN_PASSWORD_HASH: string;
   SESSION_SECRET: string;
+  TURNSTILE_SECRET: string;
+  TURNSTILE_HOSTNAMES: string;
 };
 
 const SESSION_COOKIE_NAME = "admin_session";
@@ -148,6 +150,50 @@ function isAnalyticsApiPath(pathname: string): boolean {
   return pathname.startsWith("/api/admin/") || pathname === "/api/analytics/track";
 }
 
+async function verifyTurnstileToken(opts: {
+  token: string | undefined;
+  secret: string;
+  hostnamesCsv: string;
+  ip: string | null;
+  expectedAction: string;
+}): Promise<boolean> {
+  const { token, secret, hostnamesCsv, ip, expectedAction } = opts;
+  if (!secret) return false;
+  if (typeof token !== "string" || token.length === 0 || token.length > 2048) return false;
+
+  const expectedHostnames = new Set(
+    hostnamesCsv.split(",").map((h) => h.trim()).filter(Boolean)
+  );
+  if (expectedHostnames.size === 0) return false;
+
+  let result: {
+    success?: boolean;
+    action?: string;
+    hostname?: string;
+  };
+  try {
+    const body = new URLSearchParams({ secret, response: token });
+    if (ip) body.set("remoteip", ip);
+    const r = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body,
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (!r.ok) return false;
+    result = await r.json();
+  } catch {
+    return false;
+  }
+
+  return (
+    result.success === true &&
+    result.action === expectedAction &&
+    typeof result.hostname === "string" &&
+    expectedHostnames.has(result.hostname)
+  );
+}
+
 async function logAnalyticsEvent(
   db: D1Database,
   event: {
@@ -161,6 +207,7 @@ async function logAnalyticsEvent(
     os: string;
     device: string;
     isAdmin: boolean;
+    verified: boolean;
   }
 ): Promise<void> {
   const timestamp = Date.now();
@@ -170,8 +217,8 @@ async function logAnalyticsEvent(
     await db
       .prepare(
         `INSERT INTO analytics_events 
-         (event_id, session_id, visitor_id, timestamp, path, referrer, utm_source, utm_medium, utm_campaign, utm_content, utm_term, country, device_type, browser, os, is_admin)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+         (event_id, session_id, visitor_id, timestamp, path, referrer, utm_source, utm_medium, utm_campaign, utm_content, utm_term, country, device_type, browser, os, is_admin, verified)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
       )
       .bind(
         eventId,
@@ -189,7 +236,8 @@ async function logAnalyticsEvent(
         event.device,
         event.browser,
         event.os,
-        event.isAdmin ? 1 : 0
+        event.isAdmin ? 1 : 0,
+        event.verified ? 1 : 0
       )
       .run();
   } catch (e) {
@@ -828,6 +876,7 @@ async function handleAnalyticsTrack(
     path: string;
     referrer?: string;
     utm?: Record<string, string | null>;
+    turnstileToken?: string;
   };
   try {
     body = await request.json();
@@ -856,6 +905,19 @@ async function handleAnalyticsTrack(
   const visitorId = await getOrCreateVisitorId(request, env.ANALYTICS_DB);
   const sessionId = getSessionId(request);
 
+  const clientIp =
+    request.headers.get("CF-Connecting-IP") ||
+    request.headers.get("X-Forwarded-For")?.split(",")[0]?.trim() ||
+    null;
+
+  const verified = await verifyTurnstileToken({
+    token: body.turnstileToken,
+    secret: env.TURNSTILE_SECRET,
+    hostnamesCsv: env.TURNSTILE_HOSTNAMES || "",
+    ip: clientIp,
+    expectedAction: "analytics",
+  });
+
   await Promise.all([
     logAnalyticsEvent(env.ANALYTICS_DB, {
       sessionId,
@@ -868,6 +930,7 @@ async function handleAnalyticsTrack(
       os,
       device,
       isAdmin,
+      verified,
     }),
     updateDailyAggregates(env.ANALYTICS_DB, {
       date: new Date().toISOString().split("T")[0],

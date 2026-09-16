@@ -35,4 +35,22 @@ assert.match(
   "the analytics dashboard must be reachable from the router"
 );
 
+assert.match(worker, /TURNSTILE_SECRET/);
+assert.match(worker, /TURNSTILE_HOSTNAMES/);
+assert.match(
+  worker,
+  /challenges\.cloudflare\.com\/turnstile\/v0\/siteverify/
+);
+assert.match(worker, /expectedAction|action === ["']analytics["']|action !== ["']analytics["']/);
+assert.match(worker, /verified/);
+assert.match(
+  worker,
+  /turnstileToken/
+);
+assert.doesNotMatch(
+  worker,
+  /\/api\/analytics\/track[\s\S]{0,800}status:\s*403/,
+  "track must not 403 on Turnstile failure within the handler body window"
+);
+
 console.log("Analytics routing contract passed");
