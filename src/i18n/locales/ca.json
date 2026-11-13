@@ -85,6 +85,10 @@
     "gitResetGuide": {
       "title": "Guia git reset i revert — Desfer canvis | Game4Git",
       "description": "Aprèn git reset, revert i commit --amend amb exercicis interactius. Veu com cada comanda canvia l'historial al gràfic."
+    },
+    "gitoryx": {
+      "title": "Guia Gitoryx — Veure Git en visual | Game4Git",
+      "description": "Aprèn com Gitoryx complementa la pràctica CLI: commits, branques, merges i remotes de Game4Git en un client Git visual."
     }
   },
   "playground": {
@@ -1515,6 +1519,10 @@
       "valgrindLeaks": {
         "title": "Fugues de Memòria amb Valgrind",
         "description": "Troba i corregeix memory leaks pas a pas."
+      },
+      "gitoryx": {
+        "title": "Gitoryx Git visual",
+        "description": "Pont entre la CLI i el graf de commits — guia companya de Gitoryx."
       }
     },
     "faqTitle": "Preguntes freqüents",
@@ -1544,7 +1552,8 @@
     "gdb": "Aprendre GDB",
     "valgrind": "Aprendre Valgrind",
     "contact": "Contacte",
-    "support": "Donar suport"
+    "support": "Donar suport",
+    "gitoryx": "Gitoryx"
   },
   "adminStats": {
     "title": "📊 Tauler d'Analítiques",
@@ -1607,5 +1616,114 @@
     "noData": "Sense dades per a aquest període",
     "pageViewsSeries": "Pàgines vistes",
     "visitorsSeries": "Visitants únics"
+  },
+  "gitoryx": {
+    "pageTitle": "Gitoryx — Veure Git en visual",
+    "tabs": {
+      "introduction": "Introducció",
+      "cliVisual": "CLI ↔ Visual",
+      "path": "Mini ruta",
+      "try": "Prova-ho",
+      "cheatsheet": "Xuleta"
+    },
+    "intro": {
+      "whatIsTitle": "Què és Gitoryx?",
+      "whatIsSubtitle": "Client Git visual natiu que complementa la pràctica CLI",
+      "paragraph": "Gitoryx t’ajuda a veure què fa Git: graf de commits, branques, merges i remotes amb claredat. Després de practicar ordres a Game4Git, obrir les mateixes idees en un client visual reforça el model mental.",
+      "whyTitle": "Per què ajuda a aprendre",
+      "why": {
+        "0": "Facilita raonar la topologia de branques",
+        "1": "Mostra merges i rebases en un graf viu",
+        "2": "Connecta ordres de terminal amb el que canvia al repo"
+      },
+      "withCliTitle": "Amb el playground CLI",
+      "withCli": {
+        "0": "Practica ordres amb seguretat primer a Game4Git",
+        "1": "Després obre un repo real a Gitoryx per veure les mateixes idees",
+        "2": "La CLI continua sent la font de veritat; el visual aprofundaix la intuïció"
+      }
+    },
+    "promo": {
+      "tipTitle": "Consell si proves Gitoryx Pro",
+      "tipBody": "Si proves Gitoryx Pro, el codi GAME4GIT dóna un 20 % de descompte durant 12 mesos.",
+      "copyCode": "Copiar codi",
+      "copied": "Copiat",
+      "open": "Obrir Gitoryx"
+    },
+    "cliVisual": {
+      "title": "Mapa CLI ↔ visual",
+      "subtitle": "Les mateixes idees de Git que escrius a Game4Git, vistes com a actualitzacions del graf a Gitoryx.",
+      "colCli": "CLI (Game4Git)",
+      "colVisual": "Visual (Gitoryx)",
+      "commit": "Apareix un node nou al graf de commits",
+      "branch": "Les línies de branca es divideixen i canvien el focus",
+      "merge": "Les línies s’uneixen; els conflictes s’obren costat a costat",
+      "remote": "Les puntes local i remota es mouen al graf"
+    },
+    "studentPath": {
+      "title": "Ruta guiada (5–10 min)",
+      "subtitle": "Un bucle curt després d’acabar un repte de Game4Git.",
+      "step1": "Acaba un exercici de Game4Git (branca, merge o remot).",
+      "step2": "Obre un repo similar a Gitoryx.",
+      "step3": "Localitza al graf el commit / la branca que acabes de practicar.",
+      "step4": "Repeteix una acció CLI i observa l’actualització visual.",
+      "step5": "Torna a Game4Git per al següent repte."
+    },
+    "try": {
+      "title": "Prova Gitoryx",
+      "subtitle": "Obre el client d’escriptori en un repo real — sense iframe ni compte per començar.",
+      "body": "Descarrega Gitoryx per a macOS, Windows o Linux, obre un repositori local i mira com s’actualitza el graf. Continua practicant CLI a Game4Git; usa Gitoryx quan vulguis veure amb més claredat les mateixes operacions.",
+      "cta": "Obrir Gitoryx",
+      "backPlayground": "Tornar al playground",
+      "promoLine": "Consell: codi GAME4GIT — 20 % durant 12 mesos (vegeu Introducció)."
+    },
+    "cheatsheet": {
+      "title": "Xuleta d’operacions visuals",
+      "subtitle": "Sis moviments Git habituals i com es veuen.",
+      "item1": {
+        "title": "Commit",
+        "desc": "Apareix un node nou a la línia de la branca actual."
+      },
+      "item2": {
+        "title": "Crear branca",
+        "desc": "Una línia de color se separa des de la punta."
+      },
+      "item3": {
+        "title": "Checkout / switch",
+        "desc": "El focus es mou a una altra punta de branca."
+      },
+      "item4": {
+        "title": "Merge",
+        "desc": "Les línies s’uneixen; pot aparèixer un merge commit."
+      },
+      "item5": {
+        "title": "Push / fetch",
+        "desc": "Les puntes remotes es mouen respecte a les locals."
+      },
+      "item6": {
+        "title": "Conflicte",
+        "desc": "L’editor costat a costat marca ours vs theirs."
+      }
+    },
+    "outro": {
+      "ariaLabel": "Consell Gitoryx després de l’exercici",
+      "guideCta": "Obrir guia Gitoryx",
+      "externalCta": "Obrir Gitoryx",
+      "promoLabel": "Promo:",
+      "copy": "Copiar",
+      "dismiss": "No tornar a mostrar",
+      "feature-branch": {
+        "title": "Acabes de practicar branques per CLI",
+        "body": "A Gitoryx veuries feature-login separar-se de master i tornar a unir-se en fer merge — mateixa història, graf visual."
+      },
+      "remote-workflow": {
+        "title": "Acabes de practicar remotes per CLI",
+        "body": "A Gitoryx, fetch/push/pull mostren les puntes local i origin movent-se al graf per veure ahead/behind."
+      },
+      "fast-forward-merge": {
+        "title": "Acabes de practicar merges fast-forward",
+        "body": "A Gitoryx un fast-forward avança la punta; --no-ff deixa un merge commit visible al graf."
+      }
+    }
   }
 }

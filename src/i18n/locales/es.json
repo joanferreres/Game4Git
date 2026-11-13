@@ -85,6 +85,10 @@
     "gitResetGuide": {
       "title": "Guía git reset y revert — Deshacer cambios | Game4Git",
       "description": "Aprende git reset, revert y commit --amend con ejercicios interactivos. Ve cómo cada comando cambia el historial en el gráfico."
+    },
+    "gitoryx": {
+      "title": "Guía Gitoryx — Ver Git en visual | Game4Git",
+      "description": "Aprende cómo Gitoryx complementa la práctica CLI: commits, ramas, merges y remotes de Game4Git en un cliente Git visual."
     }
   },
   "playground": {
@@ -1663,6 +1667,10 @@
       "valgrindLeaks": {
         "title": "Fugas de Memoria con Valgrind",
         "description": "Encuentra y corrige memory leaks paso a paso."
+      },
+      "gitoryx": {
+        "title": "Gitoryx Git visual",
+        "description": "Puente entre la CLI y el grafo de commits — guía compañera de Gitoryx."
       }
     },
     "faqTitle": "Preguntas frecuentes",
@@ -1692,7 +1700,8 @@
     "gdb": "Aprender GDB",
     "valgrind": "Aprender Valgrind",
     "contact": "Contacto",
-    "support": "Apoyar"
+    "support": "Apoyar",
+    "gitoryx": "Gitoryx"
   },
   "admin": {
     "viewDashboard": "Ver Panel",
@@ -1760,5 +1769,114 @@
     "noData": "Sin datos para este periodo",
     "pageViewsSeries": "Páginas vistas",
     "visitorsSeries": "Visitantes únicos"
+  },
+  "gitoryx": {
+    "pageTitle": "Gitoryx — Ver Git en visual",
+    "tabs": {
+      "introduction": "Introducción",
+      "cliVisual": "CLI ↔ Visual",
+      "path": "Mini ruta",
+      "try": "Pruébalo",
+      "cheatsheet": "Chuleta"
+    },
+    "intro": {
+      "whatIsTitle": "¿Qué es Gitoryx?",
+      "whatIsSubtitle": "Cliente Git visual nativo que complementa la práctica CLI",
+      "paragraph": "Gitoryx te ayuda a ver lo que hace Git: grafo de commits, ramas, merges y remotes con claridad. Después de practicar comandos en Game4Git, abrir las mismas ideas en un cliente visual refuerza el modelo mental.",
+      "whyTitle": "Por qué ayuda a aprender",
+      "why": {
+        "0": "Facilita razonar la topología de ramas",
+        "1": "Muestra merges y rebases en un grafo vivo",
+        "2": "Conecta comandos de terminal con lo que cambia en el repo"
+      },
+      "withCliTitle": "Con el playground CLI",
+      "withCli": {
+        "0": "Practica comandos con seguridad primero en Game4Git",
+        "1": "Luego abre un repo real en Gitoryx para ver las mismas ideas",
+        "2": "La CLI sigue siendo la fuente de verdad; lo visual profundiza la intuición"
+      }
+    },
+    "promo": {
+      "tipTitle": "Consejo si pruebas Gitoryx Pro",
+      "tipBody": "Si pruebas Gitoryx Pro, el código GAME4GIT da 20 % de descuento durante 12 meses.",
+      "copyCode": "Copiar código",
+      "copied": "Copiado",
+      "open": "Abrir Gitoryx"
+    },
+    "cliVisual": {
+      "title": "Mapa CLI ↔ visual",
+      "subtitle": "Las mismas ideas de Git que escribes en Game4Git, vistas como actualizaciones del grafo en Gitoryx.",
+      "colCli": "CLI (Game4Git)",
+      "colVisual": "Visual (Gitoryx)",
+      "commit": "Aparece un nodo nuevo en el grafo de commits",
+      "branch": "Las líneas de rama se dividen y cambian el foco",
+      "merge": "Las líneas se unen; los conflictos se abren lado a lado",
+      "remote": "Las puntas local y remota se mueven en el grafo"
+    },
+    "studentPath": {
+      "title": "Ruta guiada (5–10 min)",
+      "subtitle": "Un bucle corto después de terminar un reto de Game4Git.",
+      "step1": "Termina un ejercicio de Game4Git (rama, merge o remoto).",
+      "step2": "Abre un repo similar en Gitoryx.",
+      "step3": "Localiza en el grafo el commit / la rama que acabas de practicar.",
+      "step4": "Repite una acción CLI y observa la actualización visual.",
+      "step5": "Vuelve a Game4Git para el siguiente reto."
+    },
+    "try": {
+      "title": "Prueba Gitoryx",
+      "subtitle": "Abre el cliente de escritorio en un repo real — sin iframe ni cuenta para empezar.",
+      "body": "Descarga Gitoryx para macOS, Windows o Linux, abre un repositorio local y mira cómo se actualiza el grafo. Sigue practicando CLI en Game4Git; usa Gitoryx cuando quieras ver con más claridad las mismas operaciones.",
+      "cta": "Abrir Gitoryx",
+      "backPlayground": "Volver al playground",
+      "promoLine": "Consejo: código GAME4GIT — 20 % durante 12 meses (ver Introducción)."
+    },
+    "cheatsheet": {
+      "title": "Chuleta de operaciones visuales",
+      "subtitle": "Seis movimientos Git habituales y cómo se ven.",
+      "item1": {
+        "title": "Commit",
+        "desc": "Aparece un nodo nuevo en la línea de la rama actual."
+      },
+      "item2": {
+        "title": "Crear rama",
+        "desc": "Una línea de color se separa desde la punta."
+      },
+      "item3": {
+        "title": "Checkout / switch",
+        "desc": "El foco se mueve a otra punta de rama."
+      },
+      "item4": {
+        "title": "Merge",
+        "desc": "Las líneas se unen; puede aparecer un merge commit."
+      },
+      "item5": {
+        "title": "Push / fetch",
+        "desc": "Las puntas remotas se mueven respecto a las locales."
+      },
+      "item6": {
+        "title": "Conflicto",
+        "desc": "El editor lado a lado marca ours vs theirs."
+      }
+    },
+    "outro": {
+      "ariaLabel": "Consejo Gitoryx tras el ejercicio",
+      "guideCta": "Abrir guía Gitoryx",
+      "externalCta": "Abrir Gitoryx",
+      "promoLabel": "Promo:",
+      "copy": "Copiar",
+      "dismiss": "No volver a mostrar",
+      "feature-branch": {
+        "title": "Acabas de practicar ramas por CLI",
+        "body": "En Gitoryx verías feature-login separarse de master y volver a unirse al hacer merge — misma historia, grafo visual."
+      },
+      "remote-workflow": {
+        "title": "Acabas de practicar remotes por CLI",
+        "body": "En Gitoryx, fetch/push/pull muestran las puntas local y origin moviéndose en el grafo para ver ahead/behind."
+      },
+      "fast-forward-merge": {
+        "title": "Acabas de practicar merges fast-forward",
+        "body": "En Gitoryx un fast-forward adelanta la punta; --no-ff deja un merge commit visible en el grafo."
+      }
+    }
   }
 }

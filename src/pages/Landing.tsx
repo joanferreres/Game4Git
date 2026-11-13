@@ -9,6 +9,7 @@ import {
   Shield,
   Cpu,
   ArrowRight,
+  Eye,
 } from "lucide-react";
 import AppNav from "@/components/AppNav";
 import SiteFooter from "@/components/SiteFooter";
@@ -123,6 +124,15 @@ const Landing: React.FC = () => {
       color: "green" as const,
       command: "valgrind --leak",
       difficulty: t("home.levelAdvanced", "Avanzado"),
+    },
+    {
+      href: localizePath("/gitoryx"),
+      title: t("home.guides.gitoryx.title"),
+      description: t("home.guides.gitoryx.description"),
+      icon: Eye,
+      color: "sky" as const,
+      command: "gitoryx",
+      difficulty: t("home.levelBasic", "Básico"),
     },
   ];
 

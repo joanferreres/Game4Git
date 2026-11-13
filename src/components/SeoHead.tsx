@@ -14,6 +14,7 @@ type SeoPageKey =
   | "home"
   | "gdb"
   | "valgrind"
+  | "gitoryx"
   | "gitPracticeGame"
   | "gitBranchPractice"
   | "gitMergeConflicts"

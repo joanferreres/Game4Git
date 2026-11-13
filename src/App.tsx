@@ -23,6 +23,7 @@ const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const GdbLearning = lazy(() => import("./pages/GdbLearning"));
 const ValgrindLearning = lazy(() => import("./pages/ValgrindLearning"));
+const GitoryxLearning = lazy(() => import("./pages/GitoryxLearning"));
 const GitPracticeGame = lazy(() => import("./pages/GitPracticeGame"));
 const GitBranchPractice = lazy(() => import("./pages/GitBranchPractice"));
 const GitMergeConflicts = lazy(() => import("./pages/GitMergeConflicts"));
@@ -128,6 +129,7 @@ const localizedPageDefinitions = [
   { path: "/playground", component: Index },
   { path: "/gdb", component: GdbLearning },
   { path: "/valgrind", component: ValgrindLearning },
+  { path: "/gitoryx", component: GitoryxLearning },
   { path: "/git-practice-game", component: GitPracticeGame },
   { path: "/git-branch-practice", component: GitBranchPractice },
   { path: "/git-merge-conflicts", component: GitMergeConflicts },

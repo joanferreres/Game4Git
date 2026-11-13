@@ -15,6 +15,7 @@ const ROUTE_SOURCE = {
   playground: 'src/pages/Index.tsx',
   gdb: 'src/pages/GdbLearning.tsx',
   valgrind: 'src/pages/ValgrindLearning.tsx',
+  gitoryx: 'src/pages/GitoryxLearning.tsx',
   gitPracticeGame: 'src/pages/GitPracticeGame.tsx',
   gitBranchPractice: 'src/pages/GitBranchPractice.tsx',
   gitMergeConflicts: 'src/pages/GitMergeConflicts.tsx',
@@ -70,6 +71,7 @@ const ROUTES = [
   { key: 'playground', path: '/playground' },
   { key: 'gdb', path: '/gdb' },
   { key: 'valgrind', path: '/valgrind' },
+  { key: 'gitoryx', path: '/gitoryx' },
   { key: 'gitPracticeGame', path: '/git-practice-game' },
   { key: 'gitBranchPractice', path: '/git-branch-practice' },
   { key: 'gitMergeConflicts', path: '/git-merge-conflicts' },
@@ -229,6 +231,8 @@ const getRouteTitle = (locale, routeKey) => {
       return t(locale, 'gdb.pageTitle');
     case 'valgrind':
       return t(locale, 'valgrind.pageTitle');
+    case 'gitoryx':
+      return t(locale, 'gitoryx.pageTitle');
     case 'home':
       return t(locale, 'general.title');
     case 'playground':
@@ -244,6 +248,8 @@ const getRouteDescription = (locale, routeKey) => {
       return t(locale, 'gdb.subtitle');
     case 'valgrind':
       return t(locale, 'valgrind.intro.subtitle');
+    case 'gitoryx':
+      return t(locale, 'gitoryx.intro.whatIsSubtitle');
     case 'home':
       return t(locale, 'home.seoIntroShort');
     case 'playground':
@@ -406,12 +412,20 @@ const buildStructuredData = (route, locale) => {
     );
   }
 
-  const breadcrumbItems =
-    route.key === 'gdb' || route.key === 'valgrind'
+  const guidePageTitleKey =
+    route.key === 'gdb'
+      ? 'gdb.pageTitle'
+      : route.key === 'valgrind'
+        ? 'valgrind.pageTitle'
+        : route.key === 'gitoryx'
+          ? 'gitoryx.pageTitle'
+          : null;
+
+  const breadcrumbItems = guidePageTitleKey
       ? [
           { name: t(locale, 'general.title'), url: getLocalizedUrl('/', locale) },
           {
-            name: t(locale, route.key === 'gdb' ? 'gdb.pageTitle' : 'valgrind.pageTitle'),
+            name: t(locale, guidePageTitleKey),
             url,
           },
         ]
@@ -436,6 +450,7 @@ const buildStructuredData = (route, locale) => {
 const buildHomeMarkup = (locale) => {
   const gdbPath = getLocalizedPath('/gdb', locale);
   const valgrindPath = getLocalizedPath('/valgrind', locale);
+  const gitoryxPath = getLocalizedPath('/gitoryx', locale);
   const guideRoutes = [
     { key: 'gitPracticeGame', path: '/git-practice-game' },
     { key: 'gitBranchPractice', path: '/git-branch-practice' },
@@ -456,6 +471,7 @@ const buildHomeMarkup = (locale) => {
           <div class="mt-4 flex flex-wrap gap-3">
             <a class="underline" href="${escapeHtml(gdbPath)}">GDB</a>
             <a class="underline" href="${escapeHtml(valgrindPath)}">Valgrind</a>
+            <a class="underline" href="${escapeHtml(gitoryxPath)}">Gitoryx</a>
           </div>
         </section>
         <section class="mx-auto max-w-6xl mt-8">
@@ -600,6 +616,7 @@ const buildPlaygroundMarkup = (locale) => {
   const homePath = getLocalizedPath('/', locale);
   const gdbPath = getLocalizedPath('/gdb', locale);
   const valgrindPath = getLocalizedPath('/valgrind', locale);
+  const gitoryxPath = getLocalizedPath('/gitoryx', locale);
   const guideRoutes = [
     { key: 'gitPracticeGame', path: '/git-practice-game' },
     { key: 'gitBranchPractice', path: '/git-branch-practice' },
@@ -633,6 +650,7 @@ const buildPlaygroundMarkup = (locale) => {
             ${guideListHtml}
             <li><a class="underline" href="${escapeHtml(gdbPath)}">${escapeHtml(t(locale, 'gdb.pageTitle'))}</a></li>
             <li><a class="underline" href="${escapeHtml(valgrindPath)}">${escapeHtml(t(locale, 'valgrind.pageTitle'))}</a></li>
+            <li><a class="underline" href="${escapeHtml(gitoryxPath)}">${escapeHtml(t(locale, 'gitoryx.pageTitle'))}</a></li>
           </ul>
         </section>
       </main>`;
@@ -808,12 +826,54 @@ const buildLandingMarkup = (route, locale) => {
       </div>`;
 };
 
+const buildGitoryxMarkup = (locale) => {
+  const homePath = getLocalizedPath('/', locale);
+  const cheatItems = [1, 2, 3, 4, 5, 6]
+    .map(
+      (n) =>
+        `<li><strong>${escapeHtml(t(locale, `gitoryx.cheatsheet.item${n}.title`))}:</strong> ${escapeHtml(
+          t(locale, `gitoryx.cheatsheet.item${n}.desc`)
+        )}</li>`
+    )
+    .join('\n            ');
+  const pathSteps = [1, 2, 3, 4, 5]
+    .map((n) => `<li>${escapeHtml(t(locale, `gitoryx.studentPath.step${n}`))}</li>`)
+    .join('\n            ');
+
+  return `
+      <main class="container min-h-screen px-4 sm:px-6 lg:px-8 py-8">
+        <header class="mx-auto max-w-3xl text-center">
+          <a class="underline text-sm" href="${escapeHtml(homePath)}">${escapeHtml(t(locale, 'common.backToHome', 'Back to Home'))}</a>
+          <h1 class="mt-3 text-3xl sm:text-4xl font-bold tracking-tight">${escapeHtml(t(locale, 'gitoryx.pageTitle'))}</h1>
+          <p class="mt-3 text-sm sm:text-base text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.intro.whatIsSubtitle'))}</p>
+        </header>
+        <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
+          <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'gitoryx.intro.whatIsTitle'))}</h2>
+          <p class="mt-3 text-sm text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.intro.paragraph'))}</p>
+        </section>
+        <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
+          <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'gitoryx.studentPath.title'))}</h2>
+          <ol class="mt-4 list-decimal pl-5 space-y-2 text-sm text-muted-foreground">
+            ${pathSteps}
+          </ol>
+        </section>
+        <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
+          <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'gitoryx.cheatsheet.title'))}</h2>
+          <ul class="mt-4 space-y-2 text-sm text-muted-foreground">
+            ${cheatItems}
+          </ul>
+        </section>
+      </main>`;
+};
+
 const buildRouteMarkup = (route, locale) => {
   switch (route.key) {
     case 'gdb':
       return buildGdbMarkup(locale);
     case 'valgrind':
       return buildValgrindMarkup(locale);
+    case 'gitoryx':
+      return buildGitoryxMarkup(locale);
     case 'home':
       return buildHomeMarkup(locale);
     case 'playground':
