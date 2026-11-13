@@ -1645,7 +1645,9 @@
     },
     "playgroundStripTitle": "Practice with the playground",
     "playgroundStripDesc": "Code editor, commit tree and Git controls all in one screen. No setup needed.",
-    "playgroundStripCta": "Open playground"
+    "playgroundStripCta": "Open playground",
+    "gitoryxCta": "See Git visually — Gitoryx guide",
+    "seoIntroGitoryx": "Gitoryx"
   },
   "nav": {
     "guides": "Guides",

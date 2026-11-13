@@ -1686,7 +1686,9 @@
     },
     "playgroundStripTitle": "Practica con el playground",
     "playgroundStripDesc": "Editor de código, árbol de commits y controles de Git en una sola pantalla. Sin configurar nada.",
-    "playgroundStripCta": "Abrir playground"
+    "playgroundStripCta": "Abrir playground",
+    "gitoryxCta": "Ver Git en visual — guía Gitoryx",
+    "seoIntroGitoryx": "Gitoryx"
   },
   "nav": {
     "guides": "Guías",

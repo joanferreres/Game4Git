@@ -1538,7 +1538,9 @@
     },
     "playgroundStripTitle": "Practica amb el playground",
     "playgroundStripDesc": "Editor de codi, arbre de commits i controls de Git en una sola pantalla. Sense configurar res.",
-    "playgroundStripCta": "Obrir playground"
+    "playgroundStripCta": "Obrir playground",
+    "gitoryxCta": "Veure Git en visual — guia Gitoryx",
+    "seoIntroGitoryx": "Gitoryx"
   },
   "nav": {
     "guides": "Guies",

@@ -70,6 +70,7 @@ const Landing: React.FC = () => {
   const rootRef = useRef<HTMLDivElement>(null);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
+  // Gitoryx sits with core Git guides (row 1) so it is as easy to find as GDB/Valgrind.
   const guides = [
     {
       href: localizePath("/git-practice-game"),
@@ -88,6 +89,15 @@ const Landing: React.FC = () => {
       color: "sky" as const,
       command: "git branch",
       difficulty: t("home.levelIntermediate", "Intermedio"),
+    },
+    {
+      href: localizePath("/gitoryx"),
+      title: t("home.guides.gitoryx.title"),
+      description: t("home.guides.gitoryx.description"),
+      icon: Eye,
+      color: "sky" as const,
+      command: "gitoryx",
+      difficulty: t("home.levelBasic", "Básico"),
     },
     {
       href: localizePath("/git-merge-conflicts"),
@@ -124,15 +134,6 @@ const Landing: React.FC = () => {
       color: "green" as const,
       command: "valgrind --leak",
       difficulty: t("home.levelAdvanced", "Avanzado"),
-    },
-    {
-      href: localizePath("/gitoryx"),
-      title: t("home.guides.gitoryx.title"),
-      description: t("home.guides.gitoryx.description"),
-      icon: Eye,
-      color: "sky" as const,
-      command: "gitoryx",
-      difficulty: t("home.levelBasic", "Básico"),
     },
   ];
 
@@ -194,6 +195,13 @@ const Landing: React.FC = () => {
                   </Link>
                   {" · "}
                   <Link
+                    to={localizePath("/gitoryx")}
+                    className="underline hover:text-primary"
+                  >
+                    {t("home.seoIntroGitoryx", "Gitoryx")}
+                  </Link>
+                  {" · "}
+                  <Link
                     to={localizePath("/git-merge-conflicts")}
                     className="underline hover:text-primary"
                   >
@@ -228,6 +236,13 @@ const Landing: React.FC = () => {
                   </Link>
                   {", "}
                   <Link
+                    to={localizePath("/gitoryx")}
+                    className="underline hover:text-primary"
+                  >
+                    {t("home.seoIntroGitoryx", "Gitoryx")}
+                  </Link>
+                  {", "}
+                  <Link
                     to={localizePath("/valgrind-memory-leaks")}
                     className="underline hover:text-primary"
                   >
@@ -250,25 +265,35 @@ const Landing: React.FC = () => {
                   {t("home.seoIntroTailShort", "basics included.")}
                 </p>
               </section>
-              <div className="flex flex-col xs:flex-row items-start xs:items-center gap-2">
+              <div className="flex flex-col gap-3">
+                <div className="flex flex-col xs:flex-row items-start xs:items-center gap-2">
+                  <Link
+                    to={localizePath("/playground")}
+                    className="inline-flex items-center gap-1.5 bg-orange-brand hover:bg-orange-brand-hover text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
+                  >
+                    {t("nav.playground", "Playground")}
+                    <ArrowRight className="w-4 h-4" aria-hidden />
+                  </Link>
+                  <a
+                    href="#guides"
+                    className="inline-flex items-center gap-1.5 border border-border text-foreground text-sm font-medium px-4 py-2.5 rounded-lg hover:bg-muted/60 transition-colors"
+                  >
+                    {t("nav.guides", "Guías")}
+                  </a>
+                </div>
                 <Link
-                  to={localizePath("/playground")}
-                  className="inline-flex items-center gap-1.5 bg-orange-brand hover:bg-orange-brand-hover text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
+                  to={localizePath("/gitoryx")}
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-sky-700 hover:text-sky-800 dark:text-sky-300 dark:hover:text-sky-200"
                 >
-                  {t("nav.playground", "Playground")}
-                  <ArrowRight className="w-4 h-4" aria-hidden />
+                  <Eye className="w-3.5 h-3.5" aria-hidden />
+                  {t("home.gitoryxCta", "See Git visually — Gitoryx guide")}
+                  <ArrowRight className="w-3.5 h-3.5" aria-hidden />
                 </Link>
-                <a
-                  href="#guides"
-                  className="inline-flex items-center gap-1.5 border border-border text-foreground text-sm font-medium px-4 py-2.5 rounded-lg hover:bg-muted/60 transition-colors"
-                >
-                  {t("nav.guides", "Guías")}
-                </a>
               </div>
               {/* Stats row */}
               <div className="hidden sm:flex gap-6 mt-6 pt-5 border-t border-border/60">
                 <div>
-                  <p className="text-lg font-bold tracking-tight text-foreground">6</p>
+                  <p className="text-lg font-bold tracking-tight text-foreground">7</p>
                   <p className="text-[11px] text-muted-foreground">
                     {t("home.statGuides", "Guías interactivas")}
                   </p>
