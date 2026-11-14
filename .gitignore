@@ -36,6 +36,7 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+.unlighthouse
 .wrangler
 .dev.vars
 

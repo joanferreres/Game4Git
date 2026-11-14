@@ -17,14 +17,37 @@ npm run build
 # Ejecutar comprobaciones de seguridad
 npm run security:check
 
-# Desplegar en Cloudflare Workers
+# Desplegar en Cloudflare Workers (producción)
 npm run deploy
 ```
 
 La aplicación utiliza los siguientes archivos de configuración para el despliegue:
-- `wrangler.jsonc`: Worker, assets SPA y observabilidad
+- `wrangler.jsonc`: Worker, assets SPA, `preview_urls` y observabilidad
 - `public/_headers`: Cabeceras de seguridad y caché
 - `deploy.sh`: Script que automatiza el proceso de despliegue
+
+GitHub Actions solo hace lint/build/security. El deploy a producción es Cloudflare (Wrangler o Workers Builds), no Vercel.
+
+### Preview de una rama (sin tocar producción)
+
+Opción A — CLI (rápido, con cuenta Cloudflare autenticada):
+
+```bash
+git checkout cursor/gitoryx-v1-ae77   # o cualquier rama
+npm run preview:cf
+# equivalente: npm run build && npx wrangler preview --name cursor-gitoryx-v1-ae77
+```
+
+`wrangler preview` usa el nombre de la rama Git por defecto y imprime una Preview URL
+(`<preview-name>-game4git.<subdomain>.workers.dev`). No despliega a `game4git.com`.
+
+Opción B — Workers Builds (recomendado para PRs):
+
+1. Cloudflare dashboard → **Workers & Pages** → **game4git** → **Settings** → **Builds**
+2. Conecta el repo `joanferreres/Game4Git` si aún no está
+3. Production branch: `main` → deploy command `npx wrangler deploy`
+4. Activa **Builds for Preview branches** → Preview command `npx wrangler preview`
+5. Push a la rama (p. ej. `cursor/gitoryx-v1-ae77`) → Preview en el dashboard (**Previews**) y comentario en el PR si la integración GitHub está activa
 
 ### Dominio personalizado
 

@@ -88,6 +88,13 @@ Learn Git like you learn to ride a bike: balance first, speed later. Git Game tu
 - Progressive learning: start simple, then explore advanced workflows.
 - Accessibility and responsiveness: keyboard-friendly, mobile-ready.
 
+### Deploy (Cloudflare only)
+
+Production and previews run on **Cloudflare Workers** (`wrangler.jsonc`). There is no Vercel deploy path.
+
+- Production: `npm run deploy` (or Workers Builds on `main`)
+- Branch preview: `npm run preview:cf` — details in [`deploy/README.md`](deploy/README.md)
+
 ### Automated PageSpeed reports
 
 - Configure URLs in `pagespeed.config.json`.
