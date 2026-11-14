@@ -20,6 +20,7 @@
     "prepare:prod": "chmod +x ./prepare-for-prod.sh && ./prepare-for-prod.sh",
     "deploy": "npm run build && wrangler deploy",
     "deploy:cloudflare": "npm run security:check && npm run build && wrangler deploy",
+    "preview:cf": "npm run build && wrangler preview",
     "cf:dev": "npm run build && wrangler dev",
     "cf:typegen": "wrangler types",
     "generate:sitemap": "node generate-sitemap.cjs",
