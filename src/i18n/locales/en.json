@@ -1600,7 +1600,7 @@
     "codeEditorLabel": "Code editor for hello.c file",
     "seoIntroLabel": "App description",
     "guidesTitle": "Popular guides",
-    "guidesDescription": "Pick a topic—commits, branches, merge conflicts, Valgrind, GDB, or memory leaks—and jump straight into the matching interactive guide.",
+    "guidesDescription": "Pick a topic—commits, branches, visual Git with Gitoryx, merge conflicts, Valgrind, GDB, or memory leaks—and jump straight into the matching interactive guide.",
     "guidesPrimaryCta": "Explore guide",
     "guides": {
       "gitPractice": {
@@ -1628,8 +1628,8 @@
         "description": "Find and fix memory leaks step by step."
       },
       "gitoryx": {
-        "title": "Gitoryx visual Git",
-        "description": "Bridge CLI practice to a visual commit graph — companion guide for Gitoryx."
+        "title": "See Git visually with Gitoryx",
+        "description": "Connect Game4Git CLI practice to a visual commit graph — same commits, branches, and merges, clearer mental model."
       }
     },
     "faqTitle": "FAQs",
@@ -1646,7 +1646,10 @@
     "playgroundStripTitle": "Practice with the playground",
     "playgroundStripDesc": "Code editor, commit tree and Git controls all in one screen. No setup needed.",
     "playgroundStripCta": "Open playground",
-    "gitoryxCta": "See Git visually — Gitoryx guide",
+    "gitoryxCta": "See Git visually — open the Gitoryx guide",
+    "gitoryxCtaHint": "Practice CLI here, then see the same commits and branches on a visual graph.",
+    "gitoryxCardBadge": "CLI ↔ visual",
+    "playgroundGitoryxNudge": "After the playground: see the same Git story visually — Gitoryx guide",
     "seoIntroGitoryx": "Gitoryx"
   },
   "nav": {

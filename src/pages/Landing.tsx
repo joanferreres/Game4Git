@@ -70,7 +70,8 @@ const Landing: React.FC = () => {
   const rootRef = useRef<HTMLDivElement>(null);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
-  // Gitoryx sits with core Git guides (row 1) so it is as easy to find as GDB/Valgrind.
+  // Gitoryx sits early in the guides grid (after the primary practice game)
+  // so it is at least as discoverable as GDB/Valgrind.
   const guides = [
     {
       href: localizePath("/git-practice-game"),
@@ -82,15 +83,6 @@ const Landing: React.FC = () => {
       difficulty: t("home.levelBasic", "Básico"),
     },
     {
-      href: localizePath("/git-branch-practice"),
-      title: t("home.guides.gitBranch.title"),
-      description: t("home.guides.gitBranch.description"),
-      icon: GitBranch,
-      color: "sky" as const,
-      command: "git branch",
-      difficulty: t("home.levelIntermediate", "Intermedio"),
-    },
-    {
       href: localizePath("/gitoryx"),
       title: t("home.guides.gitoryx.title"),
       description: t("home.guides.gitoryx.description"),
@@ -98,6 +90,16 @@ const Landing: React.FC = () => {
       color: "sky" as const,
       command: "gitoryx",
       difficulty: t("home.levelBasic", "Básico"),
+      featured: true,
+    },
+    {
+      href: localizePath("/git-branch-practice"),
+      title: t("home.guides.gitBranch.title"),
+      description: t("home.guides.gitBranch.description"),
+      icon: GitBranch,
+      color: "sky" as const,
+      command: "git branch",
+      difficulty: t("home.levelIntermediate", "Intermedio"),
     },
     {
       href: localizePath("/git-merge-conflicts"),
@@ -281,13 +283,29 @@ const Landing: React.FC = () => {
                     {t("nav.guides", "Guías")}
                   </a>
                 </div>
+                {/* Learning-first hero entry: bordered chip, same language as guide cards — not a promo banner */}
                 <Link
                   to={localizePath("/gitoryx")}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-sky-700 hover:text-sky-800 dark:text-sky-300 dark:hover:text-sky-200"
+                  className="group inline-flex max-w-md items-start gap-3 rounded-lg border border-sky-200/80 bg-sky-50/70 px-3.5 py-3 text-left transition-colors hover:border-sky-300 hover:bg-sky-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-brand focus-visible:ring-offset-2 dark:border-sky-800/60 dark:bg-sky-950/40 dark:hover:border-sky-700 dark:hover:bg-sky-950/60"
                 >
-                  <Eye className="w-3.5 h-3.5" aria-hidden />
-                  {t("home.gitoryxCta", "See Git visually — Gitoryx guide")}
-                  <ArrowRight className="w-3.5 h-3.5" aria-hidden />
+                  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-sky-100 dark:bg-sky-900/60">
+                    <Eye className="h-4 w-4 text-sky-700 dark:text-sky-300" aria-hidden />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-sm font-semibold text-foreground leading-snug">
+                      {t("home.gitoryxCta", "See Git visually — Gitoryx guide")}
+                    </span>
+                    <span className="mt-0.5 block text-xs text-muted-foreground leading-relaxed">
+                      {t(
+                        "home.gitoryxCtaHint",
+                        "CLI practice here, then see the same commits and branches on a visual graph."
+                      )}
+                    </span>
+                  </span>
+                  <ArrowRight
+                    className="mt-1 h-4 w-4 shrink-0 text-sky-600 transition-transform group-hover:translate-x-0.5 dark:text-sky-400"
+                    aria-hidden
+                  />
                 </Link>
               </div>
               {/* Stats row */}
@@ -354,11 +372,16 @@ const Landing: React.FC = () => {
             {guides.map((guide) => {
               const Icon = guide.icon;
               const colors = guideColorMap[guide.color];
+              const featured = "featured" in guide && guide.featured;
               return (
                 <Link
                   key={guide.href}
                   to={guide.href}
-                  className="home-guide-card group bg-card border border-border rounded-lg p-4 flex flex-col gap-3 hover:shadow-md focus-visible:ring-2 focus-visible:ring-orange-brand focus-visible:ring-offset-2 transition-all duration-150 hover:-translate-y-0.5"
+                  className={`home-guide-card group bg-card rounded-lg p-4 flex flex-col gap-3 hover:shadow-md focus-visible:ring-2 focus-visible:ring-orange-brand focus-visible:ring-offset-2 transition-all duration-150 hover:-translate-y-0.5 ${
+                    featured
+                      ? "border-2 border-sky-300/90 dark:border-sky-700/80 ring-1 ring-sky-100 dark:ring-sky-900/40"
+                      : "border border-border"
+                  }`}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div
@@ -369,7 +392,14 @@ const Landing: React.FC = () => {
                         aria-hidden
                       />
                     </div>
-                    <span className={colors.badge}>{guide.command}</span>
+                    <div className="flex items-center gap-1.5">
+                      {featured ? (
+                        <span className="text-[10px] font-medium text-sky-700 bg-sky-50 border border-sky-200/80 px-1.5 py-0.5 rounded dark:text-sky-300 dark:bg-sky-950/50 dark:border-sky-800/60">
+                          {t("home.gitoryxCardBadge", "CLI ↔ visual")}
+                        </span>
+                      ) : null}
+                      <span className={colors.badge}>{guide.command}</span>
+                    </div>
                   </div>
                   <div className="flex-1">
                     <p className="text-sm font-semibold text-foreground leading-snug mb-1">
@@ -413,13 +443,26 @@ const Landing: React.FC = () => {
               <p className="text-sm text-slate-400 mb-6 leading-relaxed">
                 {t("home.playgroundStripDesc", "Editor de código, árbol de commits y controles de Git en una sola pantalla. Sin configurar nada.")}
               </p>
-              <Link
-                to={localizePath("/playground")}
-                className="inline-flex items-center gap-2 bg-orange-brand hover:bg-orange-brand-hover text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
-              >
-                {t("home.playgroundStripCta", "Abrir playground")}
-                <ArrowRight className="w-4 h-4" aria-hidden />
-              </Link>
+              <div className="flex flex-col gap-3 items-start">
+                <Link
+                  to={localizePath("/playground")}
+                  className="inline-flex items-center gap-2 bg-orange-brand hover:bg-orange-brand-hover text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
+                >
+                  {t("home.playgroundStripCta", "Abrir playground")}
+                  <ArrowRight className="w-4 h-4" aria-hidden />
+                </Link>
+                <Link
+                  to={localizePath("/gitoryx")}
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-sky-300 hover:text-sky-200"
+                >
+                  <Eye className="w-3.5 h-3.5" aria-hidden />
+                  {t(
+                    "home.playgroundGitoryxNudge",
+                    "After the playground: see the same Git story visually — Gitoryx guide"
+                  )}
+                  <ArrowRight className="w-3.5 h-3.5" aria-hidden />
+                </Link>
+              </div>
             </div>
             <div className="hidden md:block" aria-hidden>
               <div className="bg-[#1e293b] rounded-xl border border-[#334155] p-4 font-mono text-[11px] leading-[1.8] text-slate-400">

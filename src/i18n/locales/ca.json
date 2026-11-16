@@ -1493,7 +1493,7 @@
     "seoIntroMobile": "Aprèn git jugant online gratis — commits visuals i reptes guiats al navegador.",
     "seoIntroLabel": "Descripció de l'aplicació",
     "guidesTitle": "Guies populars",
-    "guidesDescription": "Tria un tema—commits, branques, conflictes de merge, Valgrind, GDB o fuites de memòria—i entra directament a la guia interactiva adequada.",
+    "guidesDescription": "Tria un tema—commits, branques, Git visual amb Gitoryx, conflictes de merge, Valgrind, GDB o fuites de memòria—i entra directament a la guia interactiva adequada.",
     "guidesPrimaryCta": "Veure guia",
     "guides": {
       "gitPractice": {
@@ -1521,8 +1521,8 @@
         "description": "Troba i corregeix memory leaks pas a pas."
       },
       "gitoryx": {
-        "title": "Gitoryx Git visual",
-        "description": "Pont entre la CLI i el graf de commits — guia companya de Gitoryx."
+        "title": "Veure Git en visual amb Gitoryx",
+        "description": "Connecta la pràctica CLI de Game4Git amb un graf visual — mateixos commits, branques i merges, model mental més clar."
       }
     },
     "faqTitle": "Preguntes freqüents",
@@ -1539,7 +1539,10 @@
     "playgroundStripTitle": "Practica amb el playground",
     "playgroundStripDesc": "Editor de codi, arbre de commits i controls de Git en una sola pantalla. Sense configurar res.",
     "playgroundStripCta": "Obrir playground",
-    "gitoryxCta": "Veure Git en visual — guia Gitoryx",
+    "gitoryxCta": "Veure Git en visual — obre la guia Gitoryx",
+    "gitoryxCtaHint": "Practica la CLI aquí i després mira els mateixos commits i branques en un graf visual.",
+    "gitoryxCardBadge": "CLI ↔ visual",
+    "playgroundGitoryxNudge": "Després del playground: mira la mateixa història de Git en visual — guia Gitoryx",
     "seoIntroGitoryx": "Gitoryx"
   },
   "nav": {

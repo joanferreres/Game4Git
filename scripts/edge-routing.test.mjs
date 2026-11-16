@@ -5,6 +5,7 @@ import assert from "node:assert/strict";
 import {
   getCanonicalRedirectUrl,
   isHtmlRoutePath,
+  isPreviewHostname,
 } from "../src/edge-routing.js";
 
 assert.equal(isHtmlRoutePath("/"), true);
@@ -62,6 +63,17 @@ assert.equal(
 );
 assert.equal(
   getCanonicalRedirectUrl("https://game4git.com/git-practice-game/"),
+  null
+);
+assert.equal(isPreviewHostname("game4git.ahead-windshield.workers.dev"), true);
+assert.equal(isPreviewHostname("workers.dev"), true);
+assert.equal(isPreviewHostname("game4git.com"), false);
+assert.equal(
+  getCanonicalRedirectUrl("https://game4git.ahead-windshield.workers.dev/"),
+  null
+);
+assert.equal(
+  getCanonicalRedirectUrl("https://game4git.example.workers.dev/gitoryx"),
   null
 );
 

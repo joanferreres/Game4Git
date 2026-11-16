@@ -24,6 +24,12 @@ function normalizeHeaderHost(host) {
   return value.split(":")[0];
 }
 
+/** Preview / temporary Workers hosts must stay on workers.dev (no prod redirect). */
+export function isPreviewHostname(hostname) {
+  const host = String(hostname || "").toLowerCase();
+  return host === "workers.dev" || host.endsWith(".workers.dev");
+}
+
 export function isHtmlRoutePath(pathname) {
   if (!pathname || pathname === "/") {
     return true;
@@ -47,7 +53,7 @@ export function getCanonicalRedirectUrl(rawUrl, headers) {
 
   let changed = false;
 
-  if (LOCAL_HOSTS.has(url.hostname)) {
+  if (LOCAL_HOSTS.has(url.hostname) || isPreviewHostname(url.hostname)) {
     return null;
   }
 
