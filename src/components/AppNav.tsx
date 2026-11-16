@@ -8,7 +8,7 @@ import GuideModeSelector, { type GuideMode } from "@/components/GuideModeSelecto
 interface AppNavProps {
   variant: "landing" | "inner";
   badge?: string;
-  /** When set, replaces the static badge with the gdb|valgrind|gitoryx|playground selector. */
+  /** When set, shows the gdb|valgrind|gitoryx|playground selector under the title. */
   activeMode?: GuideMode;
   centerBrand?: boolean;
   showPlaygroundCta?: boolean;
@@ -23,15 +23,14 @@ const AppNav = ({
 }: AppNavProps) => {
   const { t } = useTranslation();
   const localizePath = useLocalizedPath();
-  const showCenteredInnerBrand = variant === "inner" && centerBrand;
+  // Mode pages always center the brand so the selector can sit cleanly underneath.
+  const showCenteredInnerBrand = variant === "inner" && (centerBrand || Boolean(activeMode));
   // Selector already includes playground — skip the duplicate orange CTA.
   const effectivePlaygroundCta = showPlaygroundCta && !activeMode;
   const showStackedMobilePlaygroundCta =
     variant === "inner" && effectivePlaygroundCta && !showCenteredInnerBrand;
 
-  const modeOrBadge = activeMode ? (
-    <GuideModeSelector active={activeMode} />
-  ) : badge ? (
+  const badgeEl = !activeMode && badge ? (
     <span className="font-mono text-[10px] text-muted-foreground bg-muted border border-border px-1.5 py-0.5 rounded hidden xs:inline">
       {badge}
     </span>
@@ -42,7 +41,7 @@ const AppNav = ({
       <div
         className={
           showCenteredInnerBrand
-            ? "container max-w-full px-4 sm:px-6 lg:px-8 h-14 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3"
+            ? "container max-w-full px-4 sm:px-6 lg:px-8 min-h-14 py-2 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3"
             : showStackedMobilePlaygroundCta
               ? "container max-w-full px-4 sm:px-6 lg:px-8 min-h-14 py-2 flex flex-wrap items-center justify-between gap-3"
             : "container max-w-full px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-4"
@@ -100,22 +99,20 @@ const AppNav = ({
                 <span className="sm:hidden">← {t("nav.guides", "Guías")}</span>
                 <span className="hidden sm:inline">{t("nav.backToGuides", "← Volver a guías")}</span>
               </Link>
-              {modeOrBadge && (
+              {badgeEl && (
                 <>
                   <span className="w-px h-4 bg-border shrink-0" aria-hidden />
-                  {modeOrBadge}
+                  {badgeEl}
                 </>
               )}
             </div>
-            {showCenteredInnerBrand && (
-              <Link
-                to={localizePath("/")}
-                className="flex items-center gap-1.5 font-bold text-[15px] tracking-tight text-foreground justify-self-center"
-              >
-                <span className="w-2 h-2 rounded-full bg-orange-brand" aria-hidden />
-                Game4Git
-              </Link>
-            )}
+            <Link
+              to={localizePath("/")}
+              className="flex items-center gap-1.5 font-bold text-[15px] tracking-tight text-foreground justify-self-center"
+            >
+              <span className="w-2 h-2 rounded-full bg-orange-brand" aria-hidden />
+              Game4Git
+            </Link>
             <div className="flex items-center gap-1 justify-self-end">
               {effectivePlaygroundCta && (
                 <Link
@@ -139,10 +136,10 @@ const AppNav = ({
               <span className="sm:hidden">← {t("nav.guides", "Guías")}</span>
               <span className="hidden sm:inline">{t("nav.backToGuides", "← Volver a guías")}</span>
             </Link>
-            {modeOrBadge && (
+            {badgeEl && (
               <>
                 <span className="w-px h-4 bg-border shrink-0" aria-hidden />
-                {modeOrBadge}
+                {badgeEl}
               </>
             )}
             </div>
@@ -169,6 +166,12 @@ const AppNav = ({
           </>
         )}
       </div>
+
+      {activeMode && (
+        <div className="container max-w-full px-4 sm:px-6 lg:px-8 pb-2.5 flex justify-center">
+          <GuideModeSelector active={activeMode} />
+        </div>
+      )}
     </nav>
   );
 };

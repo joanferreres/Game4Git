@@ -18,8 +18,8 @@ interface GuideModeSelectorProps {
 }
 
 /**
- * Top guide/mode switcher (gdb | valgrind | gitoryx | playground).
- * Restores the multi-option header control that used to live beside the playground badge.
+ * Segmented guide-mode switcher (gdb | valgrind | gitoryx | playground).
+ * Light gray track + white active pill, mono labels — sits under the page title.
  */
 const GuideModeSelector = ({ active, className }: GuideModeSelectorProps) => {
   const { t } = useTranslation();
@@ -29,7 +29,7 @@ const GuideModeSelector = ({ active, className }: GuideModeSelectorProps) => {
     <nav
       aria-label={t("nav.modeSelector", "Guide modes")}
       className={cn(
-        "inline-flex max-w-full items-center gap-0.5 overflow-x-auto rounded-md border border-border bg-muted/60 p-0.5",
+        "inline-flex max-w-full items-center gap-1 overflow-x-auto rounded-full bg-muted p-1",
         className
       )}
     >
@@ -42,10 +42,10 @@ const GuideModeSelector = ({ active, className }: GuideModeSelectorProps) => {
             to={localizePath(mode.path)}
             aria-current={isActive ? "page" : undefined}
             className={cn(
-              "shrink-0 rounded px-1.5 py-0.5 font-mono text-[10px] font-medium transition-colors whitespace-nowrap",
+              "shrink-0 rounded-full px-3 sm:px-3.5 py-1.5 font-mono text-[11px] sm:text-xs font-medium tracking-tight transition-colors whitespace-nowrap",
               isActive
-                ? "bg-background text-foreground shadow-sm border border-border"
-                : "text-muted-foreground hover:text-foreground border border-transparent"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
             )}
           >
             {label}
