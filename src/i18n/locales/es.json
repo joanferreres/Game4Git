@@ -48,7 +48,7 @@
   "seo": {
     "home": {
       "title": "Aprender Git Jugando Gratis — Juego Online | Game4Git",
-      "description": "Aprender git jugando online gratis — juego interactivo de commits, ramas, conflictos de merge, GDB y Valgrind. Sin instalación."
+      "description": "Aprender git jugando online gratis — juego interactivo de commits, ramas, conflictos de merge, GDB, Valgrind y Gitoryx. Sin instalación."
     },
     "gdb": {
       "title": "Tutorial de GDB — Depuración interactiva | Game4Git",
@@ -1785,6 +1785,17 @@
   },
   "gitoryx": {
     "pageTitle": "Gitoryx — Ver Git en visual",
+    "faqTitle": "FAQ de Gitoryx",
+    "faq": {
+      "q1": "¿Qué es Gitoryx?",
+      "a1": "Gitoryx es un cliente Git nativo de escritorio para macOS, Windows y Linux. Muestra el repositorio como un grafo de commits a color y convierte operaciones reales de Git—commit, rama, merge, rebase, conflictos—en flujos visuales.",
+      "q2": "¿Gitoryx sustituye aprender la CLI de Git?",
+      "a2": "No. Game4Git enseña la CLI en el navegador; Gitoryx refuerza el mismo modelo mental en un repo local real. Usa ambos: CLI para comandos cortos y visuales cuando el estado es difícil de imaginar.",
+      "q3": "¿Cómo abro un repo en Gitoryx desde la terminal?",
+      "a3": "Instala Gitoryx y usa el helper gitoryx en la carpeta del repositorio (o Archivo → Abrir). El grafo muestra la historia que ya hay en disco—sin migrar ni reclonar.",
+      "q4": "¿Puedo probar Gitoryx gratis con Game4Git?",
+      "a4": "Puedes descargar Gitoryx y abrir repos locales sin subir código a Gitoryx. Los embajadores de Game4Git pueden usar el código GAME4GIT para un 20% de descuento en Pro durante 12 meses."
+    },
     "tabs": {
       "introduction": "Introducción",
       "cliVisual": "CLI ↔ Visual",

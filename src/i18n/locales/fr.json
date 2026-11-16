@@ -48,7 +48,7 @@
   "seo": {
     "home": {
       "title": "Apprendre Git en Jouant Gratuitement — Jeu en Ligne | Game4Git",
-      "description": "Apprendre git en jouant en ligne gratuitement — jeu interactif de commits, branches, conflits de merge, GDB et Valgrind. Sans installation."
+      "description": "Apprendre git en jouant en ligne gratuitement — jeu interactif de commits, branches, conflits de merge, GDB, Valgrind et Gitoryx. Sans installation."
     },
     "gdb": {
       "title": "Tutoriel GDB — Débogage interactif | Game4Git",
@@ -1524,6 +1524,17 @@
   },
   "gitoryx": {
     "pageTitle": "Gitoryx — Voir Git en visuel",
+    "faqTitle": "FAQ Gitoryx",
+    "faq": {
+      "q1": "Qu’est-ce que Gitoryx ?",
+      "a1": "Gitoryx est un client Git natif pour macOS, Windows et Linux. Il affiche le dépôt comme un graphe de commits coloré et mappe les vraies opérations Git—commit, branche, merge, rebase, conflits—vers des workflows visuels.",
+      "q2": "Gitoryx remplace-t-il l’apprentissage de la CLI Git ?",
+      "a2": "Non. Game4Git enseigne la CLI dans le navigateur ; Gitoryx renforce le même modèle mental sur un vrai dépôt local. Utilisez les deux : CLI pour les commandes courtes, visuel quand l’état est difficile à visualiser.",
+      "q3": "Comment ouvrir un dépôt dans Gitoryx depuis le terminal ?",
+      "a3": "Installez Gitoryx, puis utilisez l’helper gitoryx dans le dossier du dépôt (ou Fichier → Ouvrir). Le graphe montre l’historique déjà sur disque—sans migration ni nouveau clone.",
+      "q4": "Puis-je essayer Gitoryx gratuitement avec Game4Git ?",
+      "a4": "Vous pouvez télécharger Gitoryx et ouvrir des dépôts locaux sans envoyer de code à Gitoryx. Les ambassadeurs Game4Git peuvent utiliser le code GAME4GIT pour 20 % de réduction sur Pro pendant 12 mois."
+    },
     "tabs": {
       "introduction": "Introduction",
       "cliVisual": "CLI ↔ Visuel",

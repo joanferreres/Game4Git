@@ -389,7 +389,7 @@ const buildStructuredData = (route, locale) => {
 
   const faqEntries = isLandingRoute(route.key)
     ? t(locale, `landingPages.${route.key}.faq`, [])
-    : route.key === 'gdb' || route.key === 'valgrind'
+    : route.key === 'gdb' || route.key === 'valgrind' || route.key === 'gitoryx'
       ? [1, 2, 3, 4]
           .map((index) => ({
             q: t(locale, `${route.key}.faq.q${index}`),
@@ -451,8 +451,10 @@ const buildHomeMarkup = (locale) => {
   const gdbPath = getLocalizedPath('/gdb', locale);
   const valgrindPath = getLocalizedPath('/valgrind', locale);
   const gitoryxPath = getLocalizedPath('/gitoryx', locale);
+  // Keep Gitoryx early (after practice game) to match Landing.tsx discoverability.
   const guideRoutes = [
     { key: 'gitPracticeGame', path: '/git-practice-game' },
+    { key: 'gitoryx', path: '/gitoryx' },
     { key: 'gitBranchPractice', path: '/git-branch-practice' },
     { key: 'gitMergeConflicts', path: '/git-merge-conflicts' },
     { key: 'valgrindMemoryLeaks', path: '/valgrind-memory-leaks' },
@@ -828,17 +830,41 @@ const buildLandingMarkup = (route, locale) => {
 
 const buildGitoryxMarkup = (locale) => {
   const homePath = getLocalizedPath('/', locale);
-  const cheatItems = [1, 2, 3, 4, 5, 6]
-    .map(
-      (n) =>
-        `<li><strong>${escapeHtml(t(locale, `gitoryx.cheatsheet.item${n}.title`))}:</strong> ${escapeHtml(
-          t(locale, `gitoryx.cheatsheet.item${n}.desc`)
-        )}</li>`
-    )
+  const playgroundPath = getLocalizedPath('/playground', locale);
+  const cheatRows = [
+    { cli: 'git commit', key: 'commit' },
+    { cli: 'git switch -c <name>', key: 'branch' },
+    { cli: 'git switch <branch>', key: 'switch' },
+    { cli: 'git merge <branch>', key: 'merge' },
+    { cli: 'git fetch / git push', key: 'remote' },
+    { cli: 'git add -p', key: 'stage' },
+    { cli: 'merge conflict', key: 'conflict' },
+    { cli: 'gitoryx', key: 'open' },
+  ];
+  const cheatItems = cheatRows
+    .map((row) => {
+      const visual = t(locale, `gitoryx.cheatsheet.items.${row.key}`);
+      return visual
+        ? `<li><code>${escapeHtml(row.cli)}</code> — ${escapeHtml(visual)}</li>`
+        : '';
+    })
+    .filter(Boolean)
     .join('\n            ');
   const pathSteps = [1, 2, 3, 4, 5]
     .map((n) => `<li>${escapeHtml(t(locale, `gitoryx.studentPath.step${n}`))}</li>`)
     .join('\n            ');
+  const whyItems = [0, 1, 2]
+    .map((n) => `<li>${escapeHtml(t(locale, `gitoryx.intro.why.${n}`))}</li>`)
+    .join('\n            ');
+  const faqItems = [1, 2, 3, 4]
+    .map(
+      (n) => `
+            <div>
+              <dt class="font-medium">${escapeHtml(t(locale, `gitoryx.faq.q${n}`))}</dt>
+              <dd class="mt-2 text-sm text-muted-foreground">${escapeHtml(t(locale, `gitoryx.faq.a${n}`))}</dd>
+            </div>`
+    )
+    .join('');
 
   return `
       <main class="container min-h-screen px-4 sm:px-6 lg:px-8 py-8">
@@ -850,18 +876,35 @@ const buildGitoryxMarkup = (locale) => {
         <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
           <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'gitoryx.intro.whatIsTitle'))}</h2>
           <p class="mt-3 text-sm text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.intro.paragraph'))}</p>
+          <p class="mt-3 text-sm text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.intro.paragraph2'))}</p>
+          <h3 class="mt-6 text-lg font-semibold">${escapeHtml(t(locale, 'gitoryx.intro.whyTitle'))}</h3>
+          <ul class="mt-3 list-disc pl-5 space-y-2 text-sm text-muted-foreground">
+            ${whyItems}
+          </ul>
         </section>
         <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
           <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'gitoryx.studentPath.title'))}</h2>
+          <p class="mt-2 text-sm text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.studentPath.subtitle'))}</p>
           <ol class="mt-4 list-decimal pl-5 space-y-2 text-sm text-muted-foreground">
             ${pathSteps}
           </ol>
+          <p class="mt-4 text-sm"><a class="underline" href="${escapeHtml(playgroundPath)}">${escapeHtml(
+            t(locale, 'gitoryx.try.backPlayground')
+          )}</a></p>
         </section>
         <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
           <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'gitoryx.cheatsheet.title'))}</h2>
+          <p class="mt-2 text-sm text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.cheatsheet.subtitle'))}</p>
           <ul class="mt-4 space-y-2 text-sm text-muted-foreground">
             ${cheatItems}
           </ul>
+          <p class="mt-4 text-xs text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.cheatsheet.footnote'))}</p>
+        </section>
+        <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
+          <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'gitoryx.faqTitle'))}</h2>
+          <dl class="mt-4 space-y-4">
+            ${faqItems}
+          </dl>
         </section>
       </main>`;
 };

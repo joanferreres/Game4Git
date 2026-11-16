@@ -18,6 +18,11 @@ const simpleSitemap = fs.readFileSync(path.join(projectRoot, "public", "sitemap-
 
 assert.ok(!sitemap.includes("/playground/"), "noindex playground URLs must not be submitted in the sitemap");
 assert.ok(!simpleSitemap.includes("/playground/"), "the legacy sitemap must not submit noindex playground URLs");
-assert.equal((sitemap.match(/<loc>/g) ?? []).length, 36, "only the 9 indexable routes in 4 locales belong in the sitemap");
+assert.equal((sitemap.match(/<loc>/g) ?? []).length, 40, "only the 10 indexable routes in 4 locales belong in the sitemap");
+assert.ok(sitemap.includes("https://game4git.com/gitoryx/"), "main sitemap must list /gitoryx/");
+assert.ok(sitemap.includes("https://game4git.com/es/gitoryx/"), "main sitemap must list localized /es/gitoryx/");
+assert.ok(sitemap.includes("https://game4git.com/ca/gitoryx/"), "main sitemap must list localized /ca/gitoryx/");
+assert.ok(sitemap.includes("https://game4git.com/fr/gitoryx/"), "main sitemap must list localized /fr/gitoryx/");
+assert.ok(simpleSitemap.includes("https://game4git.com/gitoryx/"), "legacy sitemap must list /gitoryx/");
 
-console.log("Sitemap excludes noindex routes");
+console.log("Sitemap excludes noindex routes and includes Gitoryx");

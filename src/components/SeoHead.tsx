@@ -151,6 +151,16 @@ export const SeoHead = ({
         })).filter((item) => item.q && item.a)
       : [];
 
+  const gitoryxFaqItems: FaqItem[] =
+    page === "gitoryx"
+      ? ([1, 2, 3, 4] as const)
+          .map((index) => ({
+            q: t(`gitoryx.faq.q${index}`, ""),
+            a: t(`gitoryx.faq.a${index}`, ""),
+          }))
+          .filter((item) => item.q && item.a)
+      : [];
+
   const resolvedFaq =
     faqItems ??
     (page === "home"
@@ -159,7 +169,9 @@ export const SeoHead = ({
         ? gdbFaqItems
         : page === "valgrind"
           ? valgrindFaqItems
-          : []);
+          : page === "gitoryx"
+            ? gitoryxFaqItems
+            : []);
   const faqSchema = resolvedFaq.length > 0 ? buildFaqSchema(resolvedFaq) : null;
 
   const breadcrumbSchema =

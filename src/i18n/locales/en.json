@@ -48,7 +48,7 @@
   "seo": {
     "home": {
       "title": "Learn Git Game Online Free — Play & Practice | Game4Git",
-      "description": "Learn git game online free — play interactive challenges for commits, branches, merge conflicts, GDB and Valgrind. No install required."
+      "description": "Learn git game online free — play interactive challenges for commits, branches, merge conflicts, GDB, Valgrind and Gitoryx. No install required."
     },
     "gdb": {
       "title": "How to Use GDB | Interactive Debugger Tutorial | Game4Git",
@@ -64,7 +64,7 @@
     },
     "gitBranchPractice": {
       "title": "Git Branch Game — Practice Git Branching Online Free | Game4Git",
-      "description": "Play a free Git branching game online. Create, switch and merge branches on a visual Git graph built for beginners."
+      "description": "Play a free git branch game online. Create, switch and merge branches on a visual Git graph built for beginners."
     },
     "gitMergeConflicts": {
       "title": "Git Merge Conflict Game — Practice Conflict Markers | Game4Git",
@@ -1744,6 +1744,17 @@
   },
   "gitoryx": {
     "pageTitle": "Gitoryx — See Git Visually",
+    "faqTitle": "Gitoryx FAQ",
+    "faq": {
+      "q1": "What is Gitoryx?",
+      "a1": "Gitoryx is a native desktop Git client for macOS, Windows and Linux. It shows your repository as a colour-coded commit graph and maps real Git operations—commit, branch, merge, rebase, conflicts—to visual workflows.",
+      "q2": "Does Gitoryx replace learning the Git CLI?",
+      "a2": "No. Game4Git teaches CLI practice in the browser; Gitoryx reinforces the same mental model on a real local repo. Use both: CLI for short commands, visuals when state is hard to picture.",
+      "q3": "How do I open a repo in Gitoryx from the terminal?",
+      "a3": "Install Gitoryx, then use the gitoryx shell helper in a repository folder (or File → Open). The graph shows history already on disk—no migrate or re-clone.",
+      "q4": "Is Gitoryx free to try with Game4Git?",
+      "a4": "You can download Gitoryx and open local repositories without uploading code to Gitoryx. Game4Git ambassadors can use promo code GAME4GIT for 20% off Pro for 12 months."
+    },
     "tabs": {
       "introduction": "Introduction",
       "cliVisual": "CLI ↔ Visual",
