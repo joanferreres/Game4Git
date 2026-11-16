@@ -48,7 +48,7 @@
   "seo": {
     "home": {
       "title": "Aprèn Git Jugant Gratis — Joc Online | Game4Git",
-      "description": "Aprèn git jugant online gratis — joc interactiu de commits, branques, conflictes de merge, GDB i Valgrind. Sense instal·lació."
+      "description": "Aprèn git jugant online gratis — joc interactiu de commits, branques, conflictes de merge, GDB, Valgrind i Gitoryx. Sense instal·lació."
     },
     "gdb": {
       "title": "Com usar GDB | Tutorial interactiu de depuració | Game4Git",
@@ -85,6 +85,10 @@
     "gitResetGuide": {
       "title": "Guia git reset i revert — Desfer canvis | Game4Git",
       "description": "Aprèn git reset, revert i commit --amend amb exercicis interactius. Veu com cada comanda canvia l'historial al gràfic."
+    },
+    "gitoryx": {
+      "title": "Guia Gitoryx — Veure Git en visual | Game4Git",
+      "description": "Aprèn com Gitoryx complementa la pràctica CLI: commits, branques, merges i remotes de Game4Git en un client Git visual."
     }
   },
   "playground": {
@@ -217,7 +221,7 @@
   "howToUse": {
     "title": "Com Utilitzar Aquest Playground de Git",
     "subtitle": "Aprèn conceptes de Git mitjançant la pràctica amb el nostre playground visual i interactiu.",
-    "oneLiner": "Edita codi, fes commit al Git visual, explora branques, activa el mode Terminal, prova els Challenges i aprèn GDB i Valgrind.",
+    "oneLiner": "Edita codi, fes commit al Git visual, explora branques, activa el mode Terminal, prova els Challenges i aprèn GDB, Valgrind i Gitoryx.",
     "switchBranch": "Canviar/Seleccionar Branca",
     "switchBranchDesc": "Utilitza la secció 'Branques' als 'Controls de Git' (panell inferior) per canviar a una branca existent o crear-ne una de nova. Les teves modificacions i nous commits s'aplicaran a aquesta branca activa.",
     "editCode": "Editar Codi",
@@ -246,13 +250,15 @@
     "terminalModeDesc": "Activa el Terminal per escriure comandes Git reals.",
     "challenges": "Challenges",
     "challengesDesc": "Practica amb tasques guiades des del botó taronja de la cantonada.",
-    "tools": "Vistes de GDB i Valgrind",
-    "toolsDesc": "Aprèn depuració i anàlisi de memòria a la navegació superior.",
+    "tools": "GDB, Valgrind i Gitoryx",
+    "toolsDesc": "Canvia de guia amb el selector superior: gdb, valgrind, gitoryx o playground.",
     "tipsTitle": "Consells",
     "tip1": "Pots usar el terminal o els botons: fan el mateix.",
     "tip2": "Fes clic en un commit per previsualitzar-ne el codi a la dreta.",
     "tip3": "Busca l'etiqueta HEAD per saber la teva posició actual.",
-    "tip4": "Usa el botó de Challenges per practicar amb exercicis guiats."
+    "tip4": "Usa el botó de Challenges per practicar amb exercicis guiats.",
+    "tipGitoryx": "Vols un graf de commits més clar després de practicar la CLI?",
+    "tipGitoryxLink": "Obre la guia de Gitoryx"
   },
   "visualization": {
     "title": "Visualització de Git",
@@ -1489,7 +1495,7 @@
     "seoIntroMobile": "Aprèn git jugant online gratis — commits visuals i reptes guiats al navegador.",
     "seoIntroLabel": "Descripció de l'aplicació",
     "guidesTitle": "Guies populars",
-    "guidesDescription": "Tria un tema—commits, branques, conflictes de merge, Valgrind, GDB o fuites de memòria—i entra directament a la guia interactiva adequada.",
+    "guidesDescription": "Tria un tema—commits, branques, Git visual amb Gitoryx, conflictes de merge, Valgrind, GDB o fuites de memòria—i entra directament a la guia interactiva adequada.",
     "guidesPrimaryCta": "Veure guia",
     "guides": {
       "gitPractice": {
@@ -1515,6 +1521,10 @@
       "valgrindLeaks": {
         "title": "Fugues de Memòria amb Valgrind",
         "description": "Troba i corregeix memory leaks pas a pas."
+      },
+      "gitoryx": {
+        "title": "Veure Git en visual amb Gitoryx",
+        "description": "Connecta la pràctica CLI de Game4Git amb un graf visual — mateixos commits, branques i merges, model mental més clar."
       }
     },
     "faqTitle": "Preguntes freqüents",
@@ -1530,21 +1540,33 @@
     },
     "playgroundStripTitle": "Practica amb el playground",
     "playgroundStripDesc": "Editor de codi, arbre de commits i controls de Git en una sola pantalla. Sense configurar res.",
-    "playgroundStripCta": "Obrir playground"
+    "playgroundStripCta": "Obrir playground",
+    "gitoryxCta": "Veure Git en visual — obre la guia Gitoryx",
+    "gitoryxCtaHint": "Practica la CLI aquí i després mira els mateixos commits i branques en un graf visual.",
+    "gitoryxCardBadge": "CLI ↔ visual",
+    "playgroundGitoryxNudge": "Després del playground: mira la mateixa història de Git en visual — guia Gitoryx",
+    "seoIntroGitoryx": "Gitoryx"
   },
   "nav": {
     "guides": "Guies",
     "playground": "Playground",
     "start": "Comença →",
     "backToGuides": "← Tornar a les guies",
-    "gitInitBadge": "git init"
+    "gitInitBadge": "git init",
+    "gitoryx": "Gitoryx",
+    "modeSelector": "Modes de guia",
+    "modeGdb": "gdb",
+    "modeValgrind": "valgrind",
+    "modeGitoryx": "gitoryx",
+    "modePlayground": "playground"
   },
   "footer": {
-    "tagline": "Playground interactiu per aprendre Git, GDB i Valgrind.",
+    "tagline": "Playground interactiu per aprendre Git, GDB, Valgrind i Gitoryx.",
     "gdb": "Aprendre GDB",
     "valgrind": "Aprendre Valgrind",
     "contact": "Contacte",
-    "support": "Donar suport"
+    "support": "Donar suport",
+    "gitoryx": "Gitoryx"
   },
   "adminStats": {
     "title": "📊 Tauler d'Analítiques",
@@ -1607,5 +1629,179 @@
     "noData": "Sense dades per a aquest període",
     "pageViewsSeries": "Pàgines vistes",
     "visitorsSeries": "Visitants únics"
+  },
+  "gitoryx": {
+    "pageTitle": "Gitoryx — Veure Git en visual",
+    "faqTitle": "FAQ de Gitoryx",
+    "faq": {
+      "q1": "Què és Gitoryx?",
+      "a1": "Gitoryx és un client Git natiu d’escriptori per a macOS, Windows i Linux. Mostra el repositori com un graf de commits a color i converteix operacions reals de Git—commit, branca, merge, rebase, conflictes—en fluxos visuals.",
+      "q2": "Gitoryx substitueix aprendre la CLI de Git?",
+      "a2": "No. Game4Git ensenya la CLI al navegador; Gitoryx reforça el mateix model mental en un repo local real. Usa tots dos: CLI per a comandes curtes i visuals quan l’estat costa d’imaginar.",
+      "q3": "Com obro un repo a Gitoryx des del terminal?",
+      "a3": "Instal·la Gitoryx i usa l’helper gitoryx a la carpeta del repositori (o Fitxer → Obrir). El graf mostra la història que ja hi ha al disc—sense migrar ni clonar de nou.",
+      "q4": "Puc provar Gitoryx gratis amb Game4Git?",
+      "a4": "Pots descarregar Gitoryx i obrir repos locals sense pujar codi a Gitoryx. Els ambaixadors de Game4Git poden usar el codi GAME4GIT per a un 20% de descompte a Pro durant 12 mesos."
+    },
+    "tabs": {
+      "introduction": "Introducció",
+      "cliVisual": "CLI ↔ Visual",
+      "path": "Mini ruta",
+      "try": "Prova-ho",
+      "cheatsheet": "Xuleta"
+    },
+    "intro": {
+      "whatIsTitle": "Què és Gitoryx?",
+      "whatIsSubtitle": "Veure tot el que fa Git — client visual natiu al costat de la pràctica CLI",
+      "paragraph": "Gitoryx és un client Git d'escriptori natiu per a macOS, Windows i Linux. Mostra el repositori com un graf de commits en color i converteix operacions que solen fer-se al terminal — rebase interactiu, conflictes de merge, staging per línia — en fluxos visuals amb undo. Cada acció mapeja a una operació Git real i es nomena com ella.",
+      "whyTitle": "Per què ajuda a aprendre",
+      "why": {
+        "0": "Un graf renderitzat fa llegible la topologia de branques — més clar que git log --graph en històries amb molts merges",
+        "1": "Conflictes, rebase i staging per línia mostren l'estat que altrament tindries al cap",
+        "2": "Les accions conserven noms Git reals, així que la UI ensenya el mateix model que el terminal"
+      },
+      "withCliTitle": "Amb el playground CLI",
+      "withCli": {
+        "0": "Practica ordres amb seguretat primer al playground de Game4Git",
+        "1": "Després obre un repo local real a Gitoryx (o gitoryx des del terminal) per veure les mateixes idees",
+        "2": "Usa tots dos al mateix repo: CLI per ordres curtes, visual quan el difícil és l'estat"
+      },
+      "paragraph2": "Després de practicar ordres a Game4Git, obrir les mateixes idees a Gitoryx reforça el model mental — sense substituir la CLI.",
+      "demoLead": "Prova un graf simplificat sense connexió — mateixes idees que el client real, sense instal·lar res."
+    },
+    "promo": {
+      "tipTitle": "Consell si proves Gitoryx Pro",
+      "tipBody": "Si proves Gitoryx Pro, el codi GAME4GIT dóna un 20 % de descompte durant 12 mesos.",
+      "copyCode": "Copiar codi",
+      "copied": "Copiat",
+      "open": "Obrir Gitoryx"
+    },
+    "cliVisual": {
+      "title": "Mapa CLI ↔ visual",
+      "subtitle": "Fes clic a una operació CLI per veure com la mateixa idea de Git actualitza un graf visual — Gitoryx anomena operacions Git reals.",
+      "colCli": "CLI (Game4Git)",
+      "colVisual": "Visual (Gitoryx)",
+      "commit": "Apareix un node nou al graf de commits",
+      "branch": "Les línies de branca es divideixen i canvien el focus",
+      "merge": "Les línies s’uneixen; els conflictes s’obren costat a costat",
+      "remote": "Les puntes local i remota es mouen al graf",
+      "footnote": "Això és un mock didàctic dins de Game4Git. A Gitoryx el graf és en color, virtualitzat i lligat al teu repositori local real."
+    },
+    "studentPath": {
+      "title": "Ruta guiada (5–10 min)",
+      "subtitle": "Recorre obrir repo → commit → branca → merge en un graf simplificat; després prova el mateix bucle en un repo real.",
+      "step1": "Acaba un exercici de Game4Git (branca, merge o remot).",
+      "step2": "Obre un repo similar a Gitoryx.",
+      "step3": "Localitza al graf el commit / la branca que acabes de practicar.",
+      "step4": "Repeteix una acció CLI i observa l’actualització visual.",
+      "step5": "Torna a Game4Git per al següent repte.",
+      "afterTitle": "Després prova-ho en un repo real"
+    },
+    "try": {
+      "title": "Prova Gitoryx",
+      "subtitle": "Obre el client d'escriptori en un repo real — sense iframe; no cal compte per començar en repos públics.",
+      "body": "Descarrega Gitoryx per a macOS, Windows o Linux, obre un repositori local i mira com s'actualitza el graf. Continua practicant CLI a Game4Git; usa Gitoryx quan vulguis veure amb més claredat les mateixes operacions. També pots obrir la carpeta actual amb l'helper gitoryx.",
+      "cta": "Descarregar Gitoryx",
+      "backPlayground": "Tornar al playground",
+      "promoLine": "Consell: codi GAME4GIT — 20 % durant 12 mesos (vegeu Introducció).",
+      "screenshotAlt": "Captura oficial del graf de commits de Gitoryx",
+      "screenshotCaption": "Captura de gitoryx.com — graf de commits al client d'escriptori.",
+      "tutorialsTitle": "Tutorials oficials CLI ↔ GUI",
+      "tutorials": {
+        "commit": "Git commit bàsic (CLI + In Gitoryx)",
+        "branch": "Git branch: crear, canviar, gestionar",
+        "conflict": "Resoldre conflictes de merge",
+        "terminal": "Obrir un repo des del terminal (gitoryx)"
+      }
+    },
+    "cheatsheet": {
+      "title": "Xuleta CLI ↔ Gitoryx",
+      "subtitle": "Els mateixos noms Git a banda i banda. CLI a l’esquerra, Gitoryx a la dreta.",
+      "colCli": "CLI",
+      "colVisual": "A Gitoryx",
+      "footnote": "Les accions conserven noms Git reals. CLI per a comandes curtes; Gitoryx quan el graf o el conflicte és el difícil.",
+      "items": {
+        "commit": "Stage fitxer/hunk/línia → Commit. Node nou a la branca activa.",
+        "branch": "Crear branca. Una línia de color se separa des de la punta.",
+        "switch": "Checkout / clic a una punta. El focus passa a aquella branca.",
+        "merge": "Merge. Les línies s’uneixen; pot aparèixer un merge commit.",
+        "remote": "Fetch o push. Les puntes local i origin es mouen; es veu ahead/behind.",
+        "stage": "Stage per hunk o línia al diff (mateixa idea que git add -p).",
+        "conflict": "Ours/theirs costat a costat. Edita i acaba el merge.",
+        "open": "Helper de shell: obre la carpeta actual a Gitoryx des del terminal."
+      }
+    },
+    "outro": {
+      "ariaLabel": "Consell Gitoryx després de l’exercici",
+      "guideCta": "Obrir guia Gitoryx",
+      "externalCta": "Obrir Gitoryx",
+      "promoLabel": "Promo:",
+      "copy": "Copiar",
+      "dismiss": "No tornar a mostrar",
+      "feature-branch": {
+        "title": "Acabes de practicar branques per CLI",
+        "body": "A Gitoryx veuries feature-login separar-se de master i tornar a unir-se en fer merge — mateixa història, graf visual."
+      },
+      "remote-workflow": {
+        "title": "Acabes de practicar remotes per CLI",
+        "body": "A Gitoryx, fetch/push/pull mostren les puntes local i origin movent-se al graf per veure ahead/behind."
+      },
+      "fast-forward-merge": {
+        "title": "Acabes de practicar merges fast-forward",
+        "body": "A Gitoryx un fast-forward avança la punta; --no-ff deixa un merge commit visible al graf."
+      }
+    },
+    "demo": {
+      "opsLabel": "Operacions CLI",
+      "graphLabel": "Graf de commits simplificat",
+      "graphAria": "Graf Git interactiu simplificat",
+      "hoverHint": "Passa el cursor o enfoca un commit per veure'n el missatge.",
+      "mappingLabel": "CLI → visual",
+      "ops": {
+        "commit": {
+          "visual": "Apareix un node nou al carril de la branca actual del graf — el mateix snapshot que git commit.",
+          "hint": "A Gitoryx també veus staged vs unstaged abans de fer commit, i pots esmenar l'últim commit amb un clic."
+        },
+        "branch": {
+          "visual": "Un carril de color se separa des de la punta; el checkout mou el focus a aquesta punta amb ahead/behind.",
+          "hint": "Les accions de branca conserven noms Git: create, checkout/switch, rename, delete."
+        },
+        "merge": {
+          "visual": "Els carrils s'uneixen; pot aparèixer un merge commit perquè la forma de la història es llegeixi clar.",
+          "hint": "Si hi ha conflictes, Gitoryx obre un editor costat a costat: ours / theirs / editar a mà."
+        },
+        "remote": {
+          "visual": "Les puntes local i remote-tracking es mouen: ahead/behind es veu al graf.",
+          "hint": "Fetch, pull i push van al teu host — res no s'envia a Gitoryx."
+        },
+        "conflict": {
+          "visual": "Els fitxers en conflicte s'obren costat a costat; tria ours, theirs o edita, amb undo a cada pas.",
+          "hint": "A sota és el mateix merge de Git; la GUI facilita entendre l'estat davant dels marcadors <<<<<<<."
+        },
+        "stash": {
+          "visual": "La llista de stashes mostra un preview del diff abans d'apply o drop.",
+          "hint": "Útil quan els missatges stash@{n} no basten per recordar què vas desar."
+        }
+      },
+      "tour": {
+        "stepLabel": "Pas {{step}} de {{total}}",
+        "prev": "Anterior",
+        "next": "Següent",
+        "restart": "Reinicia",
+        "panelLabel": "Mini recorregut",
+        "titles": {
+          "0": "Obrir un repositori",
+          "1": "Fer un commit",
+          "2": "Crear una branca",
+          "3": "Merge de tornada a main"
+        },
+        "steps": {
+          "0": "A Gitoryx obres un repo local existent (o l'helper gitoryx al terminal). El graf mostra la història que ja hi ha al disc — sense migrar ni reclonar.",
+          "1": "Fes stage (fitxer, hunk o línia), escriu el missatge i commit. Apareix un node nou al carril actiu.",
+          "2": "Crea i canvia a una branca feature. Un carril de color se separa des de la punta — mateixa idea que git switch -c.",
+          "3": "Integra la branca feature a main. Els carrils s'uneixen; si hi ha conflictes, resol-los costat a costat i el graf mostra la forma del merge."
+        }
+      }
+    }
   }
 }

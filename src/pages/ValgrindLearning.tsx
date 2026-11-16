@@ -91,7 +91,7 @@ const ValgrindLearning: React.FC = () => {
           { name: t('valgrind.pageTitle'), path: localizePath('/valgrind') },
         ]}
       />
-      <AppNav variant="inner" badge="valgrind" showPlaygroundCta />
+      <AppNav variant="inner" activeMode="valgrind" />
 
       <main id="main-content" className="max-w-7xl mx-auto w-full">
         <h1 className="sr-only">{t('valgrind.intro.whatIs', 'What is Valgrind?')}</h1>

@@ -46,6 +46,8 @@ import {
   type ExerciseProgressMap,
 } from "@/hooks/useExerciseProgress";
 import { toast } from "sonner";
+import { GitoryxExerciseOutro } from "@/components/GitoryxExerciseOutro";
+import { isGitoryxOutroExercise } from "@/lib/gitoryxOutro";
 
 const EXERCISE_IDS = [
   "feature-branch",
@@ -1261,6 +1263,9 @@ const GitExercises: React.FC = () => {
                           {t("exercises.nextExercise", "Siguiente ejercicio")}
                         </Button>
                       </div>
+                      {isGitoryxOutroExercise(selectedExercise) ? (
+                        <GitoryxExerciseOutro exerciseId={selectedExercise} />
+                      ) : null}
                     </CardContent>
                   ) : (
                     <CardContent className="space-y-3 sm:space-y-4 p-3 sm:p-6">

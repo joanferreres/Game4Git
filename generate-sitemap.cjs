@@ -73,6 +73,7 @@ const detectRoutes = () => {
     { path: '/git-reset-guide', priority: '0.85', changefreq: 'weekly' },
     { path: '/gdb', priority: '0.8', changefreq: 'weekly' },
     { path: '/valgrind', priority: '0.8', changefreq: 'weekly' },
+    { path: '/gitoryx', priority: '0.8', changefreq: 'weekly' },
     { path: '/valgrind-memory-leaks', priority: '0.7', changefreq: 'weekly' },
   ];
 

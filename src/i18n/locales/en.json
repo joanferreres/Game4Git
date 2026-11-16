@@ -48,7 +48,7 @@
   "seo": {
     "home": {
       "title": "Learn Git Game Online Free — Play & Practice | Game4Git",
-      "description": "Learn git game online free — play interactive challenges for commits, branches, merge conflicts, GDB and Valgrind. No install required."
+      "description": "Learn git game online free — play interactive challenges for commits, branches, merge conflicts, GDB, Valgrind and Gitoryx. No install required."
     },
     "gdb": {
       "title": "How to Use GDB | Interactive Debugger Tutorial | Game4Git",
@@ -64,7 +64,7 @@
     },
     "gitBranchPractice": {
       "title": "Git Branch Game — Practice Git Branching Online Free | Game4Git",
-      "description": "Play a free Git branching game online. Create, switch and merge branches on a visual Git graph built for beginners."
+      "description": "Play a free git branch game online. Create, switch and merge branches on a visual Git graph built for beginners."
     },
     "gitMergeConflicts": {
       "title": "Git Merge Conflict Game — Practice Conflict Markers | Game4Git",
@@ -85,6 +85,10 @@
     "playground": {
       "title": "Git Playground — Free Git Game with Visual Graph | Game4Git",
       "description": "Play our free git game in the browser: live commit graph, staging area, branch controls and terminal. Practice git online with nothing to install."
+    },
+    "gitoryx": {
+      "title": "Gitoryx Guide — See Git Visually | Game4Git",
+      "description": "Learn how Gitoryx complements CLI practice: map commits, branches, merges and remotes from Game4Git to a visual Git client."
     }
   },
   "playground": {
@@ -333,7 +337,7 @@
   "howToUse": {
     "title": "How to Use This Git Playground",
     "subtitle": "Learn Git concepts through hands-on practice with our visual and interactive playground.",
-    "oneLiner": "Edit code, commit to the visual Git, explore branches, switch to Terminal, try Challenges, and learn GDB & Valgrind.",
+    "oneLiner": "Edit code, commit to the visual Git, explore branches, switch to Terminal, try Challenges, and learn GDB, Valgrind & Gitoryx.",
     "switchBranch": "Switch/Select Branch",
     "switchBranchDesc": "Use the 'Branches' section in 'Git Controls' (bottom panel) to switch to an existing branch or create a new one. Your file modifications and new commits will apply to this active branch.",
     "editCode": "Edit Code",
@@ -362,13 +366,15 @@
     "terminalModeDesc": "Toggle Terminal to type real Git commands.",
     "challenges": "Challenges",
     "challengesDesc": "Practice with guided tasks from the orange button in the corner.",
-    "tools": "GDB & Valgrind views",
-    "toolsDesc": "Learn debugging and memory analysis in the top navigation.",
+    "tools": "GDB, Valgrind & Gitoryx",
+    "toolsDesc": "Switch guides from the top selector: gdb, valgrind, gitoryx, or playground.",
     "tipsTitle": "Tips",
     "tip1": "You can use the terminal or the buttons — both do the same.",
     "tip2": "Click a commit to preview its code on the right.",
     "tip3": "Look for the HEAD label to know your current position.",
-    "tip4": "Use the Challenges button to practice guided exercises."
+    "tip4": "Use the Challenges button to practice guided exercises.",
+    "tipGitoryx": "Want a clearer commit graph after practising CLI?",
+    "tipGitoryxLink": "Open the Gitoryx guide"
   },
   "visualization": {
     "title": "Git Visualization",
@@ -1596,7 +1602,7 @@
     "codeEditorLabel": "Code editor for hello.c file",
     "seoIntroLabel": "App description",
     "guidesTitle": "Popular guides",
-    "guidesDescription": "Pick a topic—commits, branches, merge conflicts, Valgrind, GDB, or memory leaks—and jump straight into the matching interactive guide.",
+    "guidesDescription": "Pick a topic—commits, branches, visual Git with Gitoryx, merge conflicts, Valgrind, GDB, or memory leaks—and jump straight into the matching interactive guide.",
     "guidesPrimaryCta": "Explore guide",
     "guides": {
       "gitPractice": {
@@ -1622,6 +1628,10 @@
       "valgrindLeaks": {
         "title": "Valgrind Memory Leaks",
         "description": "Find and fix memory leaks step by step."
+      },
+      "gitoryx": {
+        "title": "See Git visually with Gitoryx",
+        "description": "Connect Game4Git CLI practice to a visual commit graph — same commits, branches, and merges, clearer mental model."
       }
     },
     "faqTitle": "FAQs",
@@ -1637,21 +1647,33 @@
     },
     "playgroundStripTitle": "Practice with the playground",
     "playgroundStripDesc": "Code editor, commit tree and Git controls all in one screen. No setup needed.",
-    "playgroundStripCta": "Open playground"
+    "playgroundStripCta": "Open playground",
+    "gitoryxCta": "See Git visually — open the Gitoryx guide",
+    "gitoryxCtaHint": "Practice CLI here, then see the same commits and branches on a visual graph.",
+    "gitoryxCardBadge": "CLI ↔ visual",
+    "playgroundGitoryxNudge": "After the playground: see the same Git story visually — Gitoryx guide",
+    "seoIntroGitoryx": "Gitoryx"
   },
   "nav": {
     "guides": "Guides",
     "playground": "Playground",
     "start": "Get started →",
     "backToGuides": "← Back to guides",
-    "gitInitBadge": "git init"
+    "gitInitBadge": "git init",
+    "gitoryx": "Gitoryx",
+    "modeSelector": "Guide modes",
+    "modeGdb": "gdb",
+    "modeValgrind": "valgrind",
+    "modeGitoryx": "gitoryx",
+    "modePlayground": "playground"
   },
   "footer": {
-    "tagline": "Interactive playground to learn Git, GDB and Valgrind.",
+    "tagline": "Interactive playground to learn Git, GDB, Valgrind and Gitoryx.",
     "gdb": "Learn GDB",
     "valgrind": "Learn Valgrind",
     "contact": "Contact",
-    "support": "Support"
+    "support": "Support",
+    "gitoryx": "Gitoryx"
   },
   "admin": {
     "viewDashboard": "View Dashboard",
@@ -1719,5 +1741,179 @@
     "noData": "No data for this period",
     "pageViewsSeries": "Page views",
     "visitorsSeries": "Unique visitors"
+  },
+  "gitoryx": {
+    "pageTitle": "Gitoryx — See Git Visually",
+    "faqTitle": "Gitoryx FAQ",
+    "faq": {
+      "q1": "What is Gitoryx?",
+      "a1": "Gitoryx is a native desktop Git client for macOS, Windows and Linux. It shows your repository as a colour-coded commit graph and maps real Git operations—commit, branch, merge, rebase, conflicts—to visual workflows.",
+      "q2": "Does Gitoryx replace learning the Git CLI?",
+      "a2": "No. Game4Git teaches CLI practice in the browser; Gitoryx reinforces the same mental model on a real local repo. Use both: CLI for short commands, visuals when state is hard to picture.",
+      "q3": "How do I open a repo in Gitoryx from the terminal?",
+      "a3": "Install Gitoryx, then use the gitoryx shell helper in a repository folder (or File → Open). The graph shows history already on disk—no migrate or re-clone.",
+      "q4": "Is Gitoryx free to try with Game4Git?",
+      "a4": "You can download Gitoryx and open local repositories without uploading code to Gitoryx. Game4Git ambassadors can use promo code GAME4GIT for 20% off Pro for 12 months."
+    },
+    "tabs": {
+      "introduction": "Introduction",
+      "cliVisual": "CLI ↔ Visual",
+      "path": "Mini path",
+      "try": "Try it",
+      "cheatsheet": "Cheat sheet"
+    },
+    "intro": {
+      "whatIsTitle": "What is Gitoryx?",
+      "whatIsSubtitle": "See everything Git is doing — a native visual client beside your CLI practice",
+      "paragraph": "Gitoryx is a native desktop Git client for macOS, Windows and Linux. It shows your repository as a colour-coded commit graph and turns operations people usually drop to the terminal for — interactive rebase, merge conflicts, line-level staging — into visual workflows with undo. Every action maps to a real Git operation and is named after it.",
+      "whyTitle": "Why it helps learning",
+      "why": {
+        "0": "A rendered graph keeps branch topology readable — clearer than git log --graph on merge-heavy history",
+        "1": "Conflicts, rebase and line-level staging show state you would otherwise hold in your head",
+        "2": "Actions keep real Git names, so the UI teaches the same model as the terminal"
+      },
+      "withCliTitle": "With the CLI playground",
+      "withCli": {
+        "0": "Practise commands safely in the Game4Git playground first",
+        "1": "Then open a real local repo in Gitoryx (or gitoryx from your terminal) to see the same ideas",
+        "2": "Use both on the same repo: CLI for short commands, visuals when state is the hard part"
+      },
+      "paragraph2": "After you practise commands in Game4Git, opening the same ideas in Gitoryx reinforces the mental model — without replacing the CLI.",
+      "demoLead": "Try a simplified graph offline — same ideas as the real client, no install required."
+    },
+    "promo": {
+      "tipTitle": "Tip if you try Gitoryx Pro",
+      "tipBody": "If you try Gitoryx Pro, the code GAME4GIT gives 20% off for 12 months.",
+      "copyCode": "Copy code",
+      "copied": "Copied",
+      "open": "Open Gitoryx"
+    },
+    "cliVisual": {
+      "title": "CLI ↔ visual map",
+      "subtitle": "Click a CLI operation to see how the same Git idea updates a visual commit graph — Gitoryx names real Git operations.",
+      "colCli": "CLI (Game4Git)",
+      "colVisual": "Visual (Gitoryx)",
+      "commit": "New node appears on the commit graph",
+      "branch": "Branch lines split and switch focus",
+      "merge": "Lines join; conflicts open side-by-side",
+      "remote": "Local and remote tips move on the graph",
+      "footnote": "This is a teaching mock inside Game4Git. In Gitoryx the graph is colour-coded, virtualised, and tied to your real local repository."
+    },
+    "studentPath": {
+      "title": "Guided path (5–10 min)",
+      "subtitle": "Step through open repo → commit → branch → merge on a simplified graph, then try the same loop on a real repo.",
+      "step1": "Finish a Game4Git exercise (branch, merge or remote).",
+      "step2": "Open the same kind of repo in Gitoryx.",
+      "step3": "Find the commit / branch you just practised on the graph.",
+      "step4": "Repeat one CLI action and watch the visual update.",
+      "step5": "Return to Game4Git to practise the next challenge.",
+      "afterTitle": "Then try it on a real repo"
+    },
+    "try": {
+      "title": "Try Gitoryx",
+      "subtitle": "Open the desktop client on a real repo — no iframe, no account required to start on public repositories.",
+      "body": "Download Gitoryx for macOS, Windows or Linux, open a local repository, and watch the commit graph update as you work. Keep practising CLI in Game4Git; use Gitoryx when you want a clearer picture of the same operations. You can also open the current folder with the gitoryx shell helper.",
+      "cta": "Download Gitoryx",
+      "backPlayground": "Back to playground",
+      "promoLine": "Pro tip: promo code GAME4GIT — 20% off for 12 months (see Introduction).",
+      "screenshotAlt": "Official Gitoryx commit graph screenshot",
+      "screenshotCaption": "Screenshot from gitoryx.com — visual commit graph in the desktop client.",
+      "tutorialsTitle": "Official CLI ↔ GUI tutorials",
+      "tutorials": {
+        "commit": "Git commit basics (CLI + In Gitoryx)",
+        "branch": "Git branch: create, switch, manage",
+        "conflict": "Resolve merge conflicts",
+        "terminal": "Open a repo from the terminal (gitoryx)"
+      }
+    },
+    "cheatsheet": {
+      "title": "CLI ↔ Gitoryx cheat sheet",
+      "subtitle": "Same Git names on both sides. CLI left, what you see in Gitoryx right.",
+      "colCli": "CLI",
+      "colVisual": "In Gitoryx",
+      "footnote": "Actions keep real Git names. Use CLI for short commands; open Gitoryx when the graph or conflict state is the hard part.",
+      "items": {
+        "commit": "Stage file/hunk/line → Commit. New node on the active branch.",
+        "branch": "Create branch. A coloured lane splits from the tip.",
+        "switch": "Checkout / click a tip. Focus moves to that branch.",
+        "merge": "Merge. Lanes join; a merge commit may appear.",
+        "remote": "Fetch or push. Local and origin tips move; ahead/behind is visible.",
+        "stage": "Stage by hunk or line in the diff UI (same idea as patch mode).",
+        "conflict": "Side-by-side ours/theirs. Edit, then finish the merge.",
+        "open": "Shell helper: open the current folder in Gitoryx from the terminal."
+      }
+    },
+    "outro": {
+      "ariaLabel": "Gitoryx tip after exercise",
+      "guideCta": "Open Gitoryx guide",
+      "externalCta": "Open Gitoryx",
+      "promoLabel": "Promo:",
+      "copy": "Copy",
+      "dismiss": "Don't show again",
+      "feature-branch": {
+        "title": "You just practised branches on the CLI",
+        "body": "In Gitoryx you’d see feature-login split from master, then join again when you merge — same story, visual graph."
+      },
+      "remote-workflow": {
+        "title": "You just practised remotes on the CLI",
+        "body": "In Gitoryx, fetch/push/pull show local and origin tips moving on the graph so ahead/behind is obvious."
+      },
+      "fast-forward-merge": {
+        "title": "You just practised fast-forward merges",
+        "body": "In Gitoryx a fast-forward slides the branch tip forward; --no-ff keeps a visible merge commit on the graph."
+      }
+    },
+    "demo": {
+      "opsLabel": "CLI operations",
+      "graphLabel": "Simplified commit graph",
+      "graphAria": "Interactive simplified Git commit graph",
+      "hoverHint": "Hover or focus a commit to reveal its message.",
+      "mappingLabel": "CLI → visual",
+      "ops": {
+        "commit": {
+          "visual": "A new node appears on the current branch lane of the colour-coded commit graph — same snapshot as git commit.",
+          "hint": "In Gitoryx you also see staged vs unstaged files before you commit, and can amend the last commit in one click."
+        },
+        "branch": {
+          "visual": "A new coloured lane splits from the tip; checkout moves focus to that branch tip with ahead/behind counts.",
+          "hint": "Branch actions keep Git names: create, checkout/switch, rename, delete — matching the CLI model."
+        },
+        "merge": {
+          "visual": "Branch lanes join; a merge commit may appear so the history shape stays readable.",
+          "hint": "When the merge conflicts, Gitoryx opens a side-by-side editor for ours / theirs / hand-edited result."
+        },
+        "remote": {
+          "visual": "Local and remote-tracking tips move so ahead/behind is obvious on the graph.",
+          "hint": "Fetch, pull and push still talk to your host (GitHub, GitLab, …) — nothing is uploaded to Gitoryx."
+        },
+        "conflict": {
+          "visual": "Conflicted files open side by side; pick ours, theirs, or edit, with undo at every step.",
+          "hint": "Same Git merge underneath — the GUI makes the state easier to reason about than <<<<<<< markers alone."
+        },
+        "stash": {
+          "visual": "Stashes list with a diff preview before you apply or drop.",
+          "hint": "Useful when stash@{n} messages alone are not enough to remember what you saved."
+        }
+      },
+      "tour": {
+        "stepLabel": "Step {{step}} of {{total}}",
+        "prev": "Previous",
+        "next": "Next",
+        "restart": "Restart",
+        "panelLabel": "Mini tour",
+        "titles": {
+          "0": "Open a repository",
+          "1": "Make a commit",
+          "2": "Create a branch",
+          "3": "Merge back to main"
+        },
+        "steps": {
+          "0": "In Gitoryx you open an existing local repo (File → Open, or the gitoryx shell helper). The graph shows history already on disk — no migrate or re-clone.",
+          "1": "Stage changes (file, hunk or line), write a message, commit. A new node appears on the active branch lane.",
+          "2": "Create and switch to a feature branch. A new coloured lane splits from the tip — same idea as git switch -c.",
+          "3": "Merge the feature branch into main. Lanes join; if there are conflicts, resolve them side by side, then the graph shows the merge shape."
+        }
+      }
+    }
   }
 }

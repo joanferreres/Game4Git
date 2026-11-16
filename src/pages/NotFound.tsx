@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import LanguageSelector from '@/components/LanguageSelector';
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -19,6 +20,10 @@ const NotFound = () => {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-gray-100">
+      <Helmet>
+        <title>{t("errors.notFound", "Oops! Page not found")} | Game4Git</title>
+        <meta name="robots" content="noindex, follow" />
+      </Helmet>
       <div className="absolute top-4 right-4">
         <LanguageSelector />
       </div>

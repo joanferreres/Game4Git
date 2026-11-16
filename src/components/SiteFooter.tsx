@@ -102,6 +102,15 @@ export function SiteFooter({ className }: SiteFooterProps) {
             <span className="text-muted-foreground/50" aria-hidden>
               •
             </span>
+            <Link
+              to={localizePath("/gitoryx")}
+              className="transition-colors hover:text-foreground"
+            >
+              {t("footer.gitoryx", "Gitoryx")}
+            </Link>
+            <span className="text-muted-foreground/50" aria-hidden>
+              •
+            </span>
             <a
               href="/developers/"
               className="transition-colors hover:text-foreground"

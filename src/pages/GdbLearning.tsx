@@ -98,7 +98,7 @@ const GdbLearning: React.FC = () => {
           { name: t('gdb.pageTitle'), path: localizePath('/gdb') },
         ]}
       />
-      <AppNav variant="inner" badge="gdb" showPlaygroundCta />
+      <AppNav variant="inner" activeMode="gdb" />
 
       <main id="main-content" className="max-w-7xl mx-auto w-full">
         <h1 className="sr-only">{t('gdb.ui.whatIsTitle', 'What is GDB?')}</h1>
