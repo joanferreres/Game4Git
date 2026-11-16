@@ -337,7 +337,7 @@
   "howToUse": {
     "title": "How to Use This Git Playground",
     "subtitle": "Learn Git concepts through hands-on practice with our visual and interactive playground.",
-    "oneLiner": "Edit code, commit to the visual Git, explore branches, switch to Terminal, try Challenges, and learn GDB & Valgrind.",
+    "oneLiner": "Edit code, commit to the visual Git, explore branches, switch to Terminal, try Challenges, and learn GDB, Valgrind & Gitoryx.",
     "switchBranch": "Switch/Select Branch",
     "switchBranchDesc": "Use the 'Branches' section in 'Git Controls' (bottom panel) to switch to an existing branch or create a new one. Your file modifications and new commits will apply to this active branch.",
     "editCode": "Edit Code",
@@ -366,13 +366,15 @@
     "terminalModeDesc": "Toggle Terminal to type real Git commands.",
     "challenges": "Challenges",
     "challengesDesc": "Practice with guided tasks from the orange button in the corner.",
-    "tools": "GDB & Valgrind views",
-    "toolsDesc": "Learn debugging and memory analysis in the top navigation.",
+    "tools": "GDB, Valgrind & Gitoryx",
+    "toolsDesc": "Switch guides from the top selector: gdb, valgrind, gitoryx, or playground.",
     "tipsTitle": "Tips",
     "tip1": "You can use the terminal or the buttons — both do the same.",
     "tip2": "Click a commit to preview its code on the right.",
     "tip3": "Look for the HEAD label to know your current position.",
-    "tip4": "Use the Challenges button to practice guided exercises."
+    "tip4": "Use the Challenges button to practice guided exercises.",
+    "tipGitoryx": "Want a clearer commit graph after practising CLI?",
+    "tipGitoryxLink": "Open the Gitoryx guide"
   },
   "visualization": {
     "title": "Git Visualization",
@@ -1657,10 +1659,16 @@
     "playground": "Playground",
     "start": "Get started →",
     "backToGuides": "← Back to guides",
-    "gitInitBadge": "git init"
+    "gitInitBadge": "git init",
+    "gitoryx": "Gitoryx",
+    "modeSelector": "Guide modes",
+    "modeGdb": "gdb",
+    "modeValgrind": "valgrind",
+    "modeGitoryx": "gitoryx",
+    "modePlayground": "playground"
   },
   "footer": {
-    "tagline": "Interactive playground to learn Git, GDB and Valgrind.",
+    "tagline": "Interactive playground to learn Git, GDB, Valgrind and Gitoryx.",
     "gdb": "Learn GDB",
     "valgrind": "Learn Valgrind",
     "contact": "Contact",

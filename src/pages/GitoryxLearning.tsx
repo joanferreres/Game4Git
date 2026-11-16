@@ -77,7 +77,7 @@ const GitoryxLearning: React.FC = () => {
           { name: t("gitoryx.pageTitle"), path: localizePath("/gitoryx") },
         ]}
       />
-      <AppNav variant="inner" badge="gitoryx" showPlaygroundCta />
+      <AppNav variant="inner" activeMode="gitoryx" />
 
       <main id="main-content" className="max-w-7xl mx-auto w-full">
         <h1 className="sr-only">{t("gitoryx.intro.whatIsTitle", "What is Gitoryx?")}</h1>

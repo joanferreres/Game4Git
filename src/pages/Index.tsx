@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Info, Play, Plus, ArrowDownUp, Upload, DownloadCloud, GitBranch as GitBranchIcon, GitMerge as GitMergeIcon, GitCommit as GitCommitIcon, Terminal as TerminalIcon, BookOpen, HelpCircle, CheckCircle2, Sparkles } from "lucide-react";
+import { Info, Play, Plus, ArrowDownUp, Upload, DownloadCloud, GitBranch as GitBranchIcon, GitMerge as GitMergeIcon, GitCommit as GitCommitIcon, Terminal as TerminalIcon, BookOpen, HelpCircle, CheckCircle2, Sparkles, Eye } from "lucide-react";
 import LanguageSelector from "@/components/LanguageSelector";
 
 import { useTranslation } from "react-i18next";
@@ -126,6 +126,7 @@ const GitGame: React.FC = () => {
   const gitPracticeGamePath = localizePath("/git-practice-game");
   const gitBranchPracticePath = localizePath("/git-branch-practice");
   const gitMergeConflictsPath = localizePath("/git-merge-conflicts");
+  const gitoryxPath = localizePath("/gitoryx");
   const valgrindMemoryLeaksPath = localizePath("/valgrind-memory-leaks");
 
   const GUIDE_BADGE = "font-mono text-[10px] text-muted-foreground bg-muted border border-border px-1.5 py-0.5 rounded";
@@ -144,6 +145,15 @@ const GitGame: React.FC = () => {
       icon: Sparkles,
       color: "orange" as const,
       command: "git practice",
+      difficulty: t("home.levelBasic", "Básico"),
+    },
+    {
+      href: gitoryxPath,
+      title: t("home.guides.gitoryx.title"),
+      description: t("home.guides.gitoryx.description"),
+      icon: Eye,
+      color: "sky" as const,
+      command: "gitoryx",
       difficulty: t("home.levelBasic", "Básico"),
     },
     {
@@ -197,7 +207,7 @@ const GitGame: React.FC = () => {
 
   return (
     <div ref={rootRef} className="min-h-screen flex flex-col">
-      <AppNav variant="inner" badge="git playground" centerBrand />
+      <AppNav variant="inner" activeMode="playground" centerBrand />
       <main id="main-content" className="container max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col flex-1">
       <SeoHead page="playground" />
       {deferWelcomeBanner && (
@@ -211,6 +221,17 @@ const GitGame: React.FC = () => {
           onDismissWithoutCta={() => setShowSecondaryBanner(true)}
         />
       )}
+
+      {/* Learning-first nudge: CLI practice → visual Gitoryx guide */}
+      <p className="mb-3 text-center text-xs sm:text-sm text-muted-foreground">
+        <Link
+          to={gitoryxPath}
+          className="inline-flex items-center gap-1.5 underline-offset-2 hover:underline hover:text-foreground transition-colors"
+        >
+          <Eye className="h-3.5 w-3.5 text-sky-600 dark:text-sky-400 shrink-0" aria-hidden />
+          {t("home.playgroundGitoryxNudge", "After the playground: see the same Git story visually — Gitoryx guide")}
+        </Link>
+      </p>
 
       {/* Sticky CTA - visible on scroll (mobile) */}
       {showStickyCta && (
@@ -252,7 +273,7 @@ const GitGame: React.FC = () => {
               </div>
               <div>
                 <h2 className="text-xl sm:text-2xl font-bold tracking-tight">{t('howToUse.title', 'How to use the playground')}</h2>
-                <p className="text-white/90 text-xs sm:text-sm mt-1">{t('howToUse.oneLiner', 'Edit code, commit to the visual Git, explore branches, switch to Terminal, try Challenges, and learn GDB & Valgrind.')}</p>
+                <p className="text-white/90 text-xs sm:text-sm mt-1">{t('howToUse.oneLiner', 'Edit code, commit to the visual Git, explore branches, switch to Terminal, try Challenges, and learn GDB, Valgrind & Gitoryx.')}</p>
               </div>
             </div>
           </div>
@@ -316,6 +337,14 @@ const GitGame: React.FC = () => {
                 <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5" />{t('howToUse.tip2', 'Click a commit to preview its code on the right.')}</li>
                 <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5" />{t('howToUse.tip3', 'Look for the HEAD label to know your current position.')}</li>
                 <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5" />{t('howToUse.tip4', 'Use the Challenges button to practice guided exercises.')}</li>
+                <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5" />
+                  <span>
+                    {t('howToUse.tipGitoryx', 'Want a clearer commit graph after practising CLI?')}{" "}
+                    <Link to={gitoryxPath} className="underline hover:text-foreground">
+                      {t('howToUse.tipGitoryxLink', 'Open the Gitoryx guide')}
+                    </Link>
+                  </span>
+                </li>
               </ul>
             </section>
           </div>

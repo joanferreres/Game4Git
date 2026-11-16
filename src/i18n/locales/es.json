@@ -348,7 +348,7 @@
   "howToUse": {
     "title": "Cómo Usar Este Playground de Git",
     "subtitle": "Aprende conceptos de Git mediante la práctica con nuestro playground visual e interactivo.",
-    "oneLiner": "Edita código, haz commit en el Git visual, explora ramas, activa el modo Terminal, prueba los Challenges y aprende GDB y Valgrind.",
+    "oneLiner": "Edita código, haz commit en el Git visual, explora ramas, activa el modo Terminal, prueba los Challenges y aprende GDB, Valgrind y Gitoryx.",
     "switchBranch": "Cambiar/Seleccionar Rama",
     "switchBranchDesc": "Usa la sección 'Ramas' en 'Controles de Git' (panel inferior) para cambiar a una rama existente o crear una nueva. Tus modificaciones y nuevos commits se aplicarán a esta rama activa.",
     "editCode": "Editar Código",
@@ -377,13 +377,15 @@
     "terminalModeDesc": "Activa el Terminal para escribir comandos Git reales.",
     "challenges": "Challenges",
     "challengesDesc": "Practica con tareas guiadas desde el botón naranja de la esquina.",
-    "tools": "Vistas de GDB y Valgrind",
-    "toolsDesc": "Aprende depuración y análisis de memoria en la navegación superior.",
+    "tools": "GDB, Valgrind y Gitoryx",
+    "toolsDesc": "Cambia de guía con el selector superior: gdb, valgrind, gitoryx o playground.",
     "tipsTitle": "Consejos",
     "tip1": "Puedes usar el terminal o los botones: hacen lo mismo.",
     "tip2": "Haz clic en un commit para previsualizar su código a la derecha.",
     "tip3": "Busca la etiqueta HEAD para saber tu posición actual.",
-    "tip4": "Usa el botón de Challenges para practicar con ejercicios guiados."
+    "tip4": "Usa el botón de Challenges para practicar con ejercicios guiados.",
+    "tipGitoryx": "¿Quieres un grafo de commits más claro tras practicar la CLI?",
+    "tipGitoryxLink": "Abre la guía de Gitoryx"
   },
   "visualization": {
     "title": "Visualización de Git",
@@ -1698,10 +1700,16 @@
     "playground": "Playground",
     "start": "Empezar →",
     "backToGuides": "← Volver a guías",
-    "gitInitBadge": "git init"
+    "gitInitBadge": "git init",
+    "gitoryx": "Gitoryx",
+    "modeSelector": "Modos de guía",
+    "modeGdb": "gdb",
+    "modeValgrind": "valgrind",
+    "modeGitoryx": "gitoryx",
+    "modePlayground": "playground"
   },
   "footer": {
-    "tagline": "Playground interactivo para aprender Git, GDB y Valgrind.",
+    "tagline": "Playground interactivo para aprender Git, GDB, Valgrind y Gitoryx.",
     "gdb": "Aprender GDB",
     "valgrind": "Aprender Valgrind",
     "contact": "Contacto",

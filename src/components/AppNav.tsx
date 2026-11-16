@@ -3,10 +3,13 @@ import { useTranslation } from "react-i18next";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import NativeLanguageSelect from "@/components/NativeLanguageSelect";
+import GuideModeSelector, { type GuideMode } from "@/components/GuideModeSelector";
 
 interface AppNavProps {
   variant: "landing" | "inner";
   badge?: string;
+  /** When set, replaces the static badge with the gdb|valgrind|gitoryx|playground selector. */
+  activeMode?: GuideMode;
   centerBrand?: boolean;
   showPlaygroundCta?: boolean;
 }
@@ -14,13 +17,25 @@ interface AppNavProps {
 const AppNav = ({
   variant,
   badge,
+  activeMode,
   centerBrand = false,
   showPlaygroundCta = false,
 }: AppNavProps) => {
   const { t } = useTranslation();
   const localizePath = useLocalizedPath();
   const showCenteredInnerBrand = variant === "inner" && centerBrand;
-  const showStackedMobilePlaygroundCta = variant === "inner" && showPlaygroundCta && !showCenteredInnerBrand;
+  // Selector already includes playground — skip the duplicate orange CTA.
+  const effectivePlaygroundCta = showPlaygroundCta && !activeMode;
+  const showStackedMobilePlaygroundCta =
+    variant === "inner" && effectivePlaygroundCta && !showCenteredInnerBrand;
+
+  const modeOrBadge = activeMode ? (
+    <GuideModeSelector active={activeMode} />
+  ) : badge ? (
+    <span className="font-mono text-[10px] text-muted-foreground bg-muted border border-border px-1.5 py-0.5 rounded hidden xs:inline">
+      {badge}
+    </span>
+  ) : null;
 
   return (
     <nav className="sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
@@ -60,6 +75,12 @@ const AppNav = ({
             >
               {t("nav.guides", "Guías")}
             </a>
+            <Link
+              to={localizePath("/gitoryx")}
+              className="hidden lg:inline text-sm text-muted-foreground font-medium hover:text-foreground transition-colors"
+            >
+              {t("nav.gitoryx", "Gitoryx")}
+            </Link>
             <ThemeToggle />
             <NativeLanguageSelect />
             <Link
@@ -71,20 +92,18 @@ const AppNav = ({
           </div>
         ) : showCenteredInnerBrand ? (
           <>
-            <div className="flex min-w-0 items-center gap-3 justify-self-start">
+            <div className="flex min-w-0 items-center gap-2 sm:gap-3 justify-self-start">
               <Link
                 to={localizePath("/")}
-                className="text-xs sm:text-sm text-muted-foreground font-medium hover:text-foreground transition-colors flex items-center gap-1 whitespace-nowrap"
+                className="text-xs sm:text-sm text-muted-foreground font-medium hover:text-foreground transition-colors flex items-center gap-1 whitespace-nowrap shrink-0"
               >
                 <span className="sm:hidden">← {t("nav.guides", "Guías")}</span>
                 <span className="hidden sm:inline">{t("nav.backToGuides", "← Volver a guías")}</span>
               </Link>
-              {badge && (
+              {modeOrBadge && (
                 <>
-                  <span className="w-px h-4 bg-border" aria-hidden />
-                  <span className="font-mono text-[10px] text-muted-foreground bg-muted border border-border px-1.5 py-0.5 rounded hidden xs:inline">
-                    {badge}
-                  </span>
+                  <span className="w-px h-4 bg-border shrink-0" aria-hidden />
+                  {modeOrBadge}
                 </>
               )}
             </div>
@@ -98,7 +117,7 @@ const AppNav = ({
               </Link>
             )}
             <div className="flex items-center gap-1 justify-self-end">
-              {showPlaygroundCta && (
+              {effectivePlaygroundCta && (
                 <Link
                   to={localizePath("/playground")}
                   className="hidden sm:inline-flex items-center rounded-lg bg-orange-brand px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-orange-brand-hover"
@@ -115,22 +134,20 @@ const AppNav = ({
             <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             <Link
               to={localizePath("/")}
-              className="text-xs sm:text-sm text-muted-foreground font-medium hover:text-foreground transition-colors flex items-center gap-1"
+              className="text-xs sm:text-sm text-muted-foreground font-medium hover:text-foreground transition-colors flex items-center gap-1 shrink-0"
             >
               <span className="sm:hidden">← {t("nav.guides", "Guías")}</span>
               <span className="hidden sm:inline">{t("nav.backToGuides", "← Volver a guías")}</span>
             </Link>
-            {badge && (
+            {modeOrBadge && (
               <>
-                <span className="w-px h-4 bg-border" aria-hidden />
-                <span className="font-mono text-[10px] text-muted-foreground bg-muted border border-border px-1.5 py-0.5 rounded hidden xs:inline">
-                  {badge}
-                </span>
+                <span className="w-px h-4 bg-border shrink-0" aria-hidden />
+                {modeOrBadge}
               </>
             )}
             </div>
             <div className="flex items-center gap-1 sm:gap-2">
-              {showPlaygroundCta && (
+              {effectivePlaygroundCta && (
                 <Link
                   to={localizePath("/playground")}
                   className="hidden sm:inline-flex items-center rounded-lg bg-orange-brand px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-orange-brand-hover"
