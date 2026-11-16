@@ -94,35 +94,35 @@ const GitoryxLearning: React.FC = () => {
             <TabsList className="w-full grid grid-cols-2 sm:grid-cols-5 gap-1 p-1 h-auto bg-muted/20 rounded-lg">
               <TabsTrigger
                 value="introduction"
-                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
+                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-orange-brand-accessible dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-orange-400 rounded-md"
               >
                 <Lightbulb className="h-4 w-4 flex-shrink-0" />
                 <span>{t("gitoryx.tabs.introduction", "Introduction")}</span>
               </TabsTrigger>
               <TabsTrigger
                 value="cli-visual"
-                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
+                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-orange-brand-accessible dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-orange-400 rounded-md"
               >
                 <Eye className="h-4 w-4 flex-shrink-0" />
                 <span>{t("gitoryx.tabs.cliVisual", "CLI ↔ Visual")}</span>
               </TabsTrigger>
               <TabsTrigger
                 value="path"
-                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
+                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-orange-brand-accessible dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-orange-400 rounded-md"
               >
                 <Route className="h-4 w-4 flex-shrink-0" />
                 <span>{t("gitoryx.tabs.path", "Mini path")}</span>
               </TabsTrigger>
               <TabsTrigger
                 value="try"
-                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
+                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-orange-brand-accessible dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-orange-400 rounded-md"
               >
                 <Play className="h-4 w-4 flex-shrink-0" />
                 <span>{t("gitoryx.tabs.try", "Try it")}</span>
               </TabsTrigger>
               <TabsTrigger
                 value="cheatsheet"
-                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-primary dark:data-[state=active]:bg-gray-800 rounded-md"
+                className="flex flex-col sm:flex-row items-center gap-1.5 py-2 px-1 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-orange-brand-accessible dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-orange-400 rounded-md"
               >
                 <ListChecks className="h-4 w-4 flex-shrink-0" />
                 <span>{t("gitoryx.tabs.cheatsheet", "Cheat sheet")}</span>
