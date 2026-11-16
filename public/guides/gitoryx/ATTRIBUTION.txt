@@ -1,0 +1,5 @@
+Gitoryx commit-graph screenshot
+Source: https://www.gitoryx.com/screenshot-commit-graph-light.png
+Product: https://www.gitoryx.com/
+Used with attribution for educational Game4Git guide (ambassador).
+Do not redistribute as standalone marketing asset.

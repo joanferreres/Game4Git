@@ -7,13 +7,10 @@ import {
   ExternalLink,
   Eye,
   GitBranch,
-  GitCommit,
-  GitMerge,
   Lightbulb,
   ListChecks,
   Play,
   Route,
-  Terminal,
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -21,11 +18,33 @@ import { Button } from "@/components/ui/button";
 import AppNav from "@/components/AppNav";
 import SeoHead from "@/components/SeoHead";
 import SiteFooter from "@/components/SiteFooter";
+import GitoryxInteractiveDemo from "@/components/GitoryxInteractiveDemo";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
 
 const GITORYX_URL =
   "https://www.gitoryx.com/?utm_source=game4git&utm_medium=guide&utm_campaign=ambassador";
+const DOWNLOAD_URL =
+  "https://www.gitoryx.com/download?utm_source=game4git&utm_medium=guide&utm_campaign=ambassador";
 const PROMO_CODE = "GAME4GIT";
+
+const TUTORIAL_LINKS = [
+  {
+    key: "commit",
+    href: "https://www.gitoryx.com/tutorials/git-commit-basics?utm_source=game4git&utm_medium=guide&utm_campaign=ambassador",
+  },
+  {
+    key: "branch",
+    href: "https://www.gitoryx.com/tutorials/git-branch-basics?utm_source=game4git&utm_medium=guide&utm_campaign=ambassador",
+  },
+  {
+    key: "conflict",
+    href: "https://www.gitoryx.com/tutorials/how-to-resolve-merge-conflicts?utm_source=game4git&utm_medium=guide&utm_campaign=ambassador",
+  },
+  {
+    key: "terminal",
+    href: "https://www.gitoryx.com/tutorials/open-repo-from-terminal?utm_source=game4git&utm_medium=guide&utm_campaign=ambassador",
+  },
+] as const;
 
 const GitoryxLearning: React.FC = () => {
   const { t } = useTranslation();
@@ -43,33 +62,6 @@ const GitoryxLearning: React.FC = () => {
       setCopyError(t("common.copyError", "Could not copy. Copy it manually."));
     }
   };
-
-  const cliVisualRows = [
-    {
-      cli: "git commit",
-      visual: t("gitoryx.cliVisual.commit", "New node appears on the commit graph"),
-      icon: GitCommit,
-    },
-    {
-      cli: "git branch / checkout",
-      visual: t("gitoryx.cliVisual.branch", "Branch lines split and switch focus"),
-      icon: GitBranch,
-    },
-    {
-      cli: "git merge",
-      visual: t("gitoryx.cliVisual.merge", "Lines join; conflicts open side-by-side"),
-      icon: GitMerge,
-    },
-    {
-      cli: "git push / fetch / pull",
-      visual: t("gitoryx.cliVisual.remote", "Local and remote tips move on the graph"),
-      icon: Terminal,
-    },
-  ];
-
-  const studentPath = [1, 2, 3, 4, 5].map((n) =>
-    t(`gitoryx.studentPath.step${n}`, `Step ${n}`)
-  );
 
   const cheatItems = [1, 2, 3, 4, 5, 6].map((n) => ({
     title: t(`gitoryx.cheatsheet.item${n}.title`, `Item ${n}`),
@@ -156,7 +148,13 @@ const GitoryxLearning: React.FC = () => {
                   <p>
                     {t(
                       "gitoryx.intro.paragraph",
-                      "Gitoryx helps you see what Git is doing: commit graph, branches, merges and remotes as a clear visual picture. After you practise commands in Game4Git, opening the same ideas in a visual client reinforces the mental model."
+                      "Gitoryx is a native desktop Git client for macOS, Windows and Linux. It shows your repository as a colour-coded commit graph and turns operations people usually drop to the terminal for — interactive rebase, merge conflicts, line-level staging — into visual workflows with undo. Every action maps to a real Git operation and is named after it."
+                    )}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {t(
+                      "gitoryx.intro.paragraph2",
+                      "After you practise commands in Game4Git, opening the same ideas in Gitoryx reinforces the mental model — without replacing the CLI."
                     )}
                   </p>
 
@@ -178,7 +176,7 @@ const GitoryxLearning: React.FC = () => {
 
                     <div className="p-4 bg-amber-50 dark:bg-amber-900/10 rounded-lg border border-amber-100 dark:border-amber-900/20">
                       <h3 className="font-semibold text-amber-700 dark:text-amber-300 flex items-center gap-2">
-                        <Terminal className="h-4 w-4" />
+                        <Play className="h-4 w-4" />
                         {t("gitoryx.intro.withCliTitle", "With the CLI playground")}
                       </h3>
                       <ul className="mt-2 space-y-2 text-sm">
@@ -192,13 +190,20 @@ const GitoryxLearning: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                  <div className="mt-6 not-prose">
+                    <p className="mb-3 text-sm font-medium text-foreground">
+                      {t(
+                        "gitoryx.intro.demoLead",
+                        "Try a simplified graph offline — same ideas as the real client, no install required."
+                      )}
+                    </p>
+                    <GitoryxInteractiveDemo mode="mapper" />
+                  </div>
+
+                  <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 not-prose">
                     <h3 className="font-semibold flex items-center gap-2 text-sm sm:text-base">
                       <Lightbulb className="h-4 w-4 text-sky-500" />
-                      {t(
-                        "gitoryx.promo.tipTitle",
-                        "Tip if you try Gitoryx Pro"
-                      )}
+                      {t("gitoryx.promo.tipTitle", "Tip if you try Gitoryx Pro")}
                     </h3>
                     <p className="mt-2 text-sm text-muted-foreground">
                       {t(
@@ -253,43 +258,18 @@ const GitoryxLearning: React.FC = () => {
                 <CardDescription>
                   {t(
                     "gitoryx.cliVisual.subtitle",
-                    "The same Git ideas you type in Game4Git, seen as graph updates in Gitoryx."
+                    "Click a CLI operation to see how the same Git idea updates a visual commit graph — the way Gitoryx names real Git operations."
                   )}
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto rounded-lg border border-border">
-                  <table className="w-full text-sm">
-                    <thead className="bg-muted/40">
-                      <tr>
-                        <th className="px-3 py-2 text-left font-medium">
-                          {t("gitoryx.cliVisual.colCli", "CLI (Game4Git)")}
-                        </th>
-                        <th className="px-3 py-2 text-left font-medium">
-                          {t("gitoryx.cliVisual.colVisual", "Visual (Gitoryx)")}
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {cliVisualRows.map((row) => {
-                        const Icon = row.icon;
-                        return (
-                          <tr key={row.cli} className="border-t border-border">
-                            <td className="px-3 py-3 align-top">
-                              <code className="font-mono text-xs sm:text-sm">{row.cli}</code>
-                            </td>
-                            <td className="px-3 py-3 align-top">
-                              <span className="inline-flex items-start gap-2">
-                                <Icon className="h-4 w-4 mt-0.5 text-sky-600 dark:text-sky-400 flex-shrink-0" />
-                                <span>{row.visual}</span>
-                              </span>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+              <CardContent className="space-y-4">
+                <GitoryxInteractiveDemo mode="mapper" />
+                <p className="text-xs text-muted-foreground">
+                  {t(
+                    "gitoryx.cliVisual.footnote",
+                    "This is a teaching mock inside Game4Git. In Gitoryx the graph is colour-coded, virtualised, and tied to your real local repository."
+                  )}
+                </p>
               </CardContent>
             </Card>
           </TabsContent>
@@ -301,15 +281,19 @@ const GitoryxLearning: React.FC = () => {
                 <CardDescription>
                   {t(
                     "gitoryx.studentPath.subtitle",
-                    "A short loop after you finish a Game4Git challenge."
+                    "Step through open repo → commit → branch → merge on a simplified graph."
                   )}
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="space-y-4">
+                <GitoryxInteractiveDemo mode="tour" />
                 <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-900/40 dark:bg-emerald-900/20">
-                  <ol className="list-decimal pl-5 text-sm text-emerald-800 dark:text-emerald-200 space-y-2">
-                    {studentPath.map((step, index) => (
-                      <li key={index}>{step}</li>
+                  <p className="text-sm font-medium text-emerald-900 dark:text-emerald-100">
+                    {t("gitoryx.studentPath.afterTitle", "Then try it on a real repo")}
+                  </p>
+                  <ol className="mt-2 list-decimal pl-5 text-sm text-emerald-800 dark:text-emerald-200 space-y-1.5">
+                    {[1, 2, 3, 4, 5].map((n) => (
+                      <li key={n}>{t(`gitoryx.studentPath.step${n}`, `Step ${n}`)}</li>
                     ))}
                   </ol>
                 </div>
@@ -324,25 +308,54 @@ const GitoryxLearning: React.FC = () => {
                 <CardDescription>
                   {t(
                     "gitoryx.try.subtitle",
-                    "Open the desktop client on a real repo — no iframe, no account required to start."
+                    "Open the desktop client on a real repo — no iframe, no account required to start on public repositories."
                   )}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
+                <figure className="overflow-hidden rounded-lg border border-border bg-muted/20">
+                  <img
+                    src="/guides/gitoryx/commit-graph-light.png"
+                    alt={t(
+                      "gitoryx.try.screenshotAlt",
+                      "Official Gitoryx commit graph screenshot"
+                    )}
+                    className="h-auto w-full"
+                    loading="lazy"
+                    width={1241}
+                    height={789}
+                  />
+                  <figcaption className="px-3 py-2 text-[11px] text-muted-foreground">
+                    {t(
+                      "gitoryx.try.screenshotCaption",
+                      "Screenshot from gitoryx.com — visual commit graph in the desktop client."
+                    )}{" "}
+                    <a
+                      href="https://www.gitoryx.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline underline-offset-2 hover:text-foreground"
+                    >
+                      gitoryx.com
+                    </a>
+                  </figcaption>
+                </figure>
+
                 <p className="text-sm text-muted-foreground">
                   {t(
                     "gitoryx.try.body",
-                    "Download Gitoryx for macOS, Windows or Linux, open a local repository, and watch the commit graph update as you work. Keep practising CLI in Game4Git; use Gitoryx when you want a clearer picture of the same operations."
+                    "Download Gitoryx for macOS, Windows or Linux, open a local repository, and watch the commit graph update as you work. Keep practising CLI in Game4Git; use Gitoryx when you want a clearer picture of the same operations. You can also open the current folder with the gitoryx shell helper."
                   )}
                 </p>
+
                 <div className="flex flex-wrap gap-2">
                   <a
-                    href={GITORYX_URL}
+                    href={DOWNLOAD_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 transition-colors"
                   >
-                    {t("gitoryx.try.cta", "Open Gitoryx")}
+                    {t("gitoryx.try.cta", "Download Gitoryx")}
                     <ExternalLink className="h-4 w-4" />
                   </a>
                   <Button asChild variant="outline" size="sm" className="h-10">
@@ -351,6 +364,28 @@ const GitoryxLearning: React.FC = () => {
                     </Link>
                   </Button>
                 </div>
+
+                <div>
+                  <h3 className="text-sm font-semibold">
+                    {t("gitoryx.try.tutorialsTitle", "Official CLI ↔ GUI tutorials")}
+                  </h3>
+                  <ul className="mt-2 space-y-1.5 text-sm">
+                    {TUTORIAL_LINKS.map((item) => (
+                      <li key={item.key}>
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-sky-700 hover:text-sky-800 dark:text-sky-300 dark:hover:text-sky-200"
+                        >
+                          {t(`gitoryx.try.tutorials.${item.key}`)}
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
                 <p className="text-xs text-muted-foreground">
                   {t(
                     "gitoryx.try.promoLine",
