@@ -3,3 +3,9 @@ Source: https://www.gitoryx.com/screenshot-commit-graph-light.png
 Product: https://www.gitoryx.com/
 Used with attribution for educational Game4Git guide (ambassador).
 Do not redistribute as standalone marketing asset.
+
+Web variants (same official frame, re-encoded for sharpness/weight):
+- commit-graph-light.png — truecolor PNG fallback (native 1241×789)
+- commit-graph-light.webp — WebP @ native
+- commit-graph-light-sm.webp — WebP ~800w (mobile)
+- commit-graph-light-2x.webp — WebP 2482×1578 (retina srcset; lanczos + mild sharpen)

@@ -320,18 +320,27 @@ const GitoryxLearning: React.FC = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <figure className="overflow-hidden rounded-lg border border-border bg-muted/20">
-                  <img
-                    src="/guides/gitoryx/commit-graph-light.png"
-                    alt={t(
-                      "gitoryx.try.screenshotAlt",
-                      "Official Gitoryx commit graph screenshot"
-                    )}
-                    className="h-auto w-full"
-                    loading="lazy"
-                    width={1241}
-                    height={789}
-                  />
+                <figure className="mx-auto max-w-3xl overflow-hidden rounded-lg border border-border bg-muted/20">
+                  <picture>
+                    <source
+                      type="image/webp"
+                      srcSet="/guides/gitoryx/commit-graph-light-sm.webp 800w, /guides/gitoryx/commit-graph-light.webp 1241w, /guides/gitoryx/commit-graph-light-2x.webp 2482w"
+                      sizes="(max-width: 768px) calc(100vw - 2rem), min(100%, 48rem)"
+                    />
+                    <img
+                      src="/guides/gitoryx/commit-graph-light.png"
+                      alt={t(
+                        "gitoryx.try.screenshotAlt",
+                        "Official Gitoryx commit graph screenshot"
+                      )}
+                      className="h-auto w-full"
+                      loading="lazy"
+                      decoding="async"
+                      width={1241}
+                      height={789}
+                      sizes="(max-width: 768px) calc(100vw - 2rem), min(100%, 48rem)"
+                    />
+                  </picture>
                   <figcaption className="px-3 py-2 text-[11px] text-muted-foreground">
                     {t(
                       "gitoryx.try.screenshotCaption",
