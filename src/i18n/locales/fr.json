@@ -1596,31 +1596,20 @@
       }
     },
     "cheatsheet": {
-      "title": "Aide-mémoire des opérations visuelles",
-      "subtitle": "Six gestes Git courants et leur rendu visuel.",
-      "item1": {
-        "title": "Commit",
-        "desc": "Un nouveau nœud apparaît sur la ligne de branche courante."
-      },
-      "item2": {
-        "title": "Créer une branche",
-        "desc": "Une ligne colorée se sépare depuis la pointe."
-      },
-      "item3": {
-        "title": "Checkout / switch",
-        "desc": "Le focus passe à une autre pointe de branche."
-      },
-      "item4": {
-        "title": "Merge",
-        "desc": "Les lignes se rejoignent ; un merge commit peut apparaître."
-      },
-      "item5": {
-        "title": "Push / fetch",
-        "desc": "Les pointes distantes bougent par rapport aux locales."
-      },
-      "item6": {
-        "title": "Conflit",
-        "desc": "L’éditeur côte à côte marque ours vs theirs."
+      "title": "Aide-mémoire CLI ↔ Gitoryx",
+      "subtitle": "Les mêmes noms Git des deux côtés. CLI à gauche, Gitoryx à droite.",
+      "colCli": "CLI",
+      "colVisual": "Dans Gitoryx",
+      "footnote": "Les actions gardent les vrais noms Git. CLI pour les commandes courtes ; Gitoryx quand le graphe ou le conflit est le point dur.",
+      "items": {
+        "commit": "Stage fichier/hunk/ligne → Commit. Nouveau nœud sur la branche active.",
+        "branch": "Créer une branche. Une ligne colorée se sépare depuis la pointe.",
+        "switch": "Checkout / clic sur une pointe. Le focus passe à cette branche.",
+        "merge": "Merge. Les lignes se rejoignent ; un merge commit peut apparaître.",
+        "remote": "Fetch ou push. Les pointes local et origin bougent ; ahead/behind visible.",
+        "stage": "Stage par hunk ou ligne dans le diff (même idée que git add -p).",
+        "conflict": "Ours/theirs côte à côte. Éditez, puis terminez le merge.",
+        "open": "Helper shell : ouvrir le dossier courant dans Gitoryx depuis le terminal."
       }
     },
     "outro": {

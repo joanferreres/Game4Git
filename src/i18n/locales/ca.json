@@ -1704,31 +1704,20 @@
       }
     },
     "cheatsheet": {
-      "title": "Xuleta d’operacions visuals",
-      "subtitle": "Sis moviments Git habituals i com es veuen.",
-      "item1": {
-        "title": "Commit",
-        "desc": "Apareix un node nou a la línia de la branca actual."
-      },
-      "item2": {
-        "title": "Crear branca",
-        "desc": "Una línia de color se separa des de la punta."
-      },
-      "item3": {
-        "title": "Checkout / switch",
-        "desc": "El focus es mou a una altra punta de branca."
-      },
-      "item4": {
-        "title": "Merge",
-        "desc": "Les línies s’uneixen; pot aparèixer un merge commit."
-      },
-      "item5": {
-        "title": "Push / fetch",
-        "desc": "Les puntes remotes es mouen respecte a les locals."
-      },
-      "item6": {
-        "title": "Conflicte",
-        "desc": "L’editor costat a costat marca ours vs theirs."
+      "title": "Xuleta CLI ↔ Gitoryx",
+      "subtitle": "Els mateixos noms Git a banda i banda. CLI a l’esquerra, Gitoryx a la dreta.",
+      "colCli": "CLI",
+      "colVisual": "A Gitoryx",
+      "footnote": "Les accions conserven noms Git reals. CLI per a comandes curtes; Gitoryx quan el graf o el conflicte és el difícil.",
+      "items": {
+        "commit": "Stage fitxer/hunk/línia → Commit. Node nou a la branca activa.",
+        "branch": "Crear branca. Una línia de color se separa des de la punta.",
+        "switch": "Checkout / clic a una punta. El focus passa a aquella branca.",
+        "merge": "Merge. Les línies s’uneixen; pot aparèixer un merge commit.",
+        "remote": "Fetch o push. Les puntes local i origin es mouen; es veu ahead/behind.",
+        "stage": "Stage per hunk o línia al diff (mateixa idea que git add -p).",
+        "conflict": "Ours/theirs costat a costat. Edita i acaba el merge.",
+        "open": "Helper de shell: obre la carpeta actual a Gitoryx des del terminal."
       }
     },
     "outro": {

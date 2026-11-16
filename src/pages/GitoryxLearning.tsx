@@ -63,10 +63,17 @@ const GitoryxLearning: React.FC = () => {
     }
   };
 
-  const cheatItems = [1, 2, 3, 4, 5, 6].map((n) => ({
-    title: t(`gitoryx.cheatsheet.item${n}.title`, `Item ${n}`),
-    desc: t(`gitoryx.cheatsheet.item${n}.desc`, ""),
-  }));
+  /** CLI stays literal (like GDB cheat sheet); only the visual side is translated. */
+  const cheatRows = [
+    { cli: "git commit", key: "commit" },
+    { cli: "git switch -c <name>", key: "branch" },
+    { cli: "git switch <branch>", key: "switch" },
+    { cli: "git merge <branch>", key: "merge" },
+    { cli: "git fetch / git push", key: "remote" },
+    { cli: "git add -p", key: "stage" },
+    { cli: "merge conflict", key: "conflict" },
+    { cli: "gitoryx", key: "open" },
+  ] as const;
 
   return (
     <div className="container min-h-screen max-w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 flex flex-col">
@@ -398,27 +405,63 @@ const GitoryxLearning: React.FC = () => {
 
           <TabsContent value="cheatsheet" className="space-y-4">
             <Card className="border-0 shadow-sm bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
-              <CardHeader>
-                <CardTitle>{t("gitoryx.cheatsheet.title", "Visual operations cheat sheet")}</CardTitle>
-                <CardDescription>
+              <CardHeader className="space-y-1.5">
+                <CardTitle className="text-xl sm:text-2xl font-bold">
+                  {t("gitoryx.cheatsheet.title", "CLI ↔ Gitoryx cheat sheet")}
+                </CardTitle>
+                <CardDescription className="text-sm">
                   {t(
                     "gitoryx.cheatsheet.subtitle",
-                    "Six common Git moves and how they show up visually."
+                    "Same Git names on both sides. CLI left, what you see in Gitoryx right."
                   )}
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="grid sm:grid-cols-2 gap-3">
-                  {cheatItems.map((item) => (
-                    <div
-                      key={item.title}
-                      className="rounded-lg border border-border bg-muted/30 p-3"
-                    >
-                      <h3 className="font-semibold text-sm">{item.title}</h3>
-                      <p className="mt-1 text-xs sm:text-sm text-muted-foreground">{item.desc}</p>
-                    </div>
-                  ))}
+              <CardContent className="pt-0">
+                <div
+                  className="hidden sm:grid grid-cols-[minmax(0,1.1fr)_auto_minmax(0,1.4fr)] gap-x-3 gap-y-0 px-1 pb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground"
+                  aria-hidden
+                >
+                  <span>{t("gitoryx.cheatsheet.colCli", "CLI")}</span>
+                  <span />
+                  <span>{t("gitoryx.cheatsheet.colVisual", "In Gitoryx")}</span>
                 </div>
+                <ul className="divide-y divide-border/70 rounded-xl border border-border/70 bg-muted/20 overflow-hidden">
+                  {cheatRows.map((row) => (
+                    <li
+                      key={row.key}
+                      className="flex flex-col gap-2 p-3 sm:grid sm:grid-cols-[minmax(0,1.1fr)_auto_minmax(0,1.4fr)] sm:items-center sm:gap-3 sm:p-3.5"
+                    >
+                      <div className="min-w-0">
+                        <span className="mb-1 block text-[10px] font-semibold uppercase tracking-wide text-muted-foreground sm:hidden">
+                          {t("gitoryx.cheatsheet.colCli", "CLI")}
+                        </span>
+                        <code className="block w-full overflow-x-auto rounded-md bg-sky-100 px-3 py-2.5 font-mono text-[13px] leading-snug text-sky-900 dark:bg-sky-950/40 dark:text-sky-200">
+                          {row.cli}
+                        </code>
+                      </div>
+                      <span
+                        className="hidden sm:inline text-muted-foreground/70 font-mono text-xs"
+                        aria-hidden
+                      >
+                        →
+                      </span>
+                      <div className="min-w-0">
+                        <span className="mb-1 block text-[10px] font-semibold uppercase tracking-wide text-muted-foreground sm:hidden">
+                          {t("gitoryx.cheatsheet.colVisual", "In Gitoryx")}
+                        </span>
+                        <p className="text-sm leading-snug text-foreground">
+                          {t(`gitoryx.cheatsheet.items.${row.key}`, "")}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-3 text-xs text-muted-foreground">
+                  {t(
+                    "gitoryx.cheatsheet.footnote",
+                    "Actions keep real Git names. Use CLI for short commands; open Gitoryx when the graph or conflict state is the hard part."
+                  )}
+                </p>
               </CardContent>
             </Card>
           </TabsContent>

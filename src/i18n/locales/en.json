@@ -1816,31 +1816,20 @@
       }
     },
     "cheatsheet": {
-      "title": "Visual operations cheat sheet",
-      "subtitle": "Six common Git moves and how they show up visually.",
-      "item1": {
-        "title": "Commit",
-        "desc": "A new node appears on the current branch line."
-      },
-      "item2": {
-        "title": "Create branch",
-        "desc": "A new coloured line splits from the tip."
-      },
-      "item3": {
-        "title": "Checkout / switch",
-        "desc": "Focus moves to another branch tip."
-      },
-      "item4": {
-        "title": "Merge",
-        "desc": "Lines join; a merge commit may appear."
-      },
-      "item5": {
-        "title": "Push / fetch",
-        "desc": "Remote-tracking tips move relative to local."
-      },
-      "item6": {
-        "title": "Conflict",
-        "desc": "Side-by-side editor highlights ours vs theirs."
+      "title": "CLI ↔ Gitoryx cheat sheet",
+      "subtitle": "Same Git names on both sides. CLI left, what you see in Gitoryx right.",
+      "colCli": "CLI",
+      "colVisual": "In Gitoryx",
+      "footnote": "Actions keep real Git names. Use CLI for short commands; open Gitoryx when the graph or conflict state is the hard part.",
+      "items": {
+        "commit": "Stage file/hunk/line → Commit. New node on the active branch.",
+        "branch": "Create branch. A coloured lane splits from the tip.",
+        "switch": "Checkout / click a tip. Focus moves to that branch.",
+        "merge": "Merge. Lanes join; a merge commit may appear.",
+        "remote": "Fetch or push. Local and origin tips move; ahead/behind is visible.",
+        "stage": "Stage by hunk or line in the diff UI (same idea as patch mode).",
+        "conflict": "Side-by-side ours/theirs. Edit, then finish the merge.",
+        "open": "Shell helper: open the current folder in Gitoryx from the terminal."
       }
     },
     "outro": {

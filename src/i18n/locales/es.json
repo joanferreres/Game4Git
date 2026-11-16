@@ -1857,31 +1857,20 @@
       }
     },
     "cheatsheet": {
-      "title": "Chuleta de operaciones visuales",
-      "subtitle": "Seis movimientos Git habituales y cómo se ven.",
-      "item1": {
-        "title": "Commit",
-        "desc": "Aparece un nodo nuevo en la línea de la rama actual."
-      },
-      "item2": {
-        "title": "Crear rama",
-        "desc": "Una línea de color se separa desde la punta."
-      },
-      "item3": {
-        "title": "Checkout / switch",
-        "desc": "El foco se mueve a otra punta de rama."
-      },
-      "item4": {
-        "title": "Merge",
-        "desc": "Las líneas se unen; puede aparecer un merge commit."
-      },
-      "item5": {
-        "title": "Push / fetch",
-        "desc": "Las puntas remotas se mueven respecto a las locales."
-      },
-      "item6": {
-        "title": "Conflicto",
-        "desc": "El editor lado a lado marca ours vs theirs."
+      "title": "Chuleta CLI ↔ Gitoryx",
+      "subtitle": "Los mismos nombres Git a ambos lados. CLI a la izquierda, Gitoryx a la derecha.",
+      "colCli": "CLI",
+      "colVisual": "En Gitoryx",
+      "footnote": "Las acciones conservan nombres Git reales. CLI para comandos cortos; Gitoryx cuando el grafo o el conflicto es lo difícil.",
+      "items": {
+        "commit": "Stage archivo/hunk/línea → Commit. Nodo nuevo en la rama activa.",
+        "branch": "Crear rama. Una línea de color se separa desde la punta.",
+        "switch": "Checkout / clic en una punta. El foco pasa a esa rama.",
+        "merge": "Merge. Las líneas se unen; puede aparecer un merge commit.",
+        "remote": "Fetch o push. Las puntas local y origin se mueven; se ve ahead/behind.",
+        "stage": "Stage por hunk o línea en el diff (misma idea que git add -p).",
+        "conflict": "Ours/theirs lado a lado. Edita y termina el merge.",
+        "open": "Helper de shell: abre la carpeta actual en Gitoryx desde la terminal."
       }
     },
     "outro": {
