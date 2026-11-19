@@ -49,7 +49,7 @@ const NativeLanguageSelect = ({ className }: NativeLanguageSelectProps) => {
       onChange={handleChange}
       aria-label={t("common.selectLanguage", "Select language")}
       className={cn(
-        "h-10 min-w-[4.75rem] cursor-pointer appearance-none rounded-md border border-input bg-background bg-[length:0.65rem] bg-[right_0.45rem_center] bg-no-repeat py-1 pl-2 pr-6 text-xs font-semibold uppercase tracking-wide text-foreground",
+        "h-10 min-w-[4.75rem] cursor-pointer appearance-none rounded-md border border-input bg-white dark:bg-slate-950 dark:[color-scheme:dark] bg-[length:0.65rem] bg-[right_0.45rem_center] bg-no-repeat py-1 pl-2 pr-6 text-xs font-semibold uppercase tracking-wide text-foreground",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         className
       )}

@@ -41,7 +41,7 @@ const AppNav = ({
       <div
         className={
           showCenteredInnerBrand
-            ? "container max-w-full px-4 sm:px-6 lg:px-8 min-h-14 py-2 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3"
+            ? "container max-w-full px-4 sm:px-6 lg:px-8 min-h-14 py-2 grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:gap-3"
             : showStackedMobilePlaygroundCta
               ? "container max-w-full px-4 sm:px-6 lg:px-8 min-h-14 py-2 flex flex-wrap items-center justify-between gap-3"
             : "container max-w-full px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-4"
@@ -123,7 +123,7 @@ const AppNav = ({
                 </Link>
               )}
               <ThemeToggle />
-              <NativeLanguageSelect />
+              <NativeLanguageSelect className="min-w-[3.25rem] sm:min-w-[4.75rem]" />
             </div>
           </>
         ) : (
@@ -168,7 +168,7 @@ const AppNav = ({
       </div>
 
       {activeMode && (
-        <div className="container max-w-full px-4 sm:px-6 lg:px-8 pb-2.5 flex justify-center">
+        <div className="container max-w-full px-0 sm:px-6 lg:px-8 pb-2.5 flex justify-center">
           <GuideModeSelector active={activeMode} />
         </div>
       )}

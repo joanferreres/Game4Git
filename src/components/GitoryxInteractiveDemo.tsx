@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ChevronLeft,
@@ -11,9 +11,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { GITORYX_OPERATIONS, type GitoryxOperation } from "@/lib/gitoryxOperations";
 
-type DemoOp = "commit" | "branch" | "merge" | "remote" | "conflict" | "stash";
-type TourStep = 0 | 1 | 2 | 3;
 
 type GraphNode = {
   id: string;
@@ -22,8 +21,8 @@ type GraphNode = {
   label: string;
   message: string;
   branch: "main" | "feature";
-  visibleFrom: TourStep;
-  highlightOps: DemoOp[];
+  visibleFrom: number;
+  highlightOps: GitoryxOperation[];
 };
 
 const NODES: GraphNode[] = [
@@ -44,7 +43,7 @@ const NODES: GraphNode[] = [
     label: "b2",
     message: "docs: readme",
     branch: "main",
-    visibleFrom: 1,
+    visibleFrom: 0,
     highlightOps: ["commit", "remote"],
   },
   {
@@ -65,7 +64,7 @@ const NODES: GraphNode[] = [
     message: "feat: login",
     branch: "feature",
     visibleFrom: 2,
-    highlightOps: ["branch", "commit", "conflict"],
+    highlightOps: ["branch", "commit", "fast-forward"],
   },
   {
     id: "m1",
@@ -79,88 +78,87 @@ const NODES: GraphNode[] = [
   },
 ];
 
-const OPS: { id: DemoOp; icon: typeof GitCommit; cli: string }[] = [
-  { id: "commit", icon: GitCommit, cli: "git commit" },
-  { id: "branch", icon: GitBranch, cli: "git branch / switch" },
-  { id: "merge", icon: GitMerge, cli: "git merge" },
-  { id: "remote", icon: Terminal, cli: "git push / fetch" },
-  { id: "conflict", icon: GitMerge, cli: "merge conflict" },
-  { id: "stash", icon: RotateCcw, cli: "git stash" },
-];
+const EDGES = [
+  { from: "c0", to: "c1", kind: "main" },
+  { from: "c1", to: "c2", kind: "main" },
+  { from: "c2", to: "f1", kind: "feature" },
+  { from: "f1", to: "m1", kind: "feature" },
+  { from: "c2", to: "m1", kind: "main" },
+] as const;
+
+const TOUR_HIGHLIGHTS = ["c1", "c2", "f1", "m1"];
+const lastTourStep = TOUR_HIGHLIGHTS.length - 1;
+
+const operationIcons = {
+  commit: GitCommit,
+  branch: GitBranch,
+  merge: GitMerge,
+  "fast-forward": GitMerge,
+  remote: Terminal,
+  conflict: GitMerge,
+  stash: RotateCcw,
+} satisfies Record<GitoryxOperation, typeof GitCommit>;
+
+const operations = Object.keys(GITORYX_OPERATIONS) as GitoryxOperation[];
 
 type Props = {
-  mode?: "mapper" | "tour";
-  className?: string;
+  mode: "mapper" | "tour";
+  initialOperation?: GitoryxOperation | null;
 };
 
-const GitoryxInteractiveDemo: React.FC<Props> = ({ mode = "mapper", className }) => {
+export default function GitoryxInteractiveDemo({ mode, initialOperation }: Props) {
   const { t } = useTranslation();
-  const [activeOp, setActiveOp] = useState<DemoOp>("commit");
-  const [tourStep, setTourStep] = useState<TourStep>(0);
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const [focusedId, setFocusedId] = useState<string | null>(null);
+  const [activeOp, setActiveOp] = useState<GitoryxOperation>(initialOperation ?? "commit");
+  const [tourStep, setTourStep] = useState(0);
+  const [pickedId, setPickedId] = useState<string | null>(null);
 
-  const effectiveStep: TourStep = mode === "tour" ? tourStep : 3;
-
-  const visibleNodes = useMemo(
-    () => NODES.filter((n) => n.visibleFrom <= effectiveStep),
-    [effectiveStep]
+  const isFastForward = mode === "mapper" && activeOp === "fast-forward";
+  const effectiveStep = mode === "tour" ? tourStep : isFastForward ? lastTourStep - 1 : lastTourStep;
+  const visibleNodes = NODES.filter((node) => node.visibleFrom <= effectiveStep);
+  const mainTip = visibleNodes.reduce<GraphNode | undefined>(
+    (tip, node) => node.branch === "main" ? node : tip,
+    undefined
   );
+  const revealedNode = visibleNodes.find((node) => node.id === pickedId);
+  const isHighlighted = (node: GraphNode) =>
+    mode === "tour"
+      ? TOUR_HIGHLIGHTS[tourStep] === node.id
+      : node.highlightOps.includes(activeOp);
 
-  const edges = useMemo(() => {
-    const byId = Object.fromEntries(visibleNodes.map((n) => [n.id, n]));
-    const links: { from: string; to: string; kind: "main" | "feature" | "merge" }[] = [];
-    if (byId.c0 && byId.c1) links.push({ from: "c0", to: "c1", kind: "main" });
-    if (byId.c1 && byId.c2) links.push({ from: "c1", to: "c2", kind: "main" });
-    if (byId.c2 && byId.f1) links.push({ from: "c2", to: "f1", kind: "feature" });
-    if (byId.f1 && byId.m1) links.push({ from: "f1", to: "m1", kind: "merge" });
-    if (byId.c2 && byId.m1) links.push({ from: "c2", to: "m1", kind: "main" });
-    return links;
-  }, [visibleNodes]);
-
-  const highlighted = useMemo(() => {
-    if (mode === "tour") {
-      if (tourStep === 0) return new Set(["c0"]);
-      if (tourStep === 1) return new Set(["c1", "c2"]);
-      if (tourStep === 2) return new Set(["f1"]);
-      return new Set(["m1"]);
-    }
-    return new Set(
-      NODES.filter((n) => n.highlightOps.includes(activeOp) && n.visibleFrom <= 3).map(
-        (n) => n.id
-      )
-    );
-  }, [mode, tourStep, activeOp]);
-
-  const activeReveal = hoveredId || focusedId;
+  function goToStep(step: number) {
+    setPickedId(null);
+    setTourStep(step);
+  }
 
   const tourCopy = t(`gitoryx.demo.tour.steps.${tourStep}`, "");
   const opVisual = t(`gitoryx.demo.ops.${activeOp}.visual`, "");
   const opHint = t(`gitoryx.demo.ops.${activeOp}.hint`, "");
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className="space-y-4">
       {mode === "mapper" ? (
-        <div className="flex flex-wrap gap-2" role="listbox" aria-label={t("gitoryx.demo.opsLabel")}>
-          {OPS.map((op) => {
-            const Icon = op.icon;
-            const selected = activeOp === op.id;
+        <div className="flex flex-wrap gap-2" role="group" aria-label={t("gitoryx.demo.opsLabel")}>
+          {operations.map((operation) => {
+            const Icon = operationIcons[operation];
+            const selected = activeOp === operation;
             return (
               <button
-                key={op.id}
+                key={operation}
                 type="button"
-                role="option"
-                aria-selected={selected}
-                onClick={() => setActiveOp(op.id)}
+                aria-pressed={selected}
+                onClick={() => {
+                  setPickedId(null);
+                  setActiveOp(operation);
+                }}
                 className={cn(
-                  "inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs sm:text-sm transition-colors",
+                  "inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 sm:text-sm",
                   selected
-                    ? "border-sky-400 bg-sky-50 text-sky-800 dark:border-sky-600 dark:bg-sky-900/40 dark:text-sky-100"
+                    ? "border-sky-700 bg-sky-50 text-sky-800 dark:border-sky-400 dark:bg-sky-900/40 dark:text-sky-100"
                     : "border-border bg-background/60 text-muted-foreground hover:border-sky-300 hover:text-foreground"
                 )}
               >
-                <Icon className="h-3.5 w-3.5" />
-                <code className="font-mono">{op.cli}</code>
+                <Icon aria-hidden="true" className="h-3.5 w-3.5" />
+                <code className="font-mono">{GITORYX_OPERATIONS[operation]}</code>
               </button>
             );
           })}
@@ -168,16 +166,16 @@ const GitoryxInteractiveDemo: React.FC<Props> = ({ mode = "mapper", className })
       ) : (
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="text-sm font-medium text-foreground">
-            {t("gitoryx.demo.tour.stepLabel", { step: tourStep + 1, total: 4 })}
+            {t("gitoryx.demo.tour.stepLabel", { step: tourStep + 1, total: TOUR_HIGHLIGHTS.length })}
           </p>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Button
               type="button"
               variant="outline"
               size="sm"
-              className="h-8 gap-1"
+              className="min-h-11 gap-1"
               disabled={tourStep === 0}
-              onClick={() => setTourStep((s) => (s > 0 ? ((s - 1) as TourStep) : s))}
+              onClick={() => goToStep(tourStep - 1)}
             >
               <ChevronLeft className="h-3.5 w-3.5" />
               {t("gitoryx.demo.tour.prev", "Previous")}
@@ -185,159 +183,107 @@ const GitoryxInteractiveDemo: React.FC<Props> = ({ mode = "mapper", className })
             <Button
               type="button"
               size="sm"
-              className="h-8 gap-1 bg-sky-600 hover:bg-sky-700"
-              disabled={tourStep === 3}
-              onClick={() => setTourStep((s) => (s < 3 ? ((s + 1) as TourStep) : s))}
+              className="min-h-11 gap-1 bg-sky-700 text-white hover:bg-sky-800"
+              disabled={tourStep === lastTourStep}
+              onClick={() => goToStep(tourStep + 1)}
             >
               {t("gitoryx.demo.tour.next", "Next")}
               <ChevronRight className="h-3.5 w-3.5" />
             </Button>
-            {tourStep === 3 ? (
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                className="h-8 gap-1"
-                onClick={() => setTourStep(0)}
-              >
-                <RotateCcw className="h-3.5 w-3.5" />
-                {t("gitoryx.demo.tour.restart", "Restart")}
-              </Button>
-            ) : null}
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="min-h-11 gap-1"
+              onClick={() => goToStep(0)}
+            >
+              <RotateCcw aria-hidden className="h-3.5 w-3.5" />
+              {t("gitoryx.demo.tour.restart")}
+            </Button>
           </div>
         </div>
       )}
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <div
-          className="relative overflow-hidden rounded-lg border border-border bg-gradient-to-br from-slate-50 via-white to-sky-50 dark:from-gray-900 dark:via-gray-900 dark:to-sky-950/40"
-          onMouseLeave={() => setHoveredId(null)}
-        >
-          <div className="absolute left-3 top-3 z-10 rounded bg-background/80 px-2 py-1 text-[10px] font-medium uppercase tracking-wide text-muted-foreground backdrop-blur">
-            {t("gitoryx.demo.graphLabel", "Simplified commit graph")}
-          </div>
-          <svg
-            viewBox="0 0 420 180"
-            className="h-auto w-full"
-            role="img"
-            aria-label={t("gitoryx.demo.graphAria")}
-          >
-            {edges.map((e) => {
-              const from = visibleNodes.find((n) => n.id === e.from);
-              const to = visibleNodes.find((n) => n.id === e.to);
-              if (!from || !to) return null;
-              const active =
-                highlighted.has(from.id) || highlighted.has(to.id) || e.kind === "feature";
-              return (
-                <line
-                  key={`${e.from}-${e.to}-${e.kind}`}
-                  x1={from.x}
-                  y1={from.y}
-                  x2={to.x}
-                  y2={to.y}
-                  stroke={e.kind === "feature" ? "#0ea5e9" : e.kind === "merge" ? "#0284c7" : "#64748b"}
-                  strokeWidth={active ? 3 : 2}
-                  strokeOpacity={active ? 0.95 : 0.45}
-                />
-              );
-            })}
-
-            {/* branch labels */}
-            {visibleNodes.some((n) => n.id === "c2") ? (
-              <text x={208} y={148} className="fill-slate-500 text-[10px]" textAnchor="middle">
-                main
-              </text>
-            ) : null}
-            {visibleNodes.some((n) => n.id === "f1") ? (
-              <text x={288} y={28} className="fill-sky-600 text-[10px]" textAnchor="middle">
-                feature
-              </text>
-            ) : null}
-
-            {visibleNodes.map((node) => {
-              const isHi = highlighted.has(node.id);
-              const isReveal = activeReveal === node.id;
-              return (
-                <g
-                  key={node.id}
-                  transform={`translate(${node.x}, ${node.y})`}
-                  className="cursor-pointer"
-                  onMouseEnter={() => setHoveredId(node.id)}
-                  onFocus={() => setFocusedId(node.id)}
-                  onBlur={() => setFocusedId(null)}
-                  onClick={() => setFocusedId(node.id)}
-                  tabIndex={0}
-                  role="button"
-                  aria-label={`${node.label}: ${node.message}`}
-                >
-                  <circle
-                    r={isHi || isReveal ? 14 : 11}
-                    fill={node.branch === "feature" ? "#0ea5e9" : "#334155"}
-                    stroke={isReveal ? "#fbbf24" : isHi ? "#38bdf8" : "#e2e8f0"}
-                    strokeWidth={isReveal || isHi ? 3 : 2}
-                    className="transition-all"
-                  />
-                  <text
-                    y={4}
-                    textAnchor="middle"
-                    className="fill-white text-[9px] font-mono font-semibold pointer-events-none"
-                  >
-                    {node.label}
-                  </text>
-                </g>
-              );
-            })}
-          </svg>
-
-          {activeReveal ? (
-            <div className="pointer-events-none absolute bottom-3 left-3 right-3 rounded-md border border-amber-200/80 bg-amber-50/95 px-3 py-2 text-xs text-amber-950 shadow-sm dark:border-amber-800/50 dark:bg-amber-950/90 dark:text-amber-50">
-              {(() => {
-                const node = NODES.find((n) => n.id === activeReveal);
-                if (!node) return null;
+        <div className="min-w-0 rounded-lg border border-border bg-slate-50 px-3 py-3 dark:bg-slate-900">
+          <p className="text-sm font-medium">{t("gitoryx.demo.graphLabel")}</p>
+          <div className="relative">
+            <svg viewBox="0 0 420 156" className="block h-auto w-full" aria-hidden="true">
+              {EDGES.map((edge) => {
+                const from = visibleNodes.find((node) => node.id === edge.from);
+                const to = visibleNodes.find((node) => node.id === edge.to);
+                if (!from || !to) return null;
                 return (
-                  <>
-                    <span className="font-mono font-semibold">{node.label}</span>
-                    <span className="mx-1.5 text-amber-700/70 dark:text-amber-200/70">·</span>
-                    <span>{node.message}</span>
-                    <span className="ml-2 text-amber-800/80 dark:text-amber-100/70">
-                      ({node.branch})
-                    </span>
-                  </>
+                  <line
+                    key={edge.to + edge.from}
+                    x1={from.x}
+                    y1={from.y}
+                    x2={to.x}
+                    y2={to.y}
+                    className={edge.kind === "main" ? "stroke-slate-500 dark:stroke-slate-400" : "stroke-sky-700 dark:stroke-sky-300"}
+                    strokeWidth={3}
+                  />
                 );
-              })()}
-            </div>
-          ) : (
-            <p className="absolute bottom-3 left-3 right-3 text-[11px] text-muted-foreground">
-              {t("gitoryx.demo.hoverHint", "Hover or focus a commit to reveal its message.")}
-            </p>
-          )}
+              })}
+              {mainTip && !isFastForward && (
+                <text x={mainTip.x} y={150} className="fill-slate-700 text-[17px] dark:fill-slate-200" textAnchor="middle">main</text>
+              )}
+              {effectiveStep >= 2 && (
+                <text x={288} y={20} className="fill-sky-800 text-[17px] dark:fill-sky-200" textAnchor="middle">{isFastForward ? "main / feature" : "feature"}</text>
+              )}
+            </svg>
+            {visibleNodes.map((node) => (
+              <button
+                key={node.id}
+                type="button"
+                aria-label={`${node.label}, ${node.message}`}
+                aria-pressed={pickedId === node.id}
+                onClick={() => setPickedId(node.id)}
+                style={{ left: `${(node.x / 420) * 100}%`, top: `${(node.y / 156) * 100}%` }}
+                className="group absolute flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-sky-700 dark:focus-visible:outline-sky-300"
+              >
+                <span
+                  className={cn(
+                    "flex h-7 w-7 items-center justify-center rounded-full border-2 font-mono text-xs font-semibold text-white group-hover:underline",
+                    node.branch === "feature" ? "bg-sky-800" : "bg-slate-700",
+                    isHighlighted(node) || pickedId === node.id ? "border-sky-300" : "border-transparent",
+                    pickedId === node.id && "underline"
+                  )}
+                >
+                  {node.label}
+                </span>
+              </button>
+            ))}
+          </div>
+          <p role="status" className="mt-3 min-h-10 text-sm text-muted-foreground">
+            {revealedNode ? (
+              <>
+                <code className="font-semibold text-foreground">{revealedNode.label}</code>{" "}
+                {revealedNode.message} ({isFastForward && revealedNode.id === "f1" ? "main / feature" : revealedNode.branch})
+              </>
+            ) : t("gitoryx.start.selectCommit")}
+          </p>
         </div>
 
-        <div className="rounded-lg border border-border bg-muted/20 p-4">
+        <div className="rounded-lg border border-border bg-card p-4" aria-live="polite">
           {mode === "mapper" ? (
             <>
-              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                {t("gitoryx.demo.mappingLabel", "CLI → visual")}
-              </p>
-              <code className="mt-2 block font-mono text-sm text-sky-800 dark:text-sky-200">
-                {OPS.find((o) => o.id === activeOp)?.cli}
+              <code className="block font-mono text-sm text-sky-800 dark:text-sky-200">
+                {GITORYX_OPERATIONS[activeOp]}
               </code>
               <p className="mt-3 text-sm leading-relaxed text-foreground">{opVisual}</p>
               <p className="mt-2 text-xs text-muted-foreground">{opHint}</p>
             </>
           ) : (
             <>
-              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                {t("gitoryx.demo.tour.panelLabel", "Mini tour")}
-              </p>
-              <h3 className="mt-2 text-base font-semibold">
+              <h3 className="text-base font-semibold">
                 {t(`gitoryx.demo.tour.titles.${tourStep}`)}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{tourCopy}</p>
               <ol className="mt-4 flex gap-1.5" aria-hidden>
-                {[0, 1, 2, 3].map((i) => (
+                {TOUR_HIGHLIGHTS.map((id, i) => (
                   <li
-                    key={i}
+                    key={id}
                     className={cn(
                       "h-1.5 flex-1 rounded-full",
                       i <= tourStep ? "bg-sky-500" : "bg-muted"
@@ -351,6 +297,4 @@ const GitoryxInteractiveDemo: React.FC<Props> = ({ mode = "mapper", className })
       </div>
     </div>
   );
-};
-
-export default GitoryxInteractiveDemo;
+}

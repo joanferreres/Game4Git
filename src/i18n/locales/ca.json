@@ -1631,116 +1631,45 @@
     "visitorsSeries": "Visitants únics"
   },
   "gitoryx": {
-    "pageTitle": "Gitoryx — Veure Git en visual",
+    "pageTitle": "Gitoryx | Guia visual de Git",
     "faqTitle": "FAQ de Gitoryx",
     "faq": {
       "q1": "Què és Gitoryx?",
-      "a1": "Gitoryx és un client Git natiu d’escriptori per a macOS, Windows i Linux. Mostra el repositori com un graf de commits a color i converteix operacions reals de Git—commit, branca, merge, rebase, conflictes—en fluxos visuals.",
+      "a1": "Gitoryx és un client Git d’escriptori per a macOS, Windows i Linux. Permet seguir branques al graf, revisar canvis en fitxers i fer commits i fusions.",
       "q2": "Gitoryx substitueix aprendre la CLI de Git?",
-      "a2": "No. Game4Git ensenya la CLI al navegador; Gitoryx reforça el mateix model mental en un repo local real. Usa tots dos: CLI per a comandes curtes i visuals quan l’estat costa d’imaginar.",
+      "a2": "A Game4Git practiques ordres de Git al navegador. A Gitoryx pots veure com aquestes operacions canvien un repositori del teu ordinador.",
       "q3": "Com obro un repo a Gitoryx des del terminal?",
-      "a3": "Instal·la Gitoryx i usa l’helper gitoryx a la carpeta del repositori (o Fitxer → Obrir). El graf mostra la història que ja hi ha al disc—sense migrar ni clonar de nou.",
+      "a3": "A macOS, instal·la l’ordre opcional des de Settings → About i executa gitoryx . a la carpeta del repositori.",
       "q4": "Puc provar Gitoryx gratis amb Game4Git?",
-      "a4": "Pots descarregar Gitoryx i obrir repos locals sense pujar codi a Gitoryx. Els ambaixadors de Game4Git poden usar el codi GAME4GIT per a un 20% de descompte a Pro durant 12 mesos."
+      "a4": "Pots baixar Gitoryx i treballar de franc amb repositoris públics. GAME4GIT ofereix als lectors de Game4Git un 20 % de descompte en Pro durant 12 mesos."
     },
     "tabs": {
-      "introduction": "Introducció",
-      "cliVisual": "CLI ↔ Visual",
-      "path": "Mini ruta",
-      "try": "Prova-ho",
-      "cheatsheet": "Xuleta"
-    },
-    "intro": {
-      "whatIsTitle": "Què és Gitoryx?",
-      "whatIsSubtitle": "Veure tot el que fa Git — client visual natiu al costat de la pràctica CLI",
-      "paragraph": "Gitoryx és un client Git d'escriptori natiu per a macOS, Windows i Linux. Mostra el repositori com un graf de commits en color i converteix operacions que solen fer-se al terminal — rebase interactiu, conflictes de merge, staging per línia — en fluxos visuals amb undo. Cada acció mapeja a una operació Git real i es nomena com ella.",
-      "whyTitle": "Per què ajuda a aprendre",
-      "why": {
-        "0": "Un graf renderitzat fa llegible la topologia de branques — més clar que git log --graph en històries amb molts merges",
-        "1": "Conflictes, rebase i staging per línia mostren l'estat que altrament tindries al cap",
-        "2": "Les accions conserven noms Git reals, així que la UI ensenya el mateix model que el terminal"
-      },
-      "withCliTitle": "Amb el playground CLI",
-      "withCli": {
-        "0": "Practica ordres amb seguretat primer al playground de Game4Git",
-        "1": "Després obre un repo local real a Gitoryx (o gitoryx des del terminal) per veure les mateixes idees",
-        "2": "Usa tots dos al mateix repo: CLI per ordres curtes, visual quan el difícil és l'estat"
-      },
-      "paragraph2": "Després de practicar ordres a Game4Git, obrir les mateixes idees a Gitoryx reforça el model mental — sense substituir la CLI.",
-      "demoLead": "Prova un graf simplificat sense connexió — mateixes idees que el client real, sense instal·lar res."
+      "cliVisual": "CLI ↔ Visual"
     },
     "promo": {
-      "tipTitle": "Consell si proves Gitoryx Pro",
-      "tipBody": "Si proves Gitoryx Pro, el codi GAME4GIT dóna un 20 % de descompte durant 12 mesos.",
-      "copyCode": "Copiar codi",
-      "copied": "Copiat",
-      "open": "Obrir Gitoryx"
-    },
-    "cliVisual": {
-      "title": "Mapa CLI ↔ visual",
-      "subtitle": "Fes clic a una operació CLI per veure com la mateixa idea de Git actualitza un graf visual — Gitoryx anomena operacions Git reals.",
-      "colCli": "CLI (Game4Git)",
-      "colVisual": "Visual (Gitoryx)",
-      "commit": "Apareix un node nou al graf de commits",
-      "branch": "Les línies de branca es divideixen i canvien el focus",
-      "merge": "Les línies s’uneixen; els conflictes s’obren costat a costat",
-      "remote": "Les puntes local i remota es mouen al graf",
-      "footnote": "Això és un mock didàctic dins de Game4Git. A Gitoryx el graf és en color, virtualitzat i lligat al teu repositori local real."
-    },
-    "studentPath": {
-      "title": "Ruta guiada (5–10 min)",
-      "subtitle": "Recorre obrir repo → commit → branca → merge en un graf simplificat; després prova el mateix bucle en un repo real.",
-      "step1": "Acaba un exercici de Game4Git (branca, merge o remot).",
-      "step2": "Obre un repo similar a Gitoryx.",
-      "step3": "Localitza al graf el commit / la branca que acabes de practicar.",
-      "step4": "Repeteix una acció CLI i observa l’actualització visual.",
-      "step5": "Torna a Game4Git per al següent repte.",
-      "afterTitle": "Després prova-ho en un repo real"
+      "copied": "Copiat"
     },
     "try": {
-      "title": "Prova Gitoryx",
-      "subtitle": "Obre el client d'escriptori en un repo real — sense iframe; no cal compte per començar en repos públics.",
-      "body": "Descarrega Gitoryx per a macOS, Windows o Linux, obre un repositori local i mira com s'actualitza el graf. Continua practicant CLI a Game4Git; usa Gitoryx quan vulguis veure amb més claredat les mateixes operacions. També pots obrir la carpeta actual amb l'helper gitoryx.",
-      "cta": "Descarregar Gitoryx",
-      "backPlayground": "Tornar al playground",
-      "promoLine": "Consell: codi GAME4GIT — 20 % durant 12 mesos (vegeu Introducció).",
-      "screenshotAlt": "Captura oficial del graf de commits de Gitoryx",
-      "screenshotCaption": "Captura de gitoryx.com — graf de commits al client d'escriptori.",
-      "tutorialsTitle": "Tutorials oficials CLI ↔ GUI",
-      "tutorials": {
-        "commit": "Git commit bàsic (CLI + In Gitoryx)",
-        "branch": "Git branch: crear, canviar, gestionar",
-        "conflict": "Resoldre conflictes de merge",
-        "terminal": "Obrir un repo des del terminal (gitoryx)"
-      }
+      "backPlayground": "Tornar al playground"
     },
     "cheatsheet": {
-      "title": "Xuleta CLI ↔ Gitoryx",
-      "subtitle": "Els mateixos noms Git a banda i banda. CLI a l’esquerra, Gitoryx a la dreta.",
-      "colCli": "CLI",
-      "colVisual": "A Gitoryx",
-      "footnote": "Les accions conserven noms Git reals. CLI per a comandes curtes; Gitoryx quan el graf o el conflicte és el difícil.",
+      "title": "Ordres de Git a Gitoryx",
       "items": {
         "commit": "Stage fitxer/hunk/línia → Commit. Node nou a la branca activa.",
-        "branch": "Crear branca. Una línia de color se separa des de la punta.",
+        "branch": "Una branca pot aparèixer en una línia pròpia quan té commits propis. Checkout canvia la branca activa.",
         "switch": "Checkout / clic a una punta. El focus passa a aquella branca.",
-        "merge": "Merge. Les línies s’uneixen; pot aparèixer un merge commit.",
-        "remote": "Fetch o push. Les puntes local i origin es mouen; es veu ahead/behind.",
+        "merge": "Fes servir Merge per integrar una branca. Un commit de fusió té dos pares. Un fast-forward mou el punter de la branca.",
+        "remote": "Fetch actualitza les referències de seguiment remot. Push puja els commits locals al remot.",
         "stage": "Stage per hunk o línia al diff (mateixa idea que git add -p).",
-        "conflict": "Ours/theirs costat a costat. Edita i acaba el merge.",
-        "open": "Helper de shell: obre la carpeta actual a Gitoryx des del terminal."
+        "conflict": "Ours/theirs costat a costat. Edita i acaba el merge."
       }
     },
     "outro": {
       "ariaLabel": "Consell Gitoryx després de l’exercici",
-      "guideCta": "Obrir guia Gitoryx",
-      "externalCta": "Obrir Gitoryx",
-      "promoLabel": "Promo:",
-      "copy": "Copiar",
       "dismiss": "No tornar a mostrar",
       "feature-branch": {
         "title": "Acabes de practicar branques per CLI",
-        "body": "A Gitoryx veuries feature-login separar-se de master i tornar a unir-se en fer merge — mateixa història, graf visual."
+        "body": "A Gitoryx, una branca amb commits propis pot aparèixer separada de la branca base. Un fast-forward mou el punter de la base i un commit de merge uneix dos historials."
       },
       "remote-workflow": {
         "title": "Acabes de practicar remotes per CLI",
@@ -1748,39 +1677,40 @@
       },
       "fast-forward-merge": {
         "title": "Acabes de practicar merges fast-forward",
-        "body": "A Gitoryx un fast-forward avança la punta; --no-ff deixa un merge commit visible al graf."
+        "body": "A Gitoryx un fast-forward avança la punta. --no-ff deixa un merge commit visible al graf."
       }
     },
     "demo": {
       "opsLabel": "Operacions CLI",
       "graphLabel": "Graf de commits simplificat",
-      "graphAria": "Graf Git interactiu simplificat",
-      "hoverHint": "Passa el cursor o enfoca un commit per veure'n el missatge.",
-      "mappingLabel": "CLI → visual",
       "ops": {
         "commit": {
-          "visual": "Apareix un node nou al carril de la branca actual del graf — el mateix snapshot que git commit.",
+          "visual": "Apareix un node nou a la branca activa. Representa el que acabes de desar amb git commit.",
           "hint": "A Gitoryx també veus staged vs unstaged abans de fer commit, i pots esmenar l'últim commit amb un clic."
         },
         "branch": {
-          "visual": "Un carril de color se separa des de la punta; el checkout mou el focus a aquesta punta amb ahead/behind.",
+          "visual": "Una branca pot aparèixer en una línia pròpia quan té commits propis. Checkout canvia la branca activa.",
           "hint": "Les accions de branca conserven noms Git: create, checkout/switch, rename, delete."
         },
         "merge": {
-          "visual": "Els carrils s'uneixen; pot aparèixer un merge commit perquè la forma de la història es llegeixi clar.",
+          "visual": "Quan una fusió crea un commit, les línies dels dos pares s’uneixen en aquest node.",
           "hint": "Si hi ha conflictes, Gitoryx obre un editor costat a costat: ours / theirs / editar a mà."
         },
         "remote": {
           "visual": "Les puntes local i remote-tracking es mouen: ahead/behind es veu al graf.",
-          "hint": "Fetch, pull i push van al teu host — res no s'envia a Gitoryx."
+          "hint": "Fetch, pull i push van al teu host. Res no s'envia a Gitoryx."
         },
         "conflict": {
-          "visual": "Els fitxers en conflicte s'obren costat a costat; tria ours, theirs o edita, amb undo a cada pas.",
-          "hint": "A sota és el mateix merge de Git; la GUI facilita entendre l'estat davant dels marcadors <<<<<<<."
+          "visual": "Els fitxers en conflicte s'obren costat a costat. Tria ours, theirs o edita, amb undo a cada pas.",
+          "hint": "A sota és el mateix merge de Git. La GUI facilita entendre l'estat davant dels marcadors <<<<<<<."
         },
         "stash": {
           "visual": "La llista de stashes mostra un preview del diff abans d'apply o drop.",
           "hint": "Útil quan els missatges stash@{n} no basten per recordar què vas desar."
+        },
+        "fast-forward": {
+          "visual": "El punter de main avança fins al commit que ja existeix a feature. Git no crea cap commit.",
+          "hint": "El fast-forward és possible quan main és un ancestre de feature."
         }
       },
       "tour": {
@@ -1788,20 +1718,67 @@
         "prev": "Anterior",
         "next": "Següent",
         "restart": "Reinicia",
-        "panelLabel": "Mini recorregut",
         "titles": {
-          "0": "Obrir un repositori",
+          "0": "Obre a Gitoryx",
           "1": "Fer un commit",
-          "2": "Crear una branca",
+          "2": "Crea una branca per al canvi",
           "3": "Merge de tornada a main"
         },
         "steps": {
-          "0": "A Gitoryx obres un repo local existent (o l'helper gitoryx al terminal). El graf mostra la història que ja hi ha al disc — sense migrar ni reclonar.",
+          "0": "Obre la carpeta del repositori a Gitoryx. El graf mostra els commits que ja tens a l’ordinador.",
           "1": "Fes stage (fitxer, hunk o línia), escriu el missatge i commit. Apareix un node nou al carril actiu.",
-          "2": "Crea i canvia a una branca feature. Un carril de color se separa des de la punta — mateixa idea que git switch -c.",
-          "3": "Integra la branca feature a main. Els carrils s'uneixen; si hi ha conflictes, resol-los costat a costat i el graf mostra la forma del merge."
+          "2": "Canvia a feature i crea un commit. La branca apareix com una línia pròpia al graf.",
+          "3": "Integra feature a main. Aquest exemple fa servir un commit de merge amb dos pares. Un fast-forward només mou el punter de la branca."
         }
       }
+    },
+    "start": {
+      "headline": "El teu primer commit amb Gitoryx",
+      "summary": "Obre un repositori Git a l’ordinador, segueix-ne les branques al graf i crea un commit que puguis trobar després.",
+      "jump": "Comença la guia d’escriptori",
+      "preview": "Explora el graf",
+      "screenshotAlt": "Gitoryx amb les branques en color, l’historial de commits i el diff d’un fitxer",
+      "screenshotCaption": "Captura de l’aplicació d’escriptori de",
+      "practiceTitle": "Mira què canvia al graf",
+      "practiceLead": "Recorre un historial d’exemple a Game4Git i fes servir el mapa d’ordres per veure com es tradueixen a l’aplicació d’escriptori.",
+      "tourTab": "Recorregut pel graf",
+      "selectCommit": "Selecciona un commit per veure’n el missatge i la branca.",
+      "exerciseLink": "Mostra aquesta operació a Gitoryx",
+      "title": "De la baixada al primer commit",
+      "lead": "Segueix els passos a macOS, Windows o Linux. Pots fer servir el repositori públic de pràctica sense un compte de Gitoryx.",
+      "download": "Baixa Gitoryx de franc",
+      "copyRepo": "Copia l’URL del repositori",
+      "officialTutorials": "Tutorials oficials de Gitoryx",
+      "steps": {
+        "install": {
+          "title": "Instal·la Gitoryx",
+          "body": "Tria l’instal·lador del teu sistema operatiu a la pàgina de baixades. Instal·la’l i obre l’aplicació."
+        },
+        "clone": {
+          "title": "Clona el repositori de pràctica",
+          "body": "A Gitoryx, tria Clone, enganxa aquest URL i selecciona una carpeta nova a l’ordinador. Per inspeccionar un projecte que ja tens, fes servir Open i selecciona la carpeta del repositori."
+        },
+        "inspect": {
+          "title": "Llegeix un commit i el seu diff",
+          "body": "Selecciona un commit al graf i després un fitxer als detalls. El diff mostra quines línies s’han afegit o tret."
+        },
+        "branch": {
+          "title": "Crea una branca per al canvi",
+          "body": "Fes servir Branch per crear practice/readme des del commit actual. Canvia a la branca nova si Gitoryx et deixa a l’original. Comprova quina branca és activa abans d’editar."
+        },
+        "commit": {
+          "title": "Prepara i desa un canvi",
+          "body": "Edita el README a l’editor i desa’l. A Gitoryx, obre Working changes, revisa el diff, afegeix el README a l’àrea de preparació i crea un commit amb el missatge Update README. Si Git et demana la identitat, configura el nom i el correu. Selecciona el commit nou per comprovar que és a practice/readme. L’exercici acaba amb un commit local."
+        }
+      },
+      "copyError": "No s’ha pogut copiar. Selecciona i copia el text manualment."
+    },
+    "offer": {
+      "title": "Gitoryx Pro per a projectes privats",
+      "benefit": "Pro permet veure tot l’historial dels repositoris privats i accedir a la vista avançada del graf.",
+      "terms": "20 % de descompte durant 12 mesos amb",
+      "disclosure": "Game4Git pot rebre una comissió si et subscrius amb aquest codi.",
+      "cta": "Consulta els plans Pro amb un 20 % de descompte"
     }
   }
 }

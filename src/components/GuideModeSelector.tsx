@@ -42,7 +42,7 @@ const GuideModeSelector = ({ active, className }: GuideModeSelectorProps) => {
             to={localizePath(mode.path)}
             aria-current={isActive ? "page" : undefined}
             className={cn(
-              "shrink-0 rounded-full px-3 sm:px-3.5 py-1.5 font-mono text-[11px] sm:text-xs font-medium tracking-tight transition-colors whitespace-nowrap",
+              "inline-flex min-h-11 shrink-0 items-center rounded-full px-2 sm:px-3.5 font-mono text-[11px] sm:text-xs font-medium tracking-tight transition-colors whitespace-nowrap",
               isActive
                 ? "bg-background text-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground"

@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const Beasties = require('beasties');
 const { SITE_URL } = require('./src/config/site.cjs');
+const gitoryxGuide = require('./src/lib/gitoryxGuide.json');
 
 const DIST_DIR = path.join(__dirname, 'dist');
 const INDEX_FILE = path.join(DIST_DIR, 'index.html');
@@ -249,7 +250,7 @@ const getRouteDescription = (locale, routeKey) => {
     case 'valgrind':
       return t(locale, 'valgrind.intro.subtitle');
     case 'gitoryx':
-      return t(locale, 'gitoryx.intro.whatIsSubtitle');
+      return t(locale, 'gitoryx.start.summary');
     case 'home':
       return t(locale, 'home.seoIntroShort');
     case 'playground':
@@ -831,31 +832,22 @@ const buildLandingMarkup = (route, locale) => {
 const buildGitoryxMarkup = (locale) => {
   const homePath = getLocalizedPath('/', locale);
   const playgroundPath = getLocalizedPath('/playground', locale);
-  const cheatRows = [
-    { cli: 'git commit', key: 'commit' },
-    { cli: 'git switch -c <name>', key: 'branch' },
-    { cli: 'git switch <branch>', key: 'switch' },
-    { cli: 'git merge <branch>', key: 'merge' },
-    { cli: 'git fetch / git push', key: 'remote' },
-    { cli: 'git add -p', key: 'stage' },
-    { cli: 'merge conflict', key: 'conflict' },
-    { cli: 'gitoryx', key: 'open' },
-  ];
-  const cheatItems = cheatRows
+  const cheatItems = gitoryxGuide.commands
     .map((row) => {
       const visual = t(locale, `gitoryx.cheatsheet.items.${row.key}`);
       return visual
-        ? `<li><code>${escapeHtml(row.cli)}</code> — ${escapeHtml(visual)}</li>`
+        ? `<li><code>${escapeHtml(row.cli)}</code> · ${escapeHtml(visual)}</li>`
         : '';
     })
     .filter(Boolean)
     .join('\n            ');
-  const pathSteps = [1, 2, 3, 4, 5]
-    .map((n) => `<li>${escapeHtml(t(locale, `gitoryx.studentPath.step${n}`))}</li>`)
-    .join('\n            ');
-  const whyItems = [0, 1, 2]
-    .map((n) => `<li>${escapeHtml(t(locale, `gitoryx.intro.why.${n}`))}</li>`)
-    .join('\n            ');
+  const pathSteps = gitoryxGuide.steps
+    .map((step) => `<li>
+      <h3 class="font-semibold">${escapeHtml(t(locale, `gitoryx.start.steps.${step}.title`))}</h3>
+      <p>${escapeHtml(t(locale, `gitoryx.start.steps.${step}.body`))}</p>
+      ${step === 'clone' ? `<code class="break-all">${escapeHtml(gitoryxGuide.practiceRepo)}</code>` : ''}
+    </li>`)
+    .join('');
   const faqItems = [1, 2, 3, 4]
     .map(
       (n) => `
@@ -870,35 +862,30 @@ const buildGitoryxMarkup = (locale) => {
       <main class="container min-h-screen px-4 sm:px-6 lg:px-8 py-8">
         <header class="mx-auto max-w-3xl text-center">
           <a class="underline text-sm" href="${escapeHtml(homePath)}">${escapeHtml(t(locale, 'common.backToHome', 'Back to Home'))}</a>
-          <h1 class="mt-3 text-3xl sm:text-4xl font-bold tracking-tight">${escapeHtml(t(locale, 'gitoryx.pageTitle'))}</h1>
-          <p class="mt-3 text-sm sm:text-base text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.intro.whatIsSubtitle'))}</p>
+          <h1 class="mt-3 text-3xl sm:text-4xl font-bold tracking-tight">${escapeHtml(t(locale, 'gitoryx.start.headline'))}</h1>
+          <p class="mt-3 text-sm sm:text-base text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.start.summary'))}</p>
         </header>
-        <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
-          <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'gitoryx.intro.whatIsTitle'))}</h2>
-          <p class="mt-3 text-sm text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.intro.paragraph'))}</p>
-          <p class="mt-3 text-sm text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.intro.paragraph2'))}</p>
-          <h3 class="mt-6 text-lg font-semibold">${escapeHtml(t(locale, 'gitoryx.intro.whyTitle'))}</h3>
-          <ul class="mt-3 list-disc pl-5 space-y-2 text-sm text-muted-foreground">
-            ${whyItems}
-          </ul>
+        <section id="practice" class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
+          <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'gitoryx.start.practiceTitle'))}</h2>
+          <p class="mt-2 text-sm text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.start.practiceLead'))}</p>
         </section>
-        <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
-          <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'gitoryx.studentPath.title'))}</h2>
-          <p class="mt-2 text-sm text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.studentPath.subtitle'))}</p>
-          <ol class="mt-4 list-decimal pl-5 space-y-2 text-sm text-muted-foreground">
-            ${pathSteps}
-          </ol>
-          <p class="mt-4 text-sm"><a class="underline" href="${escapeHtml(playgroundPath)}">${escapeHtml(
-            t(locale, 'gitoryx.try.backPlayground')
-          )}</a></p>
+        <section id="quick-start" class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
+          <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'gitoryx.start.title'))}</h2>
+          <p class="mt-2 text-sm text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.start.lead'))}</p>
+          <p class="mt-4 text-sm"><a class="underline" href="${escapeHtml(gitoryxGuide.downloadUrl)}">${escapeHtml(t(locale, 'gitoryx.start.download'))}</a></p>
+          <ol class="mt-4 list-decimal pl-5 space-y-4 text-sm">${pathSteps}</ol>
+          <aside class="mt-6 border-t pt-4">
+            <h3 class="font-semibold">${escapeHtml(t(locale, 'gitoryx.offer.title'))}</h3>
+            <p class="mt-2 text-sm">${escapeHtml(t(locale, 'gitoryx.offer.benefit'))}</p>
+            <p class="mt-2 text-sm">${escapeHtml(t(locale, 'gitoryx.offer.terms'))} <code>${escapeHtml(gitoryxGuide.promoCode)}</code></p>
+            <p class="mt-2 text-sm">${escapeHtml(t(locale, 'gitoryx.offer.disclosure'))}</p>
+            <p class="mt-2 text-sm"><a class="underline" rel="sponsored" href="${escapeHtml(gitoryxGuide.proUrl)}">${escapeHtml(t(locale, 'gitoryx.offer.cta'))}</a></p>
+          </aside>
         </section>
         <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
           <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'gitoryx.cheatsheet.title'))}</h2>
-          <p class="mt-2 text-sm text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.cheatsheet.subtitle'))}</p>
-          <ul class="mt-4 space-y-2 text-sm text-muted-foreground">
-            ${cheatItems}
-          </ul>
-          <p class="mt-4 text-xs text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.cheatsheet.footnote'))}</p>
+          <ul class="mt-4 space-y-2 text-sm text-muted-foreground">${cheatItems}</ul>
+          <p class="mt-4 text-sm"><a class="underline" href="${escapeHtml(playgroundPath)}">${escapeHtml(t(locale, 'gitoryx.try.backPlayground'))}</a></p>
         </section>
         <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
           <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'gitoryx.faqTitle'))}</h2>
