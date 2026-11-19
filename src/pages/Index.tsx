@@ -152,7 +152,7 @@ const GitGame: React.FC = () => {
       title: t("home.guides.gitoryx.title"),
       description: t("home.guides.gitoryx.description"),
       icon: Eye,
-      color: "sky" as const,
+      color: "orange" as const,
       command: "gitoryx",
       difficulty: t("home.levelBasic", "Básico"),
     },
@@ -228,7 +228,7 @@ const GitGame: React.FC = () => {
           to={gitoryxPath}
           className="inline-flex items-center gap-1.5 underline-offset-2 hover:underline hover:text-foreground transition-colors"
         >
-          <Eye className="h-3.5 w-3.5 text-sky-600 dark:text-sky-400 shrink-0" aria-hidden />
+          <Eye className="h-3.5 w-3.5 text-orange-brand-accessible dark:text-orange-300 shrink-0" aria-hidden />
           {t("home.playgroundGitoryxNudge", "After the playground: see the same Git story visually — Gitoryx guide")}
         </Link>
       </p>

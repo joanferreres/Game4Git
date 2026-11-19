@@ -32,15 +32,15 @@ export function GitoryxExerciseOutro({ exerciseId }: { exerciseId: GitoryxOutroE
 
   return (
     <aside
-      className="mt-3 w-full max-w-md rounded-lg border border-sky-200 bg-sky-50 p-4 text-left dark:border-sky-800 dark:bg-sky-950"
+      className="mt-3 w-full max-w-md rounded-lg border border-border bg-surface-warm p-4 text-left dark:bg-muted/30"
       aria-label={t("gitoryx.outro.ariaLabel")}
     >
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <p className="text-sm font-semibold text-sky-950 dark:text-sky-100">
+          <p className="text-sm font-semibold text-foreground">
             {t(`gitoryx.outro.${exerciseId}.title`)}
           </p>
-          <p className="mt-1 text-sm leading-relaxed text-sky-900 dark:text-sky-200">
+          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
             {t(`gitoryx.outro.${exerciseId}.body`)}
           </p>
         </div>
@@ -48,7 +48,7 @@ export function GitoryxExerciseOutro({ exerciseId }: { exerciseId: GitoryxOutroE
           type="button"
           variant="ghost"
           size="icon"
-          className="-mt-2 -mr-2 h-11 w-11 shrink-0 text-sky-800 dark:text-sky-200"
+          className="-mt-2 -mr-2 h-11 w-11 shrink-0 text-muted-foreground"
           onClick={dismiss}
           aria-label={t("gitoryx.outro.dismiss")}
         >
@@ -57,7 +57,7 @@ export function GitoryxExerciseOutro({ exerciseId }: { exerciseId: GitoryxOutroE
       </div>
       <Link
         to={`${localizePath("/gitoryx")}?operation=${gitoryxOperationByExercise[exerciseId]}#practice`}
-        className="mt-1 inline-flex min-h-11 items-center text-sm font-semibold text-sky-800 underline underline-offset-4 dark:text-sky-200"
+        className="mt-1 inline-flex min-h-11 items-center text-sm font-semibold text-orange-brand-accessible underline underline-offset-4 dark:text-orange-300"
       >
         {t("gitoryx.start.exerciseLink")}
       </Link>

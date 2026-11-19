@@ -860,9 +860,9 @@ const buildGitoryxMarkup = (locale) => {
 
   return `
       <main class="container min-h-screen px-4 sm:px-6 lg:px-8 py-8">
-        <header class="mx-auto max-w-3xl text-center">
+        <header class="mx-auto max-w-3xl rounded-xl border border-border/60 bg-surface-warm p-5 dark:bg-muted/20 sm:p-8">
           <a class="underline text-sm" href="${escapeHtml(homePath)}">${escapeHtml(t(locale, 'common.backToHome', 'Back to Home'))}</a>
-          <h1 class="mt-3 text-3xl sm:text-4xl font-bold tracking-tight">${escapeHtml(t(locale, 'gitoryx.start.headline'))}</h1>
+          <h1 class="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight">${escapeHtml(t(locale, 'gitoryx.start.headline'))}</h1>
           <p class="mt-3 text-sm sm:text-base text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.start.summary'))}</p>
         </header>
         <section id="practice" class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
@@ -874,12 +874,12 @@ const buildGitoryxMarkup = (locale) => {
           <p class="mt-2 text-sm text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.start.lead'))}</p>
           <p class="mt-4 text-sm"><a class="underline" href="${escapeHtml(gitoryxGuide.downloadUrl)}">${escapeHtml(t(locale, 'gitoryx.start.download'))}</a></p>
           <ol class="mt-4 list-decimal pl-5 space-y-4 text-sm">${pathSteps}</ol>
-          <aside class="mt-6 border-t pt-4">
+          <aside class="mt-6 rounded-2xl bg-sheet-dark p-5 text-white">
             <h3 class="font-semibold">${escapeHtml(t(locale, 'gitoryx.offer.title'))}</h3>
             <p class="mt-2 text-sm">${escapeHtml(t(locale, 'gitoryx.offer.benefit'))}</p>
             <p class="mt-2 text-sm">${escapeHtml(t(locale, 'gitoryx.offer.terms'))} <code>${escapeHtml(gitoryxGuide.promoCode)}</code></p>
             <p class="mt-2 text-sm">${escapeHtml(t(locale, 'gitoryx.offer.disclosure'))}</p>
-            <p class="mt-2 text-sm"><a class="underline" rel="sponsored" href="${escapeHtml(gitoryxGuide.proUrl)}">${escapeHtml(t(locale, 'gitoryx.offer.cta'))}</a></p>
+            <p class="mt-4 text-sm"><a class="inline-flex min-h-11 items-center rounded-lg bg-orange-brand px-4 py-2 font-semibold text-white hover:bg-orange-brand-hover" rel="sponsored" href="${escapeHtml(gitoryxGuide.proUrl)}">${escapeHtml(t(locale, 'gitoryx.offer.cta'))}</a></p>
           </aside>
         </section>
         <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">

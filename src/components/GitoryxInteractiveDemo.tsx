@@ -151,10 +151,10 @@ export default function GitoryxInteractiveDemo({ mode, initialOperation }: Props
                   setActiveOp(operation);
                 }}
                 className={cn(
-                  "inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 sm:text-sm",
+                  "inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-brand sm:text-sm",
                   selected
-                    ? "border-sky-700 bg-sky-50 text-sky-800 dark:border-sky-400 dark:bg-sky-900/40 dark:text-sky-100"
-                    : "border-border bg-background/60 text-muted-foreground hover:border-sky-300 hover:text-foreground"
+                    ? "border-orange-brand bg-orange-50 text-orange-950 dark:border-orange-400 dark:bg-orange-950/50 dark:text-orange-200"
+                    : "border-border bg-card text-muted-foreground hover:bg-muted hover:text-foreground"
                 )}
               >
                 <Icon aria-hidden="true" className="h-3.5 w-3.5" />
@@ -182,8 +182,9 @@ export default function GitoryxInteractiveDemo({ mode, initialOperation }: Props
             </Button>
             <Button
               type="button"
+              variant="brand"
               size="sm"
-              className="min-h-11 gap-1 bg-sky-700 text-white hover:bg-sky-800"
+              className="min-h-11 gap-1"
               disabled={tourStep === lastTourStep}
               onClick={() => goToStep(tourStep + 1)}
             >
@@ -205,7 +206,7 @@ export default function GitoryxInteractiveDemo({ mode, initialOperation }: Props
       )}
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <div className="min-w-0 rounded-lg border border-border bg-slate-50 px-3 py-3 dark:bg-slate-900">
+        <div className="min-w-0 rounded-lg border border-border bg-surface-warm p-3 dark:bg-muted/30 sm:p-4">
           <p className="text-sm font-medium">{t("gitoryx.demo.graphLabel")}</p>
           <div className="relative">
             <svg viewBox="0 0 420 156" className="block h-auto w-full" aria-hidden="true">
@@ -220,16 +221,16 @@ export default function GitoryxInteractiveDemo({ mode, initialOperation }: Props
                     y1={from.y}
                     x2={to.x}
                     y2={to.y}
-                    className={edge.kind === "main" ? "stroke-slate-500 dark:stroke-slate-400" : "stroke-sky-700 dark:stroke-sky-300"}
+                    className={edge.kind === "main" ? "stroke-muted-foreground" : "stroke-orange-brand dark:stroke-orange-400"}
                     strokeWidth={3}
                   />
                 );
               })}
               {mainTip && !isFastForward && (
-                <text x={mainTip.x} y={150} className="fill-slate-700 text-[17px] dark:fill-slate-200" textAnchor="middle">main</text>
+                <text x={mainTip.x} y={150} className="fill-foreground font-mono text-[15px]" textAnchor="middle">main</text>
               )}
               {effectiveStep >= 2 && (
-                <text x={288} y={20} className="fill-sky-800 text-[17px] dark:fill-sky-200" textAnchor="middle">{isFastForward ? "main / feature" : "feature"}</text>
+                <text x={288} y={20} className="fill-orange-brand-accessible font-mono text-[15px] dark:fill-orange-300" textAnchor="middle">{isFastForward ? "main / feature" : "feature"}</text>
               )}
             </svg>
             {visibleNodes.map((node) => (
@@ -240,13 +241,13 @@ export default function GitoryxInteractiveDemo({ mode, initialOperation }: Props
                 aria-pressed={pickedId === node.id}
                 onClick={() => setPickedId(node.id)}
                 style={{ left: `${(node.x / 420) * 100}%`, top: `${(node.y / 156) * 100}%` }}
-                className="group absolute flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-sky-700 dark:focus-visible:outline-sky-300"
+                className="group absolute flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-brand dark:focus-visible:outline-orange-300"
               >
                 <span
                   className={cn(
                     "flex h-7 w-7 items-center justify-center rounded-full border-2 font-mono text-xs font-semibold text-white group-hover:underline",
-                    node.branch === "feature" ? "bg-sky-800" : "bg-slate-700",
-                    isHighlighted(node) || pickedId === node.id ? "border-sky-300" : "border-transparent",
+                    node.branch === "feature" ? "bg-orange-brand" : "bg-slate-700",
+                    isHighlighted(node) || pickedId === node.id ? "ring-2 ring-orange-brand ring-offset-2 ring-offset-background dark:ring-orange-300" : "border-transparent",
                     pickedId === node.id && "underline"
                   )}
                 >
@@ -268,7 +269,7 @@ export default function GitoryxInteractiveDemo({ mode, initialOperation }: Props
         <div className="rounded-lg border border-border bg-card p-4" aria-live="polite">
           {mode === "mapper" ? (
             <>
-              <code className="block font-mono text-sm text-sky-800 dark:text-sky-200">
+              <code className="inline-block rounded-md bg-muted px-2 py-1 font-mono text-sm text-foreground">
                 {GITORYX_OPERATIONS[activeOp]}
               </code>
               <p className="mt-3 text-sm leading-relaxed text-foreground">{opVisual}</p>
@@ -286,7 +287,7 @@ export default function GitoryxInteractiveDemo({ mode, initialOperation }: Props
                     key={id}
                     className={cn(
                       "h-1.5 flex-1 rounded-full",
-                      i <= tourStep ? "bg-sky-500" : "bg-muted"
+                      i <= tourStep ? "bg-orange-brand" : "bg-muted"
                     )}
                   />
                 ))}
