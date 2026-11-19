@@ -1264,7 +1264,7 @@ const GitExercises: React.FC = () => {
                         </Button>
                       </div>
                       {isGitoryxOutroExercise(selectedExercise) ? (
-                        <GitoryxExerciseOutro exerciseId={selectedExercise} />
+                        <GitoryxExerciseOutro key={selectedExercise} exerciseId={selectedExercise} />
                       ) : null}
                     </CardContent>
                   ) : (

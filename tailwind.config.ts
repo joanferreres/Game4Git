@@ -92,6 +92,7 @@ export default {
 				'orange-brand': '#c43d22',
 				'orange-brand-hover': '#a8341d',
 				'orange-brand-accessible': '#c43d22',
+				'surface-warm': '#faf9f7',
 				'sheet-dark': '#0f172a'
 			},
 			borderRadius: {

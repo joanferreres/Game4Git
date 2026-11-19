@@ -1,17 +1,17 @@
-export const GITORX_OUTRO_EXERCISE_IDS = [
-  "feature-branch",
-  "remote-workflow",
-  "fast-forward-merge",
-] as const;
+import type { GitoryxOperation } from "./gitoryxOperations";
 
-export type GitoryxOutroExerciseId = (typeof GITORX_OUTRO_EXERCISE_IDS)[number];
+export const gitoryxOperationByExercise = {
+  "feature-branch": "branch",
+  "remote-workflow": "remote",
+  "fast-forward-merge": "fast-forward",
+} as const satisfies Record<string, GitoryxOperation>;
+
+export type GitoryxOutroExerciseId = keyof typeof gitoryxOperationByExercise;
 
 export function isGitoryxOutroExercise(id: string): id is GitoryxOutroExerciseId {
-  return (GITORX_OUTRO_EXERCISE_IDS as readonly string[]).includes(id);
+  return Object.prototype.hasOwnProperty.call(gitoryxOperationByExercise, id);
 }
 
-export const GITORX_OUTRO_STORAGE_PREFIX = "gitoryx-outro-dismissed:";
-
-export function gitoryxOutroStorageKey(exerciseId: string) {
-  return `${GITORX_OUTRO_STORAGE_PREFIX}${exerciseId}`;
+export function gitoryxOutroStorageKey(exerciseId: GitoryxOutroExerciseId) {
+  return `gitoryx-outro-dismissed:${exerciseId}`;
 }

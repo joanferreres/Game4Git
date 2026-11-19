@@ -1,0 +1,16 @@
+{
+  "downloadUrl": "https://www.gitoryx.com/download?utm_source=game4git&utm_medium=guide&utm_campaign=ambassador",
+  "proUrl": "https://www.gitoryx.com/pricing?promo=GAME4GIT",
+  "promoCode": "GAME4GIT",
+  "practiceRepo": "https://github.com/octocat/Hello-World.git",
+  "steps": ["install", "clone", "inspect", "branch", "commit"],
+  "commands": [
+    { "cli": "git commit", "key": "commit" },
+    { "cli": "git switch -c <name>", "key": "branch" },
+    { "cli": "git switch <branch>", "key": "switch" },
+    { "cli": "git merge <branch>", "key": "merge" },
+    { "cli": "git fetch / git push", "key": "remote" },
+    { "cli": "git add -p", "key": "stage" },
+    { "cli": "merge conflict", "key": "conflict" }
+  ]
+}
