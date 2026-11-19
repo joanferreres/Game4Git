@@ -1888,7 +1888,8 @@
     "offer": {
       "title": "Gitoryx Pro for private projects",
       "benefit": "Pro unlocks the full history of private repositories and the advanced graph view.",
-      "terms": "20% off for 12 months with",
+      "terms": "20% off for 12 months",
+      "copyCode": "Copy code",
       "disclosure": "Game4Git may earn a commission if you subscribe with this code.",
       "cta": "See Pro plans with 20% off"
     }

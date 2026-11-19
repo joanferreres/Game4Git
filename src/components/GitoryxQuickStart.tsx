@@ -52,9 +52,13 @@ export function GitoryxQuickStart() {
         <div>
           <h3 id="gitoryx-pro-title" className="text-2xl font-extrabold tracking-tight">{t("gitoryx.offer.title")}</h3>
           <p className="mt-2 max-w-prose text-sm leading-relaxed text-slate-200">{t("gitoryx.offer.benefit")}</p>
-          <p className="mt-3 text-sm font-medium text-slate-200">
-            {t("gitoryx.offer.terms")} <code className="ml-1 inline-block rounded border border-slate-500 bg-slate-800 px-2 py-0.5 font-mono text-xs text-white">{guide.promoCode}</code>
-          </p>
+          <p className="mt-4 text-sm font-semibold text-slate-200">{t("gitoryx.offer.terms")}</p>
+          <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2">
+            <code className="select-all rounded-lg border border-slate-500 bg-slate-800 px-4 py-2 font-mono text-2xl font-semibold tracking-wide text-white sm:text-3xl">
+              {guide.promoCode}
+            </code>
+            <GitoryxCopyButton value={guide.promoCode} label={t("gitoryx.offer.copyCode")} inverse />
+          </div>
           <p className="mt-3 text-sm text-slate-300">{t("gitoryx.offer.disclosure")}</p>
         </div>
         <Button asChild variant="brand" className="h-auto min-h-11 w-fit whitespace-normal px-4 py-2 ring-offset-slate-900 focus-visible:ring-white">

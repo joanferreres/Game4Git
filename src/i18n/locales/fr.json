@@ -1668,7 +1668,8 @@
     "offer": {
       "title": "Gitoryx Pro pour les projets privés",
       "benefit": "Pro donne accès à l’historique complet des dépôts privés et à la vue avancée du graphe.",
-      "terms": "20 % de remise pendant 12 mois avec",
+      "terms": "20 % de remise pendant 12 mois",
+      "copyCode": "Copier le code",
       "disclosure": "Game4Git peut toucher une commission si vous vous abonnez avec ce code.",
       "cta": "Voir les offres Pro avec 20 % de remise"
     }

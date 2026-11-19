@@ -877,7 +877,8 @@ const buildGitoryxMarkup = (locale) => {
           <aside class="mt-6 rounded-2xl bg-sheet-dark p-5 text-white">
             <h3 class="font-semibold">${escapeHtml(t(locale, 'gitoryx.offer.title'))}</h3>
             <p class="mt-2 text-sm">${escapeHtml(t(locale, 'gitoryx.offer.benefit'))}</p>
-            <p class="mt-2 text-sm">${escapeHtml(t(locale, 'gitoryx.offer.terms'))} <code>${escapeHtml(gitoryxGuide.promoCode)}</code></p>
+            <p class="mt-4 text-sm font-semibold text-slate-200">${escapeHtml(t(locale, 'gitoryx.offer.terms'))}</p>
+            <code class="mt-2 inline-block select-all rounded-lg border border-slate-500 bg-slate-800 px-4 py-2 font-mono text-2xl font-semibold tracking-wide text-white sm:text-3xl">${escapeHtml(gitoryxGuide.promoCode)}</code>
             <p class="mt-2 text-sm">${escapeHtml(t(locale, 'gitoryx.offer.disclosure'))}</p>
             <p class="mt-4 text-sm"><a class="inline-flex min-h-11 items-center rounded-lg bg-orange-brand px-4 py-2 font-semibold text-white hover:bg-orange-brand-hover" rel="sponsored" href="${escapeHtml(gitoryxGuide.proUrl)}">${escapeHtml(t(locale, 'gitoryx.offer.cta'))}</a></p>
           </aside>

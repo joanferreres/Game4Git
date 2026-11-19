@@ -1776,7 +1776,8 @@
     "offer": {
       "title": "Gitoryx Pro per a projectes privats",
       "benefit": "Pro permet veure tot l’historial dels repositoris privats i accedir a la vista avançada del graf.",
-      "terms": "20 % de descompte durant 12 mesos amb",
+      "terms": "20 % de descompte durant 12 mesos",
+      "copyCode": "Copia el codi",
       "disclosure": "Game4Git pot rebre una comissió si et subscrius amb aquest codi.",
       "cta": "Consulta els plans Pro amb un 20 % de descompte"
     }
