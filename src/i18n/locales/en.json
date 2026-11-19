@@ -1648,8 +1648,7 @@
     "playgroundStripTitle": "Practice with the playground",
     "playgroundStripDesc": "Code editor, commit tree and Git controls all in one screen. No setup needed.",
     "playgroundStripCta": "Open playground",
-    "gitoryxCta": "See Git visually — open the Gitoryx guide",
-    "gitoryxCtaHint": "Practice CLI here, then see the same commits and branches on a visual graph.",
+    "gitoryxCta": "Gitoryx guide",
     "gitoryxCardBadge": "CLI ↔ visual",
     "playgroundGitoryxNudge": "After the playground: see the same Git story visually — Gitoryx guide",
     "seoIntroGitoryx": "Gitoryx"

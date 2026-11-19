@@ -14,6 +14,7 @@ import {
 import AppNav from "@/components/AppNav";
 import SiteFooter from "@/components/SiteFooter";
 import SeoHead from "@/components/SeoHead";
+import { Button } from "@/components/ui/button";
 import { useHomeLandingAnimations } from "@/hooks/useLandingAnimations";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useLocalizedPath } from "@/lib/localizedRoutes";
@@ -70,18 +71,7 @@ const Landing: React.FC = () => {
   const rootRef = useRef<HTMLDivElement>(null);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
-  // Gitoryx sits early in the guides grid (after the primary practice game)
-  // so it is at least as discoverable as GDB/Valgrind.
   const guides = [
-    {
-      href: localizePath("/git-practice-game"),
-      title: t("home.guides.gitPractice.title"),
-      description: t("home.guides.gitPractice.description"),
-      icon: Sparkles,
-      color: "orange" as const,
-      command: "git practice",
-      difficulty: t("home.levelBasic", "Básico"),
-    },
     {
       href: localizePath("/gitoryx"),
       title: t("home.guides.gitoryx.title"),
@@ -91,6 +81,15 @@ const Landing: React.FC = () => {
       command: "gitoryx",
       difficulty: t("home.levelBasic", "Básico"),
       featured: true,
+    },
+    {
+      href: localizePath("/git-practice-game"),
+      title: t("home.guides.gitPractice.title"),
+      description: t("home.guides.gitPractice.description"),
+      icon: Sparkles,
+      color: "orange" as const,
+      command: "git practice",
+      difficulty: t("home.levelBasic", "Básico"),
     },
     {
       href: localizePath("/git-branch-practice"),
@@ -267,46 +266,22 @@ const Landing: React.FC = () => {
                   {t("home.seoIntroTailShort", "basics included.")}
                 </p>
               </section>
-              <div className="flex flex-col gap-3">
-                <div className="flex flex-col xs:flex-row items-start xs:items-center gap-2">
-                  <Link
-                    to={localizePath("/playground")}
-                    className="inline-flex items-center gap-1.5 bg-orange-brand hover:bg-orange-brand-hover text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
-                  >
+              <div className="flex flex-wrap items-center gap-2">
+                <Button asChild variant="brand" size="lg" className="px-4">
+                  <Link to={localizePath("/playground")}>
                     {t("nav.playground", "Playground")}
-                    <ArrowRight className="w-4 h-4" aria-hidden />
+                    <ArrowRight aria-hidden />
                   </Link>
-                  <a
-                    href="#guides"
-                    className="inline-flex items-center gap-1.5 border border-border text-foreground text-sm font-medium px-4 py-2.5 rounded-lg hover:bg-muted/60 transition-colors"
-                  >
-                    {t("nav.guides", "Guías")}
-                  </a>
-                </div>
-                {/* Learning-first hero entry: bordered chip, same language as guide cards — not a promo banner */}
-                <Link
-                  to={localizePath("/gitoryx")}
-                  className="group inline-flex max-w-md items-start gap-3 rounded-lg border border-orange-200/80 bg-orange-50/70 px-3.5 py-3 text-left transition-colors hover:border-orange-300 hover:bg-orange-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-brand focus-visible:ring-offset-2 dark:border-orange-800/60 dark:bg-orange-950/40 dark:hover:border-orange-700 dark:hover:bg-orange-950/60"
-                >
-                  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-100 dark:bg-orange-950/60">
-                    <Eye className="h-4 w-4 text-orange-brand-accessible dark:text-orange-300" aria-hidden />
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-sm font-semibold text-foreground leading-snug">
-                      {t("home.gitoryxCta", "See Git visually — Gitoryx guide")}
-                    </span>
-                    <span className="mt-0.5 block text-xs text-muted-foreground leading-relaxed">
-                      {t(
-                        "home.gitoryxCtaHint",
-                        "CLI practice here, then see the same commits and branches on a visual graph."
-                      )}
-                    </span>
-                  </span>
-                  <ArrowRight
-                    className="mt-1 h-4 w-4 shrink-0 text-orange-brand-accessible transition-transform group-hover:translate-x-0.5 dark:text-orange-300"
-                    aria-hidden
-                  />
-                </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="rounded-lg border-orange-brand px-4 font-semibold text-orange-brand-accessible hover:bg-orange-50 hover:text-orange-brand-hover dark:border-orange-400 dark:text-orange-300 dark:hover:bg-orange-950/50 dark:hover:text-orange-200">
+                  <Link to={localizePath("/gitoryx")}>
+                    <Eye aria-hidden />
+                    {t("home.gitoryxCta")}
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="lg" className="min-w-0 px-3 text-muted-foreground">
+                  <a href="#guides">{t("nav.guides", "Guías")}</a>
+                </Button>
               </div>
               {/* Stats row */}
               <div className="hidden sm:flex gap-6 mt-6 pt-5 border-t border-border/60">

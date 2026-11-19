@@ -452,10 +452,9 @@ const buildHomeMarkup = (locale) => {
   const gdbPath = getLocalizedPath('/gdb', locale);
   const valgrindPath = getLocalizedPath('/valgrind', locale);
   const gitoryxPath = getLocalizedPath('/gitoryx', locale);
-  // Keep Gitoryx early (after practice game) to match Landing.tsx discoverability.
   const guideRoutes = [
-    { key: 'gitPracticeGame', path: '/git-practice-game' },
     { key: 'gitoryx', path: '/gitoryx' },
+    { key: 'gitPracticeGame', path: '/git-practice-game' },
     { key: 'gitBranchPractice', path: '/git-branch-practice' },
     { key: 'gitMergeConflicts', path: '/git-merge-conflicts' },
     { key: 'valgrindMemoryLeaks', path: '/valgrind-memory-leaks' },
@@ -467,6 +466,7 @@ const buildHomeMarkup = (locale) => {
           <p class="text-sm text-muted-foreground">Game4Git</p>
           <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">${escapeHtml(t(locale, 'general.title'))}</h1>
           <p class="mt-3 text-sm sm:text-base text-muted-foreground">${escapeHtml(t(locale, 'home.seoIntroShort'))}</p>
+          <a class="mt-5 inline-flex min-h-11 items-center rounded-lg border border-orange-brand bg-background px-4 text-sm font-semibold text-orange-brand-accessible dark:border-orange-400 dark:text-orange-300" href="${escapeHtml(gitoryxPath)}">${escapeHtml(t(locale, 'home.gitoryxCta'))}</a>
         </header>
         <section class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
           <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'welcome.title'))}</h2>
@@ -474,7 +474,6 @@ const buildHomeMarkup = (locale) => {
           <div class="mt-4 flex flex-wrap gap-3">
             <a class="underline" href="${escapeHtml(gdbPath)}">GDB</a>
             <a class="underline" href="${escapeHtml(valgrindPath)}">Valgrind</a>
-            <a class="underline" href="${escapeHtml(gitoryxPath)}">Gitoryx</a>
           </div>
         </section>
         <section class="mx-auto max-w-6xl mt-8">

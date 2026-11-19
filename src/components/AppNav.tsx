@@ -44,7 +44,7 @@ const AppNav = ({
             ? "container max-w-full px-4 sm:px-6 lg:px-8 min-h-14 py-2 grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:gap-3"
             : showStackedMobilePlaygroundCta
               ? "container max-w-full px-4 sm:px-6 lg:px-8 min-h-14 py-2 flex flex-wrap items-center justify-between gap-3"
-            : "container max-w-full px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-4"
+            : "container max-w-full px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-2 sm:gap-4"
         }
       >
         {!showCenteredInnerBrand && (
@@ -62,12 +62,6 @@ const AppNav = ({
             <span className="hidden xs:inline font-mono text-[10px] text-muted-foreground bg-muted border border-border px-1.5 py-0.5 rounded">
               {t("nav.gitInitBadge", "git init")}
             </span>
-            <Link
-              to={localizePath("/playground")}
-              className="hidden md:inline text-sm text-foreground font-semibold hover:text-orange-brand transition-colors"
-            >
-              {t("nav.playground", "Playground")}
-            </Link>
             <a
               href="#guides"
               className="hidden md:inline text-sm text-muted-foreground font-medium hover:text-foreground transition-colors"
@@ -76,15 +70,15 @@ const AppNav = ({
             </a>
             <Link
               to={localizePath("/gitoryx")}
-              className="hidden lg:inline text-sm text-muted-foreground font-medium hover:text-foreground transition-colors"
+              className="hidden min-h-11 items-center rounded-md px-1 text-sm font-semibold text-orange-brand-accessible hover:underline dark:text-orange-300 sm:inline-flex"
             >
               {t("nav.gitoryx", "Gitoryx")}
             </Link>
             <ThemeToggle />
-            <NativeLanguageSelect />
+            <NativeLanguageSelect className="min-w-[3.25rem] sm:min-w-[4.75rem]" />
             <Link
               to={localizePath("/playground")}
-              className="bg-orange-brand hover:bg-orange-brand-hover text-white text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors"
+              className="bg-orange-brand hover:bg-orange-brand-hover text-white text-sm font-semibold px-2 py-1.5 rounded-lg transition-colors sm:px-3"
             >
               {t("nav.playground", "Playground")}
             </Link>

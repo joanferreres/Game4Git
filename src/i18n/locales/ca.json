@@ -1541,8 +1541,7 @@
     "playgroundStripTitle": "Practica amb el playground",
     "playgroundStripDesc": "Editor de codi, arbre de commits i controls de Git en una sola pantalla. Sense configurar res.",
     "playgroundStripCta": "Obrir playground",
-    "gitoryxCta": "Veure Git en visual — obre la guia Gitoryx",
-    "gitoryxCtaHint": "Practica la CLI aquí i després mira els mateixos commits i branques en un graf visual.",
+    "gitoryxCta": "Guia de Gitoryx",
     "gitoryxCardBadge": "CLI ↔ visual",
     "playgroundGitoryxNudge": "Després del playground: mira la mateixa història de Git en visual — guia Gitoryx",
     "seoIntroGitoryx": "Gitoryx"
