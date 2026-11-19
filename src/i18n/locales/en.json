@@ -1849,7 +1849,6 @@
       "jump": "Start the desktop guide",
       "preview": "Explore the graph",
       "screenshotAlt": "Gitoryx showing colored branch lines, commit history and a file diff",
-      "screenshotCaption": "Desktop app screenshot from",
       "practiceTitle": "See what changes in the graph",
       "practiceLead": "Follow a sample history in Game4Git, then switch to the command map to connect Git commands to the desktop app.",
       "tourTab": "Graph walkthrough",

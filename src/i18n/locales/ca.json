@@ -1737,7 +1737,6 @@
       "jump": "Comença la guia d’escriptori",
       "preview": "Explora el graf",
       "screenshotAlt": "Gitoryx amb les branques en color, l’historial de commits i el diff d’un fitxer",
-      "screenshotCaption": "Captura de l’aplicació d’escriptori de",
       "practiceTitle": "Mira què canvia al graf",
       "practiceLead": "Recorre un historial d’exemple a Game4Git i fes servir el mapa d’ordres per veure com es tradueixen a l’aplicació d’escriptori.",
       "tourTab": "Recorregut pel graf",

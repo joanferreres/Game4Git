@@ -1890,7 +1890,6 @@
       "jump": "Empezar la guía de escritorio",
       "preview": "Explorar el grafo",
       "screenshotAlt": "Gitoryx con las ramas en color, el historial de commits y el diff de un archivo",
-      "screenshotCaption": "Captura de la aplicación de escritorio de",
       "practiceTitle": "Mira qué cambia en el grafo",
       "practiceLead": "Recorre un historial de ejemplo en Game4Git y usa el mapa de comandos para ver cómo se traducen a la aplicación de escritorio.",
       "tourTab": "Recorrido por el grafo",

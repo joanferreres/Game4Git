@@ -73,10 +73,6 @@ export default function GitoryxLearning() {
                 fetchPriority="high"
               />
             </picture>
-            <figcaption className="mt-2 text-xs text-muted-foreground">
-              {t("gitoryx.start.screenshotCaption")}{" "}
-              <a href="https://www.gitoryx.com/" className="underline underline-offset-2">gitoryx.com</a>
-            </figcaption>
           </figure>
         </header>
 
