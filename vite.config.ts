@@ -4,8 +4,9 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
 
-// frame-ancestors: permite embeber en iframe solo desde el portfolio; protege contra clickjacking.
-// Debe coincidir con public/_headers (Cloudflare Workers aplica CSP en producción).
+// frame-ancestors: allow iframe embed only from the author portfolio site (clickjacking protection).
+// Must match public/_headers (Cloudflare Workers CSP in production).
+// Note: joanferreresvivero.vercel.app is the portfolio host that embeds Game4Git — not a Game4Git deploy target.
 const FRAME_ANCESTORS = "frame-ancestors 'self' https://joanferreresvivero.vercel.app";
 
 const previewSecurityHeaders = {
