@@ -42,13 +42,13 @@
     "copyError": "No s'ha pogut copiar la comanda. Copia-la manualment."
   },
   "general": {
-    "title": "Aprèn Git Jugant — Joc Online Gratuït",
-    "subtitle": "Aprèn Git jugant: visualitza branques, resol desafiaments i practica comandes reals al navegador."
+    "title": "Joc per Aprendre Git — Gratuït Online",
+    "subtitle": "Joc interactiu de Git al navegador: visualitza branques, resol reptes i practica comandes reals. Sense instal·lació."
   },
   "seo": {
     "home": {
-      "title": "Aprèn Git Jugant Gratis — Joc Online | Game4Git",
-      "description": "Aprèn git jugant online gratis — joc interactiu de commits, branques, conflictes de merge, GDB, Valgrind i Gitoryx. Sense instal·lació."
+      "title": "Joc per Aprendre Git Gratuït — Online | Game4Git",
+      "description": "Aprèn Git jugant gratuïtament al navegador. Practica commits, branques i merges amb reptes guiats. Sense instal·lació."
     },
     "gdb": {
       "title": "Com usar GDB | Tutorial interactiu de depuració | Game4Git",
@@ -59,12 +59,12 @@
       "description": "Tutorial interactiu de Valgrind — aprèn Memcheck, detecta fuites de memòria i corregeix invalid reads amb exemples guiats."
     },
     "gitPracticeGame": {
-      "title": "Joc per Practicar Git — Aprèn Git Jugant | Game4Git",
-      "description": "Joc gratuït per practicar git online — aprèn git jugant amb reptes guiats de commit, branch, checkout i merge. Sense instal·lació."
+      "title": "Practicar Git Online Gratuït — Joc Interactiu | Game4Git",
+      "description": "Practica Git online gratuïtament: commits, branques i merges en un joc visual amb reptes guiats. Sense instal·lació, al navegador."
     },
     "gitBranchPractice": {
-      "title": "Practicar Branques Git — Tutorial Interactiu de Branching | Game4Git",
-      "description": "Aprèn branching a Git online amb pràctica guiada. Crea, canvia i fusiona branques amb un gràfic visual — joc de git gratis per a principiants."
+      "title": "Practicar Branques Git Online — Joc de Branching | Game4Git",
+      "description": "Practica branching a Git online: crea, canvia i fusiona branques amb un gràfic visual. Joc gratuït per a principiants."
     },
     "gitMergeConflicts": {
       "title": "Conflictes de merge a Git | Aprèn a resoldre'ls | Game4Git",
@@ -1479,7 +1479,7 @@
     }
   },
   "home": {
-    "seoIntroShort": "Aprèn Git jugant amb Game4Git, el joc per a aprendre Git. Visualitza branques, resol desafiaments interactius i domina git practicant.",
+    "seoIntroShort": "Juga a Git gratuïtament al navegador. Visualitza branques, resol reptes interactius i practica comandes reals — sense instal·lació.",
     "seoIntroAnd": "i",
     "seoIntroTailShort": "conceptes bàsics inclosos.",
     "secondaryBanner": "Primera vegada aquí?",
@@ -1492,7 +1492,7 @@
     "statGuides": "Guies interactives",
     "statLanguages": "Idiomes",
     "statInstalls": "Instal·lacions necessàries",
-    "seoIntroMobile": "Aprèn git jugant online gratis — commits visuals i reptes guiats al navegador.",
+    "seoIntroMobile": "Joc de Git gratuït al navegador — commits visuals i reptes guiats. Sense instal·lació.",
     "seoIntroLabel": "Descripció de l'aplicació",
     "guidesTitle": "Guies populars",
     "guidesDescription": "Tria un tema—commits, branques, Git visual amb Gitoryx, conflictes de merge, Valgrind, GDB o fuites de memòria—i entra directament a la guia interactiva adequada.",

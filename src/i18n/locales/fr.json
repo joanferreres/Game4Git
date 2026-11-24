@@ -42,13 +42,13 @@
     "copyError": "Impossible de copier la commande. Copiez-la manuellement."
   },
   "general": {
-    "title": "Apprendre Git en Jouant — Jeu en Ligne Gratuit",
-    "subtitle": "Apprenez Git en jouant : visualisez les branches, relevez des défis et pratiquez de vraies commandes dans le navigateur."
+    "title": "Jeu pour Apprendre Git — Gratuit en Ligne",
+    "subtitle": "Jeu Git interactif dans le navigateur : visualisez les branches, relevez des défis et pratiquez de vraies commandes. Sans installation."
   },
   "seo": {
     "home": {
-      "title": "Apprendre Git en Jouant Gratuitement — Jeu en Ligne | Game4Git",
-      "description": "Apprendre git en jouant en ligne gratuitement — jeu interactif de commits, branches, conflits de merge, GDB, Valgrind et Gitoryx. Sans installation."
+      "title": "Apprendre Git en Jouant — Jeu Gratuit | Game4Git",
+      "description": "Apprenez Git en jouant gratuitement dans le navigateur. Pratiquez commits, branches et merges avec des défis guidés. Sans installation."
     },
     "gdb": {
       "title": "Tutoriel GDB — Débogage interactif | Game4Git",
@@ -59,12 +59,12 @@
       "description": "Tutoriel Valgrind interactif — apprenez Memcheck, détectez les fuites mémoire et corrigez les invalid reads avec des exemples guidés."
     },
     "gitPracticeGame": {
-      "title": "Jeu pour Pratiquer Git — Apprenez Git en Jouant | Game4Git",
-      "description": "Jeu gratuit pour pratiquer git en ligne — apprenez git en jouant avec des défis guidés commit, branch, checkout et merge. Sans installation."
+      "title": "Pratiquer Git en Ligne — Jeu Interactif Gratuit | Game4Git",
+      "description": "Pratiquez Git en ligne gratuitement : commits, branches et merges dans un jeu visuel avec défis guidés. Sans installation."
     },
     "gitBranchPractice": {
-      "title": "Pratique des Branches Git — Tutoriel Interactif | Game4Git",
-      "description": "Apprenez le branching Git en ligne avec une pratique guidée. Créez, changez et fusionnez des branches avec un graphe visuel — jeu git gratuit pour débutants."
+      "title": "Pratiquer les Branches Git — Jeu de Branching | Game4Git",
+      "description": "Pratiquez le branching Git en ligne : créez, changez et fusionnez des branches sur un graphe visuel. Jeu gratuit pour débutants."
     },
     "gitMergeConflicts": {
       "title": "Conflits de merge Git | Apprendre à les résoudre | Game4Git",
@@ -1371,7 +1371,7 @@
     }
   },
   "home": {
-    "seoIntroShort": "Apprenez Git en jouant avec Game4Git, le jeu pour apprendre Git. Visualisez branches, relevez des défis interactifs et maîtrisez git en pratiquant.",
+    "seoIntroShort": "Jouez à Git gratuitement dans le navigateur. Visualisez les branches, relevez des défis et pratiquez de vraies commandes — sans installation.",
     "seoIntroAnd": "et",
     "seoIntroTailShort": "bases incluses.",
     "secondaryBanner": "Première fois ici ?",
@@ -1384,7 +1384,7 @@
     "statGuides": "Guides interactifs",
     "statLanguages": "Langues",
     "statInstalls": "Installations requises",
-    "seoIntroMobile": "Apprendre git en jouant en ligne gratuitement — commits visuels et défis guidés dans le navigateur.",
+    "seoIntroMobile": "Jeu Git gratuit dans le navigateur — commits visuels et défis guidés. Sans installation.",
     "seoIntroLabel": "Description de l'application",
     "guidesTitle": "Guides populaires",
     "guidesDescription": "Choisissez un sujet—commits, branches, Git visuel avec Gitoryx, conflits de merge, Valgrind, GDB ou fuites mémoire—et ouvrez directement le guide interactif correspondant.",

@@ -203,6 +203,13 @@ const Landing: React.FC = () => {
                   </Link>
                   {" · "}
                   <Link
+                    to={localizePath("/git-branch-practice")}
+                    className="underline hover:text-primary"
+                  >
+                    {t("landingPages.gitBranchPractice.eyebrow", "Git branch practice")}
+                  </Link>
+                  {" · "}
+                  <Link
                     to={localizePath("/git-merge-conflicts")}
                     className="underline hover:text-primary"
                   >

@@ -84,6 +84,14 @@ expect(
   JSON.stringify(esLocale.landingPages?.gitPracticeGame ?? {}).toLowerCase().includes("juego de git"),
   "Spanish git practice landing copy must target the GSC query 'juego de git'"
 );
+expect(
+  esLocale.seo?.gitPracticeGame?.title?.includes("Juego de Git Online Gratis"),
+  "Spanish git practice title must lead with the high-intent 'juego de Git online gratis' query"
+);
+expect(
+  esLocale.seo?.gitPracticeGame?.description?.toLowerCase().includes("juego de git online"),
+  "Spanish git practice description must explain the game intent shown in Search Console"
+);
 
 const localizedRoutes = read("src/lib/localizedRoutes.ts");
 expect(

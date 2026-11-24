@@ -42,13 +42,13 @@
     "copyError": "Could not copy command. Copy it manually."
   },
   "general": {
-    "title": "Learn Git Game Online — Play Free",
-    "subtitle": "Learn Git by playing: visualize branches, solve challenges, and practice real commands in your browser."
+    "title": "Git Game — Learn by Playing Free",
+    "subtitle": "Free interactive git game in your browser: visualize branches, solve challenges, and practice real commands — no install."
   },
   "seo": {
     "home": {
-      "title": "Learn Git Game Online Free — Play & Practice | Game4Git",
-      "description": "Learn git game online free — play interactive challenges for commits, branches, merge conflicts, GDB, Valgrind and Gitoryx. No install required."
+      "title": "Git Game — Learn Git by Playing Free | Game4Git",
+      "description": "Free interactive git game in your browser. Practice commits, branches and merges with guided challenges — no install required."
     },
     "gdb": {
       "title": "How to Use GDB | Interactive Debugger Tutorial | Game4Git",
@@ -59,12 +59,12 @@
       "description": "Interactive Valgrind tutorial — learn Memcheck, detect memory leaks and fix invalid reads with guided examples in the browser."
     },
     "gitPracticeGame": {
-      "title": "Git Practice Game — Play Git Commands Online Free | Game4Git",
-      "description": "Play a free Git practice game online. Practice Git commands, commits, branches and merges with guided challenges — no install required."
+      "title": "Git Practice Game — Free Online Commands | Game4Git",
+      "description": "Practice Git online free: commits, branches and merges in a visual game with guided challenges. No install — play in your browser."
     },
     "gitBranchPractice": {
-      "title": "Git Branch Game — Practice Git Branching Online Free | Game4Git",
-      "description": "Play a free git branch game online. Create, switch and merge branches on a visual Git graph built for beginners."
+      "title": "Git Branch Game — Practice Branching Free | Game4Git",
+      "description": "Practice Git branching online: create, switch and merge branches on a visual graph. Free beginner-friendly git branch game."
     },
     "gitMergeConflicts": {
       "title": "Git Merge Conflict Game — Practice Conflict Markers | Game4Git",
@@ -1574,7 +1574,7 @@
     }
   },
   "home": {
-    "seoIntroShort": "Learn git game online with Game4Git — the free game to learn Git by playing. Visualize branches, solve interactive challenges, and master git by practicing.",
+    "seoIntroShort": "Play a free git game in your browser. Visualize branches, solve interactive challenges, and practice real Git commands — no install.",
     "seoIntroAnd": "and",
     "seoIntroTailShort": "basics included.",
     "startFirstChallenge": "Start first challenge",
@@ -1598,7 +1598,7 @@
     "statGuides": "Interactive guides",
     "statLanguages": "Languages",
     "statInstalls": "Installs required",
-    "seoIntroMobile": "Learn git game online free — play visual commits and guided challenges in your browser.",
+    "seoIntroMobile": "Free git game in your browser — practice visual commits and guided challenges. No install.",
     "codeEditorLabel": "Code editor for hello.c file",
     "seoIntroLabel": "App description",
     "guidesTitle": "Popular guides",
