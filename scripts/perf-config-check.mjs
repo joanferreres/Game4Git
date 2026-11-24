@@ -32,6 +32,10 @@ for (const file of filesWithCsp) {
     content.includes("https://cloudflareinsights.com"),
     `${file} must allow Cloudflare Insights beacon connections in CSP`
   );
+  expect(
+    content.includes("https://challenges.cloudflare.com"),
+    `${file} must allow Cloudflare Turnstile (challenges.cloudflare.com) in CSP`
+  );
 }
 
 for (const file of [
@@ -147,6 +151,12 @@ expect(
 expect(
   !read("src/components/SiteFooter.tsx").includes("bg-primary text-primary-foreground"),
   "footer support CTA must not use the low-contrast primary color pair"
+);
+
+const viteConfig = read("vite.config.ts");
+expect(
+  /sourcemap:\s*false/.test(viteConfig),
+  "production builds must not publish JavaScript source maps"
 );
 
 for (const asset of [

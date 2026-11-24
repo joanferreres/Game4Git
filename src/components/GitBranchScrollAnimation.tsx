@@ -186,6 +186,8 @@ const GitBranchScrollAnimation: React.FC = () => {
       >
         <svg
           viewBox="0 0 900 630"
+          width={900}
+          height={630}
           className="block h-auto w-full"
           role="img"
           aria-hidden

@@ -31,8 +31,9 @@ function getReferrer(): string | null {
 
 async function sendAnalyticsEvent(path: string): Promise<void> {
   try {
-    // Warm widget in background; do not block track on deferred script load (fail-open).
-    void ensureTurnstileWidget();
+    // Wait for the widget so the first pageview can get a token.
+    // Still fail-open: if Turnstile is slow/blocked, track with verified=0.
+    await ensureTurnstileWidget();
     const turnstileToken = await getTurnstileToken('analytics', 4000);
     const utm = extractUtmParams();
     const referrer = getReferrer();

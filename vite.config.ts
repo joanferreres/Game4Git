@@ -11,10 +11,11 @@ const FRAME_ANCESTORS = "frame-ancestors 'self' https://joanferreresvivero.verce
 const previewSecurityHeaders = {
   'Content-Security-Policy': [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://static.cloudflareinsights.com blob:",
+    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://static.cloudflareinsights.com https://challenges.cloudflare.com blob:",
     "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
     "img-src 'self' data: https://c.bing.com",
-    "connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com",
+    "connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://challenges.cloudflare.com",
+    "frame-src 'self' https://challenges.cloudflare.com",
     "font-src 'self' data:",
     "object-src 'none'",
     "media-src 'self'",
@@ -65,13 +66,13 @@ export default defineConfig({
     headers: {
       'Content-Security-Policy': [
         "default-src 'self'",
-        "connect-src 'self' ws: http: https: ws://localhost:24678 http://localhost:24678 https://cdn.jsdelivr.net https://cloudflareinsights.com",
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://static.cloudflareinsights.com blob:",
+        "connect-src 'self' ws: http: https: ws://localhost:24678 http://localhost:24678 https://cdn.jsdelivr.net https://cloudflareinsights.com https://challenges.cloudflare.com",
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://static.cloudflareinsights.com https://challenges.cloudflare.com blob:",
         "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
         "img-src 'self' data: blob: https://c.bing.com",
         "font-src 'self' data: https://cdn.jsdelivr.net",
         "worker-src 'self' blob:",
-        "frame-src 'self'",
+        "frame-src 'self' https://challenges.cloudflare.com",
         "object-src 'none'"
       ].join('; ')
     }
@@ -105,7 +106,9 @@ export default defineConfig({
         pure_funcs: ["console.log", "console.info", "console.debug"],
       },
     },
-    sourcemap: true,
+    // Source maps add several megabytes to the public deployment and expose
+    // source code without helping visitors. Keep them out of production.
+    sourcemap: false,
     outDir: 'dist',
     assetsDir: 'assets',
     emptyOutDir: true,
