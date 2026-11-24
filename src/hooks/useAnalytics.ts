@@ -29,9 +29,40 @@ function getReferrer(): string | null {
   return document.referrer || null;
 }
 
+const INTERACTION_EVENTS = ['pointerdown', 'keydown', 'scroll', 'touchstart'] as const;
+// Real visitors almost always interact; this cap keeps pageviews from non-interactive
+// visits (e.g. reading without scrolling) without loading Turnstile during page load.
+const INTERACTION_FALLBACK_MS = 8000;
+
+let interactionPromise: Promise<void> | null = null;
+
+/**
+ * Turnstile pulls ~2 MB of challenge assets. Keep it off the loading path: wait for
+ * the first user interaction (or a fallback timer) before loading it.
+ */
+function waitForInteraction(): Promise<void> {
+  if (typeof window === 'undefined') return Promise.resolve();
+  if (interactionPromise) return interactionPromise;
+
+  interactionPromise = new Promise<void>((resolve) => {
+    let timer: number | undefined;
+    const done = () => {
+      window.clearTimeout(timer);
+      INTERACTION_EVENTS.forEach((name) => window.removeEventListener(name, done));
+      resolve();
+    };
+    INTERACTION_EVENTS.forEach((name) =>
+      window.addEventListener(name, done, { once: true, passive: true }),
+    );
+    timer = window.setTimeout(done, INTERACTION_FALLBACK_MS);
+  });
+  return interactionPromise;
+}
+
 async function sendAnalyticsEvent(path: string): Promise<void> {
   try {
-    // Wait for the widget so the first pageview can get a token.
+    await waitForInteraction();
+    // Wait for the widget so the pageview can get a token.
     // Still fail-open: if Turnstile is slow/blocked, track with verified=0.
     await ensureTurnstileWidget();
     const turnstileToken = await getTurnstileToken('analytics', 4000);

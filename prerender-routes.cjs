@@ -864,6 +864,12 @@ const buildGitoryxMarkup = (locale) => {
           <h1 class="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight">${escapeHtml(t(locale, 'gitoryx.start.headline'))}</h1>
           <p class="mt-3 text-sm sm:text-base text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.start.summary'))}</p>
         </header>
+        <figure class="mx-auto mt-6 max-w-3xl">
+          <picture class="block overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+            <source type="image/webp" srcset="/guides/gitoryx/commit-graph-light-sm.webp 800w, /guides/gitoryx/commit-graph-light.webp 1241w, /guides/gitoryx/commit-graph-light-2x.webp 2482w" sizes="(min-width: 1200px) 630px, (min-width: 768px) 54vw, calc(100vw - 2rem)">
+            <img src="/guides/gitoryx/commit-graph-light.png" alt="${escapeHtml(t(locale, 'gitoryx.start.screenshotAlt'))}" class="h-auto w-full" width="1241" height="789" fetchpriority="high">
+          </picture>
+        </figure>
         <section id="practice" class="mx-auto max-w-3xl mt-8 rounded-xl border bg-card p-6">
           <h2 class="text-xl font-semibold">${escapeHtml(t(locale, 'gitoryx.start.practiceTitle'))}</h2>
           <p class="mt-2 text-sm text-muted-foreground">${escapeHtml(t(locale, 'gitoryx.start.practiceLead'))}</p>
