@@ -923,6 +923,13 @@ const addCriticalPreloads = (template, routeKey) => {
       `\n    <link rel="preload" href="${mobileHeroSrc || heroSrc}" as="image" type="image/webp" imagesrcset="${imageSrcSet}" imagesizes="(min-width: 1024px) min(42vw, 720px), 100vw" fetchpriority="high">`
     );
   }
+  if (routeKey === 'gitoryx') {
+    // The Gitoryx screenshot is the LCP element but is rendered client-side, so the
+    // browser would only discover it after JS runs. Preload it with the same srcset/sizes.
+    parts.push(
+      `\n    <link rel="preload" href="/guides/gitoryx/commit-graph-light-sm.webp" as="image" type="image/webp" imagesrcset="/guides/gitoryx/commit-graph-light-sm.webp 800w, /guides/gitoryx/commit-graph-light.webp 1241w, /guides/gitoryx/commit-graph-light-2x.webp 2482w" imagesizes="(min-width: 1200px) 630px, (min-width: 768px) 54vw, calc(100vw - 2rem)" fetchpriority="high">`
+    );
+  }
   const assetsDir = path.join(DIST_DIR, 'assets');
   if (fs.existsSync(assetsDir)) {
     const files = fs.readdirSync(assetsDir);
